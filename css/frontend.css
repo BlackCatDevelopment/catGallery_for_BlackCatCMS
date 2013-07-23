@@ -51,13 +51,12 @@
 .slider_skitter .info_slide_dots .image_number {background:#333;float:left;margin:0 5px 0 0;cursor:pointer;-moz-border-radius:50px;-webkit-border-radius:50px;border-radius:50px;width:18px;height:18px;text-indent:-9999em;overflow:hidden;}
 .slider_skitter .info_slide_dots .image_number_select {background:#cc0000;float:left;margin:0 5px 0 0;}
 
-.slider_skitter .label_skitter {right: 0px; z-index:150;position:absolute;bottom:0px;display:none;}
+
 
 .skitter_loading {position:absolute; top:50%; right:50%; z-index:10000; margin:-16px -16px;color:#fff;text-indent:-9999em;overflow:hidden;width:32px;height:32px;}
 
-.label_skitter {padding: 15px; height: 100%; width: 38%; right: 0px; background-repeat: repeat; background-image: url(images/slider_overlay.png); z-index:150;position:absolute;bottom:0px;color:#fff;display:none;}
-.label_skitter h2 { font-size: 2em; font-weight: bold; color: white; }
-.label_skitter p { color: white; padding: 0px;margin:0;}
+.label_skitter {padding: 2em 2em; height: auto; width: 100%; right: 0px; background-repeat: repeat; background-image: url(images/slider_overlay.png); z-index:150;position:absolute;bottom:2em;color:black;display:none;text-shadow: 1px 1px 1px #d8dbdd;}
+
 .info_slide * {font-family: arial, tahoma !important;}
 
 .slider_skitter .progressbar { background:#000; position:absolute; top:5px;left:15px;height:5px; width: 200px; z-index:99; border-radius:20px; }

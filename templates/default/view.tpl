@@ -11,7 +11,7 @@
  * @license			http://www.gnu.org/licenses/gpl.html
  *
  *}
-
+{if $count_img}
 <script type="text/javascript">
 	$(document).ready( function()
 	\{
@@ -22,11 +22,11 @@
 			stop_over:		false,
 			navigation:		false,
 			numbers:		false,
-			width_label:	"{$label}px"
+			width_label:	"902px"{*"{$label}px"*}
 		});
 	});
 </script>
-
+{/if}
 <div class="slider_skitter" id="slider_skitter_{$header_slider_id}" style="width: {$resize_x}px; height: {$resize_y}px;">
 	<ul>
 		{foreach $images as image}

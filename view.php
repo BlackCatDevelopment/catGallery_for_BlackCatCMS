@@ -57,7 +57,8 @@ if ( isset($result) && $result->numRows() > 0)
 		$parser_data['effect']				= ( $row['effect'] != '' && $row['effect'] != '0' ) ? $row['effect'] : false;
 		$parser_data['pauseTime']			= ( $row['pauseTime'] != '' && $row['pauseTime'] != '0' ) ? $row['pauseTime'] : false;
 		$random								= $row['random'];
-		$parser_data['label']				= floor( $row['resize_x'] * 0.38 );
+		$parser_data['label']				= floor( $row['resize_x'] * 0.382 );
+		$parser_data['count_img']			= false;
 		
 		$files			= CAT_Helper_Page::getInstance()->db()->query("SELECT * FROM " . CAT_TABLE_PREFIX . "mod_cc_header_slider_images WHERE header_slider_id = '$header_slider_id'");
 		if ( isset($files) && $files->numRows() > 0 )
@@ -77,6 +78,7 @@ if ( isset($result) && $result->numRows() > 0)
 				shuffle( $parser_data['images'] );
 			}
 			$template		= 'view';
+			$parser_data['count_img']		= count( $parser_data['images'] );
 		}
 	}
 }
