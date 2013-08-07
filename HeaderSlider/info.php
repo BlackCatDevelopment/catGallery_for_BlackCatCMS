@@ -40,7 +40,7 @@ $module_version			= '0.1';
 $module_platform		= '1.x';
 $module_author			= 'Matthias Glienke, creativecat.de';
 $module_license			= '<a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License</a>';
-$module_description		= 'Dieses Modul ermöglicht die Integration des Bildsliders im Header<br/><br/>Done by Matthias Glienke, <a class="icon-creativecat" href="http://creativecat.de"> creativecat</a>';
+$module_description		= 'The add on "HeaderSlider" provides a simple way to integrate a sliding media box on your website. For details see <a href="https://github.com/BlackCatDevelopment/HeaderSlider_for_BlackCatCMS" target="_blank">GitHub</a>.<br/><br/>Done by Matthias Glienke, <a class="icon-creativecat" href="http://creativecat.de"> creativecat</a>';
 $module_guid			= '273cc174-604b-489a-9042-6955dc193d4e';
 
 ?>

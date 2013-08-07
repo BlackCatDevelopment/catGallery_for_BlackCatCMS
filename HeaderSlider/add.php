@@ -32,10 +32,10 @@ if (defined('CAT_PATH')) {
 }
 // end include class.secure.php
 
-global $section_id, $page_id;
+global $backend, $section_id, $page_id;
 
 // Insert an extra row into the database
-CAT_Helper_Page::getInstance()->db()->query("INSERT INTO " . CAT_TABLE_PREFIX . "mod_cc_header_slider
+$backend->query("INSERT INTO " . CAT_TABLE_PREFIX . "mod_cc_header_slider
 		(page_id, section_id, effect, animSpeed, pauseTime, resize_x, resize_y, opacity) VALUES
 		('$page_id', '$section_id', 'random', '500', '4000', '781','350','0.8')");
 
