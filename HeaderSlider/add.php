@@ -35,9 +35,14 @@ if (defined('CAT_PATH')) {
 global $backend, $section_id, $page_id;
 
 // Insert an extra row into the database
-$backend->query("INSERT INTO " . CAT_TABLE_PREFIX . "mod_cc_header_slider
-		(page_id, section_id, effect, animSpeed, pauseTime, resize_x, resize_y, opacity) VALUES
+$backend->db()->query("INSERT INTO `" . CAT_TABLE_PREFIX . "mod_cc_header_slider`
+		(`page_id`, `section_id`, `effect`, `animSpeed`, `pauseTime`, `resize_x`, `resize_y`, `opacity`) VALUES
 		('$page_id', '$section_id', 'random', '500', '4000', '781','350','0.8')");
+
+if ( $backend->db()->is_error() )
+{
+	$backend->print_error($backend->db()->get_error(), false);
+}
 
 $folder		= CAT_PATH . MEDIA_DIRECTORY . '/cc_header_slider/cc_header_slider_' . $section_id;
 

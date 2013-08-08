@@ -194,6 +194,9 @@ if ( $backend->db()->is_error() )
 }
 else
 {
+	$update_when_modified = true;
+	CAT_Backend::getInstance()->updateWhenModified();
+
 	$backend->print_success('Seite erfolgreich gespeichert', CAT_ADMIN_URL . '/pages/modify.php?page_id=' . $page_id);
 }
 
