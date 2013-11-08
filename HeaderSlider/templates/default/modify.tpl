@@ -83,7 +83,7 @@
 		<div class="div_submit fc_gradient1">
 			<input type="submit" name="speichern" value="{translate('Upload/ Save')}" />
 			<button class="upload fc_gradient1 fc_gradient_hover">{translate('Add another upload')}</button>
-			<input type="reset" value="{translate('Cancel')}" onclick="javascript: window.location = '{$ADMIN_URL}/pages/modify.php?page_id={$page_id}';" />
+			<input type="reset" value="{translate('Cancel')}" onclick="javascript: window.location = '{$CAT_ADMIN_URL}/pages/modify.php?page_id={$page_id}';" />
 		</div>
 	</div>
 	{if $images}
@@ -118,7 +118,7 @@
 	</div>
 	<div class="div_submit fc_gradient1">
 		<input type="submit" name="speichern" value="{translate('Upload/ Save')}" />
-		<input type="reset" value="{translate('Cancel')}" onclick="javascript: window.location = '{$ADMIN_URL}/pages/modify.php?page_id={$page_id}';" />
+		<input type="reset" value="{translate('Cancel')}" onclick="javascript: window.location = '{$CAT_ADMIN_URL}/pages/modify.php?page_id={$page_id}';" />
 	</div>
 	{else}<h3>{translate('No images available')}</h3>{/if}
 </form>
