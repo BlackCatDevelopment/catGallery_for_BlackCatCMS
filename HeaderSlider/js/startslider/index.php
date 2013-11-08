@@ -32,25 +32,4 @@ if (defined('CAT_PATH')) {
 }
 // end include class.secure.php
 
-global $backend, $section_id, $page_id;
-
-// Insert an extra row into the database
-$header_slider_id		= $backend->db()->get_one( sprintf(
-		"INSERT INTO %smod_%s WHERE %s VALUES %s",
-		CAT_TABLE_PREFIX,
-		'cc_header_slider',
-		'(`page_id`, `section_id`, `effect`, `animSpeed`, `pauseTime`, `resize_x`, `resize_y`, `opacity`)',
-		"('$page_id', '$section_id', 'random', '500', '4000', '781','350','0.8')"
-	)
-);
-
-if ( $backend->db()->is_error() )
-{
-	$backend->print_error($backend->db()->get_error(), false);
-}
-
-$folder		= CAT_PATH . MEDIA_DIRECTORY . '/cc_header_slider/cc_header_slider_' . $section_id;
-
-CAT_Helper_Directory::createDirectory( $folder, NULL, true );
-
 ?>

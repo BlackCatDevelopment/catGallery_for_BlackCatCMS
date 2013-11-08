@@ -32,12 +32,12 @@ if (defined('CAT_PATH')) {
 }
 // end include class.secure.php
 
-if(defined('CAT_URL')) {
-	
+if(defined('CAT_URL'))
+{
 	// Create table for galleries
 	$database->query("DROP TABLE IF EXISTS `" . TABLE_PREFIX . "mod_cc_header_slider`");
 	$mod_slider = 'CREATE TABLE  `' . TABLE_PREFIX . 'mod_cc_header_slider` ('
-		. '`header_slider_id` INT NOT NULL AUTO_INCREMENT,'
+		. ' `header_slider_id` INT NOT NULL AUTO_INCREMENT,'
 		. ' `page_id` INT NOT NULL DEFAULT \'0\','
 		. ' `section_id` INT NOT NULL DEFAULT \'0\','
 		. ' `effect` VARCHAR(64) NOT NULL DEFAULT \'0\','
@@ -45,11 +45,12 @@ if(defined('CAT_URL')) {
 		. ' `resize_y` SMALLINT NOT NULL DEFAULT \'0\','
 		. ' `animSpeed` MEDIUMINT(9) NOT NULL DEFAULT \'0\','
 		. ' `pauseTime` MEDIUMINT(9) NOT NULL DEFAULT \'0\','
-		. ' `opacity` VARCHAR(3) NOT NULL DEFAULT \'0\','
-		. ' `random` SMALLINT NOT NULL DEFAULT \'0\','
+		. ' `opacity` VARCHAR(3) NOT NULL DEFAULT \'1\','
+		. ' `random` TINYINT(1) NOT NULL DEFAULT \'0\','
+		. ' `variant` TINYINT(1) NOT NULL DEFAULT \'0\','
 		. ' PRIMARY KEY ( `header_slider_id` )'
 		. ' )';
-	$database->query($mod_slider);
+	$database->query( $mod_slider );
 
 	// Create table for single pictures
 	$database->query("DROP TABLE IF EXISTS `" . TABLE_PREFIX . "mod_cc_header_slider_images`");
@@ -57,12 +58,12 @@ if(defined('CAT_URL')) {
 		 . '`image_id` INT NOT NULL AUTO_INCREMENT,'
 		. ' `header_slider_id` INT NOT NULL DEFAULT \'0\','
 		. ' `picture` VARCHAR(256) NOT NULL DEFAULT \'0\','
-		. ' `alt` VARCHAR(256) NOT NULL DEFAULT \'0\','
-		. ' `page_link` INT NOT NULL DEFAULT \'0\','
+		. ' `alt` VARCHAR(256) NOT NULL,'
+		. ' `page_link` INT NOT NULL,'
 		. ' `image_content` TEXT NOT NULL,'
 		. ' PRIMARY KEY ( `image_id` )'
 		. ' )';
-	$database->query($mod_slider);
+	$database->query( $mod_slider );
 	// add files to class_secure
 	$addons_helper = new CAT_Helper_Addons();
 	foreach(

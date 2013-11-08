@@ -51,6 +51,7 @@ if ( $val->get('_REQUEST','speichern') != '' )
 	$effect		= $val->sanitizePost( 'effect' );
 	$animSpeed	= $val->get('_REQUEST','animSpeed','numeric');
 	$pauseTime	= $val->get('_REQUEST','pauseTime','numeric');
+	$variant	= $val->get('_REQUEST','variant','numeric');
 	$random		= $val->sanitizePost( 'random' ) == '' ? 0 : 1;
 	
 	// Bildoptionen abfragen
@@ -62,7 +63,8 @@ if ( $val->get('_REQUEST','speichern') != '' )
 			$effect != '' ||
 			$resize_x != '' ||
 			$resize_y != '' ||
-			$animSpeed != '' )
+			$animSpeed != '' ||
+			$variant != '' )
 	{
 		$query = "UPDATE " . CAT_TABLE_PREFIX . "mod_cc_header_slider SET
 			pauseTime	= '$pauseTime',
@@ -70,7 +72,8 @@ if ( $val->get('_REQUEST','speichern') != '' )
 			resize_x	= '$resize_x',
 			resize_y	= '$resize_y',
 			animSpeed	= '$animSpeed',
-			random		= '$random'
+			random		= '$random',
+			variant		= '$variant'
 			WHERE header_slider_id = '$header_slider_id'";
 
 		$backend->db()->query($query);
@@ -118,9 +121,9 @@ if ( $val->get('_REQUEST','speichern') != '' )
 								CAT_Helper_Image::getInstance()->make_thumb(
 									$folder_path . '/' . $current->file_dst_name,
 									$folder_path . '/' . $current->file_dst_name,
-									$resize_y,
-									$resize_x,
-									'crop'
+									1600,//$resize_y,
+									1600,//$resize_x,
+									'fit'
 								);
 								$success	= true;
 								$picture	= $current->file_dst_name;

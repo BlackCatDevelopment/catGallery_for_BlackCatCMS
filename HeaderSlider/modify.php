@@ -34,6 +34,8 @@ if (defined('CAT_PATH')) {
 
 $PageHelper	= CAT_Helper_Page::getInstance();
 
+$info			= CAT_Helper_Addons::checkInfo( CAT_PATH . '/modules/cc_header_slider/' );
+
 $folder_url		= CAT_URL . MEDIA_DIRECTORY . '/cc_header_slider/cc_header_slider_' . $section_id;
 $folder_path	= CAT_PATH . MEDIA_DIRECTORY . '/cc_header_slider/cc_header_slider_' . $section_id;
 
@@ -44,6 +46,7 @@ $parser_data	= array(
 	'page_id'			=> $page_id,
 	'section_id'		=> $section_id,
 	'version'			=> CAT_Helper_Addons::getModuleVersion('cc_header_slider'),
+	'module_variants'	=> $info['module_variants'],
 	'easing_options'	=> array(
 								'cube',
 								'cubeRandom',
@@ -85,13 +88,21 @@ $parser_data	= array(
 	);
 
 // Get page content
-$values		= CAT_Helper_Page::getInstance()->db()->query("SELECT * FROM " . CAT_TABLE_PREFIX . "mod_cc_header_slider WHERE section_id = '$section_id'");
+$values		= CAT_Helper_Page::getInstance()->db()->query( sprintf(
+		"SELECT * FROM %smod_%s WHERE %s = '%s'",
+		CAT_TABLE_PREFIX,
+		'cc_header_slider',
+		'section_id',
+		$section_id
+	)
+);
 
 if ( isset($values) && $values->numRows() > 0 )
 {
 	while( !false == ( $row = $values->fetchRow( MYSQL_ASSOC ) ) )
 	{
 		$header_slider_id					= $row['header_slider_id'];
+		$parser_data['variant']				= $row['variant'];
 		$parser_data['header_slider_id']	= $header_slider_id;
 		$parser_data['effect']				= ( $row['effect'] != '' && $row['effect'] != '0' ) ? $row['effect'] : false;
 		$parser_data['resize_x']			= ( $row['resize_x'] != '' && $row['resize_x'] != '0' ) ? $row['resize_x'] : false;
@@ -100,8 +111,14 @@ if ( isset($values) && $values->numRows() > 0 )
 		$parser_data['pauseTime']			= ( $row['pauseTime'] != '' && $row['pauseTime'] != '0' ) ? $row['pauseTime'] : false;
 		$parser_data['random']				= $row['random'];
 	}
-	$files	= CAT_Helper_Page::getInstance()->db()->query("SELECT * FROM " . CAT_TABLE_PREFIX . "mod_cc_header_slider_images WHERE header_slider_id = '$header_slider_id'");
-
+	$files		= CAT_Helper_Page::getInstance()->db()->query( sprintf(
+			"SELECT * FROM %smod_%s WHERE %s = '%s'",
+			CAT_TABLE_PREFIX,
+			'cc_header_slider_images',
+			'header_slider_id',
+			$header_slider_id
+		)
+	);
 	if ( isset($files) && $files->numRows() > 0 )
 	{
 		while ( !false == ( $row = $files->fetchRow( MYSQL_ASSOC ) ) )
@@ -116,7 +133,13 @@ if ( isset($values) && $values->numRows() > 0 )
 		}
 	}
 }
-$parser->setPath( dirname(__FILE__) . '/templates/default' );
+
+$module_variant	= isset($info['module_variants'][$parser_data['variant']]) ?
+	$info['module_variants'][$parser_data['variant']] : 
+	'default';
+
+$parser->setPath( dirname(__FILE__) . '/templates/' . $module_variant );
+$parser->setFallbackPath( dirname( __FILE__ ) . '/templates/default' );
 
 $parser->output(
 	'modify',

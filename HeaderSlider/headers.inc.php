@@ -14,8 +14,8 @@
  */
 
 // include class.secure.php to protect this file and the whole CMS!
-if (defined('LEPTON_PATH')) {
-	include(LEPTON_PATH.'/framework/class.secure.php'); 
+if (defined('CAT_PATH')) {
+	include(CAT_PATH.'/framework/class.secure.php'); 
 } else {
 	$oneback = "../";
 	$root = $oneback;
@@ -32,12 +32,109 @@ if (defined('LEPTON_PATH')) {
 }
 // end include class.secure.php
 
+global $page_id;
+
+$getVariant	= CAT_Helper_Page::getInstance()->db()->query(
+			sprintf(
+				'SELECT `variant` FROM `%smod_cc_%s` WHERE `%s` = \'%s\'',
+					CAT_TABLE_PREFIX,
+					'header_slider',
+					'page_id',
+					$page_id
+			)
+);
+
+$getInfo	= CAT_Helper_Addons::checkInfo( CAT_PATH . '/modules/cc_header_slider/' );
+
+$variants	= array();
+$f_css		= array();
+$f_js		= array();
+$b_css		= array();
+$b_js		= array();
+
+$module_path	= '/modules/cc_header_slider/';
+
+if ( isset($getVariant) && $getVariant->numRows() > 0 )
+{
+	while ( !false == ( $row = $getVariant->fetchRow( MYSQL_ASSOC ) ) )
+	{
+		$variant	= isset($getInfo['module_variants'][$row['variant']]) ?
+			$getInfo['module_variants'][$row['variant']] : 
+			'default';
+
+		if ( file_exists( CAT_PATH . $module_path .'css/' . $variant . '/frontend.css' ) )
+			$f_css[]	= array(
+				'media'		=> 'all',
+				'file'		=> $module_path . 'css/' . $variant . '/frontend.css'
+			);
+		elseif ( file_exists( CAT_PATH . $module_path .'css/default/frontend.css' ) )
+			$f_css[]	= array(
+				'media'		=> 'all',
+				'file'		=> $module_path . 'css/default/frontend.css'
+			);
+
+		if ( file_exists( CAT_PATH . $module_path .'css/' . $variant . '/backend.css' ) )
+			$b_css[]	= array(
+				'media'		=> 'all',
+				'file'		=> $module_path . 'css/' . $variant . '/backend.css'
+			);
+		elseif ( file_exists( CAT_PATH . $module_path .'css/default/backend.css' ) )
+			$b_css[]	= array(
+				'media'		=> 'all',
+				'file'		=> $module_path . 'css/default/backend.css'
+			);
+
+		if ( file_exists( CAT_PATH . $module_path .'js/' . $variant . '/frontend.js' ) )
+			$f_js[]	= $module_path . 'js/' . $variant . '/frontend.js';
+		elseif ( file_exists( CAT_PATH . $module_path .'js/default/frontend.js' ) )
+			$f_js[]	= $module_path . 'js/default/frontend.js';
+
+		if ( file_exists( CAT_PATH . $module_path .'js/' . $variant . '/backend.js' ) )
+			$b_js[]	= $module_path . 'js/' . $variant . '/backend.js';
+		elseif ( file_exists( CAT_PATH . $module_path .'js/default/backend.js' ) )
+			$b_js[]	= $module_path . 'js/default/backend.js';
+
+		// Add additional JS/ CSS for frontend and backend
+		if ( $variant == 'default' )
+		{
+		    array_unshift( $f_js, $module_path . 'js/' . $variant . '/jquery.easing.1.3.js');
+		    array_unshift( $f_js, $module_path . 'js/' . $variant . '/jquery.skitter.min.js');
+		}
+	}
+}
+else {
+	$f_css		= array(
+		'media'		=> 'all',
+		'file'		=> $module_path . 'css/default/frontend.css'
+	);
+	$f_js		= array(
+		$module_path . 'js/default/jquery.easing.1.3.js',
+		$module_path . 'js/default/jquery.skitter.min.js',
+		$module_path . 'js/default/frontend.js'
+	);
+	$b_css		= array(
+		'media'		=> 'all',
+		'file'		=> $module_path . 'css/default/backend.css'
+	);
+	$b_js		= array(
+		$module_path . 'js/default/backend.js'
+	);
+}
+
+
 $mod_headers = array(
+	'backend' => array(
+		'css'	=> $b_css,
+		'js'	=> $b_js,
+		'jquery' => array(
+			array(
+				'core'			=> true
+			)
+		)
+	),
 	'frontend' => array(
-		'js' => array(
-			'/modules/cc_header_slider/js/jquery.easing.1.3.js',
-			'/modules/cc_header_slider/js/jquery.skitter.min.js'
-		),
+		'css'	=> $f_css,
+		'js'	=> $f_js,
 		'jquery' => array(
 			array(
 				'core'			=> true

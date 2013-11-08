@@ -32,11 +32,34 @@ if (defined('CAT_PATH')) {
 }
 // end include class.secure.php
 
-// Delete record from the database
-$header_slider_id	= CAT_Helper_Page::getInstance()->db()->get_one("SELECT header_slider_id FROM " . CAT_TABLE_PREFIX . "mod_cc_header_slider WHERE section_id = '$section_id'");
+// Get ID of headerslider
+$header_slider_id		= CAT_Helper_Page::getInstance()->db()->get_one( sprintf(
+		"SELECT header_slider_id FROM %smod_%s WHERE %s = '%s'",
+		CAT_TABLE_PREFIX,
+		'cc_header_slider',
+		'section_id',
+		$section_id
+	)
+);
 
-CAT_Helper_Page::getInstance()->db()->query("DELETE FROM " . CAT_TABLE_PREFIX . "mod_cc_header_slider WHERE section_id = '$section_id'");
-CAT_Helper_Page::getInstance()->db()->query("DELETE FROM " . CAT_TABLE_PREFIX . "mod_cc_header_slider_images WHERE header_slider_id = '$header_slider_id'");
+// Delete record from the database
+$header_slider_id		= CAT_Helper_Page::getInstance()->db()->get_one( sprintf(
+		"DELETE FROM %smod_%s WHERE %s = '%s'",
+		CAT_TABLE_PREFIX,
+		'cc_header_slider',
+		'section_id',
+		$section_id
+	)
+);
+// Delete images from the database
+$header_slider_id		= CAT_Helper_Page::getInstance()->db()->get_one( sprintf(
+		"DELETE FROM %smod_%s WHERE %s = '%s'",
+		CAT_TABLE_PREFIX,
+		'mod_cc_header_slider_images',
+		'header_slider_id',
+		$header_slider_id
+	)
+);
 
 // Set path to folder
 $folder		= CAT_PATH . MEDIA_DIRECTORY . '/cc_header_slider/cc_header_slider_' . $section_id;

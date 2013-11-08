@@ -24,6 +24,14 @@
 		<div class="cc_header_slider_show"></div>
 	</div>
 	<div class="cc_header_slider_option_content">
+		<p>
+			{translate('Skin')}:
+			<select name="variant">
+			{foreach $module_variants index variants}
+				<option value="{$index}"{if $index == $variant} selected="selected"{/if}>{$variants}</option>
+			{/foreach}
+			</select>
+		</p>
 		<p class="cc_header_slider_dreispalten">{translate('Kind of animation')}:<br/>
 			<select name="effect">
 				<option value="0"{if !$effect} selected="selected"{/if}>{translate('No effect selected...')}</option>

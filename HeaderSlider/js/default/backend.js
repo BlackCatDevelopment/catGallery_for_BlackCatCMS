@@ -15,14 +15,14 @@
 $(document).ready(function()
 {
 	$('.cc_header_slider_option_content').not('.show_on_startup').hide(0);
-	$('.cc_header_slider_option .cc_header_slider_show').click(function()
+	$('.cc_header_slider_option .cc_header_slider_show').unbind().click(function()
 	{
 		var current		= $(this).closest('.cc_header_slider_option');
 		current.next('div.cc_header_slider_option_content').toggle(200);
 		current.toggleClass('active');
 	});
 
-	$('.upload').click( function(e)
+	$('.upload').unbind().click( function(e)
 	{
 		e.preventDefault();
 		var field	= $(this).closest('.cc_header_slider_option_content').find('input[name=upload_counter]'),
