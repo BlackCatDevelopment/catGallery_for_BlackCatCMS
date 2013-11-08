@@ -32,33 +32,42 @@ if (defined('CAT_PATH')) {
 }
 // end include class.secure.php
 
-$getVariant	= CAT_Helper_Page::getInstance()->db()->query(
-			sprintf(
-				'SELECT `variant` FROM `%smod_cc_%s` WHERE `%s` = \'%s\'',
-					CAT_TABLE_PREFIX,
-					'header_slider',
-					'section_id',
-					$section['section_id']
+
+$mod_headers = array(
+	'backend' => array(
+		'css' => array(
+			array(
+				'media'		=> 'all',
+				'file'		=> 'modules/cc_header_slider/css/default/backend.css'
 			)
+		),
+		'js' => array(
+			'/modules/cc_header_slider/js/default/backend.js',
+		),
+		'jquery' => array(
+			array(
+				'core'			=> true
+			)
+		)
+	),
+	'frontend' => array(
+		'css' => array(
+			array(
+				'media'		=> 'all',
+				'file'		=> 'modules/cc_header_slider/css/default/frontend.css'
+			)
+		),
+		'js' => array(
+			'/modules/cc_header_slider/js/default/jquery.easing.1.3.js',
+			'/modules/cc_header_slider/js/default/jquery.skitter.min.js',
+			'/modules/cc_header_slider/js/default/frontend.js'
+		),
+		'jquery' => array(
+			array(
+				'core'			=> true
+			)
+		)
+	)
 );
-
-$getInfo		= CAT_Helper_Addons::checkInfo( CAT_PATH . '/modules/cc_header_slider/' );
-
-$module_path	= '/modules/cc_header_slider/';
-
-if ( isset($getVariant) && $getVariant->numRows() > 0 )
-{
-	if ( !false == ( $row = $getVariant->fetchRow( MYSQL_ASSOC ) ) )
-	{
-		$variant	= isset($getInfo['module_variants'][$row['variant']]) ?
-			$getInfo['module_variants'][$row['variant']] : 
-			'default';
-
-		if ( file_exists( CAT_PATH . $module_path .'headers_inc/' . $variant . '/headers.inc.php' ) )
-			include_once(CAT_PATH . $module_path .'headers_inc/' . $variant . '/headers.inc.php');
-		elseif ( file_exists( CAT_PATH . $module_path .'headers_inc/default/headers.inc.php' ) )
-			include_once( CAT_PATH . $module_path .'headers_inc/default/headers.inc.php' );
-	}
-}
 
 ?>
