@@ -35,8 +35,8 @@ if (defined('CAT_PATH')) {
 global $backend, $section_id, $page_id;
 
 // Insert an extra row into the database
-$header_slider_id		= $backend->db()->get_one( sprintf(
-		"INSERT INTO %smod_%s WHERE %s VALUES %s",
+$backend->db()->query( sprintf(
+		"INSERT INTO %smod_%s %s VALUES %s",
 		CAT_TABLE_PREFIX,
 		'cc_header_slider',
 		'(`page_id`, `section_id`, `effect`, `animSpeed`, `pauseTime`, `resize_x`, `resize_y`, `opacity`)',
