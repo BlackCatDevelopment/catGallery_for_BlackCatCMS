@@ -35,12 +35,12 @@ if (defined('CAT_PATH')) {
 if(defined('CAT_URL'))
 {
 	// Create table for galleries
-	$database->query("DROP TABLE IF EXISTS `" . TABLE_PREFIX . "mod_cc_cat_gallery`");
+	$database->query('DROP TABLE IF EXISTS `' . TABLE_PREFIX . 'mod_cc_cat_gallery`');
 	$mod_slider = 'CREATE TABLE  `' . TABLE_PREFIX . 'mod_cc_cat_gallery` ('
 		. ' `section_id` INT NOT NULL DEFAULT \'0\','
 		. ' `page_id` INT NOT NULL DEFAULT \'0\','
 		. ' `position` INT NOT NULL DEFAULT \'0\','
-		. ' `effect` TEXT NOT NULL DEFAULT \'0\','
+		. ' `effect` TEXT NOT NULL,'
 		. ' `resize_x` SMALLINT NOT NULL DEFAULT \'0\','
 		. ' `resize_y` SMALLINT NOT NULL DEFAULT \'0\','
 		. ' `animSpeed` MEDIUMINT(9) NOT NULL DEFAULT \'0\','
