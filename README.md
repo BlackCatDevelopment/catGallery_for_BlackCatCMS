@@ -1,10 +1,10 @@
-HeaderSlider for Black Cat CMS
+catGallery for Black Cat CMS
 ===============================
 
-This is a module for Black Cat CMS.
-With this module you can add and manage an image slider
+This is a module for Black Cat CMS. It was originally publish as "HeaderSlider", but as there are many more function by now it was renamed to "catGallery".
+With this module you can add and manage an image slider or even simple Galleries.
 
-The module uses Skitter: https://github.com/thiagosf/SkitterSlideshow
+The module uses Skitter in the default setting: https://github.com/thiagosf/SkitterSlideshow
 
 Please note that this is work in progress!
 
