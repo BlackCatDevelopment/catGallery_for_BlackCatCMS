@@ -8,6 +8,6 @@ The module uses Skitter in the default setting: https://github.com/thiagosf/Skit
 
 Please note that this is work in progress!
 
-# License
+## License
 
 This module is distributed under the GPL.
