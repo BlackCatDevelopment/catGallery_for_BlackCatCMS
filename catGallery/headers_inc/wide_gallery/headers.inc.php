@@ -63,8 +63,17 @@ $mod_headers = array(
 		'css' => array(
 			array(
 				'media'		=> 'all',
-				'file'		=> 'modules/cc_catgallery/css/startslider/frontend.css'
+				'file'		=> 'modules/cc_catgallery/css/wide_gallery/jquery.fancybox.css'
+			),
+			array(
+				'media'		=> 'all',
+				'file'		=> 'modules/cc_catgallery/css/wide_gallery/frontend.css'
 			)
+		),
+		'js' => array(
+			'/modules/cc_catgallery/js/default/jquery.easing.1.3.js',
+			'/modules/cc_catgallery/js/wide_gallery/jquery.fancybox.pack.js',
+			'/modules/cc_catgallery/js/wide_gallery/frontend.js'
 		),
 		'jquery' => array(
 			array(
@@ -73,4 +82,5 @@ $mod_headers = array(
 		)
 	)
 );
+
 ?>

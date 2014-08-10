@@ -42,38 +42,4 @@ if (defined('CAT_PATH')) {
 }
 // end include class.secure.php
 
-
-include_once( 'class.catgallery.php' );
-
-$catGallery	= new catGallery();
-
-
-$parser_data	= array(
-	'folder_url'		=> $catGallery->getFolder( false ),
-	'CAT_ADMIN_URL'		=> CAT_ADMIN_URL,
-	'CAT_URL'			=> CAT_URL,
-	'page_id'			=> $page_id,
-	'section_id'		=> $section_id,
-	'gallery_id'		=> $catGallery->getID(),
-	'version'			=> CAT_Helper_Addons::getModuleVersion('cc_catgallery'),
-	'module_variants'	=> $catGallery->getModuleVariants(),
-	'options'			=> $catGallery->getOptions(),
-	'effects'			=> $catGallery->effects,
-	'images'			=> $catGallery->getImage()
-);
-
-$module_path	= '/modules/cc_catgallery/';
-
-if ( file_exists( CAT_PATH . $module_path .'templates/' . $catGallery->getVariant() . '/modify.tpl' ) )
-	$parser->setPath( dirname(__FILE__) . '/templates/' . $catGallery->getVariant() );
-elseif ( file_exists( CAT_PATH . $module_path .'templates/default/modify.tpl' ) )
-	$parser->setPath( dirname(__FILE__) . '/templates/default/' );
-
-$parser->setFallbackPath( dirname( __FILE__ ) . '/templates/default' );
-
-$parser->output(
-	'modify',
-	$parser_data
-);
-
 ?>

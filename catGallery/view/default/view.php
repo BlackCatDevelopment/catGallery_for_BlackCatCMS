@@ -42,35 +42,12 @@ if (defined('CAT_PATH')) {
 }
 // end include class.secure.php
 
-$folder_url		= CAT_URL . MEDIA_DIRECTORY . '/cc_catgallery/cc_catgallery_' . $section_id;
-$folder_path	= CAT_PATH . MEDIA_DIRECTORY . '/cc_catgallery/cc_catgallery_' . $section_id;
-
-$template		= 'view_no_image';
-
-$parser_data	= array(
-	'page_id'		=> $page_id,
-	'section_id'	=> $section_id,
-	'folder_url'	=> $folder_url
-);
-$info						= CAT_Helper_Addons::checkInfo( CAT_PATH . '/modules/cc_catgallery/' );
-
-$parser_data['page_link']	= CAT_Helper_Page::getInstance()->properties( $page_id, 'link' );
-
-
-$result		= CAT_Helper_Page::getInstance()->db()->query( sprintf(
-		"SELECT * FROM %smod_%s WHERE %s = '%s'",
-		CAT_TABLE_PREFIX,
-		'cc_catgallery',
-		'section_id',
-		$section_id
-	)
-);
 
 if ( isset($result) && $result->numRows() > 0)
 {
 	while( !false == ($row = $result->fetchRow( MYSQL_ASSOC ) ) )
 	{
-		$parser_data['variant']				= $row['variant'];
+
 		$parser_data['resize_x']			= $row['resize_x'];
 		$parser_data['resize_y']			= $row['resize_y'];
 		$parser_data['effect']				= ( $row['effect'] != '' && $row['effect'] != '0' ) ? $row['effect'] : false;
@@ -114,13 +91,7 @@ if ( isset($result) && $result->numRows() > 0)
 										);
 				if ( !file_exists( $tmp_path . $row['picture'] ) )
 				{
-					CAT_Helper_Image::getInstance()->make_thumb(
-									$folder_path . '/' . $row['picture'],
-									$tmp_path . $row['picture'] ,
-									$parser_data['resize_y'],
-									$parser_data['resize_x'],
-									'crop'
-								);
+
 				}
 
 			}
@@ -134,16 +105,5 @@ if ( isset($result) && $result->numRows() > 0)
 	}
 }
 
-$module_variant	= isset($info['module_variants'][$parser_data['variant']]) ?
-	$info['module_variants'][$parser_data['variant']] : 
-	'default';
-
-$parser->setPath( dirname(__FILE__) . '/templates/' . $module_variant );
-$parser->setFallbackPath( dirname( __FILE__ ) . '/templates/default' );
-
-$parser->output(
-	$template,
-	$parser_data
-);
 
 ?>

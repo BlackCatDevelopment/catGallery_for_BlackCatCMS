@@ -42,17 +42,16 @@ if (defined('CAT_PATH')) {
 }
 // end include class.secure.php
 
-global $page_id, $section;
-
 include_once( 'class.catgallery.php' );
 
 $catGallery		= new catGallery( $section );
 
 $variant		= $catGallery->getVariant();
+
 $module_path	= '/modules/cc_catgallery/';
 
 if ( file_exists( CAT_PATH . $module_path .'headers_inc/' . $variant . '/headers.inc.php' ) )
-	include( CAT_PATH . $module_path .'headers_inc/' . $variant . '/headers.inc.php' );
+	include( CAT_PATH . $module_path . 'headers_inc/' . $variant . '/headers.inc.php' );
 elseif ( file_exists( CAT_PATH . $module_path .'headers_inc/default/headers.inc.php' ) )
 	include( CAT_PATH . $module_path .'headers_inc/default/headers.inc.php' );
 

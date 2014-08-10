@@ -52,9 +52,19 @@ if ( $gallery_id = $val->sanitizePost( 'gallery_id','numeric' ) )
 
 	$options		= $val->sanitizePost('options');
 	$image_options	= $val->sanitizePost('image_options');
-	$image_ids		= array_map('intval', $val->sanitizePost( 'image_ids','array') );
+	$image_ids		= is_array( $val->sanitizePost( 'image_ids','array') ) ?
+						array_map('intval', $val->sanitizePost( 'image_ids','array') ) : NULL;
 	$deleted		= false;
 
+	// =========================== 
+	// ! save variant of images   
+	// =========================== 
+	$catGallery->saveOptions( 'variant', $val->sanitizePost('variant') );
+
+
+	// =========================== 
+	// ! save options for gallery   
+	// =========================== 
 	if ( $options != '' )
 	{
 		foreach( array_filter( explode(',', $options) ) as $option )
@@ -63,8 +73,13 @@ if ( $gallery_id = $val->sanitizePost( 'gallery_id','numeric' ) )
 		}
 	}
 
-	if ( $image_options != '' )
-	{
+	// =========================== 
+	// ! save options for images   
+	// =========================== 
+	if ( $image_options != ''
+		&& is_array($image_ids)
+		&& count( $image_ids ) > 0
+	) {
 		foreach( array_filter( explode(',', $image_options) ) as $option )
 		{
 			foreach( $image_ids as $img_id )
@@ -74,32 +89,38 @@ if ( $gallery_id = $val->sanitizePost( 'gallery_id','numeric' ) )
 
 
 	// =========================== 
-	// ! save content of columns   
+	// ! save content of images   
 	// =========================== 
-	foreach( $image_ids as $img_id )
-	{
-		if ( $val->sanitizePost( 'delete_' . $img_id ) )
+	if ( is_array($image_ids)
+		&& count( $image_ids ) > 0
+	) {
+		foreach( $image_ids as $img_id )
 		{
-			$deleted	= $catGallery->removeImage( $img_id );
-		}
-		else {
-			$contentname	= sprintf( "content_%s_%s", $section_id, $img_id );
-			$content		= $val->sanitizePost( $contentname, false, true );
-			$catGallery->saveContent( $img_id, $content );
+			if ( $val->sanitizePost( 'delete_' . $img_id ) )
+			{
+				$deleted	= $catGallery->removeImage( $img_id );
+			}
+			else {
+				$contentname	= sprintf( "image_content_%s", $img_id );
+				$content		= $val->sanitizePost( $contentname, false, true );
+
+				$catGallery->saveContent( $img_id, $content );
+			}
 		}
 	}
 
-
-	// Upload images and save to database
+	// ====================================== 
+	// ! Upload images and save to database
+	// ====================================== 
 	if ( isset( $_FILES['new_image_1']['name'] ) && $_FILES['new_image_1']['name'] != '' )
 	{
+
 		$catGallery->saveImages(
 			$val->sanitizePost( 'upload_counter', 'numeric' ),
 			$_FILES
 		);
 	}
-	$update_when_modified = true;
-	CAT_Backend::getInstance()->updateWhenModified();
+
 	$backend->print_success('Seite erfolgreich gespeichert', CAT_ADMIN_URL . '/pages/modify.php?page_id=' . $page_id);
 } else {
 	$backend->print_error('Es wurde keine gültige ID übermittelt.', CAT_ADMIN_URL . '/pages/modify.php?page_id=' . $page_id);

@@ -1,5 +1,4 @@
-<?php
-/**
+{**
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -21,31 +20,25 @@
  *   @category			CAT_Modules
  *   @package			catGallery
  *
- */
-
-// include class.secure.php to protect this file and the whole CMS!
-if (defined('CAT_PATH')) {	
-	include(CAT_PATH.'/framework/class.secure.php'); 
-} else {
-	$oneback = "../";
-	$root = $oneback;
-	$level = 1;
-	while (($level < 10) && (!file_exists($root.'/framework/class.secure.php'))) {
-		$root .= $oneback;
-		$level += 1;
-	}
-	if (file_exists($root.'/framework/class.secure.php')) { 
-		include($root.'/framework/class.secure.php'); 
-	} else {
-		trigger_error(sprintf("[ <b>%s</b> ] Can't include class.secure.php!", $_SERVER['SCRIPT_NAME']), E_USER_ERROR);
-	}
-}
-// end include class.secure.php
-
-
-include_once( 'class.catgallery.php' );
-
-$catGallery	= new catGallery( true );
-
-
-?>
+ *}
+<div id="cat_gallery_{$section_id}">
+	<div class="wide_gallery_container">
+		<ul class="wide_gallery" style="width: {$countImg*$options.resize_x}px;">
+			{foreach $images as image}
+			<li>
+				<a href="{$folder_url}/{$image.picture}" class="fancybox">
+					<span class="fancy_overlay"></span>
+					<span class="icon-search"></span>
+					<img src="{$imgURL}/{$image.picture}" width="{$options.resize_x}" />
+				</a>
+			</li>
+			{/foreach}
+		</ul>
+		<div class="clear"></div>
+	</div>
+	<nav class="wide_gallery_nav">
+		<ul>
+		</ul>
+		<div class="clear"></div>
+	</nav>
+</div>

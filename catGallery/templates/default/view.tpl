@@ -21,27 +21,28 @@
  *   @package			catGallery
  *
  *}
-{if $count_img}
+{if $countImg}
 <script type="text/javascript">
 	$(document).ready( function()
 	\{
 		$("#slider_skitter_{$section_id}").skitter(
 		\{
-			{if $effect}animation:		"{$effect}",{/if}
+			{if $options.effect}animation:		"{$options.effect}",{/if}
 			interval:		{if $pauseTime}{$pauseTime}{else}4000{/if},
 			stop_over:		false,
 			navigation:		false,
 			numbers:		false,
-			width_label:	"902px"{*"{$label}px"*}
+			width_label:	"{if $options.label}{$options.label}{else}500{/if}px"
 		});
 	});
 </script>
 {/if}
-<div class="slider_skitter" id="slider_skitter_{$section_id}" style="width: {$resize_x}px; height: {$resize_y}px;">
+
+<div class="slider_skitter" id="slider_skitter_{$section_id}" style="width: {$options.resize_x}px; height: {$options.resize_y}px;">
 	<ul>
 		{foreach $images as image}
 		<li>
-			<a href="#"><img src="{$tmp_url}/{$image.picture}" width="{$resize_x}" height="{$resize_y}" alt="{$image.alt}" /></a>
+			<a href="#"><img src="{$imgURL}/{$image.picture}" width="{$options.resize_x}" height="{$options.resize_y}" alt="{$image.options.alt}" /></a>
 			{if $image.image_content}<div class="label_text">
 				{$image.image_content}
 			</div>{/if}

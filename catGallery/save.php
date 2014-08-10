@@ -61,12 +61,15 @@ $catGallery	= new catGallery();
 
 $variant		= $catGallery->getVariant();
 
-$module_path	= '/modules/cc_multicolumn/';
+$module_path	= '/modules/cc_catgallery/';
 
 if ( file_exists( CAT_PATH . $module_path .'save/' . $variant . '/save.php' ) )
 	include_once( CAT_PATH . $module_path .'save/' . $variant . '/save.php' );
 elseif ( file_exists( CAT_PATH . $module_path .'save/default/save.php' ) )
 	include_once( CAT_PATH . $module_path .'save/default/save.php' );
+
+$update_when_modified = true;
+CAT_Backend::getInstance()->updateWhenModified();
 
 
 // Print admin footer

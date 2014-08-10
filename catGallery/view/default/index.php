@@ -1,4 +1,5 @@
-{**
+<?php
+/**
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -20,19 +21,25 @@
  *   @category			CAT_Modules
  *   @package			catGallery
  *
- *}
+ */
 
-<div class="startslider" id="cat_gallery_{$section_id}" style="height: {$resize_y}px;">
-	<ul>
-		{foreach $images as image}
-		<li style="background-image: url('{$tmp_url}/{$image.picture}'); height: {$resize_y}px;">
-			<div class="cat_gallery_shadow" style="{*margin-left: -{$resize_x/2}px; *}width: {$resize_x}px; height: {$resize_y}px;"></div>
-			<div class="cat_gallery_overlay" style="margin-top: -{$resize_y}px; height: {$resize_y}px;">
-				<div class="label_text" style="height: {$resize_y}px;">
-					{$image.image_content}
-				</div>
-			</div>
-		</li>
-		{/foreach}
-	</ul>
-</div>
+// include class.secure.php to protect this file and the whole CMS!
+if (defined('CAT_PATH')) {	
+	include(CAT_PATH.'/framework/class.secure.php'); 
+} else {
+	$oneback = "../";
+	$root = $oneback;
+	$level = 1;
+	while (($level < 10) && (!file_exists($root.'/framework/class.secure.php'))) {
+		$root .= $oneback;
+		$level += 1;
+	}
+	if (file_exists($root.'/framework/class.secure.php')) { 
+		include($root.'/framework/class.secure.php'); 
+	} else {
+		trigger_error(sprintf("[ <b>%s</b> ] Can't include class.secure.php!", $_SERVER['SCRIPT_NAME']), E_USER_ERROR);
+	}
+}
+// end include class.secure.php
+
+?>

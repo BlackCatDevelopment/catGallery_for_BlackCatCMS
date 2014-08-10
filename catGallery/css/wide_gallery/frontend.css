@@ -1,0 +1,163 @@
+/**
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 3 of the License, or (at
+ *   your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful, but
+ *   WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ *   General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, see <http://www.gnu.org/licenses/>.
+ *
+ *   @author			Matthias Glienke
+ *   @copyright			2014, Black Cat Development
+ *   @link				http://blackcat-cms.org
+ *   @license			http://www.gnu.org/licenses/gpl.html
+ *   @category			CAT_Modules
+ *   @package			catGallery
+ *
+ */
+
+
+.wide_gallery_container {
+	display: block;
+	overflow: hidden;
+	margin: 5em auto 0em auto;
+
+	text-align: center;
+}
+
+.wide_gallery {
+	position: relative;
+	display: inline-block;
+	margin: 0px auto;
+	padding: 0px;
+}
+
+.wide_gallery li {
+	float: left;
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+}
+
+.wide_gallery img {
+	margin: 0px;
+	padding: 0px;
+}
+
+.wide_gallery .label_text {
+	position: relative;
+	margin: auto;
+	width: auto;
+}
+
+
+.wide_gallery_nav {
+	margin: 2em 0em;
+	width: 100%;
+	text-align: center;
+}
+
+	nav.wide_gallery_nav ul {
+		display: inline-block;
+		margin: 0px;
+		padding: 0px;
+		transition-duration: 1s;
+	}
+	
+		li.wide_gallery_point {
+			transition-duration: 1s;
+			cursor: pointer;
+			float: left;
+			list-style: none;
+			padding: 0px;
+			margin: 0.6em;
+			width: 1.6em;
+			height: 1.6em;
+			-webkit-border-radius: 50%;
+			-moz-border-radius: 50%;
+			border-radius: 50%;
+			background: #33383e;
+			list-style: none;
+			-o-border-radius: 50%;
+			-ms-border-radius: 50%;
+		}
+		li.wide_gallery_point.active {
+			background: #daae55;
+		}
+		li.wide_gallery_point:hover {
+			background: #999999;
+		}
+		li.wide_gallery_point.active:hover {
+			background: #a18b42;
+		}
+
+a.fancybox,
+.fancybox-wrap a {
+	display: inline-block;
+	line-height: 0.9em;
+	padding: 0px;
+	margin: 0px;
+	border-bottom: none !important;
+}
+
+a.fancybox {
+	text-align: center;
+	position: relative;
+}
+	a.fancybox .fancy_overlay {
+		display: none;
+		position: absolute;
+		height: 100%;
+		width: 100%;
+		background: #daae55;
+		background: rgba(218, 174, 85, 0.000);
+		transition-duration: 1s;
+	}
+	.html5_cssanimations a.fancybox .fancy_overlay {
+		display: block;
+	}
+	
+	a.fancybox:hover .fancy_overlay {
+		background: rgba(218, 174, 85, 0.600);
+		display: block;
+	}
+	a.fancybox .icon-search {
+		transition-duration: 1s;
+		display: none;
+		text-align: center;
+		position: absolute;
+		font-size: 2em;
+		height: 2em;
+		width: 2em;
+		line-height: 2em;
+		left: 50%;
+		top: 50%;
+		margin-top: -1em;
+		margin-left: -1em;
+		color: #33383e;
+		background: #ffffff;
+		opacity: 0;
+		-webkit-border-radius: 50%;
+		-moz-border-radius: 50%;
+		border-radius: 50%;
+		-o-border-radius: 50%;
+		-ms-border-radius: 50%;
+	}
+	a.fancybox .icon-search:before{
+		margin-left:	-0.1em;
+		font-size:		0.8em;;
+	}
+	.html5_cssanimations a.fancybox .icon-search {
+		display: inline-block;
+	}
+	a.fancybox:hover .icon-search {
+		opacity: 1;
+		display: inline-block;
+	}
+

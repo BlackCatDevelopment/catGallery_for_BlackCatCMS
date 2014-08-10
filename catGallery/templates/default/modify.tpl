@@ -22,24 +22,14 @@
  *
  *}
 
-
-		. ' `position` INT NOT NULL DEFAULT \'0\','
-		. ' `effect` TEXT NOT NULL,'
-		. ' `resize_x` SMALLINT NOT NULL DEFAULT \'0\','
-		. ' `resize_y` SMALLINT NOT NULL DEFAULT \'0\','
-		. ' `animSpeed` MEDIUMINT(9) NOT NULL DEFAULT \'0\','
-		. ' `pauseTime` MEDIUMINT(9) NOT NULL DEFAULT \'0\','
-		. ' `opacity` VARCHAR(3) NOT NULL DEFAULT \'1\','
-		. ' `random` TINYINT(1) NOT NULL DEFAULT \'0\','
-		. ' `variant` TINYINT(1) NOT NULL DEFAULT \'0\','
-		. ' `alt` VARCHAR(256) NOT NULL,'
-		. ' `page_link` INT NOT NULL,'
-		. ' `image_content` TEXT NOT NULL,'
 <form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" class="cc_catgallery_form" enctype="multipart/form-data">
 	<div class="cc_catgallery_header fc_gradient4">
 		{translate('Administration for HeaderSlider')}
 		<input type="hidden" name="page_id" value="{$page_id}" />
 		<input type="hidden" name="section_id" value="{$section_id}" />
+		<input type="hidden" name="gallery_id" value="{$gallery_id}" />
+		<input type="hidden" name="options" value="effect,resize_x,resize_y,animSpeed,pauseTime,random,label" />
+		<input type="hidden" name="image_options" value="alt" />
 	</div>
 	<div class="cc_catgallery_option fc_gradient1">
 		{translate('Options for frontend')}
@@ -50,28 +40,32 @@
 			{translate('Skin')}:
 			<select name="variant">
 			{foreach $module_variants index variants}
-				<option value="{$index}"{if $index == $variant} selected="selected"{/if}>{$variants}</option>
+				<option value="{$index}"{if $index == $options.variant} selected="selected"{/if}>{$variants}</option>
 			{/foreach}
 			</select>
 		</p>
 		<p class="cc_catgallery_dreispalten">{translate('Kind of animation')}:<br/>
 			<select name="effect">
-				<option value="0"{if !$effect} selected="selected"{/if}>{translate('No effect selected...')}</option>
-				{foreach $easing_options as option}
-				<option value="{$option}"{if $effect == $option} selected="selected"{/if}>{$option}</option>
+				<option value="0"{if !$options.effect} selected="selected"{/if}>{translate('No effect selected...')}</option>
+				{foreach $effects as option}
+				<option value="{$option}"{if $options.effect == $option} selected="selected"{/if}>{$option}</option>
 				{/foreach}
 			</select>
 		</p>
 		<p class="cc_catgallery_dreispalten">
 			{translate('Time until animation')}:
-			<input type="text" name="pauseTime" value="{if $pauseTime}{$pauseTime}{else}8000{/if}" /> ms
+			<input type="text" name="pauseTime" value="{if $options.pauseTime}{$options.pauseTime}{else}8000{/if}" /> ms
 		</p>
 		<p class="cc_catgallery_dreispalten">
 			{translate('Time for animation')}:
-			<input type="text" name="animSpeed" value="{if $animSpeed}{$animSpeed}{else}3000{/if}" /> ms
+			<input type="text" name="animSpeed" value="{if $options.animSpeed}{$options.animSpeed}{else}3000{/if}" /> ms
+		</p>
+		<p class="cc_catgallery_dreispalten">
+			{translate('Width of label')}:
+			<input type="text" name="label" value="{if $options.label}{$options.label}{else}500{/if}" /> px
 		</p>
 		<p class="cc_catgallery_dreispalten clear">
-			<input id="random_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="random" value="1" {if $random}checked="checked" {/if}/>
+			<input id="random_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="random" value="1" {if $options.random}checked="checked" {/if}/>
 			<label for="random_{$section_id}">{translate('Show images by chance')}:</label>
 		</p>
 		<div class="div_submit fc_gradient1">
@@ -84,9 +78,9 @@
 	</div>
 	<div class="cc_catgallery_option_content">
 		<p class="cc_catgallery_dreispalten">{translate('Adjust horizontal')}:<br/>
-			<input type="text" name="resize_x" value="{if $resize_x}{$resize_x}{else}724{/if}" /> px<br/>
+			<input type="text" name="resize_x" value="{if $options.resize_x}{$options.resize_x}{else}724{/if}" /> px<br/>
 			{translate('Adjust vertical')}:<br/>
-			<input type="text" name="resize_y" value="{if $resize_x}{$resize_y}{else}407{/if}" /> px<br/>
+			<input type="text" name="resize_y" value="{if $options.resize_x}{$options.resize_y}{else}407{/if}" /> px<br/>
 		</p>
 		<div class="div_submit fc_gradient1">
 			<input type="submit" name="speichern" value="{translate('Upload/ Save')}" />
@@ -105,7 +99,7 @@
 		<div class="div_submit fc_gradient1">
 			<input type="submit" name="speichern" value="{translate('Upload/ Save')}" />
 			<button class="upload fc_gradient1 fc_gradient_hover">{translate('Add another upload')}</button>
-			<input type="reset" value="{translate('Cancel')}" onclick="javascript: window.location = '{$ADMIN_URL}/pages/modify.php?page_id={$page_id}';" />
+			<input type="reset" value="{translate('Cancel')}" onclick="javascript: window.location = '{$CAT_ADMIN_URL}/pages/modify.php?page_id={$page_id}';" />
 		</div>
 	</div>
 	{if $images}
@@ -119,11 +113,11 @@
 		<div class="cc_catgallery_dreispalten">
 			<p>
 				{translate('Name of image')}: {$image.picture}<br/>
-				<input type="hidden" name="image_id[]" value="{$image.image_id}" />
+				<input type="hidden" name="image_ids[]" value="{$image.image_id}" />
 				<input type="hidden" name="picture_{$image.image_id}" value="{$image.picture}" /><br/>
 				<input type="checkbox" class="fc_checkbox_jq" name="delete_{$image.image_id}" value="{$image.picture}" id="cc_catgallery_{$image.image_id}" /><label for="cc_catgallery_{$image.image_id}">{translate('Delete this image during the next save')}</label><br/>
 				{translate('Alternative text')}:
-				<input type="text" name="alt_{$image.image_id}" value="{$image.alt}" />
+				<input type="text" name="alt_{$image.image_id}" value="{if $image.options.alt}{$image.options.alt}{/if}" />
 			</p>
 		</div>
 		<p class="cc_catgallery_dreispalten">
@@ -132,7 +126,7 @@
 		<div class="clear"></div>
 		<p>
 			{translate('Description for Image')}:
-		</p>
+		</p>{$image.contentname}
 		{show_wysiwyg_editor($image.contentname,$image.contentname,$image.image_content,'100%','300px')}
 		<div class="clear linie"></div>
 		{$counter = $counter + 1}
@@ -140,7 +134,7 @@
 	</div>
 	<div class="div_submit fc_gradient1">
 		<input type="submit" name="speichern" value="{translate('Upload/ Save')}" />
-		<input type="reset" value="{translate('Cancel')}" onclick="javascript: window.location = '{$ADMIN_URL}/pages/modify.php?page_id={$page_id}';" />
+		<input type="reset" value="{translate('Cancel')}" onclick="javascript: window.location = '{$CAT_ADMIN_URL}/pages/modify.php?page_id={$page_id}';" />
 	</div>
 	{else}<h3>{translate('No images available')}</h3>{/if}
 </form>

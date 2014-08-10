@@ -72,12 +72,12 @@ if(defined('CAT_URL'))
 	// Create table for single pictures
 	$pageHelper->db()->query("DROP TABLE IF EXISTS `" . CAT_TABLE_PREFIX . "mod_cc_catgallery_images`");
 	$mod_gallery = 'CREATE TABLE  `' . CAT_TABLE_PREFIX . 'mod_cc_catgallery_images` ('
-		 . '`image_id` INT NOT NULL AUTO_INCREMENT,'
+		. ' `image_id` INT NOT NULL AUTO_INCREMENT,'
 		. ' `gallery_id` INT NOT NULL,'
 		. ' `page_id` INT NOT NULL DEFAULT \'0\','
 		. ' `section_id` INT NOT NULL DEFAULT \'0\','
-		. ' `picture` VARCHAR(256) NOT NULL DEFAULT ,'
-		. ' PRIMARY KEY ( `image_id`, `gallery_id`, `section_id` )'
+		. ' `picture` VARCHAR(256) NOT NULL,'
+		. ' PRIMARY KEY ( `image_id`, `gallery_id`, `page_id`, `section_id` )'
 		. ' )';
 	$pageHelper->db()->query( $mod_gallery );
 
@@ -101,8 +101,8 @@ if(defined('CAT_URL'))
 		. ' `page_id` INT NOT NULL DEFAULT \'0\','
 		. ' `section_id` INT NOT NULL DEFAULT \'0\','
 		. ' `content` TEXT NOT NULL,'
-		. ' `text` TEXT NOT NULL ,'
-		. ' PRIMARY KEY ( `image_id`, `gallery_id`, `page_id`, `section_id`, `name` )'
+		. ' `text` TEXT NOT NULL,'
+		. ' PRIMARY KEY ( `image_id`, `gallery_id`, `page_id`, `section_id` )'
 		. ' )';
 	$pageHelper->db()->query($mod_gallery);
 
