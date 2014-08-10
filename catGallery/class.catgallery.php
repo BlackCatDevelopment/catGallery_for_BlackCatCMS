@@ -664,7 +664,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 
 
 			if ( !isset( $this->images[$image_id] ) )
-				$this->getImage( $image_id ) . '<br>';
+				$this->getImage( $image_id );
 
 			$image		= $this->images[$image_id]['picture'];
 

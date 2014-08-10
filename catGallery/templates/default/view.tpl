@@ -42,7 +42,7 @@
 	<ul>
 		{foreach $images as image}
 		<li>
-			<a href="#"><img src="{$imgURL}/{$image.picture}" width="{$options.resize_x}" height="{$options.resize_y}" alt="{$image.options.alt}" /></a>
+			<a href="#"><img src="{$imgURL}{$image.picture}" width="{$options.resize_x}" height="{$options.resize_y}" alt="{$image.options.alt}" /></a>
 			{if $image.image_content}<div class="label_text">
 				{$image.image_content}
 			</div>{/if}
