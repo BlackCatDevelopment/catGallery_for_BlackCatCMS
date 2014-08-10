@@ -119,12 +119,12 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			return self::$instance;
 		}
 
-		public function __construct( $gallery_id	= NULL )
+		public function __construct( $gallery_id	= NULL, $is_header	= false )
 		{
 			global $page_id, $section_id;
 
 			// This is a workaround for headers.inc.php as there is no $section_id defined yet
-			if ( !isset($section_id) )
+			if ( !isset($section_id) || $is_header )
 			{
 				$section_id	= $gallery_id['section_id'];
 			}
