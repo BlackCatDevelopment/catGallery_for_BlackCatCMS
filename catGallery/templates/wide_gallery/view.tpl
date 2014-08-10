@@ -21,6 +21,10 @@
  *   @package			catGallery
  *
  *}
+<script type="text/javascript">
+	var animSpeed	= {if $options.animSpeed}{$options.animSpeed}{else}700{/if};
+		
+</script>
 <div id="cat_gallery_{$section_id}">
 	<div class="wide_gallery_container">
 		<ul class="wide_gallery" style="width: {$countImg*$options.resize_x}px;">

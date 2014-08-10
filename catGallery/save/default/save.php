@@ -102,9 +102,11 @@ if ( $gallery_id = $val->sanitizePost( 'gallery_id','numeric' ) )
 			}
 			else {
 				$contentname	= sprintf( "image_content_%s", $img_id );
-				$content		= $val->sanitizePost( $contentname, false, true );
-
-				$catGallery->saveContent( $img_id, $content );
+				if ( isset($_POST[$contentname]) )
+				{
+					$content		= $val->sanitizePost( $contentname, false, true );
+					$catGallery->saveContent( $img_id, $content );
+				}
 			}
 		}
 	}

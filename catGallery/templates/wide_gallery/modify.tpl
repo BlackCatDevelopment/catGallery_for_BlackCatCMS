@@ -28,7 +28,7 @@
 		<input type="hidden" name="page_id" value="{$page_id}" />
 		<input type="hidden" name="section_id" value="{$section_id}" />
 		<input type="hidden" name="gallery_id" value="{$gallery_id}" />
-		<input type="hidden" name="options" value="effect,resize_x,resize_y,animSpeed,pauseTime,random,label" />
+		<input type="hidden" name="options" value="resize_x,resize_y,animSpeed,random" />
 		<input type="hidden" name="image_options" value="alt" />
 	</div>
 	<div class="cc_catgallery_option fc_gradient1">
@@ -44,25 +44,9 @@
 			{/foreach}
 			</select>
 		</p>
-		<p class="cc_catgallery_dreispalten">{translate('Kind of animation')}:<br/>
-			<select name="effect">
-				<option value="0"{if !$options.effect} selected="selected"{/if}>{translate('No effect selected...')}</option>
-				{foreach $effects as option}
-				<option value="{$option}"{if $options.effect == $option} selected="selected"{/if}>{$option}</option>
-				{/foreach}
-			</select>
-		</p>
-		<p class="cc_catgallery_dreispalten">
-			{translate('Time until animation')}:
-			<input type="text" name="pauseTime" value="{if $options.pauseTime}{$options.pauseTime}{else}8000{/if}" /> ms
-		</p>
 		<p class="cc_catgallery_dreispalten">
 			{translate('Time for animation')}:
 			<input type="text" name="animSpeed" value="{if $options.animSpeed}{$options.animSpeed}{else}3000{/if}" /> ms
-		</p>
-		<p class="cc_catgallery_dreispalten">
-			{translate('Width of label')}:
-			<input type="text" name="label" value="{if $options.label}{$options.label}{else}500{/if}" /> px
 		</p>
 		<p class="cc_catgallery_dreispalten clear">
 			<input id="random_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="random" value="1" {if $options.random}checked="checked" {/if}/>
@@ -123,11 +107,6 @@
 		<p class="cc_catgallery_dreispalten">
 			<img src="{$folder_url}/{$image.picture}" class="cc_preview" width="auto" height="140" />
 		</p>
-		<div class="clear"></div>
-		<p>
-			{translate('Description for Image')}:
-		</p>
-		{show_wysiwyg_editor($image.contentname,$image.contentname,$image.image_content,'100%','300px')}
 		<div class="clear linie"></div>
 		{$counter = $counter + 1}
 		{/foreach}

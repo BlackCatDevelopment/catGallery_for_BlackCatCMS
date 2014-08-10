@@ -82,7 +82,7 @@ $(document).ready(function()
 
 		$nav.children('li').removeClass('active').filter(current).addClass('active');
 
-		$container.stop().animate({marginLeft: -position*winWidth}, 700 , 'easeInOutCirc');
+		$container.stop().animate({marginLeft: -position*winWidth}, animSpeed , 'easeInOutCirc');
 
 	});
 
