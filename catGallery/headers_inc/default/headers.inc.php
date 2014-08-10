@@ -48,11 +48,11 @@ $mod_headers = array(
 		'css' => array(
 			array(
 				'media'		=> 'all',
-				'file'		=> 'modules/cc_cat_gallery/css/default/backend.css'
+				'file'		=> 'modules/cc_catgallery/css/default/backend.css'
 			)
 		),
 		'js' => array(
-			'/modules/cc_cat_gallery/js/default/backend.js',
+			'/modules/cc_catgallery/js/default/backend.js',
 		),
 		'jquery' => array(
 			array(
@@ -64,13 +64,13 @@ $mod_headers = array(
 		'css' => array(
 			array(
 				'media'		=> 'all',
-				'file'		=> 'modules/cc_cat_gallery/css/default/frontend.css'
+				'file'		=> 'modules/cc_catgallery/css/default/frontend.css'
 			)
 		),
 		'js' => array(
-			'/modules/cc_cat_gallery/js/default/jquery.easing.1.3.js',
-			'/modules/cc_cat_gallery/js/default/jquery.skitter.min.js',
-			'/modules/cc_cat_gallery/js/default/frontend.js'
+			'/modules/cc_catgallery/js/default/jquery.easing.1.3.js',
+			'/modules/cc_catgallery/js/default/jquery.skitter.min.js',
+			'/modules/cc_catgallery/js/default/frontend.js'
 		),
 		'jquery' => array(
 			array(

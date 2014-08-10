@@ -22,17 +22,30 @@
  *
  *}
 
-<form action="{$CAT_URL}/modules/cc_cat_gallery/save.php" method="post" class="cc_cat_gallery_form" enctype="multipart/form-data">
-	<div class="cc_cat_gallery_header fc_gradient4">
+
+		. ' `position` INT NOT NULL DEFAULT \'0\','
+		. ' `effect` TEXT NOT NULL,'
+		. ' `resize_x` SMALLINT NOT NULL DEFAULT \'0\','
+		. ' `resize_y` SMALLINT NOT NULL DEFAULT \'0\','
+		. ' `animSpeed` MEDIUMINT(9) NOT NULL DEFAULT \'0\','
+		. ' `pauseTime` MEDIUMINT(9) NOT NULL DEFAULT \'0\','
+		. ' `opacity` VARCHAR(3) NOT NULL DEFAULT \'1\','
+		. ' `random` TINYINT(1) NOT NULL DEFAULT \'0\','
+		. ' `variant` TINYINT(1) NOT NULL DEFAULT \'0\','
+		. ' `alt` VARCHAR(256) NOT NULL,'
+		. ' `page_link` INT NOT NULL,'
+		. ' `image_content` TEXT NOT NULL,'
+<form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" class="cc_catgallery_form" enctype="multipart/form-data">
+	<div class="cc_catgallery_header fc_gradient4">
 		{translate('Administration for HeaderSlider')}
 		<input type="hidden" name="page_id" value="{$page_id}" />
 		<input type="hidden" name="section_id" value="{$section_id}" />
 	</div>
-	<div class="cc_cat_gallery_option fc_gradient1">
+	<div class="cc_catgallery_option fc_gradient1">
 		{translate('Options for frontend')}
-		<div class="cc_cat_gallery_show"></div>
+		<div class="cc_catgallery_show"></div>
 	</div>
-	<div class="cc_cat_gallery_option_content">
+	<div class="cc_catgallery_option_content">
 		<p>
 			{translate('Skin')}:
 			<select name="variant">
@@ -41,7 +54,7 @@
 			{/foreach}
 			</select>
 		</p>
-		<p class="cc_cat_gallery_dreispalten">{translate('Kind of animation')}:<br/>
+		<p class="cc_catgallery_dreispalten">{translate('Kind of animation')}:<br/>
 			<select name="effect">
 				<option value="0"{if !$effect} selected="selected"{/if}>{translate('No effect selected...')}</option>
 				{foreach $easing_options as option}
@@ -49,15 +62,15 @@
 				{/foreach}
 			</select>
 		</p>
-		<p class="cc_cat_gallery_dreispalten">
+		<p class="cc_catgallery_dreispalten">
 			{translate('Time until animation')}:
 			<input type="text" name="pauseTime" value="{if $pauseTime}{$pauseTime}{else}8000{/if}" /> ms
 		</p>
-		<p class="cc_cat_gallery_dreispalten">
+		<p class="cc_catgallery_dreispalten">
 			{translate('Time for animation')}:
 			<input type="text" name="animSpeed" value="{if $animSpeed}{$animSpeed}{else}3000{/if}" /> ms
 		</p>
-		<p class="cc_cat_gallery_dreispalten clear">
+		<p class="cc_catgallery_dreispalten clear">
 			<input id="random_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="random" value="1" {if $random}checked="checked" {/if}/>
 			<label for="random_{$section_id}">{translate('Show images by chance')}:</label>
 		</p>
@@ -65,12 +78,12 @@
 			<input type="submit" name="speichern" value="{translate('Upload/ Save')}" />
 		</div>
 	</div>
-	<div class="cc_cat_gallery_option fc_gradient1">
+	<div class="cc_catgallery_option fc_gradient1">
 		{translate('Image option')}:
-		<div class="cc_cat_gallery_show"></div>
+		<div class="cc_catgallery_show"></div>
 	</div>
-	<div class="cc_cat_gallery_option_content">
-		<p class="cc_cat_gallery_dreispalten">{translate('Adjust horizontal')}:<br/>
+	<div class="cc_catgallery_option_content">
+		<p class="cc_catgallery_dreispalten">{translate('Adjust horizontal')}:<br/>
 			<input type="text" name="resize_x" value="{if $resize_x}{$resize_x}{else}724{/if}" /> px<br/>
 			{translate('Adjust vertical')}:<br/>
 			<input type="text" name="resize_y" value="{if $resize_x}{$resize_y}{else}407{/if}" /> px<br/>
@@ -79,11 +92,11 @@
 			<input type="submit" name="speichern" value="{translate('Upload/ Save')}" />
 		</div>
 	</div>
-	<div class="cc_cat_gallery_option fc_gradient1 active">
+	<div class="cc_catgallery_option fc_gradient1 active">
 		{translate('Upload new image')}:
-		<div class="cc_cat_gallery_show"></div>
+		<div class="cc_catgallery_show"></div>
 	</div>
-	<div class="cc_cat_gallery_option_content show_on_startup">
+	<div class="cc_catgallery_option_content show_on_startup">
 		<p>
 			<input type="hidden" name="upload_counter" value="1" />
 			<input type="file" size="32" class="new_image" name="new_image_1" /><br/>
@@ -96,24 +109,24 @@
 		</div>
 	</div>
 	{if $images}
-	<div class="cc_cat_gallery_option">
+	<div class="cc_catgallery_option">
 		{translate('Current images')}
-		<div class="cc_cat_gallery_show"></div>
+		<div class="cc_catgallery_show"></div>
 	</div>
-	<div class="cc_cat_gallery_option_content">
+	<div class="cc_catgallery_option_content">
 		{$counter = 0}
 		{foreach $images as image}
-		<div class="cc_cat_gallery_dreispalten">
+		<div class="cc_catgallery_dreispalten">
 			<p>
 				{translate('Name of image')}: {$image.picture}<br/>
 				<input type="hidden" name="image_id[]" value="{$image.image_id}" />
 				<input type="hidden" name="picture_{$image.image_id}" value="{$image.picture}" /><br/>
-				<input type="checkbox" class="fc_checkbox_jq" name="delete_{$image.image_id}" value="{$image.picture}" id="cc_cat_gallery_{$image.image_id}" /><label for="cc_cat_gallery_{$image.image_id}">{translate('Delete this image during the next save')}</label><br/>
+				<input type="checkbox" class="fc_checkbox_jq" name="delete_{$image.image_id}" value="{$image.picture}" id="cc_catgallery_{$image.image_id}" /><label for="cc_catgallery_{$image.image_id}">{translate('Delete this image during the next save')}</label><br/>
 				{translate('Alternative text')}:
 				<input type="text" name="alt_{$image.image_id}" value="{$image.alt}" />
 			</p>
 		</div>
-		<p class="cc_cat_gallery_dreispalten">
+		<p class="cc_catgallery_dreispalten">
 			<img src="{$folder_url}/{$image.picture}" class="cc_preview" width="auto" height="140" />
 		</p>
 		<div class="clear"></div>

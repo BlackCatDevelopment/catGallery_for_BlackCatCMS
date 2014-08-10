@@ -42,25 +42,14 @@ if (defined('CAT_PATH')) {
 }
 // end include class.secure.php
 
-global $backend, $section_id, $page_id;
-
 // Insert an extra row into the database
-$backend->db()->query( sprintf(
-		"REPLACE INTO %smod_%s %s VALUES %s",
-		CAT_TABLE_PREFIX,
-		'cc_cat_gallery',
-		'(`page_id`, `section_id`, `effect`, `animSpeed`, `pauseTime`, `resize_x`, `resize_y`, `opacity`)',
-		"('$page_id', '$section_id', 'random', '500', '4000', '781','350','0.8')"
-	)
-);
+global $section_id, $page_id;
 
-if ( $backend->db()->is_error() )
-{
-	$backend->print_error($backend->db()->get_error(), false);
-}
+include_once( 'class.catgallery.php' );
 
-$folder		= CAT_PATH . MEDIA_DIRECTORY . '/cc_cat_gallery/cc_cat_gallery_' . $section_id;
+$catGallery	= new catGallery( true );
 
-CAT_Helper_Directory::createDirectory( $folder, NULL, true );
+// Add initial options
+$catGallery->saveOptions( 'variant', 0 );
 
 ?>

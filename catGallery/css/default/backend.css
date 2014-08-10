@@ -22,11 +22,11 @@
  *
  */
 
-.cc_cat_gallery_form input[type=text] {
+.cc_catgallery_form input[type=text] {
 	width: auto;
 }
 
-.cc_cat_gallery_header {
+.cc_catgallery_header {
 	padding-left: 15px;
 	height: 28px;
 	border: 1px solid #2b323f;
@@ -36,13 +36,13 @@
 	line-height: 28px;
 }
 
-.cc_cat_gallery_option_content {
+.cc_catgallery_option_content {
 	padding-top: 1em;
 	border-right: 1px solid #687a8a;
 	border-left: 1px solid #687a8a;
 }
 
-.cc_cat_gallery_option {
+.cc_catgallery_option {
 	padding-left: 20px;
 	height: 38px;
 	border-top: 1px solid black;
@@ -61,22 +61,22 @@
 	border-top: 1px solid #687a8a;
 }
 
-.cc_cat_gallery_form p {
+.cc_catgallery_form p {
 	padding-right: 20px;
 	padding-left: 20px;
 }
 
-.cc_cat_gallery_dreispalten {
+.cc_catgallery_dreispalten {
 	float: left;
 	width: 33%;
 }
 
-.cc_cat_gallery_zweispalten {
+.cc_catgallery_zweispalten {
 	float: left;
 	width: 50%;
 }
 
-.cc_cat_gallery_option .cc_cat_gallery_show {
+.cc_catgallery_option .cc_catgallery_show {
 	float: left;
 	margin-top: 8px;
 	margin-right: 10px;
@@ -88,7 +88,7 @@
 	cursor: pointer;
 }
 
-.cc_cat_gallery_option.active .cc_cat_gallery_show {
+.cc_catgallery_option.active .cc_catgallery_show {
 	background-position: 0 -20px;
 }
 

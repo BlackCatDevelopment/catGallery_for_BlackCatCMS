@@ -1,3 +1,4 @@
+
 <?php
 /**
  *
@@ -42,39 +43,13 @@ if (defined('CAT_PATH')) {
 }
 // end include class.secure.php
 
-// Get ID of catGallery
-$cat_gallery_id		= CAT_Helper_Page::getInstance()->db()->get_one( sprintf(
-		"SELECT cat_gallery_id FROM %smod_%s WHERE %s = '%s'",
-		CAT_TABLE_PREFIX,
-		'cc_cat_gallery',
-		'section_id',
-		$section_id
-	)
-);
+global $section_id, $page_id;
 
-// Delete record from the database
-$cat_gallery_id		= CAT_Helper_Page::getInstance()->db()->get_one( sprintf(
-		"DELETE FROM %smod_%s WHERE %s = '%s'",
-		CAT_TABLE_PREFIX,
-		'cc_cat_gallery',
-		'section_id',
-		$section_id
-	)
-);
-// Delete images from the database
-$cat_gallery_id		= CAT_Helper_Page::getInstance()->db()->get_one( sprintf(
-		"DELETE FROM %smod_%s WHERE %s = '%s'",
-		CAT_TABLE_PREFIX,
-		'mod_cc_cat_gallery_images',
-		'cat_gallery_id',
-		$cat_gallery_id
-	)
-);
+include_once( 'class.catgallery.php' );
 
-// Set path to folder
-$folder		= CAT_PATH . MEDIA_DIRECTORY . '/cc_cat_gallery/cc_cat_gallery_' . $section_id;
+$catGallery	= new catGallery();
 
-// Delete folder
-CAT_Helper_Directory::removeDirectory( $folder );
+$catGallery->deleteGallery();
+
 
 ?>

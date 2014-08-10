@@ -42,8 +42,8 @@ if (defined('CAT_PATH')) {
 }
 // end include class.secure.php
 
-$folder_url		= CAT_URL . MEDIA_DIRECTORY . '/cc_cat_gallery/cc_cat_gallery_' . $section_id;
-$folder_path	= CAT_PATH . MEDIA_DIRECTORY . '/cc_cat_gallery/cc_cat_gallery_' . $section_id;
+$folder_url		= CAT_URL . MEDIA_DIRECTORY . '/cc_catgallery/cc_catgallery_' . $section_id;
+$folder_path	= CAT_PATH . MEDIA_DIRECTORY . '/cc_catgallery/cc_catgallery_' . $section_id;
 
 $template		= 'view_no_image';
 
@@ -52,7 +52,7 @@ $parser_data	= array(
 	'section_id'	=> $section_id,
 	'folder_url'	=> $folder_url
 );
-$info						= CAT_Helper_Addons::checkInfo( CAT_PATH . '/modules/cc_cat_gallery/' );
+$info						= CAT_Helper_Addons::checkInfo( CAT_PATH . '/modules/cc_catgallery/' );
 
 $parser_data['page_link']	= CAT_Helper_Page::getInstance()->properties( $page_id, 'link' );
 
@@ -60,7 +60,7 @@ $parser_data['page_link']	= CAT_Helper_Page::getInstance()->properties( $page_id
 $result		= CAT_Helper_Page::getInstance()->db()->query( sprintf(
 		"SELECT * FROM %smod_%s WHERE %s = '%s'",
 		CAT_TABLE_PREFIX,
-		'cc_cat_gallery',
+		'cc_catgallery',
 		'section_id',
 		$section_id
 	)
