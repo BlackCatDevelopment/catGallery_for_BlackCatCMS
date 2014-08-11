@@ -52,7 +52,8 @@ $LANG = array(
     'No effect selected...'			=> 'Kein Effekt ausgew&auml;lt',
     'Time until animation'			=> 'Zeit zwischen der Animation',
     'Time for animation'			=> 'Animationsgeschwindigkeit',
-    'Width of label'				=> 'Breite des Labels',
+    'Width of label (Set to 0 for no labels)'
+    								=> 'Breite des Labels (0 für keine Labels)',
     'Show images by chance'			=> 'Bilderreihenfolge zuf&auml;llig',
     'Upload/ Save'					=> 'Hochladen/Speichern',
     'Image option'					=> 'Bild Optionen',

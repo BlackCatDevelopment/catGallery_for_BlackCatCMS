@@ -32,7 +32,12 @@
 			stop_over:		false,
 			navigation:		false,
 			numbers:		false,
-			width_label:	"{if $options.label}{$options.label}{else}500{/if}px"
+			{if $options.label}
+			label:			true,
+			width_label:	"{$options.label}px"
+			{else}
+			label:			false
+			{/if}
 		});
 	});
 </script>
@@ -43,7 +48,7 @@
 		{foreach $images as image}
 		<li>
 			<a href="#"><img src="{$imgURL}{$image.picture}" width="{$options.resize_x}" height="{$options.resize_y}" alt="{$image.options.alt}" /></a>
-			{if $image.image_content}<div class="label_text">
+			{if $options.label && $image.image_content != ''}<div class="label_text">
 				{$image.image_content}
 			</div>{/if}
 		</li>

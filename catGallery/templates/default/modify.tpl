@@ -61,8 +61,8 @@
 			<input type="text" name="animSpeed" value="{if $options.animSpeed}{$options.animSpeed}{else}3000{/if}" /> ms
 		</p>
 		<p class="cc_catgallery_dreispalten">
-			{translate('Width of label')}:
-			<input type="text" name="label" value="{if $options.label}{$options.label}{else}500{/if}" /> px
+			{translate('Width of label (Set to 0 for no labels)')}:
+			<input type="text" name="label" value="{if $options.label}{$options.label}{else}0{/if}" /> px
 		</p>
 		<p class="cc_catgallery_dreispalten clear">
 			<input id="random_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="random" value="1" {if $options.random}checked="checked" {/if}/>

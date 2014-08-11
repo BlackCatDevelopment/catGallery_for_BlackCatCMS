@@ -23,9 +23,6 @@
  */
 
 .slider_skitter {
-	margin-left: -2em;
-	margin-right: -2em;
-	margin-bottom: -1em;
 	position: relative;
 	width: 781px;
 	background:url(images/loader.gif) no-repeat 50% 50%;
