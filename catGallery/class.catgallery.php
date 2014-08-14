@@ -51,10 +51,10 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		protected static $galleryFolder			= '';
 		protected static $allowed_file_types	= array( 'png', 'jpg', 'jpeg', 'gif' );
 		protected static $gallery_root			= '';
-		protected static $imagePATH				= NULL;
-		protected static $imageURL				= NULL;
-		protected static $galleryPATH			= '';
-		protected static $galleryURL			= '';
+		protected $imagePATH				= NULL;
+		protected $imageURL				= NULL;
+		protected $galleryPATH			= '';
+		protected $galleryURL			= '';
 
 		public $contents			= array();
 		public $options				= array();
@@ -132,9 +132,8 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			self::$section_id	= intval($section_id);
 			self::$page_id		= intval($page_id);
 			self::$gallery_root	= CAT_PATH . MEDIA_DIRECTORY . '/cc_catgallery/';
-			self::$galleryPATH	= self::$gallery_root . 'cc_catgallery_' . self::$section_id;
-			self::$galleryURL	= CAT_URL . MEDIA_DIRECTORY . '/cc_catgallery/cc_catgallery_' . self::$section_id;
-
+			$this->galleryPATH	= self::$gallery_root . 'cc_catgallery_' . self::$section_id;
+			$this->galleryURL	= CAT_URL . MEDIA_DIRECTORY . '/cc_catgallery/cc_catgallery_' . self::$section_id;
 
 			if ( $gallery_id === true )
 			{
@@ -374,9 +373,11 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			self::$gallery_id		= CAT_Helper_Page::getInstance()->db()->get_one( sprintf(
 					"SELECT `gallery_id`
 						FROM `%smod_cc_%s`
-						WHERE `section_id` = '%s'",
+						WHERE `page_id` = '%s' AND
+							`section_id` = '%s'",
 					CAT_TABLE_PREFIX,
 					'catgallery',
+					self::$page_id,
 					self::$section_id
 				)
 			);
@@ -401,7 +402,8 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			$images		= CAT_Helper_Page::getInstance()->db()->query( sprintf(
 					"SELECT * FROM %smod_%s
 						WHERE `gallery_id` = '%s' AND
-							`section_id` = '%s'%s",
+							`section_id` = '%s'%s
+							ORDER BY `position`",
 					CAT_TABLE_PREFIX,
 					'cc_catgallery_images',
 					self::$gallery_id,
@@ -419,6 +421,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 				{
 					$this->images[$row['image_id']]	= array(
 						'image_id'			=> $row['image_id'],
+						'position'			=> $row['position'],
 						'picture'			=> $row['picture'],
 						'options'			=> $addOptions ? $this->getImgOptions( $row['image_id'] ) : NULL,
 						'image_content'		=> $addContent ? $this->getImgContent( $row['image_id'] ) : NULL,
@@ -658,7 +661,6 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			if ( !$this->checkIDs($image_id) ) return false;
 
 			$tmp_path	= $this->getImageURL( true );
-
 			if ( !file_exists($tmp_path) )
 				CAT_Helper_Directory::getInstance()->createDirectory( $tmp_path, NULL, true );
 
@@ -668,11 +670,9 @@ if ( ! class_exists( 'catGallery', false ) ) {
 
 			$image		= $this->images[$image_id]['picture'];
 
-			$source	= $this->getFolder() . $this->getOptions('resize_y');
-
 			CAT_Helper_Image::getInstance()->make_thumb(
 				$this->getFolder() . '/' . $image,
-				$tmp_path . $image,
+				$tmp_path . '/' . $image,
 				$this->getOptions('resize_y'),
 				$this->getOptions('resize_x'),
 				'crop'
@@ -932,9 +932,9 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		public function getFolder( $path = true )
 		{
 			if ( $path )
-				return self::$galleryPATH;
+				return $this->galleryPATH;
 			else
-				return self::$galleryURL;
+				return $this->galleryURL;
 		} // getFolder()
 
 		/**
@@ -949,17 +949,19 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		{
 			if ( $path )
 			{
-				if ( !self::$imagePATH )
-					self::$imagePATH	= sprintf( '%s/thumbs_%s_%s/',
-						self::$galleryPATH, $this->getOptions('resize_x'), $this->getOptions('resize_y') );
-
-				return self::$imagePATH;
+				if ( !$this->imagePATH || $this->imagePATH == '' )
+					$this->imagePATH	= CAT_Helper_Directory::getInstance()->sanitizePath(
+						sprintf( '%s/thumbs_%s_%s/',
+							$this->galleryPATH, $this->getOptions('resize_x'), $this->getOptions('resize_y')
+						)
+					);
+				return $this->imagePATH;
 			}
 			else
-				if ( !self::$imageURL )
-					self::$imageURL	= sprintf( '%s/thumbs_%s_%s/',
-						self::$galleryURL, $this->getOptions('resize_x'), $this->getOptions('resize_y') );
-				return self::$imageURL;
+				if ( !$this->imageURL || $this->imageURL == '' )
+					$this->imageURL	= sprintf( '%s/thumbs_%s_%s/',
+						$this->galleryURL, $this->getOptions('resize_x'), $this->getOptions('resize_y') );
+				return $this->imageURL;
 		} // getFolder()
 
 

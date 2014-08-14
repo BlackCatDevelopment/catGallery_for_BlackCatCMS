@@ -77,6 +77,7 @@ if(defined('CAT_URL'))
 		. ' `page_id` INT NOT NULL DEFAULT \'0\','
 		. ' `section_id` INT NOT NULL DEFAULT \'0\','
 		. ' `picture` VARCHAR(256) NOT NULL,'
+		. ' `position` INT NOT NULL,'
 		. ' PRIMARY KEY ( `image_id`, `gallery_id`, `page_id`, `section_id` )'
 		. ' )';
 	$pageHelper->db()->query( $mod_gallery );
