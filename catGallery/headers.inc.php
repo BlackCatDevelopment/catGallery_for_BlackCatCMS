@@ -42,9 +42,9 @@ if (defined('CAT_PATH')) {
 }
 // end include class.secure.php
 
-include_once( 'class.catgallery.php' );
+include_once( 'classes/class.catgallery.php' );
 
-$catGallery		= new catGallery( $section );
+$catGallery		= new catGallery( $section, true );
 
 $variant		= $catGallery->getVariant();
 

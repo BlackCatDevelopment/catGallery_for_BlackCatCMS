@@ -76,7 +76,7 @@ if(defined('CAT_URL'))
 		. ' `gallery_id` INT NOT NULL,'
 		. ' `page_id` INT NOT NULL DEFAULT \'0\','
 		. ' `section_id` INT NOT NULL DEFAULT \'0\','
-		. ' `picture` VARCHAR(256) NOT NULL,'
+		. ' `picture` VARCHAR(256) NOT NULL DEFAULT \'\','
 		. ' `position` INT NOT NULL,'
 		. ' PRIMARY KEY ( `image_id`, `gallery_id`, `page_id`, `section_id` )'
 		. ' )';

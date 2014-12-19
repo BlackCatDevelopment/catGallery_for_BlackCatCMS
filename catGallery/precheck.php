@@ -43,6 +43,6 @@ if (defined('CAT_PATH')) {
 }
 // end include class.secure.php
 
-$PRECHECK['CAT_VERSION'] = array('VERSION' => '1.0.2', 'OPERATOR' => '>=');
+$PRECHECK['CAT_VERSION'] = array('VERSION' => '1.1', 'OPERATOR' => '>=');
 
 ?>

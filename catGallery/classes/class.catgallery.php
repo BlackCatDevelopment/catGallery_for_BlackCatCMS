@@ -126,7 +126,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			// This is a workaround for headers.inc.php as there is no $section_id defined yet
 			if ( !isset($section_id) || $is_header )
 			{
-				$section_id	= $gallery_id['section_id'];
+				$section_id	= is_numeric($gallery_id) ? $gallery_id : $gallery_id['section_id'];
 			}
 
 			self::$section_id	= intval($section_id);
@@ -181,17 +181,20 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		{
 			if ( !self::$section_id || !self::$page_id ) return false;
 			// Add a new catGallery
-			if ( CAT_Helper_Page::getInstance()->db()->query( sprintf(
-					"INSERT INTO `%smod_cc_%s`
+			 $check  = $database->query(
+                'SELECT `value` FROM `:prefix:settings` WHERE `name`=:name',
+                array('name'=>$key)
+            );
+			if ( CAT_Helper_Page::getInstance()->db()->query(
+					'INSERT INTO `:prefix:mod_cc_catgallery`
 						( `page_id`, `section_id` ) VALUES
-						( '%s', '%s' )",
-					CAT_TABLE_PREFIX,
-					'catgallery',
-					intval(self::$page_id),
-					intval(self::$section_id)
+						( :page_id, :page_id )',
+					array(
+						'page_id'		=> self::$page_id,
+						'section_id'	=> self::$section_id
+					)
 				)
-			) )
-			{
+			) {
 				$return	= true;
 				$this->setGalleryID();
 
@@ -229,13 +232,14 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			{
 				// Delete complete record from the database
 				if( !CAT_Helper_Page::getInstance()->db()->query( sprintf(
-						"DELETE FROM `%smod_cc_%s`
-							WHERE `section_id` = '%s' AND
-								`gallery_id` = '%s'",
-						CAT_TABLE_PREFIX,
-						$table,
-						self::$section_id,
-						self::$gallery_id
+						'DELETE FROM `:prefix:mod_cc_%s`
+							WHERE `section_id` = :section_id AND
+								`gallery_id` = :gallery_id',
+						$table
+					),
+					array(
+						'section_id'	=> self::$section_id,
+						'gallery_id'	=> self::$gallery_id
 					)
 				) ) $return = false;
 			}
@@ -259,34 +263,32 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		{
 			if ( !$this->checkIDs() ||
 				!$file_extension ) return false;
-
-			if( CAT_Helper_Page::getInstance()->db()->query( sprintf(
-					"INSERT INTO `%smod_cc_%s`
+				
+			if( CAT_Helper_Page::getInstance()->db()->query(
+					'INSERT INTO :prefix:mod_cc_catgallery_images
 						( `page_id`, `section_id`, `gallery_id` ) VALUES
-						( '%s', '%s', '%s' )",
-					CAT_TABLE_PREFIX,
-					'catgallery_images',
-					self::$page_id,
-					self::$section_id,
-					self::$gallery_id
+						( :page_id, :section_id, :gallery_id )',
+					array(
+						'page_id'		=> self::$page_id,
+						'section_id'	=> self::$section_id,
+						'gallery_id'	=> self::$gallery_id
+					)
 				)
-			) )
-			{
-				$newID		= CAT_Helper_Page::getInstance()->db()->get_one( 'SELECT LAST_INSERT_ID()' );
+			) {
+				$newID		= CAT_Helper_Page::getInstance()->db()->lastInsertId();
 				$picture	= sprintf( 'image_%s_%s.%s', self::$section_id, $newID, $file_extension );
 
-				if ( CAT_Helper_Page::getInstance()->db()->query( sprintf(
-							"UPDATE `%smod_cc_%s`
-								SET `picture` = '%s'
-								WHERE `image_id` = '%s' AND
-									`gallery_id` = '%s'",
-							CAT_TABLE_PREFIX,
-							'catgallery_images',
-							$picture,
-							$newID,
-							self::$gallery_id
+				if ( CAT_Helper_Page::getInstance()->db()->query(
+							'UPDATE `:prefix:mod_cc_catgallery_images`
+								SET `picture` = :picture
+								WHERE `image_id` = :image_id AND
+									`gallery_id` = :gallery_id',
+							array(
+								'picture'		=> $picture,
+								'image_id'		=> $newID,
+								'gallery_id'	=> self::$gallery_id
+							)
 						)
-					)
 					&& $this->saveContent( $newID, '' )
 				) return array( 'image_id' => $newID, 'picture' => $picture );
 			}
@@ -321,17 +323,19 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			{
 				// Delete complete record from the database
 				if( !CAT_Helper_Page::getInstance()->db()->query( sprintf(
-						"DELETE FROM `%smod_cc_%s`
-							WHERE `image_id` = '%s' AND
-								`section_id` = '%s' AND
-								`gallery_id` = '%s'",
-						CAT_TABLE_PREFIX,
-						$table,
-						$image_id,
-						self::$section_id,
-						self::$gallery_id
+						'DELETE FROM `:prefix:mod_cc_%s`
+							WHERE `image_id` = :image_id AND
+								`section_id` = :section_id AND
+								`gallery_id` = :gallery_id',
+							$table
+						),
+						array(
+							'image_id'		=> $image_id,
+							'section_id'	=> self::$section_id,
+							'gallery_id'	=> self::$gallery_id
+						)
 					)
-				) ) $return = false;
+				) $return = false;
 			}
 
 			// Delete folder
@@ -370,17 +374,20 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		private function setGalleryID()
 		{
 			// Get columns in this section
-			self::$gallery_id		= CAT_Helper_Page::getInstance()->db()->get_one( sprintf(
-					"SELECT `gallery_id`
-						FROM `%smod_cc_%s`
-						WHERE `page_id` = '%s' AND
-							`section_id` = '%s'",
-					CAT_TABLE_PREFIX,
-					'catgallery',
-					self::$page_id,
-					self::$section_id
+			$gallery_id	= CAT_Helper_Page::getInstance()->db()->query( sprintf(
+					'SELECT `gallery_id`
+						FROM `:prefix:mod_cc_catgallery`
+						WHERE `page_id` = :page_id AND
+							`section_id` = :section_id',
+					$table
+				),
+				array(
+					'page_id'		=> self::$page_id,
+					'section_id'	=> self::$section_id
 				)
-			);
+			)->fetchColumn();
+
+			self::$gallery_id	= $gallery_id;
 			return self::$gallery_id;
 		} // end setGalleryID()
 
@@ -399,25 +406,36 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			if ( !$this->checkIDs() ) return false;
 
 			// Get images from database
-			$images		= CAT_Helper_Page::getInstance()->db()->query( sprintf(
-					"SELECT * FROM %smod_%s
-						WHERE `gallery_id` = '%s' AND
-							`section_id` = '%s'%s
-							ORDER BY `position`",
-					CAT_TABLE_PREFIX,
-					'cc_catgallery_images',
-					self::$gallery_id,
-					self::$section_id,
-					$image_id && is_numeric($image_id) ? " AND `image_id` = '" . $image_id  . "'": ''
+			$images		= $image_id && is_numeric($image_id) ?
+			CAT_Helper_Page::getInstance()->db()->query(
+				'SELECT * FROM `:prefix:mod_cc_catgallery_images`
+					WHERE `gallery_id` = :gallery_id AND
+						`section_id` = :section_id AND
+						`image_id` = :image_id
+						ORDER BY `position`',
+				array(
+					'gallery_id'	=> self::$gallery_id,
+					'section_id'	=> self::$section_id,
+					'image_id'		=> $image_id
+				)
+			)
+			: CAT_Helper_Page::getInstance()->db()->query(
+				'SELECT * FROM `:prefix:mod_cc_catgallery_images`
+					WHERE `gallery_id` = :gallery_id AND
+						`section_id` = :section_id
+						ORDER BY `position`',
+				array(
+					'gallery_id'	=> self::$gallery_id,
+					'section_id'	=> self::$section_id
 				)
 			);
 
 			$tmp_path	= sprintf( '%s/thumbs_%s_%s/',
 						$this->getFolder(), $this->getOptions('resize_x'), $this->getOptions('resize_y') );
 
-			if ( isset($images) && $images->numRows() > 0 )
+			if ( $images && $images->rowCount() > 0 )
 			{
-				while( !false == ( $row = $images->fetchRow( MYSQL_ASSOC ) ) )
+				while( !false == ( $row = $images->fetch() ) )
 				{
 					$this->images[$row['image_id']]	= array(
 						'image_id'			=> $row['image_id'],
@@ -470,12 +488,12 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			else return false;
 
 			$opts	= CAT_Helper_Page::getInstance()->db()->query( sprintf(
-					"SELECT * FROM `%smod_%s`
-						WHERE `section_id` = '%s'%s",
-					CAT_TABLE_PREFIX,
-					'cc_catgallery_images_options',
-					self::$section_id,
+					'SELECT * FROM `:prefix:mod_cc_catgallery_images_options`
+							WHERE `section_id` = :section_id %s',
 					$select
+				),
+				array(
+					'section_id'	=> self::$section_id
 				)
 			);
 
@@ -483,9 +501,9 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			if ( $image_id )
 				$this->images[$image_id]['options']	= array();
 
-			if ( isset($opts) && $opts->numRows() > 0)
+			if ( $opts && $opts->rowCount() > 0)
 			{
-				while( !false == ($row = $opts->fetchRow( MYSQL_ASSOC ) ) )
+				while( !false == ($row = $opts->fetch() ) )
 				{
 					$options[$row['image_id']][$row['name']]		= $row['value'];
 
@@ -537,22 +555,22 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			else return false;
 
 			$conts	= CAT_Helper_Page::getInstance()->db()->query( sprintf(
-					"SELECT `content`, `image_id` FROM `%smod_cc_%s`
-						WHERE `section_id` = '%s' AND
-							`gallery_id` = '%s'%s",
-					CAT_TABLE_PREFIX,
-					'catgallery_contents',
-					self::$section_id,
-					self::$gallery_id,
+					'SELECT `content`, `image_id` FROM `:prefix:mod_cc_catgallery_contents`
+						WHERE `section_id` = :section_id AND
+							`gallery_id` = :gallery_id %s',
 					$select
+				),
+				array(
+					'section_id'		=> self::$section_id,
+					'gallery_id'	=> self::$gallery_id
 				)
 			);
 
 			$contents	= array();
 
-			if ( isset($conts) && $conts->numRows() > 0)
+			if ( $conts && $conts->rowCount() > 0)
 			{
-				while( !false == ($row = $conts->fetchRow( MYSQL_ASSOC ) ) )
+				while( !false == ($row = $conts->fetch() ) )
 				{
 					$contents[$row['image_id']]['content']		= $row['content'];
 					$this->images[$row['image_id']]['content']	= $row['content'];
@@ -692,22 +710,21 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		{
 			if ( !$this->checkIDs( $image_id ) ) return false;
 
-			if ( CAT_Helper_Page::getInstance()->db()->query( sprintf(
-					"REPLACE INTO `%smod_cc_%s`
-						SET `gallery_id` = '%s',
-							`page_id` = '%s',
-							`section_id` = '%s',
-							`image_id` = '%s',
-							`content` = '%s',
-							`text` = '%s'",
-					CAT_TABLE_PREFIX,
-					'catgallery_contents',
-					self::$gallery_id,
-					self::$page_id,
-					self::$section_id,
-					$image_id,
-					$this->toSQL( $content ),
-					umlauts_to_entities( strip_tags( $content ), strtoupper(DEFAULT_CHARSET), 0)
+			if ( CAT_Helper_Page::getInstance()->db()->query(
+				'REPLACE INTO `:prefix:mod_cc_catgallery_contents`
+					SET `gallery_id`	= :gallery_id,
+						`page_id`		= :page_id,
+						`section_id`	= :section_id,
+						`image_id`		= :image_id,
+						`content`		= :content,
+						`text`			= :text',
+				array(
+					'gallery_id'	=> self::$gallery_id,
+					'page_id'		=> self::$page_id,
+					'section_id'	=> self::$section_id,
+					'image_id'		=> $image_id,
+					'content'		=> $content,
+					'text'			=> umlauts_to_entities( strip_tags( $content ), strtoupper(DEFAULT_CHARSET), 0),
 				)
 			) ) return true;
 			else return false;
@@ -730,18 +747,17 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			if( !$this->checkIDs( $image_id ) ||
 					!$name ) return false;
 
-			if ( CAT_Helper_Page::getInstance()->db()->query( sprintf(
-					"REPLACE INTO `%smod_cc_%s`
-						SET `section_id`	= '%s',
-							`image_id`		= '%s',
-							`name`			= '%s',
-							`value`			= '%s'",
-					CAT_TABLE_PREFIX,
-					'catgallery_images_options',
-					self::$section_id,
-					intval( $image_id ),
-					$this->toSQL( $name ),
-					$this->toSQL( $value )
+			if ( CAT_Helper_Page::getInstance()->db()->query(
+				'REPLACE INTO `:prefix:mod_cc_catgallery_images_options`
+					SET `section_id`	= :section_id,
+						`image_id`		= :image_id,
+						`name`			= :name,
+						`value`			= :value',
+				array(
+					'section_id'	=> self::$section_id,
+					'image_id'		=> $image_id,
+					'name'			=> $name,
+					'value'			=> $value
 				)
 			) ) return true;
 			else return false;
@@ -764,21 +780,31 @@ if ( ! class_exists( 'catGallery', false ) ) {
 
 			if ( $name && isset($this->options[$name]) ) return $this->options[$name];
 
-			$getOptions		= CAT_Helper_Page::getInstance()->db()->query( sprintf(
-					"SELECT * FROM `%smod_cc_%s`
-						WHERE `section_id` = '%s' AND
-							`gallery_id` = '%s'%s",
-					CAT_TABLE_PREFIX,
-					'catgallery_options',
-					self::$section_id,
-					self::$gallery_id,
-					$name ? " AND `name` = '" . $this->toSQL( $name ) . "'" : ""
-				)
+			$getOptions		= $name ? 
+				CAT_Helper_Page::getInstance()->db()->query(
+					'SELECT * FROM `:prefix:mod_cc_catgallery_options`
+						WHERE `section_id` = :section_id AND
+							`gallery_id` = :gallery_id AND
+							`name` = :name',
+					array(
+						'section_id'	=> self::$section_id,
+						'gallery_id'	=> self::$gallery_id,
+						'name'			=> $name
+					)
+				) : 
+				CAT_Helper_Page::getInstance()->db()->query(
+					'SELECT * FROM `:prefix:mod_cc_catgallery_options`
+						WHERE `section_id` = :section_id AND
+							`gallery_id` = :gallery_id',
+					array(
+						'section_id'	=> self::$section_id,
+						'gallery_id'	=> self::$gallery_id
+					)
 			);
 
-			if ( isset($getOptions) && $getOptions->numRows() > 0)
+			if ( $getOptions && $getOptions->rowCount() > 0)
 			{
-				while( !false == ($row = $getOptions->fetchRow( MYSQL_ASSOC ) ) )
+				while( !false == ($row = $getOptions->fetch() ) )
 				{
 					$this->options[$row['name']]	= $row['value'];
 				}
@@ -809,46 +835,23 @@ if ( ! class_exists( 'catGallery', false ) ) {
 				!$name
 			) return false;
 
-			if ( CAT_Helper_Page::getInstance()->db()->query( sprintf(
-					"REPLACE INTO `%smod_%s` SET
-						`page_id`		= '%s',
-						`section_id`	= '%s',
-						`gallery_id`	= '%s',
-						`name`			= '%s',
-						`value`			= '%s'",
-					CAT_TABLE_PREFIX,
-					'cc_catgallery_options',
-					self::$page_id,
-					self::$section_id,
-					self::$gallery_id,
-					$this->toSQL( $name ),
-					$this->toSQL( $value )
+			if ( CAT_Helper_Page::getInstance()->db()->query(
+				'REPLACE INTO `:prefix:mod_cc_catgallery_options`
+					SET `gallery_id`	= :gallery_id,
+						`page_id`		= :page_id,
+						`section_id`	= :section_id,
+						`name`			= :name,
+						`value`			= :value',
+				array(
+					'gallery_id'	=> self::$gallery_id,
+					'page_id'		=> self::$page_id,
+					'section_id'	=> self::$section_id,
+					'name'			=> $name,
+					'value'			=> $value
 				)
 			) ) return true;
 			else return false;
 		} // end saveOptions()
-
-
-
-
-		/**
-		 *
-		 * @access public
-		 * @return
-		 * NEEDS TO BE REWORKED TO BE COMPATIBLE TO PHP 5.5!!!
-		 **/
-		private function toSQL( $value )
-		{
-			if ( !is_string( $value ) ) return $value;
-
-			if ( get_magic_quotes_gpc() == 1 )
-				return mysql_real_escape_string( stripslashes( $value ) );
-			else {
-				return mysql_real_escape_string( $value );
-			}
-
-			return NULL;
-		}   // end function toSQL()
 
 
 		/**

@@ -42,8 +42,7 @@ if (defined('CAT_PATH')) {
 }
 // end include class.secure.php
 
-
-include_once( 'class.catgallery.php' );
+include_once( 'classes/class.catgallery.php' );
 
 $catGallery	= new catGallery();
 
@@ -59,11 +58,10 @@ $parser_data	= array(
 	'options'			=> $catGallery->getOptions(),
 	'effects'			=> $catGallery->effects,
 	'images'			=> $catGallery->getImage(),
-	'page_link'			=> CAT_Helper_Page::getInstance()->properties( $page_id, 'link' ),
 	'countImg'			=> $catGallery->countImg(),
-	'imgURL'			=> $catGallery->getImageURL()
+	'imgURL'			=> $catGallery->getImageURL(),
+	'page_link'			=> CAT_Helper_Page::getInstance()->properties( $page_id, 'link' ),
 );
-
 
 if ( $parser_data['countImg'] > 0 )
 	$template		= 'view';
@@ -74,6 +72,18 @@ else
 $module_path	= '/modules/cc_catgallery/';
 
 $variant		= $catGallery->getVariant();
+
+if ( file_exists( CAT_PATH . '/modules/lib_mdetect/mdetect/mdetect.php' ) )
+{
+	require_once( CAT_PATH . '/modules/lib_mdetect/mdetect/mdetect.php' );
+	$uagent_obj = new uagent_info();
+	if( $uagent_obj->DetectMobileQuick() )
+	{
+		$parser_data['options']['is_mobile']	= true;
+	}
+} else {
+	$parser_data['options']['is_mobile']	= NULL;
+}
 
 if ( file_exists( CAT_PATH . $module_path .'view/' . $variant . '/view.php' ) )
 	include( CAT_PATH . $module_path .'view/' . $variant . '/view.php' );
