@@ -180,11 +180,8 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		private function initAdd()
 		{
 			if ( !self::$section_id || !self::$page_id ) return false;
+
 			// Add a new catGallery
-			 $check  = $database->query(
-                'SELECT `value` FROM `:prefix:settings` WHERE `name`=:name',
-                array('name'=>$key)
-            );
 			if ( CAT_Helper_Page::getInstance()->db()->query(
 					'INSERT INTO `:prefix:mod_cc_catgallery`
 						( `page_id`, `section_id` ) VALUES
