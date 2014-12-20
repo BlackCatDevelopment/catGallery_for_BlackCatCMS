@@ -64,7 +64,7 @@ if(defined('CAT_URL'))
 		. ' `section_id` INT NOT NULL DEFAULT \'0\','
 		. ' `page_id` INT NOT NULL DEFAULT \'0\','
 		. ' `name` VARCHAR(255) NOT NULL,'
-		. ' `value` VARCHAR(2047) NOT NULL,'
+		. ' `value` VARCHAR(2047) NOT NULL DEFAULT \'\','
 		. ' PRIMARY KEY ( `gallery_id`, `section_id`, `name` )'
 		. ' )';
 	$pageHelper->db()->query($mod_gallery);
@@ -89,7 +89,7 @@ if(defined('CAT_URL'))
 		. ' `gallery_id` INT NOT NULL DEFAULT \'0\','
 		. ' `section_id` INT NOT NULL DEFAULT \'0\','
 		. ' `name` VARCHAR(255) NOT NULL,'
-		. ' `value` VARCHAR(2047) NOT NULL,'
+		. ' `value` VARCHAR(2047) NOT NULL DEFAULT \'\','
 		. ' PRIMARY KEY ( `image_id`, `gallery_id`, `section_id`, `name` )'
 		. ' )';
 	$pageHelper->db()->query($mod_gallery);
