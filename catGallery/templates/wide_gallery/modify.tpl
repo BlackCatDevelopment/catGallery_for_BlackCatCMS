@@ -92,7 +92,7 @@
 	</div>
 	{if $images}
 	<div class="cc_catgallery_option">
-		{translate('Current images')}
+		{translate('Existing images')}
 		<div class="cc_catgallery_show"></div>
 	</div>
 	<div class="cc_catgallery_option_content">
