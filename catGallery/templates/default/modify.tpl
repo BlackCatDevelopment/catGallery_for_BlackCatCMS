@@ -104,25 +104,28 @@
 	</div>
 	{if $images}
 	<div class="cc_catgallery_option">
-		{translate('Current images')}
+		{translate('Existing images')}
 		<div class="cc_catgallery_show"></div>
 	</div>
 	<div class="cc_catgallery_option_content">
 		{$counter = 0}
 		{foreach $images as image}
+
+		<p class="cc_catgallery_dreispalten">
+			<img src="{$folder_url}/{$image.picture}" class="cc_preview" width="auto" height="140" ><br>
+			{translate('Name of image')}: {$image.picture}<br>
+		</p>
 		<div class="cc_catgallery_dreispalten">
 			<p>
-				{translate('Name of image')}: {$image.picture}<br/>
-				<input type="hidden" name="image_ids[]" value="{$image.image_id}" />
-				<input type="hidden" name="picture_{$image.image_id}" value="{$image.picture}" /><br/>
-				<input type="checkbox" class="fc_checkbox_jq" name="delete_{$image.image_id}" value="{$image.picture}" id="cc_catgallery_{$image.image_id}" /><label for="cc_catgallery_{$image.image_id}">{translate('Delete this image during the next save')}</label><br/>
+				<input type="hidden" name="image_ids[]" value="{$image.image_id}" >
+				<input type="hidden" name="picture_{$image.image_id}" value="{$image.picture}" ><br>
 				{translate('Alternative text')}:
-				<input type="text" name="alt_{$image.image_id}" value="{if $image.options.alt}{$image.options.alt}{/if}" />
+				<input type="text" name="alt_{$image.image_id}" value="{if $image.options.alt}{$image.options.alt}{/if}" ><br>
+			</p>
+			<p>
+				<input type="checkbox" class="fc_checkbox_jq" name="delete_{$image.image_id}" value="{$image.picture}" id="cc_catgallery_{$image.image_id}" ><label for="cc_catgallery_{$image.image_id}">{translate('Delete this image during the next save')}</label>
 			</p>
 		</div>
-		<p class="cc_catgallery_dreispalten">
-			<img src="{$folder_url}/{$image.picture}" class="cc_preview" width="auto" height="140" />
-		</p>
 		<div class="clear"></div>
 		<p>
 			{translate('Description for Image')}:

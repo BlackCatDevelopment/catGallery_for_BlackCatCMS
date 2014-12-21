@@ -64,10 +64,14 @@ $LANG = array(
     								=> 'Bitte beachten, bei mehreren Bildern erh&ouml;ht sich die Ladezeit',
     'Add another upload'			=> 'Ein weiteres Bild hinzuf&uuml;gen',
     'Cancel'						=> 'Abbrechen',
-    'Current images'				=> 'Vorhandene Bilder',
+    'Existing images'				=> 'Vorhandene Bilder',
+    'Replace image'					=> 'Bild ersetzen',
+    'Delete this image'				=> 'Dieses Bild löschen',
     'Name of image'					=> 'Bildname',
     'Alternative text'				=> 'Alternativer Text',
     'Description for Image'			=> 'Bildbeschreibung',
     'No images available'			=> 'Keine Bilder vorhanden',
-    'Width of gallery (0 for 100%)'	=> 'Breite der Galerie (0 für 100%)'
+    'Width of gallery (0 for 100%)'	=> 'Breite der Galerie (0 für 100%)',
+    'Delete this image during the next save'
+    								=> 'Dieses Bild beim n&auml;chsten Speichern l&ouml;schen'
 );
