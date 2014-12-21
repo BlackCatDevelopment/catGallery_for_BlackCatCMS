@@ -181,6 +181,9 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		{
 			if ( !self::$section_id || !self::$page_id ) return false;
 
+			if( !file_exists( self::$gallery_root ) )
+				CAT_Helper_Directory::getInstance()->createDirectory( self::$gallery_root, NULL, true );
+
 			// Add a new catGallery
 			if ( CAT_Helper_Page::getInstance()->db()->query(
 					'INSERT INTO `:prefix:mod_cc_catgallery`
