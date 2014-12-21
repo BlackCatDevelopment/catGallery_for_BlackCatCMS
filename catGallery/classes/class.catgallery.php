@@ -105,7 +105,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			'random'		=> '0',
 			'animSpeed'		=> '500',
 			'pauseTime'		=> '4000',
-			'label'			=> '500',
+			'label'			=> '0',
 			'resize_x'		=> '781',
 			'resize_y'		=> '350'
 		);
