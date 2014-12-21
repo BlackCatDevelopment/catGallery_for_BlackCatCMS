@@ -68,5 +68,6 @@ $LANG = array(
     'Name of image'					=> 'Bildname',
     'Alternative text'				=> 'Alternativer Text',
     'Description for Image'			=> 'Bildbeschreibung',
-    'No images available'			=> 'Keine Bilder vorhanden'
+    'No images available'			=> 'Keine Bilder vorhanden',
+    'Width of gallery (0 for 100%)'	=> 'Breite der Galerie (0 für 100%)'
 );

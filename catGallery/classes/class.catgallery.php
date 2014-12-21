@@ -447,6 +447,8 @@ if ( ! class_exists( 'catGallery', false ) ) {
 						$this->createImg( $row['image_id'] );
 				}
 			} else return false;
+			if ( $this->getOptions( 'random' ) == 1 )
+				shuffle( $this->images );
 			return $this->images;
 		} // end getContents()
 

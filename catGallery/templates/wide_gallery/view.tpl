@@ -23,7 +23,6 @@
  *}
 <script type="text/javascript">
 	var animSpeed	= {if $options.animSpeed}{$options.animSpeed}{else}700{/if};
-		
 </script>
 <div id="cat_gallery_{$section_id}">
 	<div class="wide_gallery_container" {if $options.winWidth}style="width: {$options.winWidth}px;"{/if}>
