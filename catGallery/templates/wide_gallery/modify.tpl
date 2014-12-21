@@ -28,7 +28,7 @@
 		<input type="hidden" name="page_id" value="{$page_id}" />
 		<input type="hidden" name="section_id" value="{$section_id}" />
 		<input type="hidden" name="gallery_id" value="{$gallery_id}" />
-		<input type="hidden" name="options" value="resize_x,resize_y,animSpeed,random" />
+		<input type="hidden" name="options" value="resize_x,resize_y,animSpeed,random,winWidth" />
 		<input type="hidden" name="image_options" value="alt" />
 	</div>
 	<div class="cc_catgallery_option fc_gradient1">
@@ -47,6 +47,10 @@
 		<p class="cc_catgallery_dreispalten">
 			{translate('Time for animation')}:
 			<input type="text" name="animSpeed" value="{if $options.animSpeed}{$options.animSpeed}{else}3000{/if}" /> ms
+		</p>
+		<p class="cc_catgallery_dreispalten">
+			{translate('Width of gallery (0 for 100%)')}:
+			<input type="text" name="winWidth" value="{if $options.winWidth}{$options.winWidth}{else}0{/if}" /> px
 		</p>
 		<p class="cc_catgallery_dreispalten clear">
 			<input id="random_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="random" value="1" {if $options.random}checked="checked" {/if}/>

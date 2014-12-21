@@ -26,7 +26,7 @@
 		
 </script>
 <div id="cat_gallery_{$section_id}">
-	<div class="wide_gallery_container">
+	<div class="wide_gallery_container" {if $options.winWidth}style="width: {$options.winWidth}px;"{/if}>
 		<ul class="wide_gallery" style="width: {$countImg*$options.resize_x}px;">
 			{foreach $images as image}
 			<li>

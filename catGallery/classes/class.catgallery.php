@@ -139,7 +139,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			{
 				$this->initAdd();
 			}
-			elseif ( is_numeric($gallery_id) )
+			elseif ( is_numeric($gallery_id) && !$is_header )
 			{
 				self::$gallery_id	= $gallery_id;
 			}
