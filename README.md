@@ -9,7 +9,7 @@ For german support please visit http://forum.blackcat-cms.org/viewtopic.php?f=21
 The module uses Skitter in the default setting: https://github.com/thiagosf/SkitterSlideshow
 
 ## Preferences
-The current is coded for BlackCat CMS 1.1.
+The current version is coded for BlackCat CMS 1.1
 
 ## License
 
