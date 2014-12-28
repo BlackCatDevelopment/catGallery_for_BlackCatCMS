@@ -24,7 +24,6 @@
 
 $(document).ready(function()
 {
-	$('.cc_catgallery_option_content').not('.show_on_startup').hide(0);
 	$('.cc_catgallery_option .cc_catgallery_show').unbind().click(function()
 	{
 		var current		= $(this).closest('.cc_catgallery_option');
@@ -32,12 +31,47 @@ $(document).ready(function()
 		current.toggleClass('active');
 	});
 
-	$('.upload').unbind().click( function(e)
+	$('.cc_toggle_set').next('div').hide();
+
+	$('.cc_catG_del .fc_close').unbind().click(function()
+	{
+		$(this).closest('p').children('.cc_catG_del_conf, .cc_catG_del_res, .cc_catG_del strong').slideToggle(100);
+	});
+
+	$('.cc_catG_del_conf').unbind().click(function()
+	{
+		
+	});
+	$('.cc_catG_del_res').unbind().click(function()
+	{
+		$(this).closest('p').children('.cc_catG_del_conf, .cc_catG_del_res, .cc_catG_del strong').slideUp(100);
+	});
+
+
+	$('.toggleWYSIWYG').click(function(e)
 	{
 		e.preventDefault();
-		var field	= $(this).closest('.cc_catgallery_option_content').find('input[name=upload_counter]'),
-			counter	= parseInt( field.val() ) + 1;
-		field.val( counter )
-		$('.new_image:last').after('<br/><input type="file" size="32" class="new_image" name="new_image_' + counter + '" />');
+		$(this).closest('li').toggleClass('cc_catG_WYSIWYG');
+	});
+
+
+
+
+
+
+	$('.cc_toggle_set, .cc_catG_skin input:reset').unbind().click(function()
+	{
+		$(this).closest('.cc_catG_skin').children('div').slideToggle(200);
+	});
+
+	$('.cc_catG_nav').children('li').unbind().click( function()
+	{
+		var $curr	= $(this),
+			cur_ind	= $curr.index(),
+			$nav	= $curr.closest('ul'),
+			$tabs	= $nav.next('ul'),
+			$currT	= $tabs.children('li').eq(cur_ind);
+		$nav.children('li').removeClass('active').filter($curr).addClass('active');
+		$tabs.children('li').removeClass('active').filter($currT).addClass('active');
 	});
 });
