@@ -122,7 +122,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		public function __construct( $gallery_id	= NULL, $is_header	= false )
 		{
 			global $page_id, $section_id;
-
+			require_once(CAT_PATH . '/framework/functions.php');
 			// This is a workaround for headers.inc.php as there is no $section_id defined yet
 			if ( !isset($section_id) || $is_header )
 			{
@@ -601,67 +601,64 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			if ( !$this->checkIDs() ||
 				!is_numeric($counter) ) return false;
 
-			for ( $file_id = 1; $file_id <= $counter; $file_id++  )
+				$field_name	= 'new_image';
+
+			if ( isset( $tmpFiles[$field_name]['name'] ) && $tmpFiles[$field_name]['name'] != '' )
 			{
-				$field_name	= 'new_image_' . $file_id;
-
-				if ( isset( $tmpFiles[$field_name]['name'] ) && $tmpFiles[$field_name]['name'] != '' )
+				// =========================================== 
+				// ! Get file extension of the uploaded file   
+				// =========================================== 
+				$file_extension	= (strtolower( pathinfo( $tmpFiles[$field_name]['name'], PATHINFO_EXTENSION ) ) == '')
+							? false
+							: strtolower( pathinfo($tmpFiles[$field_name]['name'], PATHINFO_EXTENSION))
+							;
+				// ====================================== 
+				// ! Check if file extension is allowed   
+				// ====================================== 
+				if ( isset( $file_extension ) && in_array( $file_extension, $this->getAllowed() ) )
 				{
-					// =========================================== 
-					// ! Get file extension of the uploaded file   
-					// =========================================== 
-					$file_extension	= (strtolower( pathinfo( $tmpFiles[$field_name]['name'], PATHINFO_EXTENSION ) ) == '')
-								? false
-								: strtolower( pathinfo($tmpFiles[$field_name]['name'], PATHINFO_EXTENSION))
-								;
-					// ====================================== 
-					// ! Check if file extension is allowed   
-					// ====================================== 
-					if ( isset( $file_extension ) && in_array( $file_extension, $this->getAllowed() ) )
+					if ( ! is_array($tmpFiles) || ! count($tmpFiles) )
 					{
-						if ( ! is_array($tmpFiles) || ! count($tmpFiles) )
+						echo CAT_Backend::getInstance('Pages', 'pages_modify')->lang()->translate('No files!');
+					}
+					else
+					{
+						$current = CAT_Helper_Upload::getInstance( $tmpFiles[$field_name] );
+						if ( $current->uploaded )
 						{
-							echo CAT_Backend::getInstance('Pages', 'pages_modify')->lang()->translate('No files!');
-						}
-						else
-						{
-							$current = CAT_Helper_Upload::getInstance( $tmpFiles[$field_name] );
-							if ( $current->uploaded )
+							$current->file_overwrite		= false;
+							$current->process( self::$gallery_root . '/temp/' );
+				
+							if ( $current->processed )
 							{
-								$current->file_overwrite		= false;
-								$current->process( self::$gallery_root . '/temp/' );
-					
-								if ( $current->processed )
-								{
-									$addImg	= $this->addImg( $file_extension );
+								$addImg	= $this->addImg( $file_extension );
 
-									if ( !CAT_Helper_Image::getInstance()->make_thumb(
-											self::$gallery_root . '/temp/' . $current->file_dst_name,
-											$this->getFolder() . '/' . $addImg['picture'],
-											1600,//$resize_y,
-											1600,//$resize_x,
-											'fit'
-									) ) $return	= false;
+								if ( !CAT_Helper_Image::getInstance()->make_thumb(
+										self::$gallery_root . '/temp/' . $current->file_dst_name,
+										$this->getFolder() . '/' . $addImg['picture'],
+										1600,//$resize_y,
+										1600,//$resize_x,
+										'fit'
+								) ) $return	= false;
 
-									unlink(self::$gallery_root . '/temp/' . $current->file_dst_name);
+								unlink(self::$gallery_root . '/temp/' . $current->file_dst_name);
 
-									// =================================
-									// ! Clean the upload class $files
-									// =================================
-									$current->clean();
-
-								}
-								else
-								{
-									$return	= false;
-									echo CAT_Backend::getInstance('Pages', 'pages_modify')->lang()->translate('File upload error: {{error}}',array('error'=>$current->error));
-								}
+								// =================================
+								// ! Clean the upload class $files
+								// =================================
+								$current->clean();
+								return $addImg;
 							}
 							else
 							{
 								$return	= false;
 								echo CAT_Backend::getInstance('Pages', 'pages_modify')->lang()->translate('File upload error: {{error}}',array('error'=>$current->error));
 							}
+						}
+						else
+						{
+							$return	= false;
+							echo CAT_Backend::getInstance('Pages', 'pages_modify')->lang()->translate('File upload error: {{error}}',array('error'=>$current->error));
 						}
 					}
 				}

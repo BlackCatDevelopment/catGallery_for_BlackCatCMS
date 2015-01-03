@@ -31,37 +31,107 @@ $(document).ready(function()
 		current.toggleClass('active');
 	});
 
-	$('.cc_toggle_set').next('div').hide();
+	$('.cc_toggle_set').next('form').hide();
 
-	$('.cc_catG_del .fc_close').unbind().click(function()
+
+	/**/
+	$('.cc_catG_imgs').on( 'click',
+		'.fc_close',
+	function()
 	{
-		$(this).closest('p').children('.cc_catG_del_conf, .cc_catG_del_res, .cc_catG_del strong').slideToggle(100);
+			$(this).closest('p').children('.cc_catG_del_conf, .cc_catG_del_res, .cc_catG_del strong').slideToggle(100);
 	});
 
-	$('.cc_catG_del_conf').unbind().click(function()
+	$('.cc_catG_imgs').on( 'click',
+		'.cc_catG_del_conf',
+	function()
 	{
-		
+		var	$cur		= $(this),
+			$li			= $cur.closest('li'),
+			$inputs		= $li.children('input'),
+			ajaxData	= {
+				page_id		: $inputs.filter('input[name=page_id]').val(),
+				section_id	: $inputs.filter('input[name=section_id]').val(),
+				gallery_id	: $inputs.filter('input[name=gallery_id]').val(),
+				removeID	: $inputs.filter('input[name=image_id]').val(),
+				_cat_ajax	: 1
+			};
+
+			$.ajax(
+			{
+				type:		'POST',
+				context:	$li,
+				url:		CAT_URL + '/modules/cc_catgallery/save.php',
+				dataType:	'JSON',
+				data:		ajaxData,
+				cache:		false,
+				beforeSend:	function( data )
+				{
+					// Set activity and store in a variable to use it later
+					data.process	= set_activity( 'Deleting image' );
+				},
+				success:	function( data, textStatus, jqXHR )
+				{
+					if ( data.success === true )
+					{
+						$(this).slideUp(300,function(){
+							$(this).remove();
+						});
+						return_success( jqXHR.process , data.message );
+					}
+					else {
+						// return error
+						return_error( jqXHR.process , data.message );
+					}
+				},
+				error:		function( data, textStatus, jqXHR )
+				{
+					return_error( jqXHR.process , data.message );
+				}
+			});
+
 	});
-	$('.cc_catG_del_res').unbind().click(function()
+	$('.cc_catG_imgs').on( 'click',
+		'.cc_catG_del_res',
+	function()
 	{
 		$(this).closest('p').children('.cc_catG_del_conf, .cc_catG_del_res, .cc_catG_del strong').slideUp(100);
 	});
 
-
-	$('.toggleWYSIWYG').click(function(e)
+	$('.cc_catG_imgs').on( 'click',
+		'.toggleWYSIWYG',
+	function(e)
 	{
 		e.preventDefault();
-		$(this).closest('li').toggleClass('cc_catG_WYSIWYG');
+
+		var $par		= $(this).closest('li'),
+			$WYSIWYG	= $(".catG_WYSIWYG");
+
+		if ( $par.hasClass('cc_catG_WYSIWYG') )
+		{
+			$par.removeClass('cc_catG_WYSIWYG').css({height: 'auto'});
+			$WYSIWYG.hide();
+		} else {
+			$('.cc_catG_imgs').children('li').removeClass('cc_catG_WYSIWYG').css({height: 'auto'});
+			$par.addClass('cc_catG_WYSIWYG')
+			var	pos			= $par.position(),
+				widthImg	= $par.find('.cc_catG_left').outerWidth()
+				widthLi		= $par.outerWidth();
+			
+			$WYSIWYG.css({
+			    top:	pos.top + "px",
+			    left:	( pos.left + widthImg ) + "px",
+			}).show();
+			
+			$par.css({height: ( $WYSIWYG.outerHeight() ) + 'px' });
+		}
 	});
-
-
-
 
 
 
 	$('.cc_toggle_set, .cc_catG_skin input:reset').unbind().click(function()
 	{
-		$(this).closest('.cc_catG_skin').children('div').slideToggle(200);
+		$(this).closest('.cc_catG_skin').children('form').slideToggle(200);
 	});
 
 	$('.cc_catG_nav').children('li').unbind().click( function()

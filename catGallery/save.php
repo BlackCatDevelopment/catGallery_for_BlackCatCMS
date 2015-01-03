@@ -43,7 +43,13 @@ if (defined('CAT_PATH')) {
 // end include class.secure.php
 
 $val		= CAT_Helper_Validate::getInstance();
-$backend	= CAT_Backend::getInstance('Pages', 'pages_modify');
+$is_ajax	= $val->sanitizePost( '_cat_ajax','numeric' );
+$backend	= $is_ajax == 1
+					? CAT_Backend::getInstance('Pages', 'pages_modify', false)
+					: CAT_Backend::getInstance('Pages', 'pages_modify');
+
+
+$ajax_return	= array();
 
 // ===============
 // ! Get page id
@@ -74,8 +80,12 @@ elseif ( file_exists( CAT_PATH . $module_path .'save/default/save.php' ) )
 $update_when_modified = true;
 CAT_Backend::getInstance()->updateWhenModified();
 
-
-// Print admin footer
-$backend->print_footer();
-
+if( $is_ajax == 1 )
+{
+	print json_encode( $ajax_return );
+	exit();
+} else {
+	// Print admin footer
+	$backend->print_footer();	
+}
 ?>

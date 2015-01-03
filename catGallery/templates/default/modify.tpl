@@ -22,10 +22,39 @@
  *
  *}
 
-<form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" class="cc_catG_form" enctype="multipart/form-data">
+<script type="text/javascript">
+	$(document).ready(function()
+	\{
+		$(".cc_dropzone").dropzone(
+		\{
+			url:		'{$CAT_URL}/modules/cc_catgallery/save.php',
+			paramName:	'new_image',
+			sending:	function(file, xhr, formData)
+			\{
+				formData.append('page_id',	{$page_id});
+				formData.append('section_id', {$section_id});
+				formData.append('gallery_id', {$gallery_id});
+				formData.append('_cat_ajax', 1);
+			},
+			previewsContainer:	'.cc_catG_imgs',
+			previewTemplate:	$('.prevTemp').clone().removeClass('prevTemp')[0].outerHTML,
+			success:	function(file, xhr, formData)
+			{
+				console.log(file, xhr, formData);
+			}
+		});
+	});
+</script>
+
+<div class="cc_catG_form">
 	<div class="cc_catG_skin fc_br_top">
 		<p class="icon-cog cc_toggle_set"> {translate('Set skin')}</p>
-		<div class="fc_gradient1 fc_border_all_light fc_br_bottom fc_shadow_small">
+		<form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" class="fc_gradient1 fc_border_all_light fc_br_bottom fc_shadow_small">
+			<input type="hidden" name="page_id" value="{$page_id}" />
+			<input type="hidden" name="section_id" value="{$section_id}" />
+			<input type="hidden" name="gallery_id" value="{$gallery_id}" />
+			<input type="hidden" name="_cat_ajax" value="1" />
+			<input type="hidden" name="options" value="variant" />
 			<select name="variant">
 			{foreach $module_variants index variants}
 				<option value="{$index}"{if $index == $options.variant} selected="selected"{/if}>{$variants}</option>
@@ -33,15 +62,10 @@
 			</select><br/>
 			<input type="submit" name="speichern" value="{translate('Save skin &amp; reload')}" /><br/>
 			<input type="reset" name="reset" value="{translate('Close')}" />
-		</div>
+		</form>
 	</div>
 	<div class="clear"></div>
 	<div class="cc_catG_settings">
-		<input type="hidden" name="page_id" value="{$page_id}" />
-		<input type="hidden" name="section_id" value="{$section_id}" />
-		<input type="hidden" name="gallery_id" value="{$gallery_id}" />
-		<input type="hidden" name="options" value="effect,resize_x,resize_y,animSpeed,pauseTime,random,label" />
-		<input type="hidden" name="image_options" value="alt" />
 		<ul class="cc_catG_nav fc_br_left">
 			<li class="active fc_br_topleft">{translate('Upload new image')}</li>
 			<li>{translate('Options for frontend')}</li>
@@ -50,37 +74,53 @@
 		<ul class="cc_catG_tabs fc_br_right">
 			<li class="cc_catG_tab active">
 				<div class="cc_dropzone fc_br_all">
-					{translate('Drag &amp; drop')}<span>{translate('your images here to upload')}.</span>
+					{translate('Drag &amp; drop')}<span>{translate('your images here or click to upload')}.</span>
 				</div>
 			</li>
 			<li class="cc_catG_tab">
-				<span class="cc_In200px">{translate('Kind of animation')}:</span>
-				<select name="effect">
-					<option value="0"{if !$options.effect} selected="selected"{/if}>{translate('No effect selected...')}</option>
-					{foreach $effects as option}
-					<option value="{$option}"{if $options.effect == $option} selected="selected"{/if}>{$option}</option>
-					{/foreach}
-				</select><br/>
-				<span class="cc_In200px">{translate('Time until animation')}:</span>
-				<input type="text" class="cc_In100px" name="pauseTime" value="{if $options.pauseTime}{$options.pauseTime}{else}8000{/if}" /> ms<br/>
-				<span class="cc_In200px">{translate('Time for animation')}:</span>
-				<input type="text" class="cc_In100px" name="animSpeed" value="{if $options.animSpeed}{$options.animSpeed}{else}3000{/if}" /> ms<br/>
-				<span class="cc_In200px">{translate('Width of label (Set to 0 for no labels)')}:</span>
-				<input type="text" class="cc_In100px" name="label" value="{if $options.label}{$options.label}{else}0{/if}" /> px<br/>
-				<p class="cc_In300px">
-					<input id="random_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="random" value="1" {if $options.random}checked="checked" {/if}/>
-					<label for="random_{$section_id}">{translate('Show images by chance')}:</label>
-				</p><br/>
-				<input type="submit" name="speichern" value="{translate('Save')}" />
+				<form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" class="ajaxForm">
+					<input type="hidden" name="page_id" value="{$page_id}" />
+					<input type="hidden" name="section_id" value="{$section_id}" />
+					<input type="hidden" name="gallery_id" value="{$gallery_id}" />
+					<input type="hidden" name="_cat_ajax" value="1" />
+					<input type="hidden" name="options" value="effect,animSpeed,pauseTime,random,label" />
+					<input type="hidden" name="image_options" value="alt" />
+					<span class="cc_In200px">{translate('Kind of animation')}:</span>
+					<select name="effect">
+						<option value="0"{if !$options.effect} selected="selected"{/if}>{translate('No effect selected...')}</option>
+						{foreach $effects as option}
+						<option value="{$option}"{if $options.effect == $option} selected="selected"{/if}>{$option}</option>
+						{/foreach}
+					</select><br/>
+					<span class="cc_In200px">{translate('Time until animation')}:</span>
+					<input type="text" class="cc_In100px" name="pauseTime" value="{if $options.pauseTime}{$options.pauseTime}{else}8000{/if}" /> ms<br/>
+					<span class="cc_In200px">{translate('Time for animation')}:</span>
+					<input type="text" class="cc_In100px" name="animSpeed" value="{if $options.animSpeed}{$options.animSpeed}{else}3000{/if}" /> ms<br/>
+					<span class="cc_In200px">{translate('Width of label (Set to 0 for no labels)')}:</span>
+					<input type="text" class="cc_In100px" name="label" value="{if $options.label}{$options.label}{else}0{/if}" /> px<br/>
+					<p class="cc_In300px">
+						<input id="random_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="random" value="1" {if $options.random}checked="checked" {/if}/>
+						<label for="random_{$section_id}">{translate('Show images by chance')}:</label>
+					</p><br/>
+					<input type="submit" name="speichern" value="{translate('Save')}" />
+				</form>
 			</li>
 			<li class="cc_catG_tab">
-				<p class="cc_catG_dreispalten">
-					<span class="cc_In200px">{translate('Adjust horizontal')}:</span>
-					<input type="text" class="cc_In100px" name="resize_x" value="{if $options.resize_x}{$options.resize_x}{else}724{/if}" /> px<br/>
-					<span class="cc_In200px">{translate('Adjust vertical')}:</span>
-					<input type="text" class="cc_In100px" name="resize_y" value="{if $options.resize_x}{$options.resize_y}{else}407{/if}" /> px<br/>
-				</p>
-				<input type="submit" name="speichern" value="{translate('Save')}" />
+				<form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" class="ajaxForm">
+					<input type="hidden" name="page_id" value="{$page_id}" />
+					<input type="hidden" name="section_id" value="{$section_id}" />
+					<input type="hidden" name="gallery_id" value="{$gallery_id}" />
+					<input type="hidden" name="_cat_ajax" value="1" />
+					<input type="hidden" name="options" value="resize_x,resize_y" />
+					<input type="hidden" name="image_options" value="alt" />
+					<p class="cc_catG_dreispalten">
+						<span class="cc_In200px">{translate('Adjust horizontal')}:</span>
+						<input type="text" class="cc_In100px" name="resize_x" value="{if $options.resize_x}{$options.resize_x}{else}724{/if}" /> px<br/>
+						<span class="cc_In200px">{translate('Adjust vertical')}:</span>
+						<input type="text" class="cc_In100px" name="resize_y" value="{if $options.resize_x}{$options.resize_y}{else}407{/if}" /> px<br/>
+					</p>
+					<input type="submit" name="speichern" value="{translate('Save')}" />
+				</form>
 			</li>
 			<li class="cc_catG_tab">
 				<p>
@@ -97,8 +137,14 @@
 		</ul>
 		<div class="clear"></div>
 	</div>
-	<p>{translate('Existing images')}</p>
 	{if $images}
+	<p>{translate('Existing images')}</p>
+	<div class="catG_WYSIWYG">
+		<p>
+			<strong>{translate('Description for Image')}:</strong>
+		</p>
+		{show_wysiwyg_editor($catG_WYSIWYG,$catG_WYSIWYG,'','100%','150px')}
+	</div>
 	<ul class="cc_catG_imgs">
 		{$counter = 0}
 		{foreach $images as image}
@@ -109,7 +155,11 @@
 				<strong> | </strong>
 				<span class="cc_catG_del_conf">{translate('Confirm delete')}</span>
 			</p>
-			<input type="hidden" name="image_ids[]" value="{$image.image_id}" >
+			<input type="hidden" name="pa8ge_id" value="{$page_id}" />
+			<input type="hidden" name="section_id" value="{$section_id}" />
+			<input type="hidden" name="gallery_id" value="{$gallery_id}" />
+			<input type="hidden" name="image_id" value="{$image.image_id}" />
+			<input type="hidden" name="_cat_ajax" value="1" />
 			<input type="hidden" name="picture_{$image.image_id}" value="{$image.picture}" >
 			<div class="cc_catG_left">
 				<p class="cc_catG_image">
@@ -122,18 +172,50 @@
 					<strong>{translate('Alternative text')}:<br></strong>
 					<input type="text" name="alt_{$image.image_id}" value="{if $image.options.alt}{$image.options.alt}{/if}" >
 				</p>
-				<button class="toggleWYSIWYG">Bearbeiten</button>
-			</div>
-			<div class="cc_catG_right">
-				<p>
-					<strong>{translate('Description for Image')}:</strong>
-				</p>
-				{show_wysiwyg_editor($image.contentname,$image.contentname,$image.image_content,'100%','150px')}
+				<button class="toggleWYSIWYG">{translate('Modify description')}</button>
 			</div>
 			<div class="clear"></div>
 		{$counter = $counter + 1}
 		</li>
 		{/foreach}
+		<li class="dz-preview dz-image-preview fc_border_all fc_shadow_small fc_br_all prevTemp" id="1">
+			<p class="cc_catG_del">
+				<span class="fc_close" title="{translate('Delete this image')}"></span>
+				<span class="cc_catG_del_res">{translate('Keep it!')}</span>
+				<strong> | </strong>
+				<span class="cc_catG_del_conf">{translate('Confirm delete')}</span>
+			</p>
+			<input type="hidden" name="page_id" value="{$page_id}" />
+			<input type="hidden" name="section_id" value="{$section_id}" />
+			<input type="hidden" name="gallery_id" value="{$gallery_id}" />
+			<input type="hidden" name="image_id" value="" />
+			<input type="hidden" name="_cat_ajax" value="1" />
+			{*<input type="hidden" name="picture_{$image.image_id}" value="{$image.picture}" >*}
+			<div class="cc_catG_left dz-details">
+				<p class="cc_catG_image">
+					<img data-dz-thumbnail="" src="" width="auto" height="120" ><br>
+				</p>
+				<p class="dz-filename">
+					<strong>{translate('Name of image')}: </strong><span data-dz-name=""></span>
+				</p>
+				<p>
+					<strong>{translate('Alternative text')}:<br></strong>
+					<input type="text" name="alt_{$image.image_id}" value="{if $image.options.alt}{$image.options.alt}{/if}" >
+				</p>
+				<button class="toggleWYSIWYG">{translate('Modify description')}</button>
+			</div>
+			<div class="clear"></div>
+			{*<div class="">    
+				<div class=""></span></div>
+				<div class="dz-size" data-dz-size=""><strong>85.9</strong> KiB</div>
+				{*<img data-dz-thumbnail="" alt="car-menu03.jpg" src="">
+			</div>*}
+			<div class="dz-progress fc_br_top"><span class="dz-upload fc_br_all" data-dz-uploadprogress=""></span></div>
+			{*<div class="dz-success-mark"><span>✔</span></div>
+			<div class="dz-error-mark"><span>✘</span></div>*}
+			<div class="dz-error-message"><span data-dz-errormessage=""></span></div>
+			{*<a class="dz-remove" href="javascript:undefined;" data-dz-remove="">Remove</a>*}
+		</li>
 	</ul>
 	{else}<p>{translate('No images available')}</p>{/if}
-</form>
+</div>
