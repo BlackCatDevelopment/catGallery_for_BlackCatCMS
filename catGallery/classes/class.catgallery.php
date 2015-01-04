@@ -776,11 +776,13 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			if ( CAT_Helper_Page::getInstance()->db()->query(
 				'REPLACE INTO `:prefix:mod_cc_catgallery_images_options`
 					SET `section_id`	= :section_id,
+						`gallery_id`	= :gallery_id,
 						`image_id`		= :image_id,
 						`name`			= :name,
 						`value`			= :value',
 				array(
 					'section_id'	=> self::$section_id,
+					'gallery_id'	=> self::$gallery_id,
 					'image_id'		=> $image_id,
 					'name'			=> $name,
 					'value'			=> $value
