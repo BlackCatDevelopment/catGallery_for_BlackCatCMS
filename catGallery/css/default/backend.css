@@ -25,7 +25,11 @@
 .cc_catG_form input[type=text] {
 	width: 100%;
 }
-
+.cc_catG_imgs input,
+.cc_catG_imgs textarea,
+.cc_catG_imgs button {
+	width: 100%;
+}
 .cc_catG_form input[type=text].cc_In100px,
 .cc_In100px {
 	display:	inline-block;
@@ -158,33 +162,36 @@
 			margin:		2% 1%;
 			display:	inline-block;
 			position:	relative;
-	/*		transition: all 0.2s ease-in 0.2s;
-			-webkit-transition: all 0.2s ease-in 0.2s;
-			-moz-transition: all 0.2s ease-in 0.2s;
-			-o-transition: all 0.2s ease-in 0.2s;*/
+			background:	white;
+			transition:			box-shadow 0.2s ease-in 0.2s;
+  			-webkit-transition:	box-shadow 0.2s ease-in 0.2s;
+			-moz-transition:	box-shadow 0.2s ease-in 0.2s;
+			-o-transition:		box-shadow 0.2s ease-in 0.2s;
 		}
 		.cc_catG_imgs li.prevTemp {
 			display:	none;
 		}
 		.cc_catG_imgs li.cc_catG_WYSIWYG {
-			width:		96%;
+			-webkit-box-shadow:	black 0px 0px 12px -1px;
+			-moz-box-shadow:	black 0px 0px 12px -1px;
+			box-shadow:			black 0px 0px 12px -1px;
 		}
 		.cc_catG_WYSIWYG .cc_catG_left {
-			width:			38%;
+			/*width:			38%;
 			padding-right:	2%;
-			float:			left;
+			float:			left;*/
 		}
 		.cc_catG_right {
 			display:	none;
-			transition: all 0.2s ease-in 0.2s;
-			-webkit-transition: all 0.2s ease-in 0.2s;
-			-moz-transition: all 0.2s ease-in 0.2s;
-			-o-transition: all 0.2s ease-in 0.2s;
+			transition: all 0.0.2s ease-in 0.0.2s;
+			-webkit-transition: all 0.0.2s ease-in 0.0.2s;
+			-moz-transition: all 0.0.2s ease-in 0.0.2s;
+			-o-transition: all 0.0.2s ease-in 0.0.2s;
 		}
 		.cc_catG_WYSIWYG .cc_catG_right {
-			width:		60%;
+			/*width:		60%;
 			float:		right;
-			display:	inline-block;
+			display:	inline-block;*/
 		}
 		.cc_catG_imgs .cc_catG_del {
 			background:			white;
@@ -244,20 +251,26 @@
   background-color: #27d986;
 }
 
-.catG_over {
-	display: none;
-	position: fixed;
-	top: 51px;
-	right: 0px;
-	bottom: 0px;
-	left: 0px;	
-	background: rgba(177, 190, 199, 0.900);
-	z-index: 998;
-}
-
 .catG_WYSIWYG {
-	padding:	3em 1em 0em 3em;
+	padding:	1em;
 	position:	absolute;
 	z-index:	999;
 	display:	none;
+	left:		2%;
+	right:		2%;
+	border:		1px solid #818a92;
+	border-top: 0px none;
+}
+
+.drag_corner {
+	position:	absolute;
+	top:		0px;
+	right:		0px;
+	background:	black;
+	height:		25px;
+	width:		25px;
+}
+
+.ui-sortable li.ui-sortable-placeholder {
+	background: black !important;
 }

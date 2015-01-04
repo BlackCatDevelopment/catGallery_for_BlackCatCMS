@@ -265,15 +265,36 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		{
 			if ( !$this->checkIDs() ||
 				!$file_extension ) return false;
-				
+			
+			$getPos	= CAT_Helper_Page::getInstance()->db()->query(
+				'SELECT MAX(position) AS pos FROM `:prefix:mod_cc_catgallery_images`
+					WHERE `page_id` = :page_id
+						AND `section_id` = :section_id
+						AND `gallery_id` = :gallery_id',
+				array(
+					'page_id'		=> self::$page_id,
+					'section_id'	=> self::$section_id,
+					'gallery_id'	=> self::$gallery_id
+				)
+			);
+			if ( $getPos && $getPos->rowCount() > 0 )
+			{
+				if( !false == ( $pos = $getPos->fetch() ) )
+				{
+					$position	= $pos['pos'] + 1;
+				}
+			}
+
+
 			if( CAT_Helper_Page::getInstance()->db()->query(
-					'INSERT INTO :prefix:mod_cc_catgallery_images
-						( `page_id`, `section_id`, `gallery_id` ) VALUES
-						( :page_id, :section_id, :gallery_id )',
+					'INSERT INTO `:prefix:mod_cc_catgallery_images`
+						( `page_id`, `section_id`, `gallery_id`, `position` ) VALUES
+						( :page_id, :section_id, :gallery_id, :position )',
 					array(
 						'page_id'		=> self::$page_id,
 						'section_id'	=> self::$section_id,
-						'gallery_id'	=> self::$gallery_id
+						'gallery_id'	=> self::$gallery_id,
+						'position'		=> $position
 					)
 				)
 			) {
@@ -292,7 +313,12 @@ if ( ! class_exists( 'catGallery', false ) ) {
 							)
 						)
 					&& $this->saveContent( $newID, '' )
-				) return array( 'image_id' => $newID, 'picture' => $picture );
+				) return array(
+					'image_id'	=> $newID,
+					'picture'	=> $picture,
+					'position'	=> $position,
+					'check'	=> $getPos
+				);
 			}
 			else return false;
 		}
@@ -314,10 +340,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			if( !isset($this->images[$image_id]) )
 				$this->getImage($image_id);
 
-
 			$return	= true;
-
-
 
 			foreach(
 				array( 'catgallery_images', 'catgallery_images_options', 'catgallery_contents' )
@@ -454,7 +477,10 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			} else return false;
 			if ( $this->getOptions( 'random' ) == 1 )
 				shuffle( $this->images );
-			return $this->images;
+			if ($image_id && is_numeric($image_id))
+				return $this->images[$image_id];
+			else
+				return $this->images;
 		} // end getContents()
 
 
@@ -596,10 +622,9 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		 * @return boolean true/false
 		 *
 		 **/
-		public function saveImages( $counter = NULL, $tmpFiles = NULL )
+		public function saveImages( $tmpFiles = NULL )
 		{
-			if ( !$this->checkIDs() ||
-				!is_numeric($counter) ) return false;
+			if ( !$this->checkIDs() ) return false;
 
 				$field_name	= 'new_image';
 
@@ -853,6 +878,46 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			) ) return true;
 			else return false;
 		} // end saveOptions()
+
+		/**
+		 * reorder images
+		 *
+		 * @access public
+		 * @param  array			$imgIDs - Strings from jQuery sortable()
+		 * @return bool true/false
+		 *
+		 **/
+		public function reorderImg( $imgIDs = array() )
+		{
+			if ( !$this->checkIDs()
+				|| !is_array($imgIDs)
+				|| count($imgIDs) == 0
+			) return false;
+
+			$return	= true;
+
+			foreach( $imgIDs as $index => $imgStr )
+			{
+				$imgID	= explode('_', $imgStr);
+
+				if( !CAT_Helper_Page::getInstance()->db()->query(
+					'UPDATE `:prefix:mod_cc_catgallery_images`
+						SET `position` = :position
+						WHERE `gallery_id`		= :gallery_id
+							AND `page_id`		= :page_id
+							AND `section_id`	= :section_id
+							AND `image_id`		= :image_id',
+					array(
+						'position'		=> $index,
+						'gallery_id'	=> self::$gallery_id,
+						'page_id'		=> self::$page_id,
+						'section_id'	=> self::$section_id,
+						'image_id'		=> $imgID[count($imgID)-1]
+					)
+				) ) $return = false;
+			}
+			return $return;
+		} // end reorderImg()
 
 
 		/**
