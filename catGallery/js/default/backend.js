@@ -115,7 +115,7 @@ $(document).ready(function()
 			$('.catG_over').hide();
 		} else {
 			$('.cc_catG_imgs').children('li').removeClass('cc_catG_WYSIWYG').css({height: 'auto'});
-			$par.addClass('cc_catG_WYSIWYG')
+
 			var	pos			= $par.position(),
 				widthImg	= $par.find('.cc_catG_left').outerWidth()
 				widthLi		= $par.outerWidth(),
@@ -132,11 +132,11 @@ $(document).ready(function()
 				};
 
 			$WYSIWYG.css({
-			    top:	( ( heightWin - heightLi ) / 2 ) + "px",
-			    right:	( ( widthWin - widthLi ) / 2 ) + "px",
+			    top:	( heightLi ) + "px",
+			    right:	( widthLi/ 2 ) + "px",
 			}).fadeIn(400);
-			$('.catG_over').fadeIn(400);
-
+			/*$('.catG_over').fadeIn(400);*/
+			$par.addClass('cc_catG_WYSIWYG');
 			$.ajax(
 			{
 				type:		'POST',

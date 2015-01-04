@@ -216,11 +216,11 @@
 	</ul>
 	{else}<p>{translate('No images available')}</p>{/if}
 </div>
-<div class="catG_over">
+{*<div class="catG_over">*}
 	<div class="catG_WYSIWYG">
 		<p>
 			<strong>{translate('Description for Image')}:</strong>
 		</p>
 		{show_wysiwyg_editor($catG_WYSIWYG,$catG_WYSIWYG,'','100%','150px')}
 	</div>
-</div>
+{*</div>*}

@@ -257,7 +257,7 @@
 
 .catG_WYSIWYG {
 	padding:	3em 1em 0em 3em;
-	position:	fixed;
+	position:	absolute;
 	z-index:	999;
 	display:	none;
 }
