@@ -52,90 +52,108 @@ if ( CAT_Helper_Page::getPagePermission( $page_id, 'admin' ) !== true )
 // ============================= 
 if ( $gallery_id = $val->sanitizePost( 'gallery_id','numeric' ) )
 {
+	$imgID	= $val->sanitizePost( 'imgID','numeric' );
+	$action	= $val->sanitizePost( 'action' );
 	// ====================================== 
 	// ! Upload images and save to database
 	// ====================================== 
-	if ( isset( $_FILES['new_image']['name'] ) && $_FILES['new_image']['name'] != '' )
+	switch ( $action )
 	{
-
-		$success	= $catGallery->saveImages(
-			1,
-			$_FILES
-		);
-		$ajax_return	= array(
-			'message'	=> $backend->lang()->translate( 'Image upload successful!' ),
-			'newIMG'	=> $success,
-			'success'	=> is_array($success) ? true : false
-		);
-	} elseif ( $removeID = $val->sanitizePost( 'removeID','numeric' ) )
-	{
-		$deleted	= $catGallery->removeImage( $removeID );
-		$ajax_return	= array(
-			'message'	=> $deleted === true
-				? $backend->lang()->translate( 'Image deleted successfully!' )
-				: $backend->lang()->translate( 'An error occoured!' ),
-			'success'	=> $deleted
-		);
-	} else {
-
-		$options		= $val->sanitizePost('options');
-		$image_options	= $val->sanitizePost('image_options');
-		$image_ids		= is_array( $val->sanitizePost( 'image_ids','array') ) ?
-							array_map('intval', $val->sanitizePost( 'image_ids','array') ) : NULL;
-		$deleted		= false;
-		
-		// =========================== 
-		// ! save variant of images   
-		// =========================== 
-		$catGallery->saveOptions( 'variant', $val->sanitizePost('variant') );
-		
-		
-		// =========================== 
-		// ! save options for gallery   
-		// =========================== 
-		if ( $options != '' )
-		{
-			foreach( array_filter( explode(',', $options) ) as $option )
+		case 'uploadIMG':
+			if ( isset( $_FILES['new_image']['name'] ) && $_FILES['new_image']['name'] != '' )
 			{
-				if( !$catGallery->saveOptions( $option, $val->sanitizePost( $option ) )) $error = true;
+				$success	= $catGallery->saveImages(
+					1,
+					$_FILES
+				);
+				$ajax_return	= array(
+					'message'	=> $backend->lang()->translate( 'Image upload successful!' ),
+					'newIMG'	=> $success,
+					'success'	=> is_array($success) ? true : false
+				);
+			} else {
+				$ajax_return	= array(
+					'message'	=> $backend->lang()->translate( 'No images to upload' ),
+					'success'	=> false
+				);
 			}
-		}
-		
-		// =========================== 
-		// ! save options for images   
-		// =========================== 
-		if ( $image_options != ''
-			&& is_array($image_ids)
-			&& count( $image_ids ) > 0
-		) {
-			foreach( array_filter( explode(',', $image_options) ) as $option )
+			break;
+		case 'removeIMG':
+			$deleted	= $catGallery->removeImage( $removeID );
+			$ajax_return	= array(
+				'message'	=> $deleted === true
+					? $backend->lang()->translate( 'Image deleted successfully!' )
+					: $backend->lang()->translate( 'An error occoured!' ),
+				'success'	=> $deleted
+			);
+			break;
+		case 'getContent':
+			$ajax_return	= array(
+				'content'	=> 'test' . $imgID,
+				'message'	=> $backend->lang()->translate( 'Content loaded' ),
+				'success'	=> true
+			);
+			break;
+		default:
+			$options		= $val->sanitizePost('options');
+			$image_options	= $val->sanitizePost('image_options');
+			$imgIDs		= is_array( $val->sanitizePost( 'imgIDs','array') ) ?
+								array_map('intval', $val->sanitizePost( 'imgIDs','array') ) : NULL;
+			$deleted		= false;
+			
+			// =========================== 
+			// ! save variant of images   
+			// =========================== 
+			$catGallery->saveOptions( 'variant', $val->sanitizePost('variant') );
+			
+			
+			// =========================== 
+			// ! save options for gallery   
+			// =========================== 
+			if ( $options != '' )
 			{
-				foreach( $image_ids as $img_id )
-					if( !$catGallery->saveImgOptions( $img_id, $option, $val->sanitizePost( $option . '_' . $img_id ) ) ) $error = true;
+				foreach( array_filter( explode(',', $options) ) as $option )
+				{
+					if( !$catGallery->saveOptions( $option, $val->sanitizePost( $option ) )) $error = true;
+				}
 			}
-		}
-
-		$ajax_return	= array(
-			'message'	=> $backend->lang()->translate( 'Options saved successfully!' ),
-			'success'	=> true
-		);
+			
+			// =========================== 
+			// ! save options for images   
+			// =========================== 
+			if ( $image_options != ''
+				&& is_array($imgIDs)
+				&& count( $imgIDs ) > 0
+			) {
+				foreach( array_filter( explode(',', $image_options) ) as $option )
+				{
+					foreach( $imgIDs as $imgID )
+						if( !$catGallery->saveImgOptions( $imgID, $option, $val->sanitizePost( $option . '_' . $imgID ) ) ) $error = true;
+				}
+			}
 		
-		// =========================== 
-		// ! save content of images   
-		// =========================== 
-		if ( is_array($image_ids)
-			&& count( $image_ids ) > 0
-		) {
-			foreach( $image_ids as $img_id )
-			{
-					$contentname	= sprintf( "image_content_%s", $img_id );
-					if ( isset($_POST[$contentname]) )
-					{
-						$content		= $val->sanitizePost( $contentname, false, true );
-						$catGallery->saveContent( $img_id, $content );
-					}
+			$ajax_return	= array(
+				'message'	=> $backend->lang()->translate( 'Options saved successfully!' ),
+				'success'	=> true
+			);
+			
+			// =========================== 
+			// ! save content of images   
+			// =========================== 
+			if ( is_array($imgIDs)
+				&& count( $imgIDs ) > 0
+			) {
+				foreach( $imgIDs as $imgID )
+				{
+						$contentname	= sprintf( "image_content_%s", $imgID );
+						if ( isset($_POST[$contentname]) )
+						{
+							$content		= $val->sanitizePost( $contentname, false, true );
+							$catGallery->saveContent( $imgID, $content );
+						}
+				}
 			}
-		}
+			break;
 	}
 } else {
 	$backend->print_error('Es wurde keine gültige ID übermittelt.', CAT_ADMIN_URL . '/pages/modify.php?page_id=' . $page_id);

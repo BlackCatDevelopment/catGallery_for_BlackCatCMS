@@ -53,7 +53,8 @@ $(document).ready(function()
 				page_id		: $inputs.filter('input[name=page_id]').val(),
 				section_id	: $inputs.filter('input[name=section_id]').val(),
 				gallery_id	: $inputs.filter('input[name=gallery_id]').val(),
-				removeID	: $inputs.filter('input[name=image_id]').val(),
+				imgID		: $inputs.filter('input[name=imgID]').val(),
+				action		: 'removeIMG',
 				_cat_ajax	: 1
 			};
 
@@ -111,18 +112,63 @@ $(document).ready(function()
 		{
 			$par.removeClass('cc_catG_WYSIWYG').css({height: 'auto'});
 			$WYSIWYG.hide();
+			$('.catG_over').hide();
 		} else {
 			$('.cc_catG_imgs').children('li').removeClass('cc_catG_WYSIWYG').css({height: 'auto'});
 			$par.addClass('cc_catG_WYSIWYG')
 			var	pos			= $par.position(),
 				widthImg	= $par.find('.cc_catG_left').outerWidth()
-				widthLi		= $par.outerWidth();
-			
+				widthLi		= $par.outerWidth(),
+				widthWin	= $('#fc_main_content').innerWidth();
+				heightLi	= $par.outerHeight(),
+				heightWin	= $('#fc_main_content').outerHeight();
+				ajaxData	= {
+					section_id	: $par.find('input[name=section_id]').val(),
+					page_id		: $par.find('input[name=page_id]').val(),
+					gallery_id	: $par.find('input[name=gallery_id]').val(),
+					imgID		: $par.find('input[name=imgID]').val(),
+					action		: 'getContent',
+					_cat_ajax	: 1
+				};
+
 			$WYSIWYG.css({
-			    top:	pos.top + "px",
-			    left:	( pos.left + widthImg ) + "px",
-			}).show();
-			
+			    top:	( ( heightWin - heightLi ) / 2 ) + "px",
+			    right:	( ( widthWin - widthLi ) / 2 ) + "px",
+			}).fadeIn(400);
+			$('.catG_over').fadeIn(400);
+
+			$.ajax(
+			{
+				type:		'POST',
+				context:	$par,
+				url:		CAT_URL + '/modules/cc_catgallery/save.php',
+				dataType:	'JSON',
+				data:		ajaxData,
+				cache:		false,
+				beforeSend:	function( data )
+				{
+					// Set activity and store in a variable to use it later
+					data.process	= set_activity( 'Loading content' );
+				},
+				success:	function( data, textStatus, jqXHR )
+				{
+					if ( data.success === true )
+					{
+						console.log(data.content);
+						CKEDITOR.instances['wysiwyg_' + ajaxData.section_id].setData( data.content );
+						return_success( jqXHR.process , data.message );
+					}
+					else {
+						// return error
+						return_error( jqXHR.process , data.message );
+					}
+				},
+				error:		function( data, textStatus, jqXHR )
+				{
+					return_error( jqXHR.process , data.message );
+				}
+			});
+
 			$par.css({height: ( $WYSIWYG.outerHeight() ) + 'px' });
 		}
 	});

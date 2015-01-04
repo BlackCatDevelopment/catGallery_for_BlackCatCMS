@@ -244,11 +244,20 @@
   background-color: #27d986;
 }
 
+.catG_over {
+	display: none;
+	position: fixed;
+	top: 51px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;	
+	background: rgba(177, 190, 199, 0.900);
+	z-index: 998;
+}
 
 .catG_WYSIWYG {
 	padding:	3em 1em 0em 3em;
-	position:	absolute;
-	right:		50px;
-	z-index:	1;
+	position:	fixed;
+	z-index:	999;
 	display:	none;
 }

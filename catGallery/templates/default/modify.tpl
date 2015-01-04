@@ -34,6 +34,7 @@
 				formData.append('page_id',	{$page_id});
 				formData.append('section_id', {$section_id});
 				formData.append('gallery_id', {$gallery_id});
+				formData.append('action', 'uploadIMG');
 				formData.append('_cat_ajax', 1);
 			},
 			previewsContainer:	'.cc_catG_imgs',
@@ -82,6 +83,7 @@
 					<input type="hidden" name="page_id" value="{$page_id}" />
 					<input type="hidden" name="section_id" value="{$section_id}" />
 					<input type="hidden" name="gallery_id" value="{$gallery_id}" />
+					<input type="hidden" name="action" value="saveOptions" />
 					<input type="hidden" name="_cat_ajax" value="1" />
 					<input type="hidden" name="options" value="effect,animSpeed,pauseTime,random,label" />
 					<input type="hidden" name="image_options" value="alt" />
@@ -110,6 +112,7 @@
 					<input type="hidden" name="page_id" value="{$page_id}" />
 					<input type="hidden" name="section_id" value="{$section_id}" />
 					<input type="hidden" name="gallery_id" value="{$gallery_id}" />
+					<input type="hidden" name="action" value="saveOptions" />
 					<input type="hidden" name="_cat_ajax" value="1" />
 					<input type="hidden" name="options" value="resize_x,resize_y" />
 					<input type="hidden" name="image_options" value="alt" />
@@ -139,12 +142,6 @@
 	</div>
 	{if $images}
 	<p>{translate('Existing images')}</p>
-	<div class="catG_WYSIWYG">
-		<p>
-			<strong>{translate('Description for Image')}:</strong>
-		</p>
-		{show_wysiwyg_editor($catG_WYSIWYG,$catG_WYSIWYG,'','100%','150px')}
-	</div>
 	<ul class="cc_catG_imgs">
 		{$counter = 0}
 		{foreach $images as image}
@@ -155,10 +152,10 @@
 				<strong> | </strong>
 				<span class="cc_catG_del_conf">{translate('Confirm delete')}</span>
 			</p>
-			<input type="hidden" name="pa8ge_id" value="{$page_id}" />
+			<input type="hidden" name="page_id" value="{$page_id}" />
 			<input type="hidden" name="section_id" value="{$section_id}" />
 			<input type="hidden" name="gallery_id" value="{$gallery_id}" />
-			<input type="hidden" name="image_id" value="{$image.image_id}" />
+			<input type="hidden" name="imgID" value="{$image.image_id}" />
 			<input type="hidden" name="_cat_ajax" value="1" />
 			<input type="hidden" name="picture_{$image.image_id}" value="{$image.picture}" >
 			<div class="cc_catG_left">
@@ -188,9 +185,9 @@
 			<input type="hidden" name="page_id" value="{$page_id}" />
 			<input type="hidden" name="section_id" value="{$section_id}" />
 			<input type="hidden" name="gallery_id" value="{$gallery_id}" />
-			<input type="hidden" name="image_id" value="" />
+			<input type="hidden" name="imgID" value="" />
 			<input type="hidden" name="_cat_ajax" value="1" />
-			{*<input type="hidden" name="picture_{$image.image_id}" value="{$image.picture}" >*}
+			{*<input type="hidden" name="picture_{$image.imgID}" value="{$image.picture}" >*}
 			<div class="cc_catG_left dz-details">
 				<p class="cc_catG_image">
 					<img data-dz-thumbnail="" src="" width="auto" height="120" ><br>
@@ -218,4 +215,12 @@
 		</li>
 	</ul>
 	{else}<p>{translate('No images available')}</p>{/if}
+</div>
+<div class="catG_over">
+	<div class="catG_WYSIWYG">
+		<p>
+			<strong>{translate('Description for Image')}:</strong>
+		</p>
+		{show_wysiwyg_editor($catG_WYSIWYG,$catG_WYSIWYG,'','100%','150px')}
+	</div>
 </div>
