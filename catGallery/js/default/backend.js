@@ -151,10 +151,10 @@ $(document).ready(function()
 				{
 					if ( data.success === true )
 					{
-							console.log(data);
 						$(this).addClass('fc_gradient1');
 						$WYSIWYG.fadeIn(400);
 						CKEDITOR.instances['wysiwyg_' + ajaxData.section_id].setData( data.image.image_content );
+						CKEDITOR.instances['wysiwyg_' + ajaxData.section_id].updateElement();
 						return_success( jqXHR.process , data.message );
 					}
 					else {
@@ -190,6 +190,14 @@ $(document).ready(function()
 		{
 			$('.cc_catG_imgs').children('li').removeClass('cc_catG_WYSIWYG fc_gradient1');
 			$(".catG_WYSIWYG").hide();
+		},
+		'JSON',
+		function( $form, options )
+		{
+			var	section_id	= $form.find('input[name=section_id]').val(),
+				catGal		='wysiwyg_' + section_id;
+
+			CKEDITOR.instances[catGal].updateElement();
 		}
 	);
 

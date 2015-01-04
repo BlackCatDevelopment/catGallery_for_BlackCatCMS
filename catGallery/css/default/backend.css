@@ -274,3 +274,11 @@
 .ui-sortable li.ui-sortable-placeholder {
 	background: black !important;
 }
+
+.cc_catG_disabled {
+	opacity:	0.2;
+}
+.dz-error-message {
+	font-size: 700;
+	color: #f02d6a;
+}

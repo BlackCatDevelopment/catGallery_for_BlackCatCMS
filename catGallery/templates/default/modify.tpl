@@ -41,7 +41,7 @@
 			previewsContainer:	'.cc_catG_imgs',
 			previewTemplate:	$('.prevTemp').clone().removeClass('prevTemp')[0].outerHTML,
 			success:	function(file, xhr, formData)
-			{
+			\{
 				console.log(file, xhr, formData);
 				var $newIMG	= $(file.previewElement),
 					xhr		= JSON.parse(xhr),
@@ -53,7 +53,7 @@
 				$newIMG.attr('id', newID );
 				$newIMG.find('input[name=imgID]').val(xhr.newIMG.image_id);
 				$newIMG.find('input:disabled, button:disabled').prop('disabled',false);
-
+				$newIMG.find('.cc_catG_disabled').removeClass('cc_catG_disabled');
 				dialog_form( $newIMG.find('.ajaxForm') );
 
 				console.log(xhr);
@@ -208,13 +208,13 @@
 					<p class="dz-filename">
 						<strong>{translate('Name of image')}: </strong><span data-dz-name=""></span>
 					</p>
-					<p>
+					<p class="cc_catG_disabled">
 						<strong>{translate('Alternative text')}:<br></strong>
 						<input type="text" name="alt" value="" disabled>
 					</p>
-				<button class="toggleWYSIWYG fc_gradient1 fc_gradient_hover" disabled>{translate('Modify description')}</button>
+				<button class="toggleWYSIWYG fc_gradient1 fc_gradient_hover cc_catG_disabled" disabled>{translate('Modify description')}</button>
 				<hr>
-				<input type="submit" value="{translate('Save image')}" disabled>
+				<input type="submit" value="{translate('Save image')}" class="cc_catG_disabled" disabled>
 				</div>
 			</form>
 			<div class="clear"></div>
