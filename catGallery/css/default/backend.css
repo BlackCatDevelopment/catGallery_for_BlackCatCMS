@@ -30,6 +30,14 @@
 .cc_catG_imgs button {
 	width: 100%;
 }
+.cc_catG_imgs input.input_50p,
+.cc_catG_imgs textarea.input_50p,
+.cc_catG_imgs button.input_50p {
+	width: 50%;
+	display: inline-block;
+	float:	left;
+	margin:	0px;;
+}
 .cc_catG_form input[type=text].cc_In100px,
 .cc_In100px {
 	display:	inline-block;
@@ -157,16 +165,37 @@
 	}
 		.cc_catG_imgs li {
 			margin:		0px;
-			padding:	1em;
-			width:		31%;
+			padding:	0em;
+			width:		17%;
 			margin:		2% 1%;
 			display:	inline-block;
 			position:	relative;
 			background:	white;
+			max-width:	300px;
 			transition:			box-shadow 0.2s ease-in 0.2s;
   			-webkit-transition:	box-shadow 0.2s ease-in 0.2s;
 			-moz-transition:	box-shadow 0.2s ease-in 0.2s;
 			-o-transition:		box-shadow 0.2s ease-in 0.2s;
+		}
+		@media screen and (max-width: 1800px) {
+			.cc_catG_imgs li {
+				width:		22%;
+			}
+		}
+		@media screen and (max-width: 1480px) {
+			.cc_catG_imgs li {
+				width:		31%;
+			}
+		}
+		@media screen and (max-width: 1124px) {
+			.cc_catG_imgs li {
+				width:		46%;
+			}
+		}
+		@media screen and (max-width: 780px) {
+			.cc_catG_imgs li {
+				width:		98%;
+			}
 		}
 		.cc_catG_imgs li.prevTemp {
 			display:	none;
@@ -176,44 +205,57 @@
 			-moz-box-shadow:	black 0px 0px 12px -1px;
 			box-shadow:			black 0px 0px 12px -1px;
 		}
-		.cc_catG_WYSIWYG .cc_catG_left {
-			/*width:			38%;
-			padding-right:	2%;
-			float:			left;*/
+		.cc_catG_left p {
+			padding:	0.5em 1em;
 		}
-		.cc_catG_right {
-			display:	none;
-			transition: all 0.0.2s ease-in 0.0.2s;
-			-webkit-transition: all 0.0.2s ease-in 0.0.2s;
-			-moz-transition: all 0.0.2s ease-in 0.0.2s;
-			-o-transition: all 0.0.2s ease-in 0.0.2s;
+		.cc_catG_left p.cc_catG_image {
+			padding:	0em;
 		}
-		.cc_catG_WYSIWYG .cc_catG_right {
-			/*width:		60%;
-			float:		right;
-			display:	inline-block;*/
+		
+		.catG_IMG_options {
+			position:	absolute;
+			top:		0px;
+			left:		0px;
+			height:		200px;
+			width:		50px;
+			background:	white;
+			background:	rgba(255, 255, 255, 0.800);
+			padding:	1em 0em;
+			text-align:	center;
+			border-right:	1px solid white;
+			-webkit-box-shadow:	5px 0px 5px -5px rgba(091, 098, 104, 0.800);
+			-moz-box-shadow:	5px 0px 5px -5px rgba(091, 098, 104, 0.800);
+			box-shadow:			5px 0px 5px -5px rgba(091, 098, 104, 0.800);
 		}
 		.cc_catG_imgs .cc_catG_del {
-			background:			white;
-			border-radius:		1em;
-			-webkit-box-shadow:	white 0px 0px 10px 10px;
-			-moz-box-shadow:	white 0px 0px 10px 10px;
-			box-shadow:			white 0px 0px 10px 10px;
-			background:			rgba(255, 255, 255, 0.900);
-			-webkit-box-shadow:	0px 0px 10px 10px rgba(255, 255, 255, 0.900);
-			-moz-box-shadow:	0px 0px 10px 10px rgba(255, 255, 255, 0.900);
-			box-shadow:			0px 0px 10px 10px rgba(255, 255, 255, 0.900);
-			padding:		0.4em;
-			top:			1em;
-			font-size:		1em;
-			position:		absolute;
+			padding:	0.4em;
+			text-align:	left;;
+			position:	relative;
 		}
 		.cc_catG_del > * {
 			cursor:			pointer;
 		}
-		.cc_catG_del .fc_close {
-			float:			left;
-			margin-top:		0.2em;
+		.cc_catG_del .icon-remove {
+			display:		inline-block;
+			margin-left:	0.6em;
+			margin-bottom:	0.6em;
+		}
+		.cc_catG_del > p {
+			display:		none;
+			background:		rgba(255, 255, 255, 0.900);
+			padding:		0.5em 0.5em 0.5em 1em;
+			position:		absolute;
+			top:			0px;
+			left:			50px;
+			white-space:	nowrap;
+			-webkit-box-shadow:	5px 2px 5px 0px rgba(091, 098, 104, 0.800);
+			-moz-box-shadow:	5px 2px 5px 0px rgba(091, 098, 104, 0.800);
+			box-shadow:			5px 2px 5px 0px rgba(091, 098, 104, 0.800);
+		}
+		.catG_IMG_options [class^="icon-"]:before,
+		.catG_IMG_options [class*=" icon-"]:before {
+			font-size:		1.5em;
+			margin-top:		0.6em;
 			margin-right:	0.4em;
 		}
 		.cc_catG_del_conf {
@@ -226,11 +268,16 @@
 		.cc_catG_del_conf,
 		.cc_catG_del_res,
 		.cc_catG_del strong {
-			display:	none;
 		}
 		.cc_catG_image {
+			overflow: hidden;
 			text-align:	center;
 		}
+			.cc_catG_image img {
+				height: auto;
+				width:	100%;
+			}
+
 .cc_catG_imgs .dz-progress {
   position: absolute;
   top:				0px;
@@ -263,12 +310,7 @@
 }
 
 .drag_corner {
-	position:	absolute;
-	top:		0px;
-	right:		0px;
-	background:	black;
-	height:		25px;
-	width:		25px;
+	cursor:		move;
 }
 
 .ui-sortable li.ui-sortable-placeholder {

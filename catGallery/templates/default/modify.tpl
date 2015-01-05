@@ -28,8 +28,9 @@
 		$(".cc_dropzone").dropzone(
 		\{
 			url:		'{$CAT_URL}/modules/cc_catgallery/save.php',
-			dataType:	'JSON',
 			paramName:	'new_image',
+			thumbnailWidth:		300,
+			thumbnailHeight:	200,
 			sending:	function(file, xhr, formData)
 			\{
 				formData.append('page_id',	{$page_id});
@@ -52,6 +53,7 @@
 				$newIMG.find('.dz-filename span').text(xhr.newIMG.picture);
 				$newIMG.attr('id', newID );
 				$newIMG.find('input[name=imgID]').val(xhr.newIMG.image_id);
+				$newIMG.find('.cc_catG_image img').attr('src',xhr.newIMG.thumb);
 				$newIMG.find('input:disabled, button:disabled').prop('disabled',false);
 				$newIMG.find('.cc_catG_disabled').removeClass('cc_catG_disabled');
 				dialog_form( $newIMG.find('.ajaxForm') );
@@ -150,13 +152,19 @@
 		{$counter = 0}
 		{foreach $images as image}
 		<li class="fc_border_all fc_shadow_small fc_br_all" id="catG_{$image.image_id}">
-			<p class="cc_catG_del">
-				<span class="fc_close" title="{translate('Delete this image')}"></span>
-				<span class="cc_catG_del_res">{translate('Keep it!')}</span>
-				<strong> | </strong>
-				<span class="cc_catG_del_conf">{translate('Confirm delete')}</span>
-			</p>
-			<p class="drag_corner"></p>
+			<div class="catG_IMG_options">
+				<p class="drag_corner icon-resize" title="{translate('Reorder image')}"></p>
+				<div class="cc_catG_del">
+					<span class="icon-remove" title="{translate('Delete this image')}"></span>
+					<p class="fc_br_right fc_shadow_small">
+						<span class="cc_catG_del_res">{translate('Keep it!')}</span>
+						<strong> | </strong>
+						<span class="cc_catG_del_conf">{translate('Confirm delete')}</span>
+					</p>
+				</div>
+				{*<p class="icon-eye"></p>
+				<p class="icon-scissors"></p>*}
+			</div>
 			<form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" class="ajaxForm">
 				<input type="hidden" name="page_id" value="{$page_id}" />
 				<input type="hidden" name="section_id" value="{$section_id}" />
@@ -167,7 +175,7 @@
 				<input type="hidden" name="_cat_ajax" value="1" />
 				<div class="cc_catG_left">
 					<p class="cc_catG_image">
-						<img src="{$folder_url}/{$image.picture}" width="auto" height="120" ><br>
+						<img src="{$image.thumb}" ><br>
 					</p>
 					<p>
 						<strong>{translate('Name of image')}:</strong> {$image.picture}
@@ -177,22 +185,27 @@
 						<input type="text" name="alt" value="{if $image.options.alt}{$image.options.alt}{/if}" >
 					</p>
 				</div>
-				<button class="toggleWYSIWYG fc_gradient1 fc_gradient_hover">{translate('Modify description')}</button>
-				<hr>
-				<input type="submit" value="{translate('Save image')}">
+				<button class="toggleWYSIWYG input_50p fc_br_bottomleft fc_gradient1 fc_gradient_hover">{translate('Modify description')}</button>
+				<input type="submit" class="input_50p fc_br_bottomright" value="{translate('Save image')}">
 			</form>
 			<div class="clear"></div>
 		{$counter = $counter + 1}
 		</li>
 		{/foreach}
 		<li class="dz-preview dz-image-preview fc_border_all fc_shadow_small fc_br_all prevTemp" id="catG_">
-			<p class="cc_catG_del">
-				<span class="fc_close" title="{translate('Delete this image')}"></span>
-				<span class="cc_catG_del_res">{translate('Keep it!')}</span>
-				<strong> | </strong>
-				<span class="cc_catG_del_conf">{translate('Confirm delete')}</span>
-			</p>
-			<p class="drag_corner"></p>
+			<div class="catG_IMG_options">
+				<p class="drag_corner icon-resize" title="{translate('Reorder image')}"></p>
+				<div class="cc_catG_del">
+					<span class="icon-remove" title="{translate('Delete this image')}"></span>
+					<p class="fc_br_right fc_shadow_small">
+						<span class="cc_catG_del_res">{translate('Keep it!')}</span>
+						<strong> | </strong>
+						<span class="cc_catG_del_conf">{translate('Confirm delete')}</span>
+					</p>
+				</div>
+				{*<p class="icon-eye"></p>
+				<p class="icon-scissors"></p>*}
+			</div>
 			<form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" class="ajaxForm">
 				<input type="hidden" name="page_id" value="{$page_id}" />
 				<input type="hidden" name="section_id" value="{$section_id}" />
@@ -212,10 +225,9 @@
 						<strong>{translate('Alternative text')}:<br></strong>
 						<input type="text" name="alt" value="" disabled>
 					</p>
-				<button class="toggleWYSIWYG fc_gradient1 fc_gradient_hover cc_catG_disabled" disabled>{translate('Modify description')}</button>
-				<hr>
-				<input type="submit" value="{translate('Save image')}" class="cc_catG_disabled" disabled>
 				</div>
+				<button class="toggleWYSIWYG input_50p fc_br_bottomleft fc_gradient1 fc_gradient_hover">{translate('Modify description')}</button>
+				<input type="submit" class="input_50p fc_br_bottomright" value="{translate('Save image')}">
 			</form>
 			<div class="clear"></div>
 			<div class="dz-progress fc_br_top"><span class="dz-upload fc_br_all" data-dz-uploadprogress=""></span></div>

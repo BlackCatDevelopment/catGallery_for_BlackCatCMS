@@ -36,10 +36,10 @@ $(document).ready(function()
 
 	/**/
 	$('.cc_catG_imgs').on( 'click',
-		'.fc_close',
+		'.icon-remove',
 	function()
 	{
-			$(this).closest('p').children('.cc_catG_del_conf, .cc_catG_del_res, .cc_catG_del strong').slideToggle(100);
+			$(this).closest('div').children('p').slideToggle(100);
 	});
 
 	$('.cc_catG_imgs').on( 'click',
@@ -96,7 +96,7 @@ $(document).ready(function()
 		'.cc_catG_del_res',
 	function()
 	{
-		$(this).closest('p').children('.cc_catG_del_conf, .cc_catG_del_res, .cc_catG_del strong').slideUp(100);
+		$(this).closest('div').children('p').slideUp(100);
 	});
 
 	$('.cc_catG_imgs').on( 'click',
@@ -130,7 +130,7 @@ $(document).ready(function()
 				};
 
 			$WYSIWYG.css({
-				top:	( pos.top + heightLi - 40 ) + "px"
+				top:	( pos.top + heightLi - 20 ) + "px"
 			}).find('input[name=imgID]').val(ajaxData.imgID);
 
 			$par.addClass('cc_catG_WYSIWYG');
