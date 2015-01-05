@@ -22,8 +22,27 @@
  *
  */
 
+function ceckIMG( $ul )
+{
+	var	$par	= $ul.closest('div'),
+		$yes	= $par.children('.catG_IMG_y'),
+		$no		= $par.children('.catG_IMG_n'),
+		size	= $ul.children('li').not('.prevTemp').size();
+	console.log(size);
+	if( size == 0 )
+	{
+		$yes.hide();
+		$no.show();
+		
+	} else {
+		$yes.show();
+		$no.hide();
+	}
+}
+
 $(document).ready(function()
 {
+	ceckIMG( $('.cc_catG_imgs') );
 	$('.cc_catgallery_option .cc_catgallery_show').unbind().click(function()
 	{
 		var current		= $(this).closest('.cc_catgallery_option');
@@ -77,6 +96,7 @@ $(document).ready(function()
 				{
 					$(this).slideUp(300,function(){
 						$(this).remove();
+						ceckIMG( $('.cc_catG_imgs') );
 					});
 					return_success( jqXHR.process , data.message );
 				}

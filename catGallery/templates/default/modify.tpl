@@ -57,7 +57,7 @@
 				$newIMG.find('input:disabled, button:disabled').prop('disabled',false);
 				$newIMG.find('.cc_catG_disabled').removeClass('cc_catG_disabled');
 				dialog_form( $newIMG.find('.ajaxForm') );
-
+				ceckIMG( $('.cc_catG_imgs') );
 				console.log(xhr);
 				console.log(newID);
 				console.log(xhr.newIMG);
@@ -146,8 +146,8 @@
 		</ul>
 		<div class="clear"></div>
 	</div>
-	{if $images}
-	<p>{translate('Existing images')}</p>
+	<p class="catG_IMG_y">{translate('Existing images')}</p>
+	<p class="catG_IMG_n">{translate('No images available')}</p>
 	<ul class="cc_catG_imgs">
 		{$counter = 0}
 		{foreach $images as image}
@@ -237,7 +237,6 @@
 			{*<a class="dz-remove" href="javascript:undefined;" data-dz-remove="">Remove</a>*}
 		</li>
 	</ul>
-	{else}<p>{translate('No images available')}</p>{/if}
 </div>
 
 <form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" class="catG_WYSIWYG fc_br_all fc_gradient2 fc_shadow_big">
