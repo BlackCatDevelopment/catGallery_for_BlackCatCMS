@@ -483,12 +483,14 @@ if ( ! class_exists( 'catGallery', false ) ) {
 						$this->createImg( $row['image_id'], self::$thumb_x, self::$thumb_y );
 				}
 			} else return false;
-			if ( $this->getOptions( 'random' ) == 1 )
-				shuffle( $this->images );
+
 			if ($image_id && is_numeric($image_id))
 				return $this->images[$image_id];
-			else
+			else {
+				if ( $this->getOptions( 'random' ) == 1 )
+					shuffle( $this->images );
 				return $this->images;
+			}
 		} // end getContents()
 
 
