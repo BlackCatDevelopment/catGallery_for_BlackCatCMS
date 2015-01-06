@@ -401,13 +401,11 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		private function setGalleryID()
 		{
 			// Get columns in this section
-			$gallery_id	= CAT_Helper_Page::getInstance()->db()->query( sprintf(
+			$gallery_id	= CAT_Helper_Page::getInstance()->db()->query(
 					'SELECT `gallery_id`
 						FROM `:prefix:mod_cc_catgallery`
 						WHERE `page_id` = :page_id AND
 							`section_id` = :section_id',
-					$table
-				),
 				array(
 					'page_id'		=> self::$page_id,
 					'section_id'	=> self::$section_id
