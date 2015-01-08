@@ -44,8 +44,10 @@ if (typeof ceckIMG !== 'function')
 
 $(document).ready(function()
 {
-	if (typeof catGalIDs !== 'undefined')
+	if (typeof catGalIDs !== 'undefined' && typeof catGalLoaded === 'undefined')
 	{
+		// This is a workaround if backend.js is loaded twice
+		catGalLoaded	= true;
 		$.each( catGalIDs, function( index, cGID )
 		{
 			var $catGal		= $('#cc_catG_' + cGID.gallery_id),
