@@ -130,13 +130,8 @@ if ( $gallery_id = $val->sanitizePost( 'gallery_id','numeric' ) )
 				'success'	=> $success
 			);
 			break;
-		default:
+		case 'saveOptions':
 			$options		= $val->sanitizePost('options');
-
-			// =========================== 
-			// ! save variant of images   
-			// =========================== 
-			$catGallery->saveOptions( 'variant', $val->sanitizePost('variant') );
 
 			// =========================== 
 			// ! save options for gallery   
@@ -148,9 +143,19 @@ if ( $gallery_id = $val->sanitizePost( 'gallery_id','numeric' ) )
 					if( !$catGallery->saveOptions( $option, $val->sanitizePost( $option ) )) $error = true;
 				}
 			}
+			$ajax_return	= array(
+				'message'	=> $backend->lang()->translate( 'Options saved successfully!' ),
+				'success'	=> true
+			);
+			break;
+		default:
+			// =========================== 
+			// ! save variant of images   
+			// =========================== 
+			$catGallery->saveOptions( 'variant', $val->sanitizePost('variant') );
 
 			$ajax_return	= array(
-				'message'	=> $action . '*' . $imgID,#$backend->lang()->translate( 'Options saved successfully!' ),
+				'message'	=> $backend->lang()->translate( 'Variant saved successfully!' ),
 				'success'	=> true
 			);
 			break;

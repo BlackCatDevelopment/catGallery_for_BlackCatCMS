@@ -73,7 +73,6 @@
 			<input type="hidden" name="page_id" value="{$page_id}" />
 			<input type="hidden" name="section_id" value="{$section_id}" />
 			<input type="hidden" name="gallery_id" value="{$gallery_id}" />
-			<input type="hidden" name="_cat_ajax" value="1" />
 			<input type="hidden" name="options" value="variant" />
 			<select name="variant">
 			{foreach $module_variants index variants}
