@@ -43,6 +43,7 @@ if (defined('CAT_PATH')) {
 // end include class.secure.php
 
 $val		= CAT_Helper_Validate::getInstance();
+$lang		= CAT_Helper_I18n::getInstance();
 $is_ajax	= $val->sanitizePost( '_cat_ajax','numeric' );
 $backend	= $is_ajax == 1
 					? CAT_Backend::getInstance('Pages', 'pages_modify', false)
@@ -72,6 +73,8 @@ $variant		= $catGallery->getVariant();
 
 $module_path	= '/modules/cc_catgallery/';
 
+$lang->addFile( $lang->getLang().'.php', CAT_PATH . $module_path . 'languages/' );
+
 if ( file_exists( CAT_PATH . $module_path .'save/' . $variant . '/save.php' ) )
 	include_once( CAT_PATH . $module_path .'save/' . $variant . '/save.php' );
 elseif ( file_exists( CAT_PATH . $module_path .'save/default/save.php' ) )
@@ -85,6 +88,10 @@ if( $is_ajax == 1 )
 	print json_encode( $ajax_return );
 	exit();
 } else {
+	$backend->print_success(
+		$ajax_return['message'] ? $ajax_return['message'] : $lang->translate( 'Saved successfully' ),
+		CAT_ADMIN_URL . '/pages/modify.php?page_id=' . $page_id
+	);
 	// Print admin footer
 	$backend->print_footer();	
 }

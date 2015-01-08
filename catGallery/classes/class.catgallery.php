@@ -121,7 +121,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			return self::$instance;
 		}
 
-		public function __construct( $gallery_id	= NULL, $is_header	= false )
+		public function __construct( $gallery_id = NULL, $is_header = false )
 		{
 			global $page_id, $section_id;
 			require_once(CAT_PATH . '/framework/functions.php');
@@ -436,8 +436,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 				'SELECT * FROM `:prefix:mod_cc_catgallery_images`
 					WHERE `gallery_id` = :gallery_id AND
 						`section_id` = :section_id AND
-						`image_id` = :image_id
-						ORDER BY `position`',
+						`image_id` = :image_id',
 				array(
 					'gallery_id'	=> self::$gallery_id,
 					'section_id'	=> self::$section_id,

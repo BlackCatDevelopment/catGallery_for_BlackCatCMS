@@ -64,13 +64,13 @@ if ( $gallery_id = $val->sanitizePost( 'gallery_id','numeric' ) )
 			{
 				$success	= $catGallery->saveImages( $_FILES );
 				$ajax_return	= array(
-					'message'	=> $backend->lang()->translate( 'Image upload successful!' ),
+					'message'	=> $lang->translate( 'Image uploaded successfully!' ),
 					'newIMG'	=> $success,
 					'success'	=> is_array($success) ? true : false
 				);
 			} else {
 				$ajax_return	= array(
-					'message'	=> $backend->lang()->translate( 'No images to upload' ),
+					'message'	=> $lang->translate( 'No images to upload' ),
 					'success'	=> false
 				);
 			}
@@ -79,22 +79,22 @@ if ( $gallery_id = $val->sanitizePost( 'gallery_id','numeric' ) )
 			$deleted	= $catGallery->removeImage( $imgID );
 			$ajax_return	= array(
 				'message'	=> $deleted === true
-					? $backend->lang()->translate( 'Image deleted successfully!' )
-					: $backend->lang()->translate( 'An error occoured!' ),
+					? $lang->translate( 'Image deleted successfully!' )
+					: $lang->translate( 'An error occoured!' ),
 				'success'	=> $deleted
 			);
 			break;
 		case 'getContent':
 			$ajax_return	= array(
 				'image'		=> $catGallery->getImage( $imgID ),
-				'message'	=> $backend->lang()->translate( 'Content loaded' ),
+				'message'	=> $lang->translate( 'Content loaded' ),
 				'success'	=> true
 			);
 			break;
 		case 'saveContent':
 			$catGallery->saveContent( $imgID, $val->sanitizePost('wysiwyg_' . $section_id, false, true  ) );
 			$ajax_return	= array(
-				'message'	=> $backend->lang()->translate( 'Content saved succesfully' ),
+				'message'	=> $lang->translate( 'Content saved successfully' ),
 				'success'	=> true
 			);
 			break;
@@ -113,7 +113,7 @@ if ( $gallery_id = $val->sanitizePost( 'gallery_id','numeric' ) )
 			}
 
 			$ajax_return	= array(
-				'message'	=> $backend->lang()->translate( 'Image saved successfully' ),
+				'message'	=> $lang->translate( 'Image saved successfully' ),
 				'success'	=> true
 			);
 			break;
@@ -125,8 +125,8 @@ if ( $gallery_id = $val->sanitizePost( 'gallery_id','numeric' ) )
 
 			$ajax_return	= array(
 				'message'	=> $success === true ?
-						$backend->lang()->translate( 'Image reordered successfully' )
-						: $backend->lang()->translate( 'Reorder failed' ),
+						$lang->translate( 'Image reordered successfully' )
+						: $lang->translate( 'Reorder failed' ),
 				'success'	=> $success
 			);
 			break;
@@ -144,7 +144,7 @@ if ( $gallery_id = $val->sanitizePost( 'gallery_id','numeric' ) )
 				}
 			}
 			$ajax_return	= array(
-				'message'	=> $backend->lang()->translate( 'Options saved successfully!' ),
+				'message'	=> $lang->translate( 'Options saved successfully!' ),
 				'success'	=> true
 			);
 			break;
@@ -155,13 +155,17 @@ if ( $gallery_id = $val->sanitizePost( 'gallery_id','numeric' ) )
 			$catGallery->saveOptions( 'variant', $val->sanitizePost('variant') );
 
 			$ajax_return	= array(
-				'message'	=> $backend->lang()->translate( 'Variant saved successfully!' ),
+				'message'	=> $lang->translate( 'Variant saved successfully!' ),
 				'success'	=> true
 			);
+
 			break;
 	}
 } else {
-	$backend->print_error('Es wurde keine gültige ID übermittelt.', CAT_ADMIN_URL . '/pages/modify.php?page_id=' . $page_id);
+	$backend->print_error(
+		$lang->translate( 'You send an invalid ID' ),
+		CAT_ADMIN_URL . '/pages/modify.php?page_id=' . $page_id
+	);
 }
 
 

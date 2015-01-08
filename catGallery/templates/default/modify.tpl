@@ -23,50 +23,19 @@
  *}
 
 <script type="text/javascript">
-	$(document).ready(function()
+	if (typeof catGalIDs === 'undefined')
 	\{
-		$(".cc_dropzone").dropzone(
-		\{
-			url:		'{$CAT_URL}/modules/cc_catgallery/save.php',
-			paramName:	'new_image',
-			thumbnailWidth:		300,
-			thumbnailHeight:	200,
-			sending:	function(file, xhr, formData)
-			\{
-				formData.append('page_id',	{$page_id});
-				formData.append('section_id', {$section_id});
-				formData.append('gallery_id', {$gallery_id});
-				formData.append('action', 'uploadIMG');
-				formData.append('_cat_ajax', 1);
-			},
-			previewsContainer:	'.cc_catG_imgs',
-			previewTemplate:	$('.prevTemp').clone().removeClass('prevTemp')[0].outerHTML,
-			success:	function(file, xhr, formData)
-			\{
-				console.log(file, xhr, formData);
-				var $newIMG	= $(file.previewElement),
-					xhr		= JSON.parse(xhr),
-					newID	= $newIMG.attr('id') + xhr.newIMG.image_id;
-				$('.cc_catG_imgs').sortable( "refresh" );
-
-				$newIMG.find('.dz-progress').remove();
-				$newIMG.find('.dz-filename span').text(xhr.newIMG.picture);
-				$newIMG.attr('id', newID );
-				$newIMG.find('input[name=imgID]').val(xhr.newIMG.image_id);
-				$newIMG.find('.cc_catG_image img').attr('src',xhr.newIMG.thumb);
-				$newIMG.find('input:disabled, button:disabled').prop('disabled',false);
-				$newIMG.find('.cc_catG_disabled').removeClass('cc_catG_disabled');
-				dialog_form( $newIMG.find('.ajaxForm') );
-				ceckIMG( $('.cc_catG_imgs') );
-				console.log(xhr);
-				console.log(newID);
-				console.log(xhr.newIMG);
-			}
-		});
+		catGalIDs	= [];
+	}
+	catGalIDs.push(
+	\{
+		'page_id'		: {$page_id},
+		'section_id'	: {$section_id},
+		'gallery_id'	: {$gallery_id}
 	});
 </script>
 
-<div class="cc_catG_form">
+<div class="cc_catG_form" id="cc_catG_{$gallery_id}">
 	<div class="cc_catG_skin fc_br_top">
 		<p class="icon-cog cc_toggle_set"> {translate('Set skin')}</p>
 		<form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" class="fc_gradient1 fc_border_all_light fc_br_bottom fc_shadow_small">
@@ -85,14 +54,14 @@
 	</div>
 	<div class="clear"></div>
 	<div class="cc_catG_settings">
-		<ul class="cc_catG_nav fc_br_left">
-			<li class="active fc_br_topleft">{translate('Upload new image')}</li>
+		<ul class="cc_catG_nav fc_br_left" id="cc_catG_nav_{$gallery_id}">
+			<li class="active fc_br_topleft">{translate('Upload new images')}</li>
 			<li>{translate('Options for frontend')}</li>
 			<li class="fc_br_bottomleft">{translate('Image option')}</li>
 		</ul>
 		<ul class="cc_catG_tabs fc_br_right">
 			<li class="cc_catG_tab active">
-				<div class="cc_dropzone fc_br_all">
+				<div id="cc_dropzone_{$gallery_id}" class="cc_dropzone fc_br_all">
 					{translate('Drag &amp; drop')}<span>{translate('your images here or click to upload')}.</span>
 				</div>
 			</li>
@@ -147,7 +116,7 @@
 	</div>
 	<p class="catG_IMG_y">{translate('Existing images')}</p>
 	<p class="catG_IMG_n">{translate('No images available')}</p>
-	<ul class="cc_catG_imgs">
+	<ul id="cc_catG_imgs_{$gallery_id}" class="cc_catG_imgs">
 		{$counter = 0}
 		{foreach $images as image}
 		<li class="fc_border_all fc_shadow_small fc_br_all" id="catG_{$image.image_id}">
@@ -191,7 +160,7 @@
 		{$counter = $counter + 1}
 		</li>
 		{/foreach}
-		<li class="dz-preview dz-image-preview fc_border_all fc_shadow_small fc_br_all prevTemp" id="catG_">
+		<li class="dz-preview dz-image-preview fc_border_all fc_shadow_small fc_br_all prevTemp prevTemp_{$gallery_id}" id="catG_">
 			<div class="catG_IMG_options">
 				<p class="drag_corner icon-resize" title="{translate('Reorder image')}"></p>
 				<div class="cc_catG_del">
@@ -238,7 +207,7 @@
 	</ul>
 </div>
 
-<form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" class="catG_WYSIWYG fc_br_all fc_gradient2 fc_shadow_big">
+<form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" class="catG_WYSIWYG fc_br_all fc_gradient2 fc_shadow_big" id="catG_WYSIWYG_{$gallery_id}">
 	<input type="hidden" name="page_id" value="{$page_id}" />
 	<input type="hidden" name="section_id" value="{$section_id}" />
 	<input type="hidden" name="gallery_id" value="{$gallery_id}" />

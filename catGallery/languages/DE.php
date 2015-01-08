@@ -43,10 +43,14 @@ if (defined('CAT_PATH')) {
 $module_description	  = 'Dieses Addon bietet eine einfache M&ouml;glichkeit einen Bildslider oder eine einfache Gallerie auf ihrer Internetseite einzubinden. F&uuml;r mehr Informationen lesen Sie <a href="https://github.com/BlackCatDevelopment/catGallery_for_BlackCatCMS" target="_blank">GitHub</a>.<br/><br/>Done by Matthias Glienke, <a class="icon-creativecat" href="http://creativecat.de"> creativecat</a>';
 
 $LANG = array(
+	'Set skin'						=> 'Variante setzen',
+	'Save skin &amp; reload'		=> 'Speichern &amp; Neuladen',
 // --- view no image ---
     'No images were found'			=> 'Keine Bilder gefunden',
+    'Drag &amp; drop'				=> 'Drag &amp; drop',
+	'your images here or click to upload'
+									=> 'Ziehe deine Bilder hierher oder klicke um Bilder hochzuladen',
 // --- modify ---				
-	'Administration for catGallery'	=> 'Verwaltung von catGallery',
     'Options for frontend'			=> 'Optionen f&uuml;rs Frontend',
     'Kind of animation'				=> 'Art der Animation',
     'No effect selected...'			=> 'Kein Effekt ausgew&auml;lt',
@@ -55,11 +59,10 @@ $LANG = array(
     'Width of label (Set to 0 for no labels)'
     								=> 'Breite des Labels (0 für keine Labels)',
     'Show images by chance'			=> 'Bilderreihenfolge zuf&auml;llig',
-    'Upload/ Save'					=> 'Hochladen/Speichern',
     'Image option'					=> 'Bild Optionen',
     'Adjust horizontal'				=> 'Breite einstellen',
     'Adjust vertical'				=> 'H&ouml;he einstellen',
-    'Upload new image'				=> 'Neues Bild hochladen',
+    'Upload new images'				=> 'Neues Bilder hochladen',
     'Please notice, that loadingtime increases on more images'
     								=> 'Bitte beachten, bei mehreren Bildern erh&ouml;ht sich die Ladezeit',
     'Add another upload'			=> 'Ein weiteres Bild hinzuf&uuml;gen',
@@ -73,5 +76,26 @@ $LANG = array(
     'No images available'			=> 'Keine Bilder vorhanden',
     'Width of gallery (0 for 100%)'	=> 'Breite der Galerie (0 für 100%)',
     'Delete this image during the next save'
-    								=> 'Dieses Bild beim n&auml;chsten Speichern l&ouml;schen'
+    								=> 'Dieses Bild beim n&auml;chsten Speichern l&ouml;schen',
+// --- save ---				
+	'Save image'					=> 'Bild speichern',
+	'Modify description'			=> 'Beschreibung',
+	'Close without saving'			=> 'Ohne Speichern schließen',
+	'Reorder image'					=> 'Bilder umsortieren',
+	'Image reordered successfully'	=> 'Bilder erfolgreich umsortiert',
+	'Reorder failed'				=> 'Umsortieren fehlgeschlagen',
+	'Delete this image'				=> 'Dieses Bild l&ouml;schen',
+	'Keep it!'						=> 'Bild behalten',
+	'Confirm delete'				=> 'Bild endgültig löschen',
+	'No images to upload'			=> 'Keine Bilder zum Upload vorhanden',
+	'Image uploaded successfully!'	=> 'Bild erfolgreich hochgeladen',
+	'Image deleted successfully!'	=> 'Bild erfolgreich gel&ouml;scht',
+	'Image saved successfully'		=> 'Bild erfolgreich gespeichert',
+	'An error occoured!'			=> 'Es ist ein Fehler aufgetraten',
+	'Content loaded'				=> 'Inhalt geladen',
+	'Content saved successfully'	=> 'Inhalt erfolgreich gespeichert',
+	'Options saved successfully!'	=> 'Optionen erfolgreich gespeichert',
+	'Variant saved successfully!'	=> 'Variante erfolgreich gespeichert',
+	'You send an invalid ID'		=> 'Es wurde keine gültige ID übermittelt.'
+	
 );
