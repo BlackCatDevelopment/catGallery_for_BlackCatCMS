@@ -57,7 +57,8 @@ $parser_data	= array(
 	'module_variants'	=> $catGallery->getModuleVariants(),
 	'options'			=> $catGallery->getOptions(),
 	'effects'			=> $catGallery->effects,
-	'images'			=> $catGallery->getImage()
+	'images'			=> $catGallery->getImage(),
+	'catG_WYSIWYG'		=> 'wysiwyg_' . $section_id
 );
 
 $module_path	= '/modules/cc_catgallery/';
