@@ -26,20 +26,15 @@
 .header_slider {
 	margin-bottom: 50px;
 	position: relative;
-	padding-left: 33px;
-	padding-top: 36px;
+	padding:	1em 5em;
 	text-align: center;
-	margin-right: auto;
-	margin-left: auto;
-	width: 810px;
-	height: 363px;
+	margin:	50px auto;
 }
 .header_slider_images {
 	z-index: 20;
-	height: 327px;
-	width: 776px;
 	position: relative;
-}.header_slider img {
+}
+.header_slider img {
 	border-color: white;
 	border-style: solid;
 	border-width: 10px;

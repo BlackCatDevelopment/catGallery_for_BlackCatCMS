@@ -29,12 +29,12 @@
 	cardSlider.push(
 	\{
 		'section_id'	: {$section_id},
-		'animSpeed'		: {if $animSpeed}{$animSpeed}{else}500{/if},
-		'pauseTime'		: {if $pauseTime}{$pauseTime}{else}4000{/if}
+		'animSpeed'		: {if $options.animSpeed}{$options.animSpeed}{else}500{/if},
+		'pauseTime'		: {if $options.pauseTime}{$options.pauseTime}{else}5000{/if}
 	});
 </script>
 <div class="header_slider">
-	<div id="header_slider_images_{$section_id}" class="header_slider_images">
+	<div id="header_slider_images_{$section_id}" class="header_slider_images" style="height: {$options.resize_y}px;">
 		{foreach $images image}
 		<img src="{$imgURL}{$image.picture}" width="{$options.resize_x}" height="{$options.resize_y}" alt="{$image.options.alt}">
 		{/foreach}
