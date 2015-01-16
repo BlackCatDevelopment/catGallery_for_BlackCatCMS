@@ -21,22 +21,20 @@
  *   @package			catGallery
  *
  *}
-<script type="text/javascript">
-	if (typeof cardSlider === 'undefined')
-	\{
-		cardSlider	= [];
-	}
-	cardSlider.push(
-	\{
-		'section_id'	: {$section_id},
-		'animSpeed'		: {if $animSpeed}{$animSpeed}{else}500{/if},
-		'pauseTime'		: {if $pauseTime}{$pauseTime}{else}4000{/if}
-	});
-</script>
-<div class="header_slider">
-	<div id="header_slider_images_{$section_id}" class="header_slider_images">
-		{foreach $images image}
-		<img src="{$imgURL}{$image.picture}" width="{$options.resize_x}" height="{$options.resize_y}" alt="{$image.options.alt}">
+
+<div class="cc_catG_skin fc_br_top">
+	<p class="icon-cog cc_toggle_set"> {translate('Set skin')}</p>
+	<form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" class="fc_gradient1 fc_border_all_light fc_br_bottom fc_shadow_small">
+		<input type="hidden" name="page_id" value="{$page_id}" />
+		<input type="hidden" name="section_id" value="{$section_id}" />
+		<input type="hidden" name="gallery_id" value="{$gallery_id}" />
+		<input type="hidden" name="options" value="variant" />
+		<select name="variant">
+		{foreach $module_variants index variants}
+			<option value="{$index}"{if $index == $options.variant} selected="selected"{/if}>{$variants}</option>
 		{/foreach}
-	</div>
+		</select><br/>
+		<input type="submit" name="speichern" value="{translate('Save skin &amp; reload')}" /><br/>
+		<input type="reset" name="reset" value="{translate('Close')}" />
+	</form>
 </div>

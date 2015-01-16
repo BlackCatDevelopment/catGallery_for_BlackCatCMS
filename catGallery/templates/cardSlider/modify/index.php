@@ -1,4 +1,5 @@
-{**
+<?php
+/**
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -20,23 +21,25 @@
  *   @category			CAT_Modules
  *   @package			catGallery
  *
- *}
-<script type="text/javascript">
-	if (typeof cardSlider === 'undefined')
-	\{
-		cardSlider	= [];
+ */
+
+// include class.secure.php to protect this file and the whole CMS!
+if (defined('CAT_PATH')) {	
+	include(CAT_PATH.'/framework/class.secure.php'); 
+} else {
+	$oneback = "../";
+	$root = $oneback;
+	$level = 1;
+	while (($level < 10) && (!file_exists($root.'/framework/class.secure.php'))) {
+		$root .= $oneback;
+		$level += 1;
 	}
-	cardSlider.push(
-	\{
-		'section_id'	: {$section_id},
-		'animSpeed'		: {if $animSpeed}{$animSpeed}{else}500{/if},
-		'pauseTime'		: {if $pauseTime}{$pauseTime}{else}4000{/if}
-	});
-</script>
-<div class="header_slider">
-	<div id="header_slider_images_{$section_id}" class="header_slider_images">
-		{foreach $images image}
-		<img src="{$imgURL}{$image.picture}" width="{$options.resize_x}" height="{$options.resize_y}" alt="{$image.options.alt}">
-		{/foreach}
-	</div>
-</div>
+	if (file_exists($root.'/framework/class.secure.php')) { 
+		include($root.'/framework/class.secure.php'); 
+	} else {
+		trigger_error(sprintf("[ <b>%s</b> ] Can't include class.secure.php!", $_SERVER['SCRIPT_NAME']), E_USER_ERROR);
+	}
+}
+// end include class.secure.php
+
+?>

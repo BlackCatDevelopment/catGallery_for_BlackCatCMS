@@ -21,22 +21,7 @@
  *   @package			catGallery
  *
  *}
-<script type="text/javascript">
-	if (typeof cardSlider === 'undefined')
-	\{
-		cardSlider	= [];
-	}
-	cardSlider.push(
-	\{
-		'section_id'	: {$section_id},
-		'animSpeed'		: {if $animSpeed}{$animSpeed}{else}500{/if},
-		'pauseTime'		: {if $pauseTime}{$pauseTime}{else}4000{/if}
-	});
-</script>
-<div class="header_slider">
-	<div id="header_slider_images_{$section_id}" class="header_slider_images">
-		{foreach $images image}
-		<img src="{$imgURL}{$image.picture}" width="{$options.resize_x}" height="{$options.resize_y}" alt="{$image.options.alt}">
-		{/foreach}
-	</div>
+
+<div id="cc_dropzone_{$gallery_id}" class="cc_dropzone fc_br_all">
+	{translate('Drag &amp; drop')}<span>{translate('your images here or click to upload')}.</span>
 </div>

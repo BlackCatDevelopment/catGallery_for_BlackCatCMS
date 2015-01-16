@@ -82,12 +82,21 @@ $(document).ready(function()
 			
 					$newIMG.find('.dz-progress').remove();
 					$newIMG.find('.dz-filename span').text(xhr.newIMG.picture);
-					$newIMG.attr('id', newID );
 					$newIMG.find('input[name=imgID]').val(xhr.newIMG.image_id);
 					$newIMG.find('.cc_catG_image img').attr('src',xhr.newIMG.thumb);
 					$newIMG.find('input:disabled, button:disabled').prop('disabled',false);
 					$newIMG.find('.cc_catG_disabled').removeClass('cc_catG_disabled');
-			
+
+					/*$newIMG.html(function(index,html){
+						return html.replace(/__section_id__/g,xhr.newIMG.section_id);
+					});
+					$newIMG.html(function(index,html){
+						return html.replace(/__gallery_id__/g,xhr.newIMG.image_id);
+					});*/
+					$newIMG.html(function(index,html){
+						return html.replace(/__image_id__/g,xhr.newIMG.image_id);
+					});
+
 					dialog_form( $newIMG.find('.ajaxForm') );
 			
 					ceckIMG( $imgUL );

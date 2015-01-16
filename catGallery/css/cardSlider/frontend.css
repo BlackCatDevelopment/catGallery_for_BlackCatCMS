@@ -33,7 +33,6 @@
 	margin-left: auto;
 	width: 810px;
 	height: 363px;
-	background:url(images/slider_back.jpg) no-repeat;
 }
 .header_slider_images {
 	z-index: 20;
@@ -52,37 +51,4 @@
 .header_slider a {
 	border:0;
 	display:block;
-}
-.nivo-slice {
-	display:block;
-	position:absolute;
-	z-index:5;
-	height:100%;
-}
-.nivo-box {
-	display:block;
-	position:absolute;
-	z-index:5;
-}
-.band {
-	z-index: 998;
-	left: -50px;
-	bottom: 30px;
-	position: absolute;
-	background-position: 0px 0px;
-	background-image: url(images/schleife_back.png);
-	background-repeat: no-repeat;
-	height: 67px;
-	width: 943px;
-}
-.schleife {
-	bottom: -140px;
-	margin-left: -123px;
-	left: 50%;
-	z-index: 999;
-	position: absolute;
-	height: 238px;
-	width: 256px;
-	background-image: url(images/schleife.png);
-	background-repeat: no-repeat;
 }

@@ -21,22 +21,18 @@
  *   @package			catGallery
  *
  *}
-<script type="text/javascript">
-	if (typeof cardSlider === 'undefined')
-	\{
-		cardSlider	= [];
-	}
-	cardSlider.push(
-	\{
-		'section_id'	: {$section_id},
-		'animSpeed'		: {if $animSpeed}{$animSpeed}{else}500{/if},
-		'pauseTime'		: {if $pauseTime}{$pauseTime}{else}4000{/if}
-	});
-</script>
-<div class="header_slider">
-	<div id="header_slider_images_{$section_id}" class="header_slider_images">
-		{foreach $images image}
-		<img src="{$imgURL}{$image.picture}" width="{$options.resize_x}" height="{$options.resize_y}" alt="{$image.options.alt}">
-		{/foreach}
-	</div>
-</div>
+
+
+<form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" class="ajaxForm">
+	<input type="hidden" name="page_id" value="{$page_id}" />
+	<input type="hidden" name="section_id" value="{$section_id}" />
+	<input type="hidden" name="gallery_id" value="{$gallery_id}" />
+	<input type="hidden" name="action" value="saveOptions" />
+	<input type="hidden" name="_cat_ajax" value="1" />
+	<input type="hidden" name="options" value="random" />
+	<p class="cc_In300px">
+		<input id="random_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="random" value="1" {if $options.random}checked="checked" {/if}/>
+		<label for="random_{$section_id}">{translate('Show images by chance')}:</label>
+	</p><br/>
+	<input type="submit" name="speichern" value="{translate('Save')}" />
+</form>
