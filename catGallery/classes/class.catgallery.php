@@ -45,6 +45,7 @@ if (defined('CAT_PATH')) {
 if ( ! class_exists( 'catGallery', false ) ) {
 	class catGallery
 	{
+		private static $instance;
 		protected static $gallery_id			= NULL;
 		protected static $page_id				= NULL;
 		protected static $section_id			= NULL;
@@ -115,9 +116,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		public static function getInstance()
 		{
 			if (!self::$instance)
-				self::$instance = new self();
-			else
-				self::reset();
+				self::$instance	= new self();
 			return self::$instance;
 		}
 
@@ -131,11 +130,8 @@ if ( ! class_exists( 'catGallery', false ) ) {
 				$section_id	= is_numeric($gallery_id) ? $gallery_id : $gallery_id['section_id'];
 			}
 
-			self::$section_id	= intval($section_id);
-			self::$page_id		= intval($page_id);
-			self::$gallery_root	= CAT_PATH . MEDIA_DIRECTORY . '/cc_catgallery/';
-			$this->galleryPATH	= self::$gallery_root . 'cc_catgallery_' . self::$section_id;
-			$this->galleryURL	= CAT_URL . MEDIA_DIRECTORY . '/cc_catgallery/cc_catgallery_' . self::$section_id;
+			$this->setPageID( intval($page_id) );
+			$this->setSectionID( intval($section_id) );
 
 			if ( $gallery_id === true )
 			{
@@ -151,6 +147,77 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			}
 			else return false;
 		}
+
+
+		/**
+		 * set the $page_id
+		 */
+		public function setPageID( $page_id )
+		{
+			self::$page_id		= intval($page_id);
+			$this->setGalleryFolder();
+			return $this;
+		}
+		
+		/**
+		 * set the $section_id
+		 */
+		public function setSectionID( $section_id )
+		{
+			self::$section_id	= intval($section_id);
+			$this->setGalleryFolder();
+			return $this;
+		}
+
+		/**
+		 * set the $gallery_root, galleryPATH and galleryURL if section_id or page_id is changed
+		 */
+		private function setGalleryFolder()
+		{
+			self::$gallery_root	= CAT_PATH . MEDIA_DIRECTORY . '/cc_catgallery/';
+			$this->galleryPATH	= self::$gallery_root . 'cc_catgallery_' . self::$section_id;
+			$this->galleryURL	= CAT_URL . MEDIA_DIRECTORY . '/cc_catgallery/cc_catgallery_' . self::$section_id;
+			return $this;
+		}
+
+		/**
+		 * set the $gallery_id by self:$sectionid
+		 *
+		 * @access public
+		 * @return integer
+		 *
+		 **/
+		public function setGalleryID()
+		{
+			// Get columns in this section
+			$gallery_id	= CAT_Helper_Page::getInstance()->db()->query(
+					'SELECT `gallery_id`
+						FROM `:prefix:mod_cc_catgallery`
+						WHERE `page_id` = :page_id AND
+							`section_id` = :section_id',
+				array(
+					'page_id'		=> self::$page_id,
+					'section_id'	=> self::$section_id
+				)
+			)->fetchColumn();
+
+			self::$gallery_id	= $gallery_id;
+			return $this;
+		} // end setGalleryID()
+
+		/**
+		 * set the $gallery_id by self:$sectionid
+		 *
+		 * @access public
+		 * @return integer
+		 *
+		 **/
+		public function getGalleryID()
+		{
+			if ( !self::$gallery_id )
+				$this->setGalleryID();
+			return self::$gallery_id;
+		} // end getGalleryID()
 
 		public function __destruct() {}
 
@@ -391,38 +458,14 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			return true;
 		}
 
-		/**
-		 * set the $gallery_id by self:$sectionid
-		 *
-		 * @access private
-		 * @return integer
-		 *
-		 **/
-		private function setGalleryID()
-		{
-			// Get columns in this section
-			$gallery_id	= CAT_Helper_Page::getInstance()->db()->query(
-					'SELECT `gallery_id`
-						FROM `:prefix:mod_cc_catgallery`
-						WHERE `page_id` = :page_id AND
-							`section_id` = :section_id',
-				array(
-					'page_id'		=> self::$page_id,
-					'section_id'	=> self::$section_id
-				)
-			)->fetchColumn();
-
-			self::$gallery_id	= $gallery_id;
-			return self::$gallery_id;
-		} // end setGalleryID()
-
 
 		/**
 		 * get all images from database
 		 *
 		 * @access public
-		 * @param  boolean  $addOptions - add options of an image
-		 * @param  boolean  $addContent - add content of an image
+		 * @param  integer  $image_id	- optional id of single image
+		 * @param  boolean  $addOptions	- optional add options of an image
+		 * @param  boolean  $addContent	- optional add content of an image
 		 * @return array()
 		 *
 		 **/
@@ -490,14 +533,14 @@ if ( ! class_exists( 'catGallery', false ) ) {
 					shuffle( $this->images );
 				return $this->images;
 			}
-		} // end getContents()
+		} // end getImage()
 
 
 		/**
 		 * get option of an image
 		 *
 		 * @access public
-		 * @param  string  $image_id - optional id of an image
+		 * @param  integer  $image_id - optional id of an image
 		 * @return array()
 		 *
 		 **/
@@ -744,6 +787,10 @@ if ( ! class_exists( 'catGallery', false ) ) {
 				$resize_y,
 				$resize_x,
 				'crop'
+			);
+			return array(
+				'path'	=> $tmp_path . '/' . $image,
+				'url'	=> str_replace( CAT_PATH, CAT_URL, $tmp_path ) . '/' . $image,
 			);
 		} // createImg()
 
