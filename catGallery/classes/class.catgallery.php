@@ -654,8 +654,9 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			{
 				while( !false == ($row = $conts->fetch() ) )
 				{
-					$contents[$row['image_id']]['content']		= $row['content'];
-					$this->images[$row['image_id']]['content']	= $row['content'];
+					$cont	= stripslashes( $row['content'] );
+					$contents[$row['image_id']]['content']		= $cont;
+					$this->images[$row['image_id']]['content']	= $cont;
 				}
 			}
 			if ( $image_id )
