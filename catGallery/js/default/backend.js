@@ -79,12 +79,12 @@ $(document).ready(function()
 						newID	= $newIMG.attr('id') + xhr.newIMG.image_id;
 			
 					$imgUL.sortable( "refresh" );
-			
+
 					$newIMG.find('.dz-progress').remove();
 					$newIMG.find('.dz-filename span').text(xhr.newIMG.picture);
 					$newIMG.find('input[name=imgID]').val(xhr.newIMG.image_id);
 					$newIMG.find('.cc_catG_image img').attr('src',xhr.newIMG.thumb);
-					$newIMG.find('input:disabled, button:disabled').prop('disabled',false);
+					$newIMG.find('input, button, textarea').prop('disabled',false);
 					$newIMG.find('.cc_catG_disabled').removeClass('cc_catG_disabled');
 
 					/*$newIMG.html(function(index,html){
@@ -105,8 +105,8 @@ $(document).ready(function()
 		
 			ceckIMG( $imgUL );
 		
-			$('.cc_toggle_set').next('form').hide();
-			$('.cc_toggle_set, .cc_catG_skin input:reset').unbind().click(function()
+			$catGal.find('.cc_toggle_set').next('form').hide();
+			$catGal.find('.cc_toggle_set, .cc_catG_skin input:reset').unbind().click(function()
 			{
 				$(this).closest('.cc_catG_skin').children('form').slideToggle(200);
 			});
@@ -320,9 +320,7 @@ $(document).ready(function()
 					});
 				}
 			});
-			$imgUL.disableSelection();
-		
-			
+	
 			$catNav.children('li').click( function()
 			{
 				var $curr	= $(this),

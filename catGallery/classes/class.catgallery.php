@@ -335,7 +335,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			if ( !$this->checkIDs() ||
 				!$file_extension ) return false;
 			
-			$getPos	= CAT_Helper_Page::getInstance()->db()->query(
+			$pos	= CAT_Helper_Page::getInstance()->db()->query(
 				'SELECT MAX(position) AS pos FROM `:prefix:mod_cc_catgallery_images`
 					WHERE `page_id` = :page_id
 						AND `section_id` = :section_id
@@ -345,14 +345,9 @@ if ( ! class_exists( 'catGallery', false ) ) {
 					'section_id'	=> self::$section_id,
 					'gallery_id'	=> self::$gallery_id
 				)
-			);
-			if ( $getPos && $getPos->rowCount() > 0 )
-			{
-				if( !false == ( $pos = $getPos->fetch() ) )
-				{
-					$position	= $pos['pos'] + 1;
-				}
-			}
+			)->fetchColumn();
+
+			$position	= $pos + 1;
 
 
 			if( CAT_Helper_Page::getInstance()->db()->query(
