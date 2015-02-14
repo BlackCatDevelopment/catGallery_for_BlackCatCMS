@@ -148,6 +148,17 @@ if ( $gallery_id = $val->sanitizePost( 'gallery_id','numeric' ) )
 				'success'	=> true
 			);
 			break;
+		case 'publishIMG':
+			// =========================== 
+			// ! save options for gallery   
+			// =========================== 
+			$success		= $catGallery->publishImg( $imgID );
+			$ajax_return	= array(
+				'message'	=> $success['published']	? $lang->translate( 'Image published successfully!' ) : $lang->translate( 'Image unpublished successfully!' ),
+				'published'	=> $success['published'],
+				'success'	=> true
+			);
+			break;
 		default:
 			// =========================== 
 			// ! save variant of images   

@@ -63,6 +63,11 @@ $parser_data	= array(
 
 $module_path	= '/modules/cc_catgallery/';
 
+if ( file_exists( CAT_PATH . $module_path .'modify/' . $catGallery->getVariant() . '/modify.php' ) )
+	include( CAT_PATH . $module_path .'modify/' . $catGallery->getVariant() . '/modify.php' );
+elseif ( file_exists( CAT_PATH . $module_path .'modify/default/modify.php' ) )
+	include( CAT_PATH . $module_path .'modify/default/modify.php' );
+
 if ( file_exists( CAT_PATH . $module_path .'templates/' . $catGallery->getVariant() . '/modify.tpl' ) )
 	$parser->setPath( dirname(__FILE__) . '/templates/' . $catGallery->getVariant() );
 elseif ( file_exists( CAT_PATH . $module_path .'templates/default/modify.tpl' ) )

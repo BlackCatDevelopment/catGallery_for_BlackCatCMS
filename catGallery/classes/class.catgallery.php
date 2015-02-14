@@ -507,7 +507,10 @@ if ( ! class_exists( 'catGallery', false ) ) {
 					$this->images[$row['image_id']]	= array(
 						'image_id'			=> $row['image_id'],
 						'position'			=> $row['position'],
+						'published'			=> $row['published'],
 						'picture'			=> $row['picture'],
+						'original'			=> $this->getFolder(false) . '/' . $row['picture'],
+						'temp'				=> CAT_URL. MEDIA_DIRECTORY . '/cc_catgallery/temp/' . $row['picture'],
 						'options'			=> $addOptions ? $this->getImgOptions( $row['image_id'] ) : NULL,
 						'image_content'		=> $addContent ? $this->getImgContent( $row['image_id'] ) : NULL,
 						'contentname'		=> 'image_content_' . $row['image_id'],
@@ -649,8 +652,8 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			{
 				while( !false == ($row = $conts->fetch() ) )
 				{
-					$contents[$row['image_id']]['content']		= $row['content'];
-					$this->images[$row['image_id']]['content']	= $row['content'];
+					$contents[$row['image_id']]['content']		= stripslashes( $row['content'] );
+					$this->images[$row['image_id']]['content']	= stripslashes( $row['content'] );
 				}
 			}
 			if ( $image_id )
@@ -708,8 +711,8 @@ if ( ! class_exists( 'catGallery', false ) ) {
 								if ( !CAT_Helper_Image::getInstance()->make_thumb(
 										self::$gallery_root . '/temp/' . $current->file_dst_name,
 										$this->getFolder() . '/' . $addImg['picture'],
-										1600,//$resize_y,
-										1600,//$resize_x,
+										2000,//$resize_y,
+										2000,//$resize_x,
 										'fit'
 								) ) $return	= false;
 
@@ -720,7 +723,10 @@ if ( ! class_exists( 'catGallery', false ) ) {
 									self::$thumb_x,
 									self::$thumb_y ) . $addImg['picture'];
 
-								unlink(self::$gallery_root . '/temp/' . $current->file_dst_name);
+								rename(
+									self::$gallery_root . '/temp/' . $current->file_dst_name,
+									self::$gallery_root . '/temp/' . $addImg['picture']
+								);
 
 								// =================================
 								// ! Clean the upload class $files
@@ -820,8 +826,48 @@ if ( ! class_exists( 'catGallery', false ) ) {
 				)
 			) ) return true;
 			else return false;
-
 		} // end saveContent()
+
+		/**
+		 * (un)publish single image
+		 *
+		 * @access public
+		 * @param  integer		$image_id - id of image
+		 * @return bool true/false
+		 *
+		 **/
+		public function publishImg( $image_id = NULL )
+		{
+			if ( !$this->checkIDs( $image_id ) ) return false;
+
+			CAT_Helper_Page::getInstance()->db()->query(
+				'UPDATE `:prefix:mod_cc_catgallery_images`' .
+					' SET `published` = 1 - `published`' .
+				' WHERE `gallery_id`		= :gallery_id' .
+						' AND `page_id`		= :page_id' .
+						' AND `section_id`	= :section_id' .
+						' AND `image_id`	= :image_id',
+				array(
+					'gallery_id'	=> self::$gallery_id,
+					'page_id'		=> self::$page_id,
+					'section_id'	=> self::$section_id,
+					'image_id'		=> $image_id
+				)
+			);
+			return CAT_Helper_Page::getInstance()->db()->query(
+				'SELECT `published` FROM `:prefix:mod_cc_catgallery_images`' .
+				' WHERE `gallery_id`		= :gallery_id' .
+						' AND `page_id`		= :page_id' .
+						' AND `section_id`	= :section_id' .
+						' AND `image_id`	= :image_id',
+				array(
+					'gallery_id'	=> self::$gallery_id,
+					'page_id'		=> self::$page_id,
+					'section_id'	=> self::$section_id,
+					'image_id'		=> $image_id
+				)
+			)->fetchColumn();
+		} // end publishImg()
 
 		/**
 		 * save options for single image to database
