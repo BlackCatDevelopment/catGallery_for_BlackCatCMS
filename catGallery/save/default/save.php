@@ -174,7 +174,7 @@ if ( $gallery_id = $val->sanitizePost( 'gallery_id','numeric' ) )
 	}
 } else {
 	$backend->print_error(
-		$lang->translate( 'You send an invalid ID' ),
+		$lang->translate( 'You sent an invalid ID' ),
 		CAT_ADMIN_URL . '/pages/modify.php?page_id=' . $page_id
 	);
 }
