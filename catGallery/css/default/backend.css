@@ -115,6 +115,11 @@
 		font-weight:	700;
 		cursor:			pointer;
 	}
+		.cc_catG_skin small {
+			font-weight:	300;
+			font-size:		0.9em;
+			float:			right;
+		}
 	.cc_catG_skin > form {
 		padding:	 	1em 0.8em 0.2em 0.8em;
 		line-height:	1.8em;
