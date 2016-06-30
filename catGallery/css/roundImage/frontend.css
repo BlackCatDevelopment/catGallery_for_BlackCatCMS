@@ -1,0 +1,77 @@
+/**
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 3 of the License, or (at
+ *   your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful, but
+ *   WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ *   General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, see <http://www.gnu.org/licenses/>.
+ *
+ *   @author			Matthias Glienke
+ *   @copyright			2014, Black Cat Development
+ *   @link				http://blackcat-cms.org
+ *   @license			http://www.gnu.org/licenses/gpl.html
+ *   @category			CAT_Modules
+ *   @package			catGallery
+ *
+ */
+
+.cG_roundImage {
+	padding:	3em 0;
+	margin: auto;
+}
+.cG_roundImage::after {
+	content:	'';
+	clear:		both;
+	display:	block;
+}
+	.cG_rI {
+		padding:	1em 0;
+		clear:		both;
+	}
+
+		.cG_rI img {
+			width:					90%;
+			margin:					0 auto 1em auto;
+			display:				block;
+			height:					auto;
+			-o-border-radius:		50%;
+			-ms-border-radius:		50%;
+			-webkit-border-radius:	50%;
+			-moz-border-radius:		50%;
+			border-radius:			50%;
+			border:					.5em solid #d8dbdd;
+		}
+
+
+@media screen and (min-width:480px) {
+	.cG_rI {
+		padding:	3em 0;
+		clear:		both;
+	}
+		.cG_rI img {
+			display:	inline-block;
+			max-width:	50%;
+			width:		auto;
+		}
+		.cG_rI_right img {
+			margin:	0 0 0 4em;
+			float:	right;
+		}
+		.cG_rI_left img {
+			margin:	0 4em 0 0;
+			float:	left;
+		}
+}
+
+@media screen and (min-width:1024px) {
+	.cG_rI img {
+		max-width:	auto;
+	}
+}
