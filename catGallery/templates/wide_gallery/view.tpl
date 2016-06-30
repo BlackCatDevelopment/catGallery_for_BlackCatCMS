@@ -27,7 +27,7 @@
 <div id="cat_gallery_{$section_id}">
 	<div class="wide_gallery_container" {if $options.winWidth}style="width: {$options.winWidth}px;"{/if}>
 		<ul class="wide_gallery" style="width: {$countImg*$options.resize_x}px;">
-			{foreach $images as image}
+			{foreach $images as image}{if $image.published}
 			<li>
 				<a href="{$folder_url}/{$image.picture}" class="fancybox">
 					<span class="fancy_overlay"></span>
@@ -35,7 +35,7 @@
 					<img src="{$imgURL}{$image.picture}" width="{$options.resize_x}" />
 				</a>
 			</li>
-			{/foreach}
+			{/if}{/foreach}
 		</ul>
 		<div class="clear"></div>
 	</div>

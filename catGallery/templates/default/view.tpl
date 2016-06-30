@@ -45,13 +45,13 @@
 
 <div class="slider_skitter" id="slider_skitter_{$section_id}" style="width: {$options.resize_x}px; height: {$options.resize_y}px;">
 	<ul>
-		{foreach $images as image}
+		{foreach $images as image}{if $image.published}
 		<li>
 			<a href="#"><img src="{$imgURL}{$image.picture}" width="{$options.resize_x}" height="{$options.resize_y}" alt="{$image.options.alt}" /></a>
 			{if $options.label && $image.image_content != ''}<div class="label_text">
 				{$image.image_content}
 			</div>{/if}
 		</li>
-		{/foreach}
+		{/if}{/foreach}
 	</ul>
 </div>
