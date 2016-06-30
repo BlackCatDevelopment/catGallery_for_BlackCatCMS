@@ -122,12 +122,20 @@ if ( ! class_exists( 'catGallery', false ) ) {
 
 		public function __construct( $gallery_id = NULL, $is_header = false )
 		{
-			global $page_id, $section_id;
+			if ( $is_header || ( !$is_header && !is_array($gallery_id)) )
+			{
+				global $page_id, $section_id;
+			}
 			require_once(CAT_PATH . '/framework/functions.php');
+
 			// This is a workaround for headers.inc.php as there is no $section_id defined yet
 			if ( !isset($section_id) || $is_header )
 			{
 				$section_id	= is_numeric($gallery_id) ? $gallery_id : $gallery_id['section_id'];
+			}
+			if ( !isset($page_id) && isset($gallery_id['page_id'] ) )
+			{
+				$page_id	= is_numeric($gallery_id) ? $gallery_id : $gallery_id['page_id'];
 			}
 
 			$this->setPageID( intval($page_id) );
@@ -140,6 +148,10 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			elseif ( is_numeric($gallery_id) && !$is_header )
 			{
 				self::$gallery_id	= $gallery_id;
+			}
+			elseif ( is_array($gallery_id) && !$is_header )
+			{
+				self::$gallery_id	= $gallery_id['gallery_id'];
 			}
 			elseif ( is_numeric($section_id) && $section_id > 0 )
 			{
@@ -335,7 +347,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			if ( !$this->checkIDs() ||
 				!$file_extension ) return false;
 			
-			$pos	= CAT_Helper_Page::getInstance()->db()->query(
+			$getPos	= CAT_Helper_Page::getInstance()->db()->query(
 				'SELECT MAX(position) AS pos FROM `:prefix:mod_cc_catgallery_images`
 					WHERE `page_id` = :page_id
 						AND `section_id` = :section_id
@@ -345,9 +357,14 @@ if ( ! class_exists( 'catGallery', false ) ) {
 					'section_id'	=> self::$section_id,
 					'gallery_id'	=> self::$gallery_id
 				)
-			)->fetchColumn();
-
-			$position	= $pos + 1;
+			);
+			if ( $getPos && $getPos->rowCount() > 0 )
+			{
+				if( !false == ( $pos = $getPos->fetch() ) )
+				{
+					$position	= $pos['pos'] + 1;
+				}
+			}
 
 
 			if( CAT_Helper_Page::getInstance()->db()->query(
@@ -510,7 +527,6 @@ if ( ! class_exists( 'catGallery', false ) ) {
 						'published'			=> $row['published'],
 						'picture'			=> $row['picture'],
 						'original'			=> $this->getFolder(false) . '/' . $row['picture'],
-						'temp'				=> CAT_URL. MEDIA_DIRECTORY . '/cc_catgallery/temp/' . $row['picture'],
 						'options'			=> $addOptions ? $this->getImgOptions( $row['image_id'] ) : NULL,
 						'image_content'		=> $addContent ? $this->getImgContent( $row['image_id'] ) : NULL,
 						'contentname'		=> 'image_content_' . $row['image_id'],
@@ -652,8 +668,8 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			{
 				while( !false == ($row = $conts->fetch() ) )
 				{
-					$contents[$row['image_id']]['content']		= stripslashes( $row['content'] );
-					$this->images[$row['image_id']]['content']	= stripslashes( $row['content'] );
+					$contents[$row['image_id']]['content']		= stripcslashes( $row['content'] );
+					$this->images[$row['image_id']]['content']	= stripcslashes( $row['content'] );
 				}
 			}
 			if ( $image_id )
@@ -711,8 +727,8 @@ if ( ! class_exists( 'catGallery', false ) ) {
 								if ( !CAT_Helper_Image::getInstance()->make_thumb(
 										self::$gallery_root . '/temp/' . $current->file_dst_name,
 										$this->getFolder() . '/' . $addImg['picture'],
-										2000,//$resize_y,
-										2000,//$resize_x,
+										1600,//$resize_y,
+										1600,//$resize_x,
 										'fit'
 								) ) $return	= false;
 
@@ -723,10 +739,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 									self::$thumb_x,
 									self::$thumb_y ) . $addImg['picture'];
 
-								rename(
-									self::$gallery_root . '/temp/' . $current->file_dst_name,
-									self::$gallery_root . '/temp/' . $addImg['picture']
-								);
+								unlink(self::$gallery_root . '/temp/' . $current->file_dst_name);
 
 								// =================================
 								// ! Clean the upload class $files
@@ -826,7 +839,9 @@ if ( ! class_exists( 'catGallery', false ) ) {
 				)
 			) ) return true;
 			else return false;
+
 		} // end saveContent()
+
 
 		/**
 		 * (un)publish single image
