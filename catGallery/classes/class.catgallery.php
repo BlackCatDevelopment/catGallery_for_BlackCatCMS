@@ -105,7 +105,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		);
 
 		protected static $initOptions		= array(
-			'variant'		=> '0',
+			'variant'		=> 'default',
 			'effect'		=> 'random',
 			'random'		=> '0',
 			'animSpeed'		=> '500',

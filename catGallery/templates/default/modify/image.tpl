@@ -25,6 +25,7 @@
 <li class="dz-preview dz-image-preview fc_border_all fc_shadow_small fc_br_all {if !$image}prevTemp prevTemp_{$gallery_id}{/if}" id="catG_{if !$image}__image_id__{else}{$image.image_id}{/if}">
 	<div class="catG_IMG_options">
 		<p class="drag_corner icon-resize" title="{translate('Reorder image')}"></p>
+		<p class="cG_icon-feed cG_publish{if $image.published} active{/if}" title="{translate('Publish this image')}"></p>
 		<div class="cc_catG_del">
 			<span class="icon-remove" title="{translate('Delete this image')}"></span>
 			<p class="fc_br_right fc_shadow_small">
@@ -33,8 +34,6 @@
 				<span class="cc_catG_del_conf">{translate('Confirm delete')}</span>
 			</p>
 		</div>
-		{*<p class="icon-eye"></p>
-		<p class="icon-scissors"></p>*}
 	</div>
 	<form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" class="ajaxForm">
 		<input type="hidden" name="page_id" value="{$page_id}" />
