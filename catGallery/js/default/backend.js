@@ -28,7 +28,7 @@ if (typeof ceckIMG !== 'function')
 		var	$par	= $ul.closest('div'),
 			$yes	= $par.children('.catG_IMG_y'),
 			$no		= $par.children('.catG_IMG_n'),
-			size	= $ul.children('li').not('.prevTemp').size();
+			size	= $ul.children('li').not('.prevTemp').length;
 		if( size == 0 )
 		{
 			$yes.hide();
@@ -40,7 +40,14 @@ if (typeof ceckIMG !== 'function')
 		}
 	}
 }
-
+if (typeof catGalPU !== 'function')
+{
+	function catGalPU( state )
+	{
+		unloadMessage			= 'Es werden aktuell Bilder hochgeladen!';
+		window.onbeforeunload	= state ? function() { return unloadMessage; } : null;
+	}
+}
 
 $(document).ready(function()
 {
@@ -55,7 +62,9 @@ $(document).ready(function()
 				$prevTemp	= $('.prevTemp_' + cGID.gallery_id).clone().removeClass('prevTemp')[0].outerHTML,
 				$WYSIWYG	= $('#catG_WYSIWYG_' + cGID.gallery_id),
 				$catNav		= $('#cc_catG_nav_' + cGID.gallery_id);
-		
+
+			ceckIMG( $imgUL );
+
 			$('#cc_dropzone_' + cGID.gallery_id).dropzone(
 			{
 				url:				CAT_URL + '/modules/cc_catgallery/save.php',
@@ -69,30 +78,28 @@ $(document).ready(function()
 					formData.append('gallery_id', cGID.gallery_id);
 					formData.append('action', 'uploadIMG');
 					formData.append('_cat_ajax', 1);
+					catGalPU( true );
 				},
 				previewsContainer:	'#cc_catG_imgs_' + cGID.gallery_id,
 				previewTemplate:	$prevTemp,
 				success:			function(file, xhr, formData)
 				{
+					// Unvollständigen Upload durch wechseln der Seite verhindern
+					if( $('.dz-preview').not('#catG___image_id__').find('.dz-progress').length == 0 ) catGalPU( false );
+
 					var $newIMG	= $(file.previewElement),
 						xhr		= JSON.parse(xhr),
 						newID	= $newIMG.attr('id') + xhr.newIMG.image_id;
 			
-					$imgUL.sortable( "refresh" );
+					$imgUL.sortable( 'refresh' );
 			
 					$newIMG.find('.dz-progress').remove();
 					$newIMG.find('.dz-filename span').text(xhr.newIMG.picture);
 					$newIMG.find('input[name=imgID]').val(xhr.newIMG.image_id);
 					$newIMG.find('.cc_catG_image img').attr('src',xhr.newIMG.thumb);
-					$newIMG.find('input:disabled, button:disabled').prop('disabled',false);
+					$newIMG.find('input, button, textarea').prop('disabled',false);
 					$newIMG.find('.cc_catG_disabled').removeClass('cc_catG_disabled');
 
-					/*$newIMG.html(function(index,html){
-						return html.replace(/__section_id__/g,xhr.newIMG.section_id);
-					});
-					$newIMG.html(function(index,html){
-						return html.replace(/__gallery_id__/g,xhr.newIMG.image_id);
-					});*/
 					$newIMG.html(function(index,html){
 						return html.replace(/__image_id__/g,xhr.newIMG.image_id);
 					});
@@ -102,11 +109,9 @@ $(document).ready(function()
 					ceckIMG( $imgUL );
 				}
 			});
-		
-			ceckIMG( $imgUL );
-		
-			$('.cc_toggle_set').next('form').hide();
-			$('.cc_toggle_set, .cc_catG_skin input:reset').unbind().click(function()
+				
+			$catGal.find('.cc_toggle_set').next('form').hide();
+			$catGal.find('.cc_toggle_set, .cc_catG_skin input:reset').unbind().click(function()
 			{
 				$(this).closest('.cc_catG_skin').children('form').slideToggle(200);
 			});
@@ -118,7 +123,39 @@ $(document).ready(function()
 			{
 				$(this).closest('div').children('p').slideToggle(100);
 			});
-		
+
+			$imgUL.on( 'click',
+				'.cG_publish',
+			function()
+			{
+				var $cur		= $(this),
+					$li			= $cur.closest('li'),
+					$inputs		= $li.find('input'),
+					ajaxData	= {
+						page_id		: cGID.page_id,
+						section_id	: cGID.section_id,
+						gallery_id	: cGID.gallery_id,
+						imgID		: $inputs.filter('input[name=imgID]').val(),
+						action		: 'publishIMG',
+						_cat_ajax	: 1
+					};
+				dialog_ajax(
+					'Bild veröffentlichen',
+					CAT_URL + '/modules/cc_catgallery/save.php',
+					ajaxData,
+					'POST',
+					'JSON',
+					false, function(data)
+					{
+						if( data.published == 1 )
+							$cur.addClass('active');
+						else
+							$cur.removeClass('active');
+					}, $cur
+				);
+			});
+
+
 			$imgUL.on( 'click',
 				'.cc_catG_del_conf',
 			function()
@@ -320,9 +357,7 @@ $(document).ready(function()
 					});
 				}
 			});
-			$imgUL.disableSelection();
-		
-			
+
 			$catNav.children('li').click( function()
 			{
 				var $curr	= $(this),

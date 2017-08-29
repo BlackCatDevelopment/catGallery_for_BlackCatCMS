@@ -35,8 +35,8 @@
 </script>
 <div class="header_slider">
 	<div id="header_slider_images_{$section_id}" class="header_slider_images" style="height: {$options.resize_y}px;">
-		{foreach $images image}
+		{foreach $images image}{if $image.published}
 		<img src="{$imgURL}{$image.picture}" width="{$options.resize_x}" height="{$options.resize_y}" alt="{$image.options.alt}">
-		{/foreach}
+		{/if}{/foreach}
 	</div>
 </div>

@@ -63,6 +63,7 @@ if ( $gallery_id = $val->sanitizePost( 'gallery_id','numeric' ) )
 			if ( isset( $_FILES['new_image']['name'] ) && $_FILES['new_image']['name'] != '' )
 			{
 				$success	= $catGallery->saveImages( $_FILES );
+
 				$ajax_return	= array(
 					'message'	=> $lang->translate( 'Image uploaded successfully!' ),
 					'newIMG'	=> $success,
@@ -148,6 +149,17 @@ if ( $gallery_id = $val->sanitizePost( 'gallery_id','numeric' ) )
 				'success'	=> true
 			);
 			break;
+		case 'publishIMG':
+			// =========================== 
+			// ! save options for gallery   
+			// =========================== 
+			$success		= $catGallery->publishImg( $imgID );
+			$ajax_return	= array(
+				'message'	=> $success	? $lang->translate( 'Image published successfully!' ) : $lang->translate( 'Image unpublished successfully!' ),
+				'published'	=> $success,
+				'success'	=> true
+			);
+			break;
 		default:
 			// =========================== 
 			// ! save variant of images   
@@ -163,7 +175,7 @@ if ( $gallery_id = $val->sanitizePost( 'gallery_id','numeric' ) )
 	}
 } else {
 	$backend->print_error(
-		$lang->translate( 'You send an invalid ID' ),
+		$lang->translate( 'You sent an invalid ID' ),
 		CAT_ADMIN_URL . '/pages/modify.php?page_id=' . $page_id
 	);
 }

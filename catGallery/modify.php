@@ -42,7 +42,7 @@ if (defined('CAT_PATH')) {
 }
 // end include class.secure.php
 
-include_once( 'classes/class.catgallery.php' );
+include_once "inc/class.catgallery.php";
 
 $catGallery	= new catGallery();
 
@@ -54,7 +54,7 @@ $parser_data	= array(
 	'section_id'		=> $section_id,
 	'gallery_id'		=> $catGallery->getID(),
 	'version'			=> CAT_Helper_Addons::getModuleVersion('cc_catgallery'),
-	'module_variants'	=> $catGallery->getModuleVariants(),
+	'module_variants'	=> $catGallery->getAllVariants(),
 	'options'			=> $catGallery->getOptions(),
 	'effects'			=> $catGallery->effects,
 	'images'			=> $catGallery->getImage(),
@@ -62,6 +62,11 @@ $parser_data	= array(
 );
 
 $module_path	= '/modules/cc_catgallery/';
+
+if ( file_exists( CAT_PATH . $module_path .'modify/' . $catGallery->getVariant() . '/modify.php' ) )
+	include( CAT_PATH . $module_path .'modify/' . $catGallery->getVariant() . '/modify.php' );
+elseif ( file_exists( CAT_PATH . $module_path .'modify/default/modify.php' ) )
+	include( CAT_PATH . $module_path .'modify/default/modify.php' );
 
 if ( file_exists( CAT_PATH . $module_path .'templates/' . $catGallery->getVariant() . '/modify.tpl' ) )
 	$parser->setPath( dirname(__FILE__) . '/templates/' . $catGallery->getVariant() );

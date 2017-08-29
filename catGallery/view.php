@@ -42,7 +42,7 @@ if (defined('CAT_PATH')) {
 }
 // end include class.secure.php
 
-include_once( 'classes/class.catgallery.php' );
+include_once "inc/class.catgallery.php";
 
 $catGallery	= new catGallery();
 
@@ -54,20 +54,20 @@ $parser_data	= array(
 	'section_id'		=> $section_id,
 	'gallery_id'		=> $catGallery->getID(),
 	'version'			=> CAT_Helper_Addons::getModuleVersion('cc_catgallery'),
-	'module_variants'	=> $catGallery->getModuleVariants(),
+	'module_variants'	=> $catGallery->getAllVariants(),
 	'options'			=> $catGallery->getOptions(),
 	'effects'			=> $catGallery->effects,
 	'images'			=> $catGallery->getImage(),
 	'countImg'			=> $catGallery->countImg(),
 	'imgURL'			=> $catGallery->getImageURL(),
 	'page_link'			=> CAT_Helper_Page::getInstance()->properties( $page_id, 'link' ),
+	'section_name'		=> str_replace( array('ä', 'ö', 'ü', 'ß'), array('ae', 'oe', 'ue', 'ss'), strtolower( $section['name'] ) )
 );
 
 if ( $parser_data['countImg'] > 0 )
 	$template		= 'view';
 else
 	$template		= 'view_no_image';
-
 
 $module_path	= '/modules/cc_catgallery/';
 

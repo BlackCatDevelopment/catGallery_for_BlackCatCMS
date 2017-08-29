@@ -1,4 +1,4 @@
-{**
+/**
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -20,28 +20,58 @@
  *   @category			CAT_Modules
  *   @package			catGallery
  *
- *}
-<script type="text/javascript">
-	var animSpeed	= {if $options.animSpeed}{$options.animSpeed}{else}700{/if};
-</script>
-<div id="cat_gallery_{$section_id}">
-	<div class="wide_gallery_container" {if $options.winWidth}style="width: {$options.winWidth}px;"{/if}>
-		<ul class="wide_gallery" style="width: {$countImg*$options.resize_x}px;">
-			{foreach $images as image}{if $image.published}
-			<li>
-				<a href="{$folder_url}/{$image.picture}" class="fancybox">
-					<span class="fancy_overlay"></span>
-					<span class="icon-search"></span>
-					<img src="{$imgURL}{$image.picture}" width="{$options.resize_x}" />
-				</a>
-			</li>
-			{/if}{/foreach}
-		</ul>
-		<div class="clear"></div>
-	</div>
-	<nav class="wide_gallery_nav">
-		<ul>
-		</ul>
-		<div class="clear"></div>
-	</nav>
-</div>
+ */
+
+.cG_roundImage {
+	padding:	3em 0;
+	margin: auto;
+}
+.cG_roundImage::after {
+	content:	'';
+	clear:		both;
+	display:	block;
+}
+	.cG_rI {
+		padding:	1em 0;
+		clear:		both;
+	}
+
+		.cG_rI img {
+			width:					90%;
+			margin:					0 auto 1em auto;
+			display:				block;
+			height:					auto;
+			-o-border-radius:		50%;
+			-ms-border-radius:		50%;
+			-webkit-border-radius:	50%;
+			-moz-border-radius:		50%;
+			border-radius:			50%;
+			border:					.5em solid #d8dbdd;
+		}
+
+
+@media screen and (min-width:480px) {
+	.cG_rI {
+		padding:	3em 0;
+		clear:		both;
+	}
+		.cG_rI img {
+			display:	inline-block;
+			max-width:	50%;
+			width:		auto;
+		}
+		.cG_rI_right img {
+			margin:	0 0 0 4em;
+			float:	right;
+		}
+		.cG_rI_left img {
+			margin:	0 4em 0 0;
+			float:	left;
+		}
+}
+
+@media screen and (min-width:1024px) {
+	.cG_rI img {
+		max-width:	auto;
+	}
+}

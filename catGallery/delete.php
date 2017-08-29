@@ -45,7 +45,7 @@ if (defined('CAT_PATH')) {
 
 global $section_id, $page_id;
 
-include_once( 'classes/class.catgallery.php' );
+include_once "inc/class.catgallery.php";
 
 $catGallery	= new catGallery();
 

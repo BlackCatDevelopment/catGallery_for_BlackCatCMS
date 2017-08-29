@@ -24,7 +24,7 @@
  */
 
 // include class.secure.php to protect this file and the whole CMS!
-if (defined('CAT_PATH')) {	
+if (defined('CAT_PATH')) {
 	include(CAT_PATH.'/framework/class.secure.php'); 
 } else {
 	$oneback = "../";
@@ -42,10 +42,32 @@ if (defined('CAT_PATH')) {
 }
 // end include class.secure.php
 
-
-include_once "inc/class.catgallery.php";
-
-$catGallery	= new catGallery( true );
-
+$mod_headers = array(
+	'backend' => array(
+		'css' => array(
+			array(
+				'media'		=> 'all',
+				'file'		=> 'modules/cc_catgallery/css/default/backend.css'
+			)
+		),
+		'js' => array(
+			'/modules/cc_catgallery/js/default/dropzone.min.js',
+			'/modules/cc_catgallery/js/default/backend.js',
+		),
+		'jquery' => array(
+			array(
+				'core'			=> true
+			)
+		)
+	),
+	'frontend' => array(
+		'css' => array(
+			array(
+				'media'		=> 'all',
+				'file'		=> 'modules/cc_catgallery/css/roundImage/frontend.css'
+			)
+		)
+	)
+);
 
 ?>

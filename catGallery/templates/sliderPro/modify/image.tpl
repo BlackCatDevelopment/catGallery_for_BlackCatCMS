@@ -34,8 +34,7 @@
 				<span class="cc_catG_del_conf">{translate('Confirm delete')}</span>
 			</p>
 		</div>
-		{*<p class="icon-eye"></p>
-		<p class="icon-scissors"></p>*}
+		{*<p class="icon-scissors"></p>*}
 	</div>
 	<form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" class="ajaxForm">
 		<input type="hidden" name="page_id" value="{$page_id}" />
@@ -43,7 +42,7 @@
 		<input type="hidden" name="gallery_id" value="{$gallery_id}" />
 		<input type="hidden" name="imgID" value="{if !$image}__image_id__{else}{$image.image_id}{/if}" />
 		<input type="hidden" name="action" value="saveIMG" />
-		<input type="hidden" name="image_options" value="alt" />
+		<input type="hidden" name="image_options" value="alt,side" />
 		<input type="hidden" name="_cat_ajax" value="1" />
 		<div class="cc_catG_left dz-details">
 			<p class="cc_catG_image">
@@ -55,9 +54,15 @@
 			<p{if !$image} class="cc_catG_disabled"{/if}>
 				<strong>{translate('Alternative text')}:<br></strong>
 				<input type="text" name="alt" value="{if $image.options.alt}{$image.options.alt}{/if}" {if !$image}disabled{/if}>
+				<strong>Bild links/rechts:<br></strong>
+				<select name="side"{if !$image}disabled{/if}>
+					<option value="right"{if $image.options.side == 'right'}selected="selected"{/if}>Rechts</option>
+					<option value="left" {if $image.options.side == 'left'}selected="selected"{/if}>Links</option>
+				</select>
 			</p>
 		</div>
-		<input type="submit" class="input_100p fc_br_bottom" value="{translate('Save image')}" {if !$image}disabled{/if}>
+		<button class="toggleWYSIWYG input_50p fc_br_bottomleft fc_gradient1 fc_gradient_hover" {if !$image}disabled{/if}>{translate('Modify description')}</button>
+		<input type="submit" class="input_50p fc_br_bottomright" value="{translate('Save image')}" {if !$image}disabled{/if}>
 	</form>
 	<div class="clear"></div>
 	{if !$image}<div class="dz-progress fc_br_top"><span class="dz-upload fc_br_all" data-dz-uploadprogress=""></span></div>

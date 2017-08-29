@@ -96,6 +96,7 @@ $LANG = array(
 	'Content saved successfully'	=> 'Inhalt erfolgreich gespeichert',
 	'Options saved successfully!'	=> 'Optionen erfolgreich gespeichert',
 	'Variant saved successfully!'	=> 'Variante erfolgreich gespeichert',
-	'You send an invalid ID'		=> 'Es wurde keine gültige ID übermittelt.'
+	'You sent an invalid ID'		=> 'Es wurde keine gültige ID übermittelt.',
+	'Publish this image'			=> 'Dieses Bild freigeben'
 	
 );
