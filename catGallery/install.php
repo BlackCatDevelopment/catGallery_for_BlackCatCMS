@@ -44,76 +44,82 @@ if (defined('CAT_PATH')) {
 
 if(defined('CAT_URL'))
 {
-	$pageHelper	= CAT_Helper_Page::getInstance();
-	
-	// Create table for galleries
-	$pageHelper->db()->query('DROP TABLE IF EXISTS `' . CAT_TABLE_PREFIX . 'mod_cc_catgallery`');
-	$mod_gallery = 'CREATE TABLE  `' . CAT_TABLE_PREFIX . 'mod_cc_catgallery` ('
-		. ' `gallery_id` INT NOT NULL AUTO_INCREMENT,'
-		. ' `section_id` INT NOT NULL DEFAULT \'0\','
-		. ' `page_id` INT NOT NULL DEFAULT \'0\','
-		. ' PRIMARY KEY ( `gallery_id`, `section_id`, `page_id` )'
-		. ' )';
-	$pageHelper->db()->query( $mod_gallery );
+	// Delete all tables if exists
+	CAT_Helper_Page::getInstance()->db()->query(
+		'DROP TABLE IF EXISTS'
+			. ' `:prefix:mod_cc_catgallery_options`,'
+			. ' `:prefix:mod_cc_catgallery_images_options`,'
+			. ' `:prefix:mod_cc_catgallery_contents`,'
+			. ' `:prefix:mod_cc_catgallery_images`,'
+			. ' `:prefix:mod_cc_catgallery`;'
+	);
 
+	// Create table for basic informations
+	CAT_Helper_Page::getInstance()->db()->query(
+		'CREATE TABLE `:prefix:mod_cc_catgallery`  ('
+			. ' `gallery_id` INT NOT NULL AUTO_INCREMENT,'
+			. ' `page_id` INT,'
+			. ' `section_id` INT,'
+			. ' PRIMARY KEY ( `gallery_id` ),'
+			. ' CONSTRAINT `:prefix:cG_pages` FOREIGN KEY (`page_id`) REFERENCES `:prefix:pages`(`page_id`) ON DELETE CASCADE,'
+			. ' CONSTRAINT `:prefix:cG_sections` FOREIGN KEY (`section_id`) REFERENCES `:prefix:sections`(`section_id`) ON DELETE CASCADE'
+		. ' ) ENGINE=InnoDB'
+	);
 
 	// Create table for options
-	$pageHelper->db()->query("DROP TABLE IF EXISTS `" . CAT_TABLE_PREFIX . "mod_cc_catgallery_options`");
-	$mod_gallery = 'CREATE TABLE  `'.CAT_TABLE_PREFIX.'mod_cc_catgallery_options` ('
-		. ' `gallery_id` INT NOT NULL,'
-		. ' `section_id` INT NOT NULL DEFAULT \'0\','
-		. ' `page_id` INT NOT NULL DEFAULT \'0\','
-		. ' `name` VARCHAR(255) NOT NULL,'
-		. ' `value` VARCHAR(2047) NOT NULL DEFAULT \'\','
-		. ' PRIMARY KEY ( `gallery_id`, `section_id`, `name` )'
-		. ' )';
-	$pageHelper->db()->query($mod_gallery);
+	CAT_Helper_Page::getInstance()->db()->query(
+		'CREATE TABLE `:prefix:mod_cc_catgallery_options`  ('
+			. ' `gallery_id` INT NOT NULL DEFAULT 0,'
+			. ' `name` VARCHAR(255) NOT NULL DEFAULT \'\','
+			. ' `value` VARCHAR(2047) NULL DEFAULT NULL,'
+			. ' PRIMARY KEY ( `gallery_id`, `name` ),'
+			. ' CONSTRAINT `:prefix:cG_Options` FOREIGN KEY (`gallery_id`) REFERENCES `:prefix:mod_cc_catgallery`(`gallery_id`) ON DELETE CASCADE'
+		. ' ) ENGINE=InnoDB'
+	);
 
 	// Create table for single pictures
-	$pageHelper->db()->query("DROP TABLE IF EXISTS `" . CAT_TABLE_PREFIX . "mod_cc_catgallery_images`");
-	$mod_gallery = 'CREATE TABLE  `' . CAT_TABLE_PREFIX . 'mod_cc_catgallery_images` ('
-		. ' `image_id` INT NOT NULL AUTO_INCREMENT,'
-		. ' `gallery_id` INT NOT NULL,'
-		. ' `page_id` INT NOT NULL DEFAULT \'0\','
-		. ' `section_id` INT NOT NULL DEFAULT \'0\','
-		. ' `picture` VARCHAR(256) NOT NULL DEFAULT \'\','
-		. ' `published` TINYINT(1) NOT NULL DEFAULT \'0\','
-		. ' `position` INT NOT NULL,'
-		. ' PRIMARY KEY ( `image_id`, `gallery_id`, `page_id`, `section_id` )'
-		. ' )';
-	$pageHelper->db()->query( $mod_gallery );
+	CAT_Helper_Page::getInstance()->db()->query(
+		'CREATE TABLE `:prefix:mod_cc_catgallery_images`  ('
+			. ' `image_id` INT NOT NULL AUTO_INCREMENT,'
+			. ' `gallery_id` INT NULL DEFAULT NULL,'
+			. ' `picture` VARCHAR(256) NOT NULL DEFAULT \'\','
+			. ' `published` TINYINT(1) NOT NULL DEFAULT 0,'
+			. ' `position` INT NOT NULL,'
+			. ' PRIMARY KEY ( `image_id` ),'
+			. ' CONSTRAINT `:prefix:cG_Images` FOREIGN KEY (`gallery_id`) REFERENCES `:prefix:mod_cc_catgallery`(`gallery_id`) ON DELETE CASCADE'
+		. ' ) ENGINE=InnoDB'
+	);
 
-	// Create table
-	$pageHelper->db()->query("DROP TABLE IF EXISTS `" . CAT_TABLE_PREFIX . "mod_cc_catgallery_images_options`");
-	$mod_gallery = 'CREATE TABLE  `'.CAT_TABLE_PREFIX.'mod_cc_catgallery_images_options` ('
-		. ' `image_id` INT NOT NULL DEFAULT \'0\','
-		. ' `gallery_id` INT NOT NULL DEFAULT \'0\','
-		. ' `section_id` INT NOT NULL DEFAULT \'0\','
-		. ' `name` VARCHAR(255) NOT NULL,'
-		. ' `value` VARCHAR(2047) NOT NULL DEFAULT \'\','
-		. ' PRIMARY KEY ( `image_id`, `gallery_id`, `section_id`, `name` )'
-		. ' )';
-	$pageHelper->db()->query($mod_gallery);
+	// Create table for image options
+	CAT_Helper_Page::getInstance()->db()->query(
+		'CREATE TABLE `:prefix:mod_cc_catgallery_images_options`  ('
+			. ' `image_id` INT NOT NULL DEFAULT 0,'
+			. ' `gallery_id` INT NULL DEFAULT NULL,'
+			. ' `name` VARCHAR(255) NOT NULL DEFAULT \'\','
+			. ' `value` VARCHAR(2047) NULL DEFAULT NULL,'
+			. ' PRIMARY KEY ( `image_id`, `name` ),'
+			. ' CONSTRAINT `:prefix:cG_ImageOptionsImg` FOREIGN KEY (`image_id`) REFERENCES `:prefix:mod_cc_catgallery_images`(`image_id`) ON DELETE CASCADE,'
+			. ' CONSTRAINT `:prefix:cG_ImageOptionsGal` FOREIGN KEY (`gallery_id`) REFERENCES `:prefix:mod_cc_catgallery`(`gallery_id`) ON DELETE CASCADE'
+		. ' ) ENGINE=InnoDB'
+	);
 
-	// Create table
-	$pageHelper->db()->query("DROP TABLE IF EXISTS `" . CAT_TABLE_PREFIX . "mod_cc_catgallery_contents`");
-	$mod_gallery = 'CREATE TABLE  `'.CAT_TABLE_PREFIX.'mod_cc_catgallery_contents` ('
-		. ' `image_id` INT NOT NULL DEFAULT \'0\','
-		. ' `gallery_id` INT NOT NULL DEFAULT \'0\','
-		. ' `page_id` INT NOT NULL DEFAULT \'0\','
-		. ' `section_id` INT NOT NULL DEFAULT \'0\','
-		. ' `content` TEXT NOT NULL,'
-		. ' `text` TEXT NOT NULL,'
-		. ' PRIMARY KEY ( `image_id`, `gallery_id`, `page_id`, `section_id` )'
-		. ' )';
-	$pageHelper->db()->query($mod_gallery);
+	// Create table for image contents
+	CAT_Helper_Page::getInstance()->db()->query(
+		'CREATE TABLE `:prefix:mod_cc_catgallery_contents`  ('
+			. ' `image_id` INT NOT NULL DEFAULT 0,'
+			. ' `content` TEXT NOT NULL,'
+			. ' `text` TEXT NOT NULL,'
+			. ' PRIMARY KEY ( `image_id` ),'
+			. ' CONSTRAINT `:prefix:cG_ImageOptionsContent` FOREIGN KEY (`image_id`) REFERENCES `:prefix:mod_cc_catgallery_images`(`image_id`) ON DELETE CASCADE'
+		. ' ) ENGINE=InnoDB'
+	);
 
 	$gallery_path	= CAT_PATH . MEDIA_DIRECTORY . '/cc_catgallery';
 	if ( !file_exists($gallery_path) )
 		CAT_Helper_Directory::getInstance()->createDirectory( $gallery_path . '/temp', NULL, true );
 
 	// Activate search for image_contents
-	$insert_search = $pageHelper->db()->query( sprintf(
+	$insert_search = CAT_Helper_Page::getInstance()->db()->query( sprintf(
 			"SELECT * FROM `%ssearch`
 				WHERE `value` = '%s'",
 			CAT_TABLE_PREFIX,
@@ -136,7 +142,7 @@ if(defined('CAT_URL'))
 
 		$field_info = serialize($field_info);
 
-		$pageHelper->query( sprintf(
+		CAT_Helper_Page::getInstance()->db()->query( sprintf(
 				"INSERT INTO `%ssearch`
 					( `name`, `value`, `extra` ) VALUES
 					( 'module', 'cc_catgallery', '%s' )",
@@ -147,7 +153,7 @@ if(defined('CAT_URL'))
 		// Query start
 		$query_start_code = "SELECT [TP]pages.page_id, [TP]pages.page_title, [TP]pages.link, [TP]pages.description, [TP]pages.modified_when, [TP]pages.modified_by FROM [TP]mod_cc_catgallery_contents, [TP]pages WHERE ";
 
-		$pageHelper->query( sprintf(
+		CAT_Helper_Page::getInstance()->db()->query( sprintf(
 				"INSERT INTO `%ssearch`
 					( `name`, `value`, `extra` ) VALUES
 					( 'query_start', '%s', '%s' )",
@@ -159,7 +165,7 @@ if(defined('CAT_URL'))
 		// Query body
 		$query_body_code = " [TP]pages.page_id = [TP]mod_cc_catgallery_contents.page_id AND [TP]mod_cc_catgallery_contents.text [O] \'[W][STRING][W]\' AND [TP]pages.searching = \'1\'";
 
-		$pageHelper->query( sprintf(
+		CAT_Helper_Page::getInstance()->db()->query( sprintf(
 				"INSERT INTO `%ssearch`
 					( `name`, `value`, `extra` ) VALUES
 					( 'query_body', '%s', '%s' )",
@@ -171,7 +177,7 @@ if(defined('CAT_URL'))
 
 		// Query end
 		$query_end_code = "";
-		$pageHelper->query( sprintf(
+		CAT_Helper_Page::getInstance()->db()->query( sprintf(
 				"INSERT INTO `%ssearch`
 					( `name`, `value`, `extra` ) VALUES
 					( 'query_end', '%s', '%s' )",
@@ -181,15 +187,6 @@ if(defined('CAT_URL'))
 			)
 		);
 
-
-		// Insert blank row (there needs to be at least on row for the search to work)
-		$pageHelper->query( sprintf(
-				"INSERT INTO `%smod_cc_catgallery_contents`
-					( `page_id`, `section_id`, `content`, `text` ) VALUES
-					( '0', '0', '', '' )",
-				CAT_TABLE_PREFIX
-			)
-		);
 	}
 
 

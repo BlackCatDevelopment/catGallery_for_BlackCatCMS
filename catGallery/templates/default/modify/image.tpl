@@ -34,8 +34,6 @@
 				<span class="cc_catG_del_conf">{translate('Confirm delete')}</span>
 			</p>
 		</div>
-		{*<p class="icon-eye"></p>
-		<p class="icon-scissors"></p>*}
 	</div>
 	<form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" class="ajaxForm">
 		<input type="hidden" name="page_id" value="{$page_id}" />
