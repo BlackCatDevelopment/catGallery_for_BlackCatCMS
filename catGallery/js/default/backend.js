@@ -28,7 +28,7 @@ if (typeof ceckIMG !== 'function')
 		var	$par	= $ul.closest('div'),
 			$yes	= $par.children('.catG_IMG_y'),
 			$no		= $par.children('.catG_IMG_n'),
-			size	= $ul.children('li').not('.prevTemp').size();
+			size	= $ul.children('li').not('.prevTemp').length;
 		if( size == 0 )
 		{
 			$yes.hide();
@@ -63,6 +63,7 @@ $(document).ready(function()
 				$WYSIWYG	= $('#catG_WYSIWYG_' + cGID.gallery_id),
 				$catNav		= $('#cc_catG_nav_' + cGID.gallery_id);
 
+			ceckIMG( $imgUL );
 
 			$('#cc_dropzone_' + cGID.gallery_id).dropzone(
 			{
@@ -84,7 +85,7 @@ $(document).ready(function()
 				success:			function(file, xhr, formData)
 				{
 					// Unvollständigen Upload durch wechseln der Seite verhindern
-					if( $('.dz-preview').not('#catG___image_id__').find('.dz-progress').size() == 0 ) catGalPU( false );
+					if( $('.dz-preview').not('#catG___image_id__').find('.dz-progress').length == 0 ) catGalPU( false );
 
 					var $newIMG	= $(file.previewElement),
 						xhr		= JSON.parse(xhr),
@@ -108,9 +109,7 @@ $(document).ready(function()
 					ceckIMG( $imgUL );
 				}
 			});
-		
-			ceckIMG( $imgUL );
-		
+				
 			$catGal.find('.cc_toggle_set').next('form').hide();
 			$catGal.find('.cc_toggle_set, .cc_catG_skin input:reset').unbind().click(function()
 			{

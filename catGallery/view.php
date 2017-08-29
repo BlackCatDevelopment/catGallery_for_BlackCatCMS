@@ -42,7 +42,7 @@ if (defined('CAT_PATH')) {
 }
 // end include class.secure.php
 
-include_once( 'classes/class.catgallery.php' );
+include_once "inc/class.catgallery.php";
 
 $catGallery	= new catGallery();
 
@@ -54,7 +54,7 @@ $parser_data	= array(
 	'section_id'		=> $section_id,
 	'gallery_id'		=> $catGallery->getID(),
 	'version'			=> CAT_Helper_Addons::getModuleVersion('cc_catgallery'),
-	'module_variants'	=> $catGallery->getModuleVariants(),
+	'module_variants'	=> $catGallery->getAllVariants(),
 	'options'			=> $catGallery->getOptions(),
 	'effects'			=> $catGallery->effects,
 	'images'			=> $catGallery->getImage(),

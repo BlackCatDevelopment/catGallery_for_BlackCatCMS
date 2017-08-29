@@ -1,5 +1,4 @@
-<?php
-/**
+{**
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -21,31 +20,31 @@
  *   @category			CAT_Modules
  *   @package			catGallery
  *
- */
+ *}
 
-// include class.secure.php to protect this file and the whole CMS!
-if (defined('CAT_PATH')) {	
-	include(CAT_PATH.'/framework/class.secure.php'); 
-} else {
-	$oneback = "../";
-	$root = $oneback;
-	$level = 1;
-	while (($level < 10) && (!file_exists($root.'/framework/class.secure.php'))) {
-		$root .= $oneback;
-		$level += 1;
+<script type="text/javascript">
+	if (typeof sliderProIDs === 'undefined')
+	\{
+		sliderProIDs	= [];
 	}
-	if (file_exists($root.'/framework/class.secure.php')) { 
-		include($root.'/framework/class.secure.php'); 
-	} else {
-		trigger_error(sprintf("[ <b>%s</b> ] Can't include class.secure.php!", $_SERVER['SCRIPT_NAME']), E_USER_ERROR);
-	}
-}
-// end include class.secure.php
+	sliderProIDs.push(
+	\{
+		'gallery_id'	: {$gallery_id},
+		'resX'			: {$options.resize_x},
+		'resY'			: {$options.resize_y},
+		'arrows'		: {if $options.arrows}true{else}false{/if},
+		'buttons'		: {if $options.buttons}true{else}false{/if},
+		'autoplay'		: {if $options.autoplay}true{else}false{/if}
+	});
+</script>
 
-
-include_once "inc/class.catgallery.php";
-
-$catGallery	= new catGallery( true );
-
-
-?>
+<div class="slider-pro" id="my-slider_{$gallery_id}">
+	<div class="sp-slides">
+		{foreach $images image}{if $image.published}
+		<div class="sp-slide">
+			<img src="{$imgURL}{$image.picture}" class="sp-image" alt="{$image.options.alt}">
+			{if $image.image_content != ''}<div class="sp-layer">{$image.image_content}</div>{/if}
+		</div>
+		{/if}{/foreach}
+	</div>
+</div>

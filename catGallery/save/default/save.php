@@ -63,6 +63,7 @@ if ( $gallery_id = $val->sanitizePost( 'gallery_id','numeric' ) )
 			if ( isset( $_FILES['new_image']['name'] ) && $_FILES['new_image']['name'] != '' )
 			{
 				$success	= $catGallery->saveImages( $_FILES );
+
 				$ajax_return	= array(
 					'message'	=> $lang->translate( 'Image uploaded successfully!' ),
 					'newIMG'	=> $success,
@@ -154,8 +155,8 @@ if ( $gallery_id = $val->sanitizePost( 'gallery_id','numeric' ) )
 			// =========================== 
 			$success		= $catGallery->publishImg( $imgID );
 			$ajax_return	= array(
-				'message'	=> $success['published']	? $lang->translate( 'Image published successfully!' ) : $lang->translate( 'Image unpublished successfully!' ),
-				'published'	=> $success['published'],
+				'message'	=> $success	? $lang->translate( 'Image published successfully!' ) : $lang->translate( 'Image unpublished successfully!' ),
+				'published'	=> $success,
 				'success'	=> true
 			);
 			break;

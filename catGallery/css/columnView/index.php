@@ -42,10 +42,4 @@ if (defined('CAT_PATH')) {
 }
 // end include class.secure.php
 
-
-include_once "inc/class.catgallery.php";
-
-$catGallery	= new catGallery( true );
-
-
 ?>

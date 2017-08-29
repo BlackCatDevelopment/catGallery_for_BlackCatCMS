@@ -1,4 +1,3 @@
-<?php
 /**
  *
  *   This program is free software; you can redistribute it and/or modify
@@ -23,29 +22,24 @@
  *
  */
 
-// include class.secure.php to protect this file and the whole CMS!
-if (defined('CAT_PATH')) {	
-	include(CAT_PATH.'/framework/class.secure.php'); 
-} else {
-	$oneback = "../";
-	$root = $oneback;
-	$level = 1;
-	while (($level < 10) && (!file_exists($root.'/framework/class.secure.php'))) {
-		$root .= $oneback;
-		$level += 1;
+$(document).ready(function()
+{
+	if (typeof sliderProIDs !== 'undefined' && typeof sliderProLoaded === 'undefined')
+	{
+		// This is a workaround if backend.js is loaded twice
+		sliderProLoaded	= true;
+		$.each( sliderProIDs, function( index, cGID )
+		{
+			$( '#my-slider_' + cGID.gallery_id).sliderPro({
+				width:				cGID.resX,
+				height:				cGID.resY,
+				arrows:				cGID.arrows,
+				buttons:			cGID.buttons,
+				waitForLayers:		true,
+				fade:				true,
+				autoplay:			false,
+				autoScaleLayers:	false
+			});
+		});
 	}
-	if (file_exists($root.'/framework/class.secure.php')) { 
-		include($root.'/framework/class.secure.php'); 
-	} else {
-		trigger_error(sprintf("[ <b>%s</b> ] Can't include class.secure.php!", $_SERVER['SCRIPT_NAME']), E_USER_ERROR);
-	}
-}
-// end include class.secure.php
-
-
-include_once "inc/class.catgallery.php";
-
-$catGallery	= new catGallery( true );
-
-
-?>
+});

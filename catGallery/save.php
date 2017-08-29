@@ -65,7 +65,7 @@ if ( CAT_Helper_Page::getPagePermission( $page_id, 'admin' ) !== true )
 	$backend->print_error( 'You do not have permissions to modify this page!' );
 }
 
-include_once( 'classes/class.catgallery.php' );
+include_once "inc/class.catgallery.php";
 
 $catGallery	= new catGallery();
 
