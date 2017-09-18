@@ -86,7 +86,7 @@ $(document).ready(function()
 				{
 					// Unvollständigen Upload durch wechseln der Seite verhindern
 					if( $('.dz-preview').not('#catG___image_id__').find('.dz-progress').length == 0 ) catGalPU( false );
-
+					console.log(file, xhr, formData);
 					var $newIMG	= $(file.previewElement),
 						xhr		= JSON.parse(xhr),
 						newID	= $newIMG.attr('id') + xhr.newIMG.image_id;
