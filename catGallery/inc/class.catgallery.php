@@ -790,13 +790,17 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			$resize_x	= isset($resize_x) ? $resize_x : $this->getOptions('resize_x');
 			$resize_y	= isset($resize_y) ? $resize_y : $this->getOptions('resize_y');
 
-			CAT_Helper_Image::getInstance()->make_thumb(
-				$this->getFolder() . '/' . $image,
-				$tmp_path . '/' . $image,
-				$resize_y,
-				$resize_x,
-				'crop'
-			);
+			if( file_exists($this->getFolder() . '/' . $image))
+			{
+				CAT_Helper_Image::getInstance()->make_thumb(
+					$this->getFolder() . '/' . $image,
+					$tmp_path . '/' . $image,
+					$resize_y,
+					$resize_x,
+					'crop',
+					'jpg'
+				);
+			}
 			return array(
 				'path'	=> $tmp_path . '/' . $image,
 				'url'	=> str_replace( CAT_PATH, CAT_URL, $tmp_path ) . '/' . $image,
