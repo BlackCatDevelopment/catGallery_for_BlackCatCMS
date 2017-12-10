@@ -140,7 +140,6 @@ if ( ! class_exists( 'catGallery', false ) ) {
 				self::setSectionID($section_id);
 				self::setGalleryID();
 			}
-			self::setGalleryFolder();
 			require_once(CAT_PATH . '/framework/functions.php');
 /*			if ( $is_header || ( !$is_header && !is_array($gallery_id)) )
 			{
@@ -243,6 +242,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 				)->fetchColumn();
 				self::$gallery_id	= intval($gallery_id);
 			}
+			self::setGalleryFolder();
 			return $this;
 		} // end setGalleryID()
 
