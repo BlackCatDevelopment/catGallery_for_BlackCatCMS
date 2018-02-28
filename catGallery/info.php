@@ -46,7 +46,7 @@ if (defined('CAT_PATH')) {
 $module_directory		= 'cc_catgallery';
 $module_name			= 'catGallery';
 $module_function		= 'page';
-$module_version			= '2.0';
+$module_version			= '2.0.1';
 $module_platform		= '1.1.x';
 $module_author			= 'Matthias Glienke, creativecat.de';
 $module_license			= '<a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License</a>';

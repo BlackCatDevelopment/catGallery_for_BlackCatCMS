@@ -63,7 +63,7 @@ if(defined('CAT_URL'))
 		. ' `gallery_id` INT NOT NULL,'
 		. ' `section_id` INT NOT NULL DEFAULT \'0\','
 		. ' `page_id` INT NOT NULL DEFAULT \'0\','
-		. ' `name` VARCHAR(255) NOT NULL,'
+		. ' `name` VARCHAR(150) NOT NULL,'
 		. ' `value` VARCHAR(2047) NOT NULL DEFAULT \'\','
 		. ' PRIMARY KEY ( `gallery_id`, `section_id`, `name` )'
 		. ' )';
@@ -88,7 +88,7 @@ if(defined('CAT_URL'))
 		. ' `image_id` INT NOT NULL DEFAULT \'0\','
 		. ' `gallery_id` INT NOT NULL DEFAULT \'0\','
 		. ' `section_id` INT NOT NULL DEFAULT \'0\','
-		. ' `name` VARCHAR(255) NOT NULL,'
+		. ' `name` VARCHAR(150) NOT NULL,'
 		. ' `value` VARCHAR(2047) NOT NULL DEFAULT \'\','
 		. ' PRIMARY KEY ( `image_id`, `gallery_id`, `section_id`, `name` )'
 		. ' )';

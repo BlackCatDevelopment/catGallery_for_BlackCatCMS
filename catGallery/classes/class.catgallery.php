@@ -513,6 +513,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 						'image_id'			=> $row['image_id'],
 						'position'			=> $row['position'],
 						'picture'			=> $row['picture'],
+						'original'			=> $this->getFolder(false) . '/' . $row['picture'],
 						'options'			=> $addOptions ? $this->getImgOptions( $row['image_id'] ) : NULL,
 						'image_content'		=> $addContent ? $this->getImgContent( $row['image_id'] ) : NULL,
 						'contentname'		=> 'image_content_' . $row['image_id'],
@@ -654,8 +655,9 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			{
 				while( !false == ($row = $conts->fetch() ) )
 				{
-					$contents[$row['image_id']]['content']		= $row['content'];
-					$this->images[$row['image_id']]['content']	= $row['content'];
+					$cont	= stripslashes( $row['content'] );
+					$contents[$row['image_id']]['content']		= $cont;
+					$this->images[$row['image_id']]['content']	= $cont;
 				}
 			}
 			if ( $image_id )
