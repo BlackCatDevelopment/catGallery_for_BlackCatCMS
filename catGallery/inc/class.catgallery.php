@@ -199,7 +199,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 
 				self::$section_id	= intval($sectionID);
 			}
-
+			self::setGalleryFolder();
 			return $this;
 		} // end setGalleryID()
 
