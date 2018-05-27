@@ -124,11 +124,28 @@ if ( ! class_exists( 'catGallery', false ) ) {
 
 		public function __construct( $gallery_id = NULL, $is_header = false )
 		{
-			if ( $is_header || ( !$is_header && !is_array($gallery_id)) )
+			if ( ($gallery_id && is_numeric($gallery_id)) && !$is_header)
+			{
+				self::setGalleryID($gallery_id);
+			} elseif ( $gallery_id && is_numeric($gallery_id) && $is_header ) {
+				self::setSectionID($gallery_id);
+				self::setGalleryID();
+			} elseif ( $gallery_id === true ) {
+				global $section_id;
+				self::setSectionID( $section_id );
+				self::initAdd();
+				self::setGalleryID();
+			} else {
+				global $section_id;
+				self::setSectionID($section_id);
+				self::setGalleryID();
+			}
+			require_once(CAT_PATH . '/framework/functions.php');
+/*			if ( $is_header || ( !$is_header && !is_array($gallery_id)) )
 			{
 				global $section_id;
 			}
-			require_once(CAT_PATH . '/framework/functions.php');
+			
 
 			// This is a workaround for headers.inc.php as there is no $section_id defined yet
 			if ( !isset($section_id) || $is_header )
@@ -136,37 +153,55 @@ if ( ! class_exists( 'catGallery', false ) ) {
 				$section_id	= is_numeric($gallery_id) ? $gallery_id : intval($gallery_id['section_id']);
 			}
 
-			$this->setSectionID( intval($section_id) );
+#			$this->setSectionID($section_id);
 
-			if ( $gallery_id === true )
-			{
-				$this->initAdd();
-			}
-			elseif ( is_numeric($gallery_id) && !$is_header )
-			{
-				self::$gallery_id	= intval($gallery_id);
-			}
-			elseif ( is_array($gallery_id) && !$is_header )
-			{
-				self::$gallery_id	= intval($gallery_id['gallery_id']);
-			}
-			elseif ( is_numeric($section_id) && $section_id > 0 )
-			{
-				$this->setGalleryID();
-			}
-			else return false;
+#			if ( $gallery_id === true )
+#			{
+#				$this->initAdd();
+#			}
+#			elseif ( is_numeric($gallery_id) && !$is_header )
+#			{
+#				self::$gallery_id	= intval($gallery_id);
+#			}
+#			elseif ( is_array($gallery_id) && !$is_header )
+#			{
+#				self::$gallery_id	= intval($gallery_id['gallery_id']);
+#			}
+#			elseif ( is_numeric($section_id) && $section_id > 0 )
+#			{
+#				$this->setGalleryID();
+#			}
+#			else return false;*/
 		}
 
-		
 		/**
-		 * set the $section_id
-		 */
-		public function setSectionID( $section_id )
+		 * set the $section_id by self:$gallery_id
+		 *
+		 * @access public
+		 * @return integer
+		 *
+		 **/
+		private function setSectionID( $sectionID = NULL )
 		{
-			self::$section_id	= intval($section_id);
-			$this->setGalleryFolder();
+			if ( $sectionID )
+			{
+				self::$section_id	= intval($sectionID);
+			} else {
+				// Get columns in this section
+				$sectionID	= CAT_Helper_Page::getInstance()->db()->query(
+						'SELECT `section_id` ' .
+							'FROM `:prefix:mod_cc_catgallery` ' .
+							'WHERE `gallery_id` = :galID',
+					array(
+						'galID'	=> self::$gallery_id
+					)
+				)->fetchColumn();
+
+				self::$section_id	= intval($sectionID);
+			}
+			self::setGalleryFolder();
 			return $this;
-		}
+		} // end setGalleryID()
 
 		/**
 		 * set the $gallery_root, galleryPATH and galleryURL if section_id is changed
@@ -179,6 +214,9 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			return $this;
 		}
 
+
+
+
 		/**
 		 * set the $gallery_id by self:$sectionid
 		 *
@@ -186,19 +224,25 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		 * @return integer
 		 *
 		 **/
-		public function setGalleryID()
+		private function setGalleryID( $galleryID = NULL )
 		{
-			// Get columns in this section
-			$gallery_id	= CAT_Helper_Page::getInstance()->db()->query(
-					'SELECT `gallery_id` ' .
-						'FROM `:prefix:mod_cc_catgallery` ' .
-						'WHERE `section_id` = :section_id',
-				array(
-					'section_id'	=> self::$section_id
-				)
-			)->fetchColumn();
-
-			self::$gallery_id	= intval($gallery_id);
+			if ( $galleryID )
+			{
+				self::$gallery_id	= intval($galleryID);
+				self::setSectionID();
+			} else {
+				// Get columns in this section
+				$gallery_id	= CAT_Helper_Page::getInstance()->db()->query(
+						'SELECT `gallery_id` ' .
+							'FROM `:prefix:mod_cc_catgallery` ' .
+							'WHERE `section_id` = :section_id',
+					array(
+						'section_id'	=> self::$section_id
+					)
+				)->fetchColumn();
+				self::$gallery_id	= intval($gallery_id);
+			}
+			self::setGalleryFolder();
 			return $this;
 		} // end setGalleryID()
 
@@ -746,13 +790,17 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			$resize_x	= isset($resize_x) ? $resize_x : $this->getOptions('resize_x');
 			$resize_y	= isset($resize_y) ? $resize_y : $this->getOptions('resize_y');
 
-			CAT_Helper_Image::getInstance()->make_thumb(
-				$this->getFolder() . '/' . $image,
-				$tmp_path . '/' . $image,
-				$resize_y,
-				$resize_x,
-				'crop'
-			);
+			if( file_exists($this->getFolder() . '/' . $image))
+			{
+				CAT_Helper_Image::getInstance()->make_thumb(
+					$this->getFolder() . '/' . $image,
+					$tmp_path . '/' . $image,
+					$resize_y,
+					$resize_x,
+					'crop',
+					'jpg'
+				);
+			}
 			return array(
 				'path'	=> $tmp_path . '/' . $image,
 				'url'	=> str_replace( CAT_PATH, CAT_URL, $tmp_path ) . '/' . $image,

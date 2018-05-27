@@ -174,13 +174,13 @@
 			padding:		0px;
 			border:			1px solid #b1bec7;
 		}
-			.cc_catG_tabs li {
+			.cc_catG_tabs > li {
 				min-height:	149px;
 				margin:		0px;
 				padding:	1em;
 				display:	none;
 			}
-			.cc_catG_tabs li.active {
+			.cc_catG_tabs > li.active {
 				display:	list-item;
 			}
 				.cc_dropzone {
