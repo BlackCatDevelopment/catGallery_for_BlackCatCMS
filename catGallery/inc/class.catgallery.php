@@ -786,6 +786,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 				$this->getImage( $image_id );
 
 			$image		= $this->images[$image_id]['picture'];
+			$ext            = pathinfo($image,PATHINFO_EXTENSION);
 
 			$resize_x	= isset($resize_x) ? $resize_x : $this->getOptions('resize_x');
 			$resize_y	= isset($resize_y) ? $resize_y : $this->getOptions('resize_y');
@@ -798,7 +799,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 					$resize_y,
 					$resize_x,
 					'crop',
-					'jpg'
+					$ext
 				);
 			}
 			return array(
