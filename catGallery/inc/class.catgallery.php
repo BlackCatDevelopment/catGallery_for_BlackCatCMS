@@ -57,6 +57,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		protected $imageURL				= NULL;
 		protected $galleryPATH			= '';
 		protected $galleryURL			= '';
+		private static $respSize		= array( 320, 480, 768, 1080, 1280, 1920 );
 
 		public $contents			= array();
 		public $options				= array();
@@ -515,23 +516,30 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			$thumb_url	= sprintf( '%s/thumbs_%s_%s/',
 						$this->getFolder(false), self::$thumb_x, self::$thumb_y );
 
-
 			if ( $images && $images->rowCount() > 0 )
 			{
 				while( !false == ( $row = $images->fetch() ) )
 				{
+					$row['image_id']	= intval($row['image_id']);
 					$this->images[$row['image_id']]	= array(
 						'image_id'			=> $row['image_id'],
 						'position'			=> $row['position'],
 						'published'			=> $row['published'],
 						'picture'			=> $row['picture'],
-						'original'			=> $this->getFolder(false) . '/' . $row['picture'],
+						'original'			=> $this->getFolder(false) . '/originals/' . $row['picture'],
 						'options'			=> $addOptions ? $this->getImgOptions( $row['image_id'] ) : NULL,
 						'image_content'		=> $addContent ? $this->getImgContent( $row['image_id'] ) : NULL,
 						'contentname'		=> 'image_content_' . $row['image_id'],
 						'thumb'				=> $thumb_url . $row['picture']
 					);
-					
+
+					foreach( self::$respSize as $size )
+					{
+						$ratio	= round($this->getOptions('resize_x')/$this->getOptions('resize_y'));
+						$respY	= $size/$ratio;
+						$this->images[$row['image_id']]['rd_'.$size]	= $this->galleryURL.'/thumbs_'.$size.'_'.$respY.'/';
+					}
+
 					if( !file_exists( $tmp_path . $row['picture'] ) )
 						$this->createImg( $row['image_id'] );
 					if( !file_exists( $thumb_path . $row['picture'] ) )
@@ -718,9 +726,11 @@ if ( ! class_exists( 'catGallery', false ) ) {
 							{
 								$addImg	= $this->addImg( $file_extension );
 
+								if ( !file_exists($this->getFolder() . '/originals/') )
+									CAT_Helper_Directory::getInstance()->createDirectory( $this->getFolder() . '/originals/', NULL, true );
 								if ( !CAT_Helper_Image::getInstance()->make_thumb(
-										self::$gallery_root . '/temp/' . $current->file_dst_name,
-										$this->getFolder() . '/' . $addImg['picture'],
+										self::$gallery_root . 'temp/' . $current->file_dst_name,
+										$this->getFolder() . '/originals/' . $addImg['picture'],
 										1600,//$resize_y,
 										1600,//$resize_x,
 										'fit'
@@ -772,34 +782,64 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		{
 			if ( !$this->checkIDs($image_id) ) return false;
 
-			$tmp_path	= ($resize_x && $resize_y) && ( is_numeric($resize_x) && is_numeric($resize_y) )
+			$tmp_path	= ($resize_x && $resize_y)
 				? CAT_Helper_Directory::getInstance()->sanitizePath(
 					sprintf( '%s/thumbs_%s_%s/',
 						$this->galleryPATH, $resize_x, $resize_y
 					)
 				) : $this->getImageURL( true );
 
-			if ( !file_exists($tmp_path) )
-				CAT_Helper_Directory::getInstance()->createDirectory( $tmp_path, NULL, true );
-				
+
 			if ( !isset( $this->images[$image_id] ) )
 				$this->getImage( $image_id );
 
 			$image		= $this->images[$image_id]['picture'];
+			$ext		= pathinfo($image,PATHINFO_EXTENSION);
 
 			$resize_x	= isset($resize_x) ? $resize_x : $this->getOptions('resize_x');
 			$resize_y	= isset($resize_y) ? $resize_y : $this->getOptions('resize_y');
-
-			if( file_exists($this->getFolder() . '/' . $image))
+			$ext		= pathinfo($image,PATHINFO_EXTENSION);
+			if( file_exists($this->getFolder() . '/originals/' . $image))
 			{
+				if ( !file_exists($tmp_path) )
+					CAT_Helper_Directory::getInstance()->createDirectory( $tmp_path, NULL, true );
+
 				CAT_Helper_Image::getInstance()->make_thumb(
-					$this->getFolder() . '/' . $image,
+					$this->getFolder() . '/originals/' . $image,
 					$tmp_path . '/' . $image,
 					$resize_y,
 					$resize_x,
 					'crop',
-					'jpg'
+					$ext
 				);
+
+				#dppoelte Größe
+				foreach( self::$respSize as $size )
+				{
+					$ratio	= round($resize_x/$resize_y);
+					$respY	= $size/$ratio;
+
+					$this->images[$image_id]['rd_'.$size]	= $this->galleryURL.'/thumbs_'.$size.'_'.$respY.'/';
+
+					$respPath	= CAT_Helper_Directory::getInstance()->sanitizePath(
+						sprintf( '%s/thumbs_%s_%s/',
+							$this->galleryPATH, $size, $respY
+						)
+					);
+
+					if ( !file_exists($respPath) )
+						CAT_Helper_Directory::getInstance()->createDirectory( $respPath, NULL, true );
+
+					// Create responsive images
+					CAT_Helper_Image::getInstance()->make_thumb(
+						$this->getFolder() . '/originals/' . $image,
+						$respPath . '/' . $image,
+						$respY,
+						$size,
+						'crop',
+						$ext
+					);
+				}
 			}
 			return array(
 				'path'	=> $tmp_path . '/' . $image,
