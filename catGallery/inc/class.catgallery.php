@@ -367,7 +367,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		{
 			if ( !$this->checkIDs() ||
 				!$file_extension ) return false;
-			
+
 			$getPos	= CAT_Helper_Page::getInstance()->db()->query(
 				'SELECT MAX(position) AS pos FROM `:prefix:mod_cc_catgallery_images` ' .
 					'WHERE `gallery_id` = :gallery_id',
@@ -703,6 +703,8 @@ if ( ! class_exists( 'catGallery', false ) ) {
 							? false
 							: strtolower( pathinfo($tmpFiles[$field_name]['name'], PATHINFO_EXTENSION))
 							;
+				$file_extension		= strtolower($file_extension) == 'jpeg' ? 'jpg' : $file_extension;
+
 				// ====================================== 
 				// ! Check if file extension is allowed   
 				// ====================================== 
@@ -795,6 +797,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 
 			$image		= $this->images[$image_id]['picture'];
 			$ext		= pathinfo($image,PATHINFO_EXTENSION);
+			$ext		= strtolower($ext) == 'jpeg' ? '' : $ext;
 
 			$resize_x	= isset($resize_x) ? $resize_x : $this->getOptions('resize_x');
 			$resize_y	= isset($resize_y) ? $resize_y : $this->getOptions('resize_y');
@@ -978,7 +981,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 
 			if ( isset($getOptions) && $getOptions->numRows() > 0)
 			{
-				while( !false == ($row = $getOptions->fetchRow( MYSQL_ASSOC ) ) )
+				while( !false == ($row = $getOptions->fetchRow() ) )
 				{
 					$this->options[$row['name']]	= $row['value'];
 				}
