@@ -591,8 +591,10 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			else return false;
 
 			$opts	= CAT_Helper_Page::getInstance()->db()->query( sprintf(
-					'SELECT * FROM `:prefix:mod_cc_catgallery_images_options`
-							WHERE `gallery_id` = :gallery_id %s',
+					'SELECT * FROM `:prefix:mod_cc_catgallery_images_options` ' .
+							'WHERE `image_id` IN ' .
+							'(SELECT `image_id` FROM `:prefix:mod_cc_catgallery_images` WHERE `gallery_id` = :gallery_id) ' .
+							'%s',
 					$select
 				),
 				array(
@@ -940,8 +942,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 
 			if ( CAT_Helper_Page::getInstance()->db()->query(
 				'REPLACE INTO `:prefix:mod_cc_catgallery_images_options` ' .
-					'SET `gallery_id`	= :gallery_id, ' .
-						'`image_id`		= :image_id, ' .
+					'SET `image_id`		= :image_id, ' .
 						'`name`			= :name, ' .
 						'`value`		= :value',
 				array(
