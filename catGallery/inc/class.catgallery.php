@@ -863,6 +863,16 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		{
 			if ( !$this->checkIDs( $image_id ) ) return false;
 
+			// use HTMLPurifier to clean up the contents if enabled
+			if ( 
+				$backend->db()->get_one(
+					"SELECT `value` FROM `:prefix:settings` " .
+						"WHERE `name` = 'enable_htmlpurifier' AND `value` = 'true'" )
+			)
+				$content = CAT_Helper_Protect::getInstance()->purify(
+					$content,array('Core.CollectErrors'=>true)
+				);
+
 			if ( CAT_Helper_Page::getInstance()->db()->query(
 				'REPLACE INTO `:prefix:mod_cc_catgallery_contents` ' .
 					'SET `image_id`		= :image_id, ' .
