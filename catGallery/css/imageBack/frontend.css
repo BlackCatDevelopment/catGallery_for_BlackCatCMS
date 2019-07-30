@@ -1,0 +1,160 @@
+/**
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 3 of the License, or (at
+ *   your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful, but
+ *   WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ *   General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, see <http://www.gnu.org/licenses/>.
+ *
+ *   @author			Matthias Glienke
+ *   @copyright			2019, Black Cat Development
+ *   @link				https://blackcat-cms.org
+ *   @license			http://www.gnu.org/licenses/gpl.html
+ *   @category			CAT_Modules
+ *   @package			catGallery
+ *
+ */
+
+
+.cG_imageBack {
+	padding:	7em 0;
+}
+
+	.cG_imageBack figure {
+		margin:		0;
+		padding:	1em;
+	}
+	.cG_imgC.cG_iBColor figure {
+		padding:	0;
+	}
+	.cG_iBColor figure {
+		padding:	15px;
+	}
+	.cG_imageBack figure:after {
+		content:	'';
+		display:	block;
+		clear:		both;
+	}
+/*
+/* !Left Right */
+/*
+ */
+
+	.cG_imgR-IMG,
+	.cG_imgL-IMG {
+		display:			-webkit-box;
+		display:			-moz-box;
+		display:			-o-flexbox;
+		display:			-ms-flexbox;
+		display:			flex;
+		-moz-box-wrap:		wrap;
+		-webkit-box-wrap:	wrap;
+		-webkit-flex-wrap:	wrap;
+		-ms-flexbox-wrap:	wrap;
+		-ms-flex-wrap:		wrap;
+		flex-wrap:			wrap;
+		align-items:		flex-start;
+	}
+		.cG_imgR-content {
+			line-height:	1.5em;
+		}
+		.cG_imageBack figure > a,
+		.cG_imageBack figure > div,
+		.cG_imageBack figure img {
+			max-width:			100% !important;
+			height:				auto !important;
+			-webkit-box-flex:	1;
+			-webkit-flex:		1 0 38%;
+			-ms-flex:			1 0 38%;
+			flex:				1 0 38%;
+			border:				0 none;
+		}
+		.cG_imageBack figure > div {
+			background-size:		cover;
+			background-position:	center center;
+		}
+		.cG_imageBack figure > div > img {
+			opacity:	0;
+		}
+		.cG_imageBack figure > a > img,
+		.cG_imageBack figure > img {
+			line-height:	1em;
+			margin:			0;
+		}
+
+@media (min-width: 768px) {
+	.cG_imgR-IMG,
+	.cG_imgL-IMG {
+		-moz-box-wrap:		nowrap;
+		-webkit-box-wrap:	nowrap;
+		-webkit-flex-wrap:	nowrap;
+		-ms-flexbox-wrap:	nowrap;
+		-ms-flex-wrap:		nowrap;
+		flex-wrap:			nowrap;
+	}
+	.cG_imageBack figure.cG_imgL-IMG > img {
+		margin:	0 1em 0 0;
+	}
+	.cG_imageBack figure.cG_imgR-IMG > a,
+	.cG_imageBack figure.cG_imgR-IMG > img {
+		order:	1;
+		margin:	0 0 0 1em;
+	}
+}
+@media (min-width: 960px) {
+	.cG_imageBack figure {
+		padding:	0;
+	}
+}
+
+/*
+/* !Left */
+/*
+ */
+	.cG_imgL-content {
+		padding:	0 0 0 2em;
+	}
+
+ /*
+/* !Right */
+/*
+ */
+
+/*
+/* !Center */
+/*
+ */
+	.cG_imgC {
+		position:	relative;
+	}
+		.cG_imgC figure {
+			line-height:	0;
+		}
+		.cG_imgC-content {
+			line-height:	1.3em;
+			padding:		15px;
+		}
+
+		.cG_imgC h2 {
+			font-size:	1.2em;
+			padding:	1em 15px 15px 15px;
+			position:	absolute;
+			background:	none;
+		}
+		@media (min-width: 768px) {
+			.cG_imgC h2 {
+				padding:	7em 15px 15px 15px;
+				font-size:	2.4em;
+			}
+			.cG_imgC-content {
+				column-count:	2;
+				column-gap:		40px;
+			}
+		}

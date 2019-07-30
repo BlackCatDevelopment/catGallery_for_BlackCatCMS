@@ -1,0 +1,180 @@
+/**
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 3 of the License, or (at
+ *   your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful, but
+ *   WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ *   General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, see <http://www.gnu.org/licenses/>.
+ *
+ *   @author			Matthias Glienke
+ *   @copyright			2019, Black Cat Development
+ *   @link				https://blackcat-cms.org
+ *   @license			http://www.gnu.org/licenses/gpl.html
+ *   @category			CAT_Modules
+ *   @package			catGallery
+ *
+ */
+
+.cG_startNav {
+	display:			-webkit-box;
+	display:			-moz-box;
+	display:			-o-flexbox;
+	display:			-ms-flexbox;
+	display:			flex;
+	align-items:		stretch;
+	-moz-box-wrap:		nowrap;
+	-webkit-box-wrap:	nowrap;
+	-webkit-flex-wrap:	nowrap;
+	-ms-flexbox-wrap:	nowrap;
+	-ms-flex-wrap:		nowrap;
+	flex-wrap:			nowrap;
+	margin:				-4em auto 1em auto;
+	background:			white;
+}
+	
+	.cG_startNav article {
+		background:			white;
+		z-index:			1;
+		position:			relative;
+		-webkit-box-flex:	1;
+		-webkit-flex:		1 0 33%;
+		-ms-flex:			1 0 33%;
+		flex:				1 0 33%;
+		padding:			0;
+		margin:				0;
+		border-right:		1px solid #aebbdd;
+		line-height: 		0;
+		cursor:				pointer;
+		-webkit-box-shadow:	black 0 0 0 0;
+		-moz-box-shadow:	black 0 0 0 0;
+		-o-box-shadow:		black 0 0 0 0;
+		-ms-box-shadow:		black 0 0 0 0;
+		box-shadow:			black 0 0 0 0;
+		-webkit-transition:	all .25s ease-in;
+		-moz-transition:	all .25s ease-in;
+		-o-transition:		all .25s ease-in;
+		-ms-transition:		all .25s ease-in;
+		transition:			all .25s ease-in;
+		-webkit-transform:	scale(1);
+		-moz-transform:		scale(1);
+		-ms-transform:		scale(1);
+		-o-transform:		scale(1);
+		transform:			scale(1);
+	}
+	.cG_startNav article:hover {
+		border-right:		0 none;
+		z-index:			2;
+		-webkit-box-shadow:	black 0 0 5em -1.5em;
+		-moz-box-shadow:	black 0 0 5em -1.5em;
+		-o-box-shadow:		black 0 0 5em -1.5em;
+		-ms-box-shadow:		black 0 0 5em -1.5em;
+		box-shadow:			black 0 0 5em -1.5em;
+		-webkit-transform:	scale(1.02);
+		-moz-transform:		scale(1.02);
+		-ms-transform:		scale(1.02);
+		-o-transform:		scale(1.02);
+		transform:			scale(1.02);
+	}
+	.cG_startNav article:nth-child(3) {
+		border-right:		0 none;
+	}
+		.cG_startNav article:nth-child(1) img {
+			border-top:	.4em solid #1261a9;
+			border-top:	.4em solid #00aaff;
+		}
+		.cG_startNav article:nth-child(2) img {
+			border-top:	.4em solid #6b8bc2;
+			border-top:	.4em solid #81ca00;
+		}
+		.cG_startNav article:nth-child(3) img {
+			border-top:	.4em solid #aebbdd;
+			border-top:	.4em solid #a422e6;
+		}
+		.cG_startNav article:nth-child(1) h2 {
+			color:		#00aaff;
+
+		}
+		.cG_startNav article:nth-child(2) h2 {
+			color:		#81ca00;
+
+		}
+		.cG_startNav article:nth-child(3) h2 {
+			color:		#a422e6;
+
+		}
+		.cG_startNav h2 {
+			position:	relative;
+			font-size:	1.2em;
+			padding:	.9em 1rem;
+			margin:		0;
+			height:		4em;
+		}
+		.cG_startNav h2::before {
+			position:			absolute;
+			top:				1.1em;
+			right:				0em;
+			-webkit-transition:	all 350ms ease-in;
+			-moz-transition:	all 350ms ease-in;
+			-o-transition:		all 350ms ease-in;
+			-ms-transition:		all 350ms ease-in;
+			transition:			all 350ms ease-in;
+		}
+		.cG_startNav h2::after {
+			display:	none;
+		}
+/*		.cG_startNav article:hover h2::before {
+			right:				0em;
+			-webkit-transition:	all 650ms ease-in;
+			-moz-transition:	all 650ms ease-in;
+			-o-transition:		all 650ms ease-in;
+			-ms-transition:		all 650ms ease-in;
+			transition:			all 650ms ease-in;
+		}*/
+		.cG_startNav img {
+			max-width:	100%;
+			height:		auto;
+			margin:		0;
+			padding:	0;
+		}
+		.cG_startNav a {
+			text-indent:	-200vw;
+			color:		#5b6268;
+			position:	absolute;
+			top:		0;
+			right:		0;
+			bottom:		0;
+			left:		0;
+			border:		0 none;
+			display:	inline-block;
+			padding:	4em 1rem 1rem 1rem;
+		}
+@media (min-width: 375px) {
+	.cG_startNav h2 {
+		font-size:	1.4em;
+		padding:	.9em 1rem;
+	}
+	.cG_startNav h2::before {
+		top:				1.1em;
+		right:				.5em;
+	}
+}
+@media (min-width: 480px) {
+	.cG_startNav h2::before {
+		top:				1.5em;
+		right:				1em;
+	}
+	.cG_startNav a {
+		text-indent:	0;
+	}
+}
+
+@media (min-width: 768px) {
+
+}

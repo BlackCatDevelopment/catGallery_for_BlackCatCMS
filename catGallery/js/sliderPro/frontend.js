@@ -14,8 +14,8 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  *   @author			Matthias Glienke
- *   @copyright			2014, Black Cat Development
- *   @link				http://blackcat-cms.org
+ *   @copyright			2019, Black Cat Development
+ *   @link				https://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
  *   @package			catGallery
@@ -31,14 +31,14 @@ $(document).ready(function()
 		$.each( sliderProIDs, function( index, cGID )
 		{
 			$( '#my-slider_' + cGID.gallery_id).sliderPro({
-				width:				cGID.resX,
-				height:				cGID.resY,
-				arrows:				cGID.arrows,
-				buttons:			cGID.buttons,
-				waitForLayers:		true,
-				fade:				true,
-				autoplay:			false,
-				autoScaleLayers:	false
+				'width'					: cGID.resX,
+				'height'				: cGID.resY,
+				'arrows'				: cGID.arrows,
+				'buttons'				: cGID.buttons,
+				'autoplay'				: cGID.autoplay,
+				'fadeArrows'			: cGID.fadeArrows,
+				'centerSelectedSlide'	: cGID.centerSelectedSlide,
+				'rightToLeft'			: cGID.rightToLeft
 			});
 		});
 	}

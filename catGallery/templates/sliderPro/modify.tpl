@@ -14,8 +14,8 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  *   @author			Matthias Glienke
- *   @copyright			2014, Black Cat Development
- *   @link				http://blackcat-cms.org
+ *   @copyright			2019, Black Cat Development
+ *   @link				https://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
  *   @package			catGallery
@@ -30,7 +30,7 @@
 	<div class="cc_catG_settings">
 		<ul class="cc_catG_nav fc_br_left" id="cc_catG_nav_{$gallery_id}">
 			<li class="active fc_br_topleft">{translate('Upload new images')}</li>
-			<li>{translate('Options for frontend')}</li>
+			<li>{translate('Slider-Pro options')}</li>
 			<li class="fc_br_bottomleft">{translate('Image option')}</li>
 		</ul>
 		<ul class="cc_catG_tabs fc_br_right">

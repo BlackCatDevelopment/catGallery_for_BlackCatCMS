@@ -15,8 +15,8 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  *   @author			Matthias Glienke
- *   @copyright			2014, Black Cat Development
- *   @link				http://blackcat-cms.org
+ *   @copyright			2019, Black Cat Development
+ *   @link				https://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
  *   @package			catGallery
@@ -41,6 +41,28 @@ if (defined('CAT_PATH')) {
 	}
 }
 // end include class.secure.php
+
+
+
+#if (CAT_Users::is_root() )
+#{
+##$baseURL	= CAT_PATH.MEDIA_DIRECTORY.'/cc_catgallery/';
+##$dirs = glob($baseURL.'/*',GLOB_ONLYDIR);
+##foreach($dirs as $dir )
+##{
+##	if ( !file_exists($dir.'/originals/'))
+##		CAT_Helper_Directory::createDirectory( $dir.'/originals/', NULL, true );
+##	$files = glob($dir."/*.{jpeg,jpg,gif,png}", GLOB_BRACE);
+##	foreach($files as $file)
+##	{
+##		rename($file,$dir.'/originals/'.basename( $file ));
+##	}
+##}
+##
+#}
+
+
+
 
 include_once "inc/class.catgallery.php";
 

@@ -15,8 +15,8 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  *   @author			Matthias Glienke
- *   @copyright			2017, Black Cat Development
- *   @link				http://blackcat-cms.org
+ *   @copyright			2019, Black Cat Development
+ *   @link				https://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
  *   @package			catgallery

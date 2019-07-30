@@ -15,8 +15,8 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  *   @author			Matthias Glienke
- *   @copyright			2014, Black Cat Development
- *   @link				http://blackcat-cms.org
+ *   @copyright			2019, Black Cat Development
+ *   @link				https://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
  *   @package			catGallery
@@ -53,18 +53,19 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		protected static $gallery_root			= '';
 		protected static $thumb_x				= 300;
 		protected static $thumb_y				= 200;
-		protected $imagePATH			= NULL;
-		protected $imageURL				= NULL;
-		protected $galleryPATH			= '';
-		protected $galleryURL			= '';
 		private static $respSize		= array( 320, 480, 768, 1080, 1280, 1920 );
+		protected $imagePATH					= NULL;
+		protected $imageURL						= NULL;
+		protected $galleryPATH					= '';
+		protected $galleryURL					= '';
 
-		public $contents			= array();
-		public $options				= array();
+		public $contents					= array();
+		public $options						= array();
 
-		public $variant				= 'default';
-		public static $directory	= 'cc_catgallery';
-		public static $allVariants	= array();
+		public $variant						= 'cubicGallery';
+		public static $directory			= 'cc_catgallery';
+		protected static $orignalFolder		= '/originals/';
+		public static $allVariants			= array();
 
 		public $effects	= array(
 			'cube',
@@ -199,8 +200,9 @@ if ( ! class_exists( 'catGallery', false ) ) {
 				)->fetchColumn();
 
 				self::$section_id	= intval($sectionID);
+				self::setGalleryFolder();
 			}
-			self::setGalleryFolder();
+
 			return $this;
 		} // end setGalleryID()
 
@@ -210,8 +212,8 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		private function setGalleryFolder()
 		{
 			self::$gallery_root	= CAT_PATH . MEDIA_DIRECTORY . '/cc_catgallery/';
-			$this->galleryPATH	= self::$gallery_root . 'cc_catgallery_' . self::$section_id;
-			$this->galleryURL	= CAT_URL . MEDIA_DIRECTORY . '/cc_catgallery/cc_catgallery_' . self::$section_id;
+			$this->galleryPATH	= self::$gallery_root . 'cc_catgallery_' . self::$section_id . '/';
+			$this->galleryURL	= CAT_URL . MEDIA_DIRECTORY . '/cc_catgallery/cc_catgallery_' . self::$section_id . '/';
 			return $this;
 		}
 
@@ -294,7 +296,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			if( !file_exists( self::$gallery_root ) )
 			{
 				CAT_Helper_Directory::getInstance()->createDirectory( self::$gallery_root, NULL, true );
-				CAT_Helper_Directory::getInstance()->createDirectory( self::$gallery_root . '/temp/', NULL, true );				
+				CAT_Helper_Directory::getInstance()->createDirectory( self::$gallery_root . '/temp/', NULL, true );	
 			}
 			// Add a new catGallery
 			if ( CAT_Helper_Page::getInstance()->db()->query(
@@ -315,8 +317,9 @@ if ( ! class_exists( 'catGallery', false ) ) {
 					if( !$this->saveOptions( $name, $val ) )
 						$return	= false;
 				}
-				if ( $return &&
-					CAT_Helper_Directory::getInstance()->createDirectory( $this->getFolder(), NULL, true ) )
+				if ( $return
+					&& CAT_Helper_Directory::getInstance()->createDirectory( $this->getFolder(), NULL, true )
+					&& CAT_Helper_Directory::getInstance()->createDirectory( $this->getOriginalFolder(), NULL, true ) )
 					return self::$gallery_id;
 				else
 					return false;
@@ -363,11 +366,11 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		 * @return array
 		 *
 		 **/
-		private function addImg( $file_extension = NULL)
+		public function addImg( $file_extension = NULL)
 		{
 			if ( !$this->checkIDs() ||
 				!$file_extension ) return false;
-
+			
 			$getPos	= CAT_Helper_Page::getInstance()->db()->query(
 				'SELECT MAX(position) AS pos FROM `:prefix:mod_cc_catgallery_images` ' .
 					'WHERE `gallery_id` = :gallery_id',
@@ -509,24 +512,24 @@ if ( ! class_exists( 'catGallery', false ) ) {
 				)
 			);
 
-			$tmp_path	= sprintf( '%s/thumbs_%s_%s/',
+			$tmp_path	= sprintf( '%sthumbs_%s_%s/',
 						$this->getFolder(), $this->getOptions('resize_x'), $this->getOptions('resize_y') );
-			$thumb_path	= sprintf( '%s/thumbs_%s_%s/',
+			$thumb_path	= sprintf( '%sthumbs_%s_%s/',
 						$this->getFolder(), self::$thumb_x, self::$thumb_y );
-			$thumb_url	= sprintf( '%s/thumbs_%s_%s/',
+			$thumb_url	= sprintf( '%sthumbs_%s_%s/',
 						$this->getFolder(false), self::$thumb_x, self::$thumb_y );
+
 
 			if ( $images && $images->rowCount() > 0 )
 			{
 				while( !false == ( $row = $images->fetch() ) )
 				{
-					$row['image_id']	= intval($row['image_id']);
 					$this->images[$row['image_id']]	= array(
 						'image_id'			=> $row['image_id'],
 						'position'			=> $row['position'],
 						'published'			=> $row['published'],
 						'picture'			=> $row['picture'],
-						'original'			=> $this->getFolder(false) . '/originals/' . $row['picture'],
+						'original'			=> $this->getOriginalFolder(false) . $row['picture'],
 						'options'			=> $addOptions ? $this->getImgOptions( $row['image_id'] ) : NULL,
 						'image_content'		=> $addContent ? $this->getImgContent( $row['image_id'] ) : NULL,
 						'contentname'		=> 'image_content_' . $row['image_id'],
@@ -541,7 +544,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 					}
 
 					if( !file_exists( $tmp_path . $row['picture'] ) )
-						$this->createImg( $row['image_id'] );
+						$this->createImg( $row['image_id'], NULL, NULL, 'crop' );
 					if( !file_exists( $thumb_path . $row['picture'] ) )
 						$this->createImg( $row['image_id'], self::$thumb_x, self::$thumb_y );
 				}
@@ -703,9 +706,11 @@ if ( ! class_exists( 'catGallery', false ) ) {
 				// =========================================== 
 				$file_extension	= (strtolower( pathinfo( $tmpFiles[$field_name]['name'], PATHINFO_EXTENSION ) ) == '')
 							? false
-							: strtolower( pathinfo($tmpFiles[$field_name]['name'], PATHINFO_EXTENSION))
-							;
-				$file_extension		= strtolower($file_extension) == 'jpeg' ? 'jpg' : $file_extension;
+							: strtolower( pathinfo($tmpFiles[$field_name]['name'], PATHINFO_EXTENSION));
+
+
+				if(strtolower($file_extension)=='jpeg')
+					$file_extension	= 'jpg';
 
 				// ====================================== 
 				// ! Check if file extension is allowed   
@@ -724,30 +729,37 @@ if ( ! class_exists( 'catGallery', false ) ) {
 						if ( $current->uploaded )
 						{
 							$current->file_overwrite		= false;
-							$current->process( self::$gallery_root . '/temp/' );
+
+							if (!file_exists( $this->getOriginalFolder() ))
+								CAT_Helper_Directory::getInstance()->createDirectory( $this->getOriginalFolder(), NULL, true );
+
+							$current->process( $this->getOriginalFolder() );
 
 							if ( $current->processed )
 							{
 								$addImg	= $this->addImg( $file_extension );
 
-								if ( !file_exists($this->getFolder() . '/originals/') )
-									CAT_Helper_Directory::getInstance()->createDirectory( $this->getFolder() . '/originals/', NULL, true );
+								rename(
+									$this->getOriginalFolder() . $current->file_dst_name,
+									$this->getOriginalFolder() . $addImg['picture']
+								);
+
 								if ( !CAT_Helper_Image::getInstance()->make_thumb(
-										self::$gallery_root . 'temp/' . $current->file_dst_name,
-										$this->getFolder() . '/originals/' . $addImg['picture'],
+										$this->getOriginalFolder() . $addImg['picture'],
+										$this->getFolder() . $addImg['picture'],
 										1600,//$resize_y,
 										1600,//$resize_x,
-										'fit'
+										'crop'
 								) ) $return	= false;
 
 								$this->createImg( $addImg['image_id'], self::$thumb_x, self::$thumb_y );
 
-								$addImg['thumb']	= sprintf( '%s/thumbs_%s_%s/',
-									$this->galleryURL,
+								$addImg['thumb']	= sprintf( '%sthumbs_%s_%s/',
+									$this->getFolder(false),
 									self::$thumb_x,
 									self::$thumb_y ) . $addImg['picture'];
 
-								unlink(self::$gallery_root . '/temp/' . $current->file_dst_name);
+								/*unlink(self::$gallery_root . '/temp/' . $current->file_dst_name);*/
 
 								// =================================
 								// ! Clean the upload class $files
@@ -782,18 +794,20 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		 * @return bool true/false
 		 *
 		 **/
-		public function createImg( $image_id = NULL, $resize_x = NULL, $resize_y = NULL )
+		public function createImg( $image_id = NULL, $resize_x = NULL, $resize_y = NULL, $method = 'crop' )
 		{
 			if ( !$this->checkIDs($image_id) ) return false;
 
-			$tmp_path	= ($resize_x && $resize_y)
+			$tmp_path	= ($resize_x && $resize_y) && ( is_numeric($resize_x) && is_numeric($resize_y) )
 				? CAT_Helper_Directory::getInstance()->sanitizePath(
-					sprintf( '%s/thumbs_%s_%s/',
-						$this->galleryPATH, $resize_x, $resize_y
+					sprintf( '%sthumbs_%s_%s/',
+						$this->getFolder(), $resize_x, $resize_y
 					)
 				) : $this->getImageURL( true );
 
-
+			if ( !file_exists($tmp_path) )
+				CAT_Helper_Directory::getInstance()->createDirectory( $tmp_path, NULL, true );
+				
 			if ( !isset( $this->images[$image_id] ) )
 				$this->getImage( $image_id );
 
@@ -803,22 +817,19 @@ if ( ! class_exists( 'catGallery', false ) ) {
 
 			$resize_x	= isset($resize_x) ? $resize_x : $this->getOptions('resize_x');
 			$resize_y	= isset($resize_y) ? $resize_y : $this->getOptions('resize_y');
-			$ext		= pathinfo($image,PATHINFO_EXTENSION);
-			if( file_exists($this->getFolder() . '/originals/' . $image))
-			{
-				if ( !file_exists($tmp_path) )
-					CAT_Helper_Directory::getInstance()->createDirectory( $tmp_path, NULL, true );
 
+			if( file_exists( $this->getOriginalFolder() . $image))
+			{
 				CAT_Helper_Image::getInstance()->make_thumb(
-					$this->getFolder() . '/originals/' . $image,
+					$this->getOriginalFolder() . $image,
 					$tmp_path . '/' . $image,
 					$resize_y,
 					$resize_x,
-					'crop',
+					$method,
 					$ext
 				);
 
-				#dppoelte Größe
+				#doppelte Größe
 				foreach( self::$respSize as $size )
 				{
 					$ratio	= round($resize_x/$resize_y);
@@ -942,7 +953,8 @@ if ( ! class_exists( 'catGallery', false ) ) {
 
 			if ( CAT_Helper_Page::getInstance()->db()->query(
 				'REPLACE INTO `:prefix:mod_cc_catgallery_images_options` ' .
-					'SET `image_id`		= :image_id, ' .
+					'SET `gallery_id`	= :gallery_id, ' .
+						'`image_id`		= :image_id, ' .
 						'`name`			= :name, ' .
 						'`value`		= :value',
 				array(
@@ -1159,24 +1171,41 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		 * @return string
 		 *
 		 **/
+		public function getOriginalFolder( $path = true )
+		{
+			if ( $path )
+				return $this->galleryPATH . self::$orignalFolder;
+			else
+				return $this->galleryURL . self::$orignalFolder;
+		} // getOriginalFolder()
+
+
+		/**
+		 * get folder path/url for gallery
+		 *
+		 * @access public
+		 * @param  boolean	$path - true (default) for getting folder path/ false for getting url
+		 * @return string
+		 *
+		 **/
 		public function getImageURL( $path = false )
 		{
 			if ( $path )
 			{
 				if ( !$this->imagePATH || $this->imagePATH == '' )
 					$this->imagePATH	= CAT_Helper_Directory::getInstance()->sanitizePath(
-						sprintf( '%s/thumbs_%s_%s/',
-							$this->galleryPATH, $this->getOptions('resize_x'), $this->getOptions('resize_y')
+						sprintf( '%sthumbs_%s_%s/',
+							$this->getFolder(), $this->getOptions('resize_x'), $this->getOptions('resize_y')
 						)
 					);
 				return $this->imagePATH;
 			}
 			else
 				if ( !$this->imageURL || $this->imageURL == '' )
-					$this->imageURL	= sprintf( '%s/thumbs_%s_%s/',
-						$this->galleryURL, $this->getOptions('resize_x'), $this->getOptions('resize_y') );
+					$this->imageURL	= sprintf( '%sthumbs_%s_%s/',
+						$this->getFolder(false), $this->getOptions('resize_x'), $this->getOptions('resize_y') );
 				return $this->imageURL;
-		} // getFolder()
+		} // getImageURL()
 
 
 		/**

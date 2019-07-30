@@ -1,0 +1,45 @@
+.cG_logo {
+	padding:			4em 0;
+	text-align:			center;
+	background:			#F2F3F4;
+	width:				100%;
+	max-width:			100%;
+	height:				calc( 90px + 12em );
+	overflow:			hidden;
+	position:			relative;
+}
+	.cG_logo_wrap {
+		white-space:	nowrap;
+	}
+
+	.cG_logo img {
+		display:			inline-block;
+		margin:				2em 3em;
+	}
+
+	.cG_logo_sh_l,
+	.cG_logo_sh_r {
+		position:	absolute;
+		display:	inline-block;
+		top:		0;
+		bottom:		0;
+		width:		300px;
+		width:		40vw;
+	}
+
+	.cG_logo_sh_l {
+		-webkit-box-shadow:	inset #F2F3F4 10vw 0 8vw 1vw;
+		-moz-box-shadow:	inset #F2F3F4 10vw 0 8vw 1vw;
+		-o-box-shadow:		inset #F2F3F4 10vw 0 8vw 1vw;
+		-ms-box-shadow:		inset #F2F3F4 10vw 0 8vw 1vw;
+		box-shadow:			inset #F2F3F4 10vw 0 8vw 1vw;
+		left:	0;
+	}
+	.cG_logo_sh_r {
+		-webkit-box-shadow:	inset #F2F3F4 -10vw 0 8vw 1vw;
+		-moz-box-shadow:	inset #F2F3F4 -10vw 0 8vw 1vw;
+		-o-box-shadow:		inset #F2F3F4 -10vw 0 8vw 1vw;
+		-ms-box-shadow:		inset #F2F3F4 -10vw 0 8vw 1vw;
+		box-shadow:			inset #F2F3F4 -10vw 0 8vw 1vw;
+		right:	0;
+	}

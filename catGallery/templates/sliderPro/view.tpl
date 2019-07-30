@@ -14,8 +14,8 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  *   @author			Matthias Glienke
- *   @copyright			2014, Black Cat Development
- *   @link				http://blackcat-cms.org
+ *   @copyright			2019, Black Cat Development
+ *   @link				https://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
  *   @package			catGallery
@@ -29,22 +29,27 @@
 	}
 	sliderProIDs.push(
 	\{
-		'gallery_id'	: {$gallery_id},
-		'resX'			: {$options.resize_x},
-		'resY'			: {$options.resize_y},
-		'arrows'		: {if $options.arrows}true{else}false{/if},
-		'buttons'		: {if $options.buttons}true{else}false{/if},
-		'autoplay'		: {if $options.autoplay}true{else}false{/if}
+		'gallery_id'			: {$gallery_id},
+		'resX'					: {$options.resize_x},
+		'resY'					: {$options.resize_y},
+		'arrows'				: {if $options.arrows}true{else}false{/if},
+		'buttons'				: {if $options.buttons}true{else}false{/if},
+		'autoplay'				: {if $options.autoplay}true{else}false{/if},
+		'fadeArrows'			: {if $options.fadeArrows}true{else}false{/if},
+		'centerSelectedSlide'	: {if $options.centerSelectedSlide}true{else}false{/if},
+		'rightToLeft'			: {if $options.rightToLeft}true{else}false{/if}
 	});
 </script>
 
 <div class="slider-pro" id="my-slider_{$gallery_id}">
 	<div class="sp-slides">
-		{foreach $images image}{if $image.published}
+		{foreach $images image}
 		<div class="sp-slide">
-			<img src="{$imgURL}{$image.picture}" class="sp-image" alt="{$image.options.alt}">
-			{if $image.image_content != ''}<div class="sp-layer">{$image.image_content}</div>{/if}
+			<img src="{$imgURL}{$image.picture}" class="sp-image" alt="{$image.options.alt}" />
+			{if $image.options.caption != ''}<p class="sp-caption">{$image.options.caption}</p>{/if}
+			{if $image.image_content != ''}<div class="sp-layer sp-{$image.options.layercolor} {$image.options.layerrounded} {$image.options.layerpadding}" data-position="{$image.options.layerposition}" data-width="{$image.options.layerwidth}" data-height="{$image.options.layerheight}" data-horizontal="{$image.options.layerhoffset}" data-vertical="{$image.options.layervoffset}">{$image.image_content}</div>{/if}
+			{if $image.options.thumbnail != ''}<p class="sp-thumbnail">{$image.options.thumbnail}</p>{/if}
 		</div>
-		{/if}{/foreach}
+		{/foreach}
 	</div>
 </div>

@@ -14,8 +14,8 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  *   @author			Matthias Glienke
- *   @copyright			2014, Black Cat Development
- *   @link				http://blackcat-cms.org
+ *   @copyright			2019, Black Cat Development
+ *   @link				https://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
  *   @package			catGallery
@@ -30,10 +30,10 @@
 	<input type="hidden" name="_cat_ajax" value="1" />
 	<input type="hidden" name="options" value="resize_x,resize_y" />
 	<p class="cc_catG_dreispalten">
-		<span class="cc_In200px">{translate('Adjust horizontal')}:</span>
-		<input type="text" class="cc_In100px" name="resize_x" value="{if $options.resize_x}{$options.resize_x}{else}724{/if}" /> px<br/>
-		<span class="cc_In200px">{translate('Adjust vertical')}:</span>
-		<input type="text" class="cc_In100px" name="resize_y" value="{if $options.resize_x}{$options.resize_y}{else}407{/if}" /> px<br/>
+		<span class="cc_In200px">{translate('Picture width')}:</span>
+		<input type="text" class="cc_In100px" name="resize_x" value="{if $options.resize_x}{$options.resize_x}{else}640{/if}" /> px<br/>
+		<span class="cc_In200px">{translate('Picture height')}:</span>
+		<input type="text" class="cc_In100px" name="resize_y" value="{if $options.resize_y}{$options.resize_y}{else}480{/if}" /> px<br/><br/>
 	</p>
 	<input type="submit" name="speichern" value="{translate('Save')}" />
 </form>

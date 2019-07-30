@@ -15,8 +15,8 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  *   @author			Matthias Glienke
- *   @copyright			2014, Black Cat Development
- *   @link				http://blackcat-cms.org
+ *   @copyright			2019, Black Cat Development
+ *   @link				https://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
  *   @package			catGallery
@@ -62,7 +62,7 @@ $LANG = array(
     'Image option'					=> 'Bild Optionen',
     'Adjust horizontal'				=> 'Breite einstellen',
     'Adjust vertical'				=> 'H&ouml;he einstellen',
-    'Upload new images'				=> 'Neues Bilder hochladen',
+    'Upload new images'				=> 'Neue Bilder hochladen',
     'Please notice, that loadingtime increases on more images'
     								=> 'Bitte beachten, bei mehreren Bildern erh&ouml;ht sich die Ladezeit',
     'Add another upload'			=> 'Ein weiteres Bild hinzuf&uuml;gen',
@@ -97,6 +97,34 @@ $LANG = array(
 	'Options saved successfully!'	=> 'Optionen erfolgreich gespeichert',
 	'Variant saved successfully!'	=> 'Variante erfolgreich gespeichert',
 	'You sent an invalid ID'		=> 'Es wurde keine gültige ID übermittelt.',
-	'Publish this image'			=> 'Dieses Bild freigeben'
+	'Publish this image'			=> 'Dieses Bild freigeben',
+// --- Slider-Pro ---
+	'Slider-Pro options'			=> 'Slider-Pro Optionen',
+	'Picture width'					=> 'Bildbreite',
+	'Picture height'				=> 'Bildh&ouml;he',
+	'Arrows'						=> 'Pfeile',
+	'Picture Caption'				=> 'Bildunterschrift',
+	'Alternative Text'				=> 'Bildersatztext',
+	'Text Layer Content'			=> 'Textebene Inhalt',
+	'Text Layer Color'				=> 'Textebene Hintergrund',
+	'white'							=> 'Hell',
+	'black'							=> 'Dunkel',
+	'Text Layer Rounded'			=> 'Textebene abgerundet',
+	'Text Layer Padding'			=> 'Textebene Textabstand',
+	'Text Layer Width'				=> 'Textebene Breite',
+	'Text Layer Height'				=> 'Textebene H&ouml;he',
 	
+	'Text Layer Offset Horizontal'	=> 'Abstand (horizontal) der Textebene',
+	'Text Layer Offset Vertical'	=> 'Abstand (vertikal) der Textebene',
+	'Text Layer Position'			=> 'Position der Textebene',
+	'topLeft'						=> 'Oben Links',
+	'topCenter'						=> 'Oben Mitte',
+	'topRight'						=> 'Oben Rechts',
+	'centerLeft'					=> 'Mitte Links',
+	'centerCenter'					=> 'Mitte Mitte',
+	'centerRight'					=> 'Mitte Rechts',	
+	'bottomLeft'					=> 'Unten Links',
+	'bottomCenter'					=> 'Unten Mitte',
+	'bottomRight'					=> 'Unten Rechts',
+	'Thumbnail'						=> 'Vorschau Text'
 );
