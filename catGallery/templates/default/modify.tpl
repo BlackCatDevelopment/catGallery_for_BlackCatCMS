@@ -30,7 +30,7 @@
 	<div class="cc_catG_settings">
 		<ul class="cc_catG_nav fc_br_left" id="cc_catG_nav_{$gallery_id}">
 			<li class="active fc_br_topleft">{translate('Upload new images')}</li>
-			<li>{translate('Options for frontend')}</li>
+			<li>{translate('Options for skitter')}</li>
 			<li class="fc_br_bottomleft">{translate('Image option')}</li>
 		</ul>
 		<ul class="cc_catG_tabs fc_br_right">

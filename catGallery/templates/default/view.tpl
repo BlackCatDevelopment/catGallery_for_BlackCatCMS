@@ -29,7 +29,7 @@
 		\{
 			{if $options.effect}animation:		"{$options.effect}",{/if}
 			interval:		{if $pauseTime}{$pauseTime}{else}4000{/if},
-			velocity:		"{if $options.velocity}{$velocity}{else}1.0{/if}",
+			velocity:		{if $options.velocity}"{$options.velocity}"{else}"1.0"{/if},
 			stop_over:		{if $options.stop_over}true{else}false{/if},
 			auto_play:		{if $options.auto_play}true{else}false{/if},
 			navigation:		{if $options.navigation}true{else}false{/if},
@@ -38,13 +38,15 @@
 			numbers:		{if $options.numbers}true{else}false{/if},
 			controls:		{if $options.controls}true{else}false{/if},
 			dots:			{if $options.dots}true{else}false{/if},
-			label:			{if $options.label}true{else}false{/if}
+			focus:			{if $options.focus}true{else}false{/if},
+			label:			{if $options.label}true{else}false{/if},
+			preview:		{if $options.preview}true{else}false{/if},
 		});
 	});
 </script>
 {/if}
 
-<div class="skitter" id="slider_skitter_{$section_id}" style="width: {$options.resize_x}px; height: {$options.resize_y}px;">
+<div class="skitter" id="slider_skitter_{$section_id}">
 	<ul>
 		{foreach $images as image}{if $image.published}
 		<li>
