@@ -1,0 +1,108 @@
+/**
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 3 of the License, or (at
+ *   your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful, but
+ *   WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ *   General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, see <http://www.gnu.org/licenses/>.
+ *
+ *   @author			Matthias Glienke
+ *   @copyright			2014, Black Cat Development
+ *   @link				http://blackcat-cms.org
+ *   @license			http://www.gnu.org/licenses/gpl.html
+ *   @category			CAT_Modules
+ *   @package			catGallery
+ *
+ */
+
+.cG_mH {
+}
+	.cG_mH figure {
+		background-position:	center center;
+		background-size:		cover;
+		padding:				6em 0 0 0;
+		width:					100vw;
+		margin:					0;
+	}
+		.cG_mH figcaption {
+			width:		1000px;
+			margin:		0em auto;
+			padding:	2em 0 5em 0;
+		}
+			.cG_mH figcaption > * {
+				margin:		.2em 0;
+/*				padding:	1em;
+				background:	rgba(255, 255, 255, .9);*/
+			}
+
+			.cG_mH.cG_mHdarkMode figcaption > * {
+				color:			white;
+				text-shadow:	0 0 .1em black;
+			}
+			.cG_mH h1 {
+				font-weight: 400;
+			}
+
+			.cG_mH figcaption p:nth-child(2) {
+				padding:	1em;
+				margin:		.2em 0 1em 0;
+				background:	rgba(255, 255, 255, .9);
+			}
+			.cG_mH.cG_mHdarkMode figcaption p:nth-child(2) {
+				background:	rgba(0, 0, 0, .8);
+			}
+			.cG_mH figcaption .button {
+				margin:	.5em 0;
+			}
+		.cG_mH figure img {
+			display:					none;
+			padding:					0;
+			-webkit-transition:			all .5s ease-in;
+			-moz-transition:			all .5s ease-in;
+			-o-transition:				all .5s ease-in;
+			-ms-transition:				all .5s ease-in;
+			transition:					all .5s ease-in;
+		}
+
+
+.cG_mH_Info {
+	padding:	2em 0;
+	background:	rgba(020, 150, 221, .2);
+	color:		black;
+}
+	.cG_mH_Info > div {
+		width:	1000px;
+		margin:	2em auto;
+	}
+	.cG_mH_Info img {
+		margin:	0;
+	}
+	.cG_mH_Info dl {
+		display:		-webkit-box;
+		display:		-moz-box;
+		display:		-o-flexbox;
+		display:		-ms-flexbox;
+		display:		flex;
+		flex-wrap:		wrap;
+		padding:		2em 0 1em 0;
+		color:			rgba(040, 042, 046, .8);
+	}
+		.cG_mH_Info dt {
+			font-weight:	700;
+			flex:			0 1 250px;
+		}
+			.cG_mH_Info dt::after { 
+				content: ": "; 
+			}
+		.cG_mH_Info dd {
+			order:		10;
+			flex:		0 1 250px;
+			padding:	0 3em 0 0;
+		}

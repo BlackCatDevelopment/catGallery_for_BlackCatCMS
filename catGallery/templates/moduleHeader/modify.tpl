@@ -14,8 +14,8 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  *   @author			Matthias Glienke
- *   @copyright			2019, Black Cat Development
- *   @link				https://blackcat-cms.org
+ *   @copyright			2014, Black Cat Development
+ *   @link				http://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
  *   @package			catGallery
@@ -30,15 +30,16 @@
 	<div class="cc_catG_settings">
 		<ul class="cc_catG_nav fc_br_left" id="cc_catG_nav_{$gallery_id}">
 			<li class="active fc_br_topleft">{translate('Upload new images')}</li>
+			<li>{translate('Options for frontend')}</li>
 			<li class="fc_br_bottomleft">{translate('Image option')}</li>
 		</ul>
 		<ul class="cc_catG_tabs fc_br_right">
 			<li class="cc_catG_tab active">{include(../default/modify/set_dropzone.tpl)}</li>
+			<li class="cc_catG_tab">{include(modify/set_frontend.tpl)}</li>
 			<li class="cc_catG_tab">{include(../default/modify/set_image.tpl)}</li>
 		</ul>
 		<div class="clear"></div>
 	</div>
-	<h2 class="fc_gradient_red center"><br>{translate('For perfect result set height and width in image option to the same value.')}<br><br></h2>
 	<p class="catG_IMG_y">{translate('Existing images')}</p>
 	<p class="catG_IMG_n">{translate('No images available')}</p>
 	<ul id="cc_catG_imgs_{$gallery_id}" class="cc_catG_imgs">

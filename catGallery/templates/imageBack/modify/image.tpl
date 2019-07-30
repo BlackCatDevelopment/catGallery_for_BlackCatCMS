@@ -43,7 +43,7 @@
 		<input type="hidden" name="gallery_id" value="{$gallery_id}" />
 		<input type="hidden" name="imgID" value="{if !$image}__image_id__{else}{$image.image_id}{/if}" />
 		<input type="hidden" name="action" value="saveIMG" />
-		<input type="hidden" name="image_options" value="alt,type,title,backColor,pdf" />
+		<input type="hidden" name="image_options" value="alt,type,title,backColor" />
 		<input type="hidden" name="_cat_ajax" value="1" />
 		<div class="cc_catG_left dz-details">
 			<p class="cc_catG_image">
@@ -59,8 +59,6 @@
 				<input type="text" name="title" value="{if $image.options.title}{$image.options.title}{/if}" {if !$image}disabled{/if}>
 				<strong>Background: (#....)<br></strong>
 				<input type="text" name="backColor" value="{if $image.options.backColor}{$image.options.backColor}{/if}" {if !$image}disabled{/if}>
-				<strong>Hinterlegte PDF (optional):<br><small>(unter media/downloads/...)</small><br></strong>
-				<input type="text" name="pdf" value="{if $image.options.pdf}{$image.options.pdf}{/if}" {if !$image}disabled{/if}>
 			</p>
 			<p{if !$image} class="cc_catG_disabled"{/if}>
 				<strong>Bild platzieren:<br></strong>

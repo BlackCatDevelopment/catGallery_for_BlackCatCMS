@@ -14,8 +14,8 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  *   @author			Matthias Glienke
- *   @copyright			2019, Black Cat Development
- *   @link				https://blackcat-cms.org
+ *   @copyright			2014, Black Cat Development
+ *   @link				http://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
  *   @package			catGallery
@@ -36,13 +36,13 @@
 		</div>
 	</div>
 	<form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" class="ajaxForm">
-		<input type="hidden" name="page_id" value="{$page_id}" />
-		<input type="hidden" name="section_id" value="{$section_id}" />
-		<input type="hidden" name="gallery_id" value="{$gallery_id}" />
-		<input type="hidden" name="imgID" value="{if !$image}__image_id__{else}{$image.image_id}{/if}" />
-		<input type="hidden" name="action" value="saveIMG" />
-		<input type="hidden" name="image_options" value="alt,urlPage,title,position,linkTitle" />
-		<input type="hidden" name="_cat_ajax" value="1" />
+		<input type="hidden" name="page_id" value="{$page_id}">
+		<input type="hidden" name="section_id" value="{$section_id}">
+		<input type="hidden" name="gallery_id" value="{$gallery_id}">
+		<input type="hidden" name="imgID" value="{if !$image}__image_id__{else}{$image.image_id}{/if}">
+		<input type="hidden" name="action" value="saveIMG">
+		<input type="hidden" name="image_options" value="alt">
+		<input type="hidden" name="_cat_ajax" value="1">
 		<div class="cc_catG_left dz-details">
 			<p class="cc_catG_image">
 				<img data-dz-thumbnail="" src="{$image.thumb}" width="auto" height="120" ><br>
@@ -51,24 +51,8 @@
 				<strong>{translate('Name of image')}: </strong><span data-dz-name="">{$image.picture}</span>
 			</p>
 			<p{if !$image} class="cc_catG_disabled"{/if}>
-				<strong>Verlinkte Seite:<br></strong>
-				<select name="urlPage" {if !$image}disabled{/if}>
-					<option value="">--- Kein Link ---</option>
-					{foreach $pages page}
-					<option value="{$page.page_id}"{if $image.options.urlPage == $page.page_id} selected="selected"{/if}>{if $page.level > 0}{for i 0 $page.level-1}|--{/for}{/if}{$page.menu_title}</option>
-					{/foreach}
-				</select>
-				<strong>Beschriftung Button:<br></strong>
-				<input type="text" name="linkTitle" value="{if $image.options.linkTitle}{$image.options.linkTitle}{/if}" {if !$image}disabled{/if}>
-			</p>
-			<p{if !$image} class="cc_catG_disabled"{/if}>
 				<strong>{translate('Alternative text')}:<br></strong>
 				<input type="text" name="alt" value="{if $image.options.alt}{$image.options.alt}{/if}" {if !$image}disabled{/if}>
-
-				<strong>{translate('Subtitle')}:<br></strong>
-				<input type="text" name="position" value="{if $image.options.position}{$image.options.position}{/if}" {if !$image}disabled{/if}>
-				<strong>{translate('Heading')}:<br></strong>
-				<input type="text" name="title" value="{if $image.options.title}{$image.options.title}{/if}" {if !$image}disabled{/if}>
 			</p>
 		</div>
 		<button class="toggleWYSIWYG input_50p fc_br_bottomleft fc_gradient1 fc_gradient_hover" {if !$image}disabled{/if}>{translate('Modify description')}</button>

@@ -41,7 +41,7 @@ $(document).ready(function()
 		$.each( catGalcGalIDs, function( index, cGID )
 		{
 			var $cur	= $('#cG_cGal_' + cGID.gallery_id);
-			$cur.find('.wrp-plus').magnificPopup({
+			$cur.find('.icon-plus').magnificPopup({
 				type:		'image',
 				gallery:	{
 					enabled: true
@@ -52,15 +52,6 @@ $(document).ready(function()
 						var $t	= item.el.closest('figcaption').clone();
 						$t.children('a').remove();
 						return $t.html();
-					}
-				},
-				callbacks: {
-					open:		function()
-					{
-						/*console.log(this.contentContainer.find('.mfp-bottom-bar').height());
-						var cH	= this.contentContainer.find('.mfp-bottom-bar').height()
-							h	= $(window).height() - 1.5*cH;
-						this.currItem.img.css({maxHeight: h,marginTop: -(h/6)});*/
 					}
 				}
 			});

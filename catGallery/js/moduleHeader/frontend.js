@@ -1,4 +1,4 @@
-{**
+/**
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -14,20 +14,14 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  *   @author			Matthias Glienke
- *   @copyright			2019, Black Cat Development
- *   @link				https://blackcat-cms.org
+ *   @copyright			2014, Black Cat Development
+ *   @link				http://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
  *   @package			catGallery
  *
- *}
+ */
 
-<article class="cG_imgR{if $image.options.backColor} cG_iBColor{/if}" {if $image.options.backColor}style="background-color:#{$image.options.backColor}"{/if}>
-	<figure class="cG_imgR-IMG">
-		<figcaption class="cG_imgR-content">
-			{if $image.options.title}<h2>{$image.options.title}</h2>{/if}
-			{$image.image_content}
-		</figcaption>
-		<div style="background-image: url({$imgURL}{$image.picture})"><img src="{$imgURL}{$image.picture}" alt="{$image.options.alt}"></div>
-	</figure>
-</article>
+$(document).ready(function()
+{
+});

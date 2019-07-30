@@ -4,7 +4,6 @@
 	background:			#F2F3F4;
 	width:				100%;
 	max-width:			100%;
-	height:				calc( 90px + 12em );
 	overflow:			hidden;
 	position:			relative;
 }

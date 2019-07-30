@@ -34,16 +34,12 @@
 </script>
 
 <section id="cG_cGal_{$gallery_id}" class="cG_cGal c_960">
-	{*if $options.title}<h2>Bilder zu "{$options.title}"</h2>{/if*}
 	{foreach $images image}{if $image.published}<figure>
 		<img src="{$imgURL}{$image.picture}" alt="{$image.options.alt}">
 		<figcaption>
-			<a class="wrp-plus" href="{$image.original}" title="{$image.options.title}"></a>
+			<a class="icon-plus" href="{$image.original}" title="{$image.options.title}"></a>
 			<div class="c_960">{if $image.options.title}<h3>{$image.options.title}</h3>{/if}
-			{if $image.options.material}<div class="wrpMaterial"><strong>Material:</strong>{$image.options.material}</div>{/if}
-			{if $image.options.usage}<div class="wrpUsage"><strong>Verwendung:</strong>{$image.options.usage}</div>{/if}
-			{if $image.options.description}<div class="wrpDescription"><strong>Besonderheit:</strong>{$image.options.description}</div>{/if}
-			{if $image.image_content}<div class="wrpImageContent">{$image.image_content}</div>{/if}</div>
+			{if $image.image_content}<div class="cG_cGal_ImageContent">{$image.image_content}</div>{/if}</div>
 		</figcaption>
 	</figure>{/if}{/foreach}
 </section>

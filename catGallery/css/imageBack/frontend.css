@@ -24,12 +24,16 @@
 
 
 .cG_imageBack {
-	padding:	7em 0;
+	padding:	1em 0;
 }
 
 	.cG_imageBack figure {
 		margin:		0;
 		padding:	1em;
+	}
+	.cG_imageBack article {
+		max-width:	100%;
+		width:		100%;
 	}
 	.cG_imgC.cG_iBColor figure {
 		padding:	0;
@@ -135,11 +139,9 @@
 		position:	relative;
 	}
 		.cG_imgC figure {
-			line-height:	0;
 		}
 		.cG_imgC-content {
-			line-height:	1.3em;
-			padding:		15px;
+			padding:		1em 0;
 		}
 
 		.cG_imgC h2 {

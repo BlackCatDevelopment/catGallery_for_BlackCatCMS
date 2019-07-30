@@ -72,7 +72,6 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			'cubeRandom',
 			'block',
 			'cubeStop',
-			'cubeStopRandom',
 			'cubeHide',
 			'cubeSize',
 			'horizontal',
@@ -89,7 +88,9 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			'directionBottom',
 			'directionRight',
 			'directionLeft',
+			'cubeStopRandom',
 			'cubeSpread',
+			'cubeJelly',
 			'glassCube',
 			'glassBlock',
 			'circles',
@@ -101,8 +102,8 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			'hideBars',
 			'swapBars',
 			'swapBarsBack',
-			'swapBlocks',
-			'cut'
+			'random',
+			'randomSmart'
 		);
 
 		protected static $initOptions		= array(

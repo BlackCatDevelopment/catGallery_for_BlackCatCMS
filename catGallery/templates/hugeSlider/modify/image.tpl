@@ -42,7 +42,7 @@
 		<input type="hidden" name="gallery_id" value="{$gallery_id}" />
 		<input type="hidden" name="imgID" value="{if !$image}__image_id__{else}{$image.image_id}{/if}" />
 		<input type="hidden" name="action" value="saveIMG" />
-		<input type="hidden" name="image_options" value="alt,side" />
+		<input type="hidden" name="image_options" value="alt" />
 		<input type="hidden" name="_cat_ajax" value="1" />
 		<div class="cc_catG_left dz-details">
 			<p class="cc_catG_image">
@@ -54,11 +54,6 @@
 			<p{if !$image} class="cc_catG_disabled"{/if}>
 				<strong>{translate('Alternative text')}:<br></strong>
 				<input type="text" name="alt" value="{if $image.options.alt}{$image.options.alt}{/if}" {if !$image}disabled{/if}>
-				<strong>Bild links/rechts:<br></strong>
-				<select name="side"{if !$image}disabled{/if}>
-					<option value="right"{if $image.options.side == 'right'}selected="selected"{/if}>Rechts</option>
-					<option value="left" {if $image.options.side == 'left'}selected="selected"{/if}>Links</option>
-				</select>
 			</p>
 		</div>
 		<button class="toggleWYSIWYG input_50p fc_br_bottomleft fc_gradient1 fc_gradient_hover" {if !$image}disabled{/if}>{translate('Modify description')}</button>

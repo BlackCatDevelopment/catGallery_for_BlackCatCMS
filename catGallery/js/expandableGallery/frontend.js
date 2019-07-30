@@ -37,7 +37,7 @@ $(document).ready(function()
 				$close	= $fig.children('button.cG_eG-cancel'),
 				$imgs	= $fig.children('div').children('img'),
 				$img	= $imgs.filter(':first'),
-				iCount	= $imgs.size(),
+				iCount	= $imgs.length,
 				imgC	= 0;
 
 			$fig.append('<nav />')
