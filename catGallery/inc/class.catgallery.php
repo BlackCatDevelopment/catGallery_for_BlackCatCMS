@@ -878,7 +878,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 
 			// use HTMLPurifier to clean up the contents if enabled
 			if ( 
-				$backend->db()->get_one(
+				CAT_Helper_Page::getInstance()->db()->get_one(
 					"SELECT `value` FROM `:prefix:settings` " .
 						"WHERE `name` = 'enable_htmlpurifier' AND `value` = 'true'" )
 			)
