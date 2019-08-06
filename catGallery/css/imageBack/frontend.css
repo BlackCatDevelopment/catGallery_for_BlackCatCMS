@@ -81,6 +81,9 @@
 			border:				0 none;
 		}
 		.cG_imageBack figure > div {
+			overflow:	hidden;
+		}
+		.cG_imageBack figure > div {
 			background-size:		cover;
 			background-position:	center center;
 		}

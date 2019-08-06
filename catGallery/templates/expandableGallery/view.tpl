@@ -23,4 +23,4 @@
 	});
 </script>
 
-<section id="cG_eG_{$gallery_id}" class="cG_eG"><figure><div>{foreach $images index image}{if $image.published}<img src="{$image.thumb}" data-src="{$imgURL}{$image.picture}" class="b-lazy" alt="{$image.options.alt}">{/if}{/foreach}</div><figcaption>{$options.wysiwygContent}</figcaption><button class="cG_eG-prev inactive"></button><button class="cG_eG-next{if count($images)>1} active{else} inactive{/if}"></button><button class="cG_eG-cancel"></button><button class="cG_eG-zoom-in"></button></figure></section>
+<section id="cG_eG_{$gallery_id}" class="cG_eG"><figure><div>{foreach $images index image}{if $image.published}<img src="{$imgURL}{$image.picture}" {*src="{$image.thumb}" data-src="{$imgURL}{$image.picture}" class="b-lazy"*} alt="{$image.options.alt}">{/if}{/foreach}</div><figcaption>{$options.wysiwygContent}</figcaption><button class="cG_eG-prev inactive"></button><button class="cG_eG-next{if count($images)>1} active{else} inactive{/if}"></button><button class="cG_eG-cancel"></button><button class="cG_eG-zoom-in"></button></figure></section>

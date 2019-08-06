@@ -41,7 +41,7 @@ $(document).ready(function()
 		$.each( catGalcGalIDs, function( index, cGID )
 		{
 			var $cur	= $('#cG_cGal_' + cGID.gallery_id);
-			$cur.find('.icon-plus').magnificPopup({
+			$cur.find('.cg_cGalOpen').magnificPopup({
 				type:		'image',
 				gallery:	{
 					enabled: true

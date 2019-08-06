@@ -153,7 +153,8 @@ a.fancybox {
 	}
 	a.fancybox .icon-search:before{
 		margin-left:	-0.1em;
-		font-size:		0.8em;;
+		font-size:		0.8em;
+		padding:		0;
 	}
 	.html5_cssanimations a.fancybox .icon-search {
 		display: inline-block;

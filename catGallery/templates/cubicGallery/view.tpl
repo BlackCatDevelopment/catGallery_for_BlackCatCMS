@@ -37,7 +37,7 @@
 	{foreach $images image}{if $image.published}<figure>
 		<img src="{$imgURL}{$image.picture}" alt="{$image.options.alt}">
 		<figcaption>
-			<a class="icon-plus" href="{$image.original}" title="{$image.options.title}">+</a>
+			<a class="cg_cGalOpen" href="{$image.original}" title="{$image.options.title}">+</a>
 			<div class="c_960">{if $image.options.title}<h3>{$image.options.title}</h3>{/if}
 			{if $image.image_content}<div class="cG_cGal_ImageContent">{$image.image_content}</div>{/if}</div>
 		</figcaption>
