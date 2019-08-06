@@ -1,21 +1,32 @@
-catGallery v2.0 for Black Cat CMS
+catGallery v2.x for Black Cat CMS
 ===============================
 
-This is a module for Black Cat CMS. It was originally published as "HeaderSlider", but as there are many new functions added it was renamed to "catGallery".
-With this module you can easily add and manage an image slider or galleries.
+This is an add-on for Black Cat CMS.
+With this add on you can add and manage different types of content that have anything to do with images.
 
-For german support please visit http://forum.blackcat-cms.org/viewtopic.php?f=21&t=257
+For german support please visit https://forum.blackcat-cms.org/viewtopic.php?f=21&t=257
 
 Adding new variants is very simple. Follow the instructions similar as described for MultiColumn:
 http://wiki.blackcat-cms.org/doku.php?id=addons:modules:multicolumn:module_variants
 
+An video based instruction will follow.
+
 ## Included variants
-- default (Skitter in default setting: https://github.com/thiagosf/SkitterSlideshow)
-- wide_gallery
+- default (skitter in default setting: https://github.com/thiagosf/SkitterSlideshow)
 - cardSlider
+- columnView
+- cubicGallery
+- expandableGallery
+- hugeSlider
+- imageBack
+- logos
+- moduleHeader
+- roundImage
+- sliderPro
+- wide_gallery
 
 ## Preferences
-BlackCat CMS 1.1
+BlackCat CMS 1.3.x
 
 ## License
 This module is distributed under the GPL.
