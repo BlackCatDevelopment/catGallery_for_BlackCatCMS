@@ -33,8 +33,8 @@
 		'pauseTime'		: {if $options.pauseTime}{$options.pauseTime}{else}5000{/if}
 	});
 </script>
-<div class="header_slider">
-	<div id="header_slider_images_{$section_id}" class="header_slider_images" style="height: {$options.resize_y}px;">
+<div class="cG_cardSlider">
+	<div id="cG_cS_IMG_{$section_id}" class="cG_cS_IMG" style="height:{$options.resize_y}px;">
 		{foreach $images image}{if $image.published}
 		<img src="{$imgURL}{$image.picture}" width="{$options.resize_x}" height="{$options.resize_y}" alt="{$image.options.alt}">
 		{/if}{/foreach}

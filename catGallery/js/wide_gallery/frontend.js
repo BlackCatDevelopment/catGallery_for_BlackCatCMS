@@ -36,7 +36,7 @@ $(document).ready(function()
 
 	var $container	= $('.wide_gallery_container').children('ul');
 		$img		= $container.find('img'),
-		imgCount	= $img.size(),
+		imgCount	= $img.length,
 		imgWidth	= $img.filter(':first').width(),
 		$nav		= $('.wide_gallery_nav').children('ul');
 

@@ -38,10 +38,10 @@
 }
 
 .wide_gallery li {
-	float: left;
-	margin: 0px;
-	padding: 0px;
-	list-style: none;
+	float:		left;
+	margin:		0px;
+	padding: 	0px;
+	list-style:	none;
 }
 
 .wide_gallery img {
@@ -85,6 +85,9 @@
 			list-style: none;
 			-o-border-radius: 50%;
 			-ms-border-radius: 50%;
+		}
+		li.wide_gallery_point::before {
+			content:	'';
 		}
 		li.wide_gallery_point.active {
 			background: #daae55;

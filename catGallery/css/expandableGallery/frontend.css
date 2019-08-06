@@ -102,7 +102,7 @@
 			opacity:			1;
 			width:				100%;
 			margin-right:		0%;
-			overflow-y:			scroll;
+			overflow-y:			auto;
 			overflow-x:			inherit;
 			-webkit-transition:	all 350ms ease-in-out;
 			-moz-transition:	all 350ms ease-in-out;
@@ -178,6 +178,7 @@
 }
 
 .cG_eG button {
+	color:				white;
 	background:			transparent;
 	border:				0 none;
 	font-size:			3em;

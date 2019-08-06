@@ -92,6 +92,13 @@ if ( $gallery_id = $val->sanitizePost( 'gallery_id','numeric' ) )
 				'success'	=> true
 			);
 			break;
+		case 'saveContent':
+				$catGallery->saveContent( $imgID, $val->sanitizePost('wysiwyg_' . $section_id, false, true  ) );
+				$ajax_return	= array(
+					'message'	=> $lang->translate( 'Content saved successfully' ),
+					'success'	=> true
+				);
+				break;
 		case 'saveIMG':
 			$image_options	= $val->sanitizePost('image_options');
 			// =========================== 

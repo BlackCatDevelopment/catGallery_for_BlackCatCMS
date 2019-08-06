@@ -25,7 +25,7 @@
 <section class="cG_cV" id="cG_cV_{$section_id}">
 	{foreach $images image}{if $image.published}<figure>
 		<div>{if $image.options.urlPage}<a href="{cmsplink($image.options.urlPage)}">{/if}<img src="{$imgURL}{$image.picture}" alt="{$image.options.alt}">{if $image.options.urlPage}</a>{/if}</div>
-		<figcaption>{if $image.options.alt}<h3>{$image.options.alt}</h3>{/if}{if $image.options.position}<strong>&bull; {$image.options.position} &bull;</strong>{/if}{if $image.image_content}<div>{$image.image_content}</div>{/if}</figcaption>
+		<figcaption>{if $image.options.title}<h3>{$image.options.title}</h3>{/if}{if $image.options.subtitle}<strong>&bull; {$image.options.subtitle} &bull;</strong>{/if}{if $image.image_content}<div>{$image.image_content}</div>{/if}</figcaption>
 		{if $image.options.urlPage}<a class="button" href="{cmsplink($image.options.urlPage)}">{$image.options.linkTitle}</a>{/if}
 	</figure>{/if}{/foreach}
 </section>

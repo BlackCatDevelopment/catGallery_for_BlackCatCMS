@@ -41,7 +41,7 @@
 		<input type="hidden" name="gallery_id" value="{$gallery_id}" />
 		<input type="hidden" name="imgID" value="{if !$image}__image_id__{else}{$image.image_id}{/if}" />
 		<input type="hidden" name="action" value="saveIMG" />
-		<input type="hidden" name="image_options" value="alt,urlPage,title,position,linkTitle" />
+		<input type="hidden" name="image_options" value="alt,urlPage,title,subtitle,linkTitle" />
 		<input type="hidden" name="_cat_ajax" value="1" />
 		<div class="cc_catG_left dz-details">
 			<p class="cc_catG_image">
@@ -66,7 +66,7 @@
 				<input type="text" name="alt" value="{if $image.options.alt}{$image.options.alt}{/if}" {if !$image}disabled{/if}>
 
 				<strong>{translate('Subtitle')}:<br></strong>
-				<input type="text" name="position" value="{if $image.options.position}{$image.options.position}{/if}" {if !$image}disabled{/if}>
+				<input type="text" name="subtitle" value="{if $image.options.subtitle}{$image.options.subtitle}{/if}" {if !$image}disabled{/if}>
 				<strong>{translate('Heading')}:<br></strong>
 				<input type="text" name="title" value="{if $image.options.title}{$image.options.title}{/if}" {if !$image}disabled{/if}>
 			</p>

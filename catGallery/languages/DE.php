@@ -126,5 +126,18 @@ $LANG = array(
 	'bottomLeft'					=> 'Unten Links',
 	'bottomCenter'					=> 'Unten Mitte',
 	'bottomRight'					=> 'Unten Rechts',
-	'Thumbnail'						=> 'Vorschau Text'
+	'Thumbnail'						=> 'Vorschau Text',
+
+// --- Skitter ---
+	'Progressbar'					=> 'Fortschrittsbalken',
+	'Label display'					=> 'Bildbeschreibung',
+	'Velocity'						=> 'Geschwindigkeit',
+	'Autoplay'						=> 'Autostart',
+	'Stop Over'						=> 'Stop bei Mouseover',
+	'Numbers'						=> 'Navigation mit Nummern',
+	'Dots'							=> 'Navigation mit Punkte',
+	'Preview with dots'				=> 'Vorschaubilder mit Punkten',
+	'Controls'						=> 'Steuerung anzeigen',
+	'Focus'							=> 'Fokus aktivieren',
+	'Thumbs'						=> 'Vorschaubilder'
 );
