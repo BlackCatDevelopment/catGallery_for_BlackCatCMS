@@ -53,8 +53,7 @@ $mod_headers = array(
 		),
 		'js' => array(
 			'/modules/cc_catgallery/js/default/dropzone.min.js',
-			'/modules/cc_catgallery/js/default/backend.js',
-			'/modules/cc_catgallery/js/expandableGallery/backend.js'
+			'/modules/cc_catgallery/js/default/backend.js'
 		),
 		'jquery' => array(
 			array(

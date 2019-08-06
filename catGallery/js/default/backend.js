@@ -61,6 +61,7 @@ $(document).ready(function()
 				$imgUL		= $catGal.children('#cc_catG_imgs_'  + cGID.gallery_id),
 				$prevTemp	= $('.prevTemp_' + cGID.gallery_id).clone().removeClass('prevTemp')[0].outerHTML,
 				$WYSIWYG	= $('#catG_WYSIWYG_' + cGID.gallery_id),
+				$cG_fOpt	= $('#cG_frontOptions_' + cGID.gallery_id),
 				$catNav		= $('#cc_catG_nav_' + cGID.gallery_id);
 
 			ceckIMG( $imgUL );
@@ -296,7 +297,7 @@ $(document).ready(function()
 				$imgUL.children('li').removeClass('cc_catG_WYSIWYG fc_gradient1');
 				$WYSIWYG.hide();
 			});
-		
+
 			dialog_form(
 				$WYSIWYG,
 				false,
@@ -310,6 +311,18 @@ $(document).ready(function()
 				{
 					var	catGal		='wysiwyg_' + cGID.section_id;
 					CKEDITOR.instances[catGal].updateElement();
+				}
+			);
+
+	
+			dialog_form(
+				$cG_fOpt,
+				false,
+				function(){},
+				'JSON',
+				function( $form, options )
+				{
+					CKEDITOR.instances['wysiwygContent_' + cGID.section_id].updateElement();
 				}
 			);
 		

@@ -457,9 +457,9 @@ img.mfp-img {
 		height:			100%;
 		width:			100%;
 		display:		block;
-		color:			white;
+		color:			white !important;
 		border:			0 none;
-		font-size:		2em;
+		font-size:		3em !important;
 		text-align:		center;
 		line-height:	182px;
 		padding:		0 !important;

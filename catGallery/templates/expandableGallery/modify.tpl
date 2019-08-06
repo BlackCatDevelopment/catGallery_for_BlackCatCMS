@@ -31,13 +31,11 @@
 		<ul class="cc_catG_nav fc_br_left" id="cc_catG_nav_{$gallery_id}">
 			<li class="active fc_br_topleft">{translate('Upload new images')}</li>
 			<li>{translate('Options for frontend')}</li>
-			<li>Beschreibung bearbeiten</li>
 			<li class="fc_br_bottomleft">{translate('Image option')}</li>
 		</ul>
 		<ul class="cc_catG_tabs fc_br_right">
 			<li class="cc_catG_tab active">{include(../default/modify/set_dropzone.tpl)}</li>
 			<li class="cc_catG_tab">{include(modify/set_frontend.tpl)}</li>
-			<li class="cc_catG_tab">{include(modify/set_content.tpl)}</li>
 			<li class="cc_catG_tab">{include(../default/modify/set_image.tpl)}</li>
 		</ul>
 		<div class="clear"></div>

@@ -41,6 +41,8 @@
 }
 	.cG_cV figure {
 		margin:					0 0 4em 0;
+		background:				white;
+		border-radius:			.4em;
 		position:				relative;
 		padding:				0 0 2em 0;
 		-webkit-box-flex:		0 calc( 320px - 2em );

@@ -92,13 +92,6 @@ if ( $gallery_id = $val->sanitizePost( 'gallery_id','numeric' ) )
 				'success'	=> true
 			);
 			break;
-		case 'saveContent':
-			$catGallery->saveContent( $imgID, $val->sanitizePost('wysiwyg_' . $section_id, false, true  ) );
-			$ajax_return	= array(
-				'message'	=> $lang->translate( 'Content saved successfully' ),
-				'success'	=> true
-			);
-			break;
 		case 'saveIMG':
 			$image_options	= $val->sanitizePost('image_options');
 			// =========================== 
@@ -141,7 +134,10 @@ if ( $gallery_id = $val->sanitizePost( 'gallery_id','numeric' ) )
 			{
 				foreach( array_filter( explode(',', $options) ) as $option )
 				{
-					if( !$catGallery->saveOptions( $option, $val->sanitizePost( $option ) )) $error = true;
+					if( $option == 'wysiwygContent' )
+						$catGallery->saveOptions( $option, $val->sanitizePost('wysiwygContent_' . $section_id, false, true) );
+					elseif( !$catGallery->saveOptions( $option, $val->sanitizePost( $option ) ))
+						$error = true;
 				}
 			}
 			$ajax_return	= array(

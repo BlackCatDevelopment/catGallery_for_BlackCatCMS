@@ -80,7 +80,8 @@ $parser_data	= array(
 	'options'			=> $catGallery->getOptions(),
 	'effects'			=> $catGallery->effects,
 	'images'			=> $catGallery->getImage(),
-	'catG_WYSIWYG'		=> 'wysiwyg_' . $section_id
+	'catG_WYSIWYG'		=> 'wysiwyg_' . $section_id,
+	'cG_wysiwygContent'	=> 'wysiwygContent_' . $section_id
 );
 
 $module_path	= '/modules/cc_catgallery/';

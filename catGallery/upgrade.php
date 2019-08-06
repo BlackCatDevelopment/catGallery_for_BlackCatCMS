@@ -94,7 +94,7 @@ if ( CAT_Helper_Addons::versionCompare( $module_version, '2.1', '<' ) )
 		'mod_cc_catgallery_images_options',
 		'mod_cc_catgallery_options' ) as $table )
 	{
-		CAT_Helper_Page::getInstance()->db()->query("ALTER TABLE `:prefix:".$table."` MODIFY `value` text");
+		CAT_Helper_Page::getInstance()->db()->query("ALTER TABLE `:prefix:".$table."` MODIFY `value` TEXT");
 	}
 
 	# Remove page_id/section_id from database where not needed
@@ -104,8 +104,10 @@ if ( CAT_Helper_Addons::versionCompare( $module_version, '2.1', '<' ) )
 		'mod_cc_catgallery_images_options',
 		'mod_cc_catgallery_options' ) as $table )
 	{
-		$getTable	= CAT_Helper_Page::getInstance()->db()->query("SELECT * FROM INFORMATION_SCHEMA.COLUMNS
- WHERE table_name = ':prefix:".$table."'");
+		$getTable	= CAT_Helper_Page::getInstance()->db()->query(
+			"SELECT * FROM INFORMATION_SCHEMA.COLUMNS " .
+				"WHERE table_name = ':prefix:".$table."'");
+
 		$attr	= array();
 		if( $getTable && $getTable->rowCount() > 0 )
 		{
@@ -228,8 +230,9 @@ if ( CAT_Helper_Addons::versionCompare( $module_version, '2.1', '<' ) )
 	# change save of variant to new automatic detected variants
 	$getInfo	= CAT_Helper_Addons::checkInfo( CAT_PATH . '/modules/cc_catgallery/' );
 
-	$getVariant	= CAT_Helper_Page::getInstance()->db()->query("SELECT `gallery_id`, `value` FROM `:prefix:mod_cc_catgallery_options`
- WHERE `name` = 'variant'");
+	$getVariant	= CAT_Helper_Page::getInstance()->db()->query(
+		"SELECT `gallery_id`, `value` FROM `:prefix:mod_cc_catgallery_options` " .
+			"WHERE `name` = 'variant'");
 	if( $getVariant && $getVariant->rowCount() > 0 )
 	{
 		while( !false == ($row = $getVariant->fetchRow() ) )
