@@ -23,10 +23,10 @@
  *}
 
 <article class="cG_imgC{if $image.options.backColor} cG_iBColor{/if}">
-	{if $image.options.title}<h2>{$image.options.title}</h2>{/if}
 	<figure>
 		<img src="{$imgURL}{$image.picture}" alt="{$image.options.alt}">
 		<figcaption class="cG_imgC-content" {if $image.options.backColor}style="background-color:#{$image.options.backColor}"{/if}>
+			{if $image.options.title}<h2>{$image.options.title}</h2>{/if}
 			{$image.image_content}
 		</figcaption>
 	</figure>

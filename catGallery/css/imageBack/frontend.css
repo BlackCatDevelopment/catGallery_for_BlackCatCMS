@@ -26,20 +26,24 @@
 .cG_imageBack {
 	padding:	1em 0;
 }
-
 	.cG_imageBack figure {
+		padding:	0;
 		margin:		0;
-		padding:	1em;
+	}
+	@media screen and (min-width: 960px) {
+		.cG_imageBack {
+			padding:	6em 0;
+		}
+		.cG_imageBack figure {
+			max-width:	960px;
+			margin:		0 auto;
+		}
 	}
 	.cG_imageBack article {
-		max-width:	100%;
-		width:		100%;
-	}
-	.cG_imgC.cG_iBColor figure {
-		padding:	0;
+		padding:	0 1em;
 	}
 	.cG_iBColor figure {
-		padding:	15px;
+		padding:	1em;
 	}
 	.cG_imageBack figure:after {
 		content:	'';
@@ -66,10 +70,6 @@
 		flex-wrap:			wrap;
 		align-items:		flex-start;
 	}
-		.cG_imgR-content {
-			line-height:	1.5em;
-		}
-		.cG_imageBack figure > a,
 		.cG_imageBack figure > div,
 		.cG_imageBack figure img {
 			max-width:			100% !important;
@@ -81,16 +81,12 @@
 			border:				0 none;
 		}
 		.cG_imageBack figure > div {
-			overflow:	hidden;
-		}
-		.cG_imageBack figure > div {
 			background-size:		cover;
 			background-position:	center center;
 		}
 		.cG_imageBack figure > div > img {
 			opacity:	0;
 		}
-		.cG_imageBack figure > a > img,
 		.cG_imageBack figure > img {
 			line-height:	1em;
 			margin:			0;
@@ -109,15 +105,15 @@
 	.cG_imageBack figure.cG_imgL-IMG > img {
 		margin:	0 1em 0 0;
 	}
-	.cG_imageBack figure.cG_imgR-IMG > a,
-	.cG_imageBack figure.cG_imgR-IMG > img {
+	.cG_imageBack figure.cG_imgR-IMG > div {
 		order:	1;
 		margin:	0 0 0 1em;
 	}
 }
 @media (min-width: 960px) {
-	.cG_imageBack figure {
-		padding:	0;
+	article.cG_imgR,
+	article.cG_imgL {
+		padding:	3em 0;
 	}
 }
 
@@ -125,41 +121,35 @@
 /* !Left */
 /*
  */
+@media (min-width: 768px) {
 	.cG_imgL-content {
 		padding:	0 0 0 2em;
 	}
+}
 
  /*
 /* !Right */
 /*
  */
-
+@media (min-width: 768px) {
+	.cG_imgR-content {
+		padding:	0 2em 0 0;
+	}
+}
 /*
 /* !Center */
 /*
  */
 	.cG_imgC {
 		position:	relative;
+		padding:	4em 0 1em 0;
 	}
 		.cG_imgC figure {
+			text-align:	center;
 		}
 		.cG_imgC-content {
-			padding:		1em 0;
+			padding:		1em;
 		}
 
 		.cG_imgC h2 {
-			font-size:	1.2em;
-			padding:	1em 15px 15px 15px;
-			position:	absolute;
-			background:	none;
-		}
-		@media (min-width: 768px) {
-			.cG_imgC h2 {
-				padding:	7em 15px 15px 15px;
-				font-size:	2.4em;
-			}
-			.cG_imgC-content {
-				column-count:	2;
-				column-gap:		40px;
-			}
 		}
