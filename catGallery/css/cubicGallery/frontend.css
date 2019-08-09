@@ -405,6 +405,9 @@ img.mfp-img {
 	-ms-flex-pack:				center;
 	justify-content:			center;
 }
+.cG_cGal.cG_960 {
+	max-width:	960px;
+}
 @media screen and (min-width: 960px) {
 	.cG_cGal {
 		margin:		2em 0 0 0;

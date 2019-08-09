@@ -24,7 +24,10 @@
 
 .cG_roundImage {
 	padding:	3em 0;
-	margin: auto;
+	margin:		auto;
+}
+.cG_roundImage.cG_960 {
+	max-width:	960px;
 }
 .cG_roundImage::after {
 	content:	'';

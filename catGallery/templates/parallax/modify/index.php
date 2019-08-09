@@ -1,4 +1,5 @@
-{**
+<?php
+/**
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -14,19 +15,31 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  *   @author			Matthias Glienke
- *   @copyright			2019, Black Cat Development
- *   @link				https://blackcat-cms.org
+ *   @copyright			2014, Black Cat Development
+ *   @link				http://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
  *   @package			catGallery
  *
- *}
+ */
 
-<section id="cG_roundImage_{$section_id}" class="cG_roundImage{if $options.960grid} cG_960{/if}">
-	{foreach $images image}{if $image.published}
-	<article class="cG_rI cG_rI_{if $image.options.side}{$image.options.side}{else}right{/if}">
-<img src="{$imgURL}{$image.picture}" width="{$options.resize_x}" height="{$options.resize_y}" alt="{$image.options.alt}">
-		{if $image.image_content != ''}<div class="cG_rI_cont">{$image.image_content}</div>{/if}
-	</article>
-	{/if}{/foreach}
-</section>
+// include class.secure.php to protect this file and the whole CMS!
+if (defined('CAT_PATH')) {	
+	include(CAT_PATH.'/framework/class.secure.php'); 
+} else {
+	$oneback = "../";
+	$root = $oneback;
+	$level = 1;
+	while (($level < 10) && (!file_exists($root.'/framework/class.secure.php'))) {
+		$root .= $oneback;
+		$level += 1;
+	}
+	if (file_exists($root.'/framework/class.secure.php')) { 
+		include($root.'/framework/class.secure.php'); 
+	} else {
+		trigger_error(sprintf("[ <b>%s</b> ] Can't include class.secure.php!", $_SERVER['SCRIPT_NAME']), E_USER_ERROR);
+	}
+}
+// end include class.secure.php
+
+?>

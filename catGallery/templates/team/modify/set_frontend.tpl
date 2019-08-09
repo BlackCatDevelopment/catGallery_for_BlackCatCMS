@@ -29,14 +29,11 @@
 	<input type="hidden" name="gallery_id" value="{$gallery_id}">
 	<input type="hidden" name="action" value="saveOptions">
 	<input type="hidden" name="_cat_ajax" value="1">
-	<input type="hidden" name="options" value="960grid">
+	<input type="hidden" name="options" value="title">
 
-	<p class="cc_In300px">
-		<input id="960grid_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="960grid" value="1" {if $options.960grid}checked="checked" {/if}>
-		<label for="960grid_{$section_id}">{translate('Maximum width 960px')}:</label>
+	<p>	
+		<label for="title_{$section_id}" class="cc_In100px">{translate('Title')}:</label>
+		<input id="title_{$section_id}" type="text" class="cc_In300px" name="title" value="{if $options.title}{$options.title}{/if}" placeholder="{translate("e.g. Our team")}"><br>
 	</p><br>
-	<span class="cc_In300px">Name der Galerie:</span>
-	<input type="text" class="cc_In100px" name="title" value="{if $options.title}{$options.title}{/if}"><br>
-
 	<input type="submit" name="speichern" value="{translate('Save')}">
 </form>

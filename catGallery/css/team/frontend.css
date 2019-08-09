@@ -1,0 +1,112 @@
+/**
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 3 of the License, or (at
+ *   your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful, but
+ *   WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ *   General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, see <http://www.gnu.org/licenses/>.
+ *
+ *   @author			Matthias Glienke
+ *   @copyright			2014, Black Cat Development
+ *   @link				http://blackcat-cms.org
+ *   @license			http://www.gnu.org/licenses/gpl.html
+ *   @category			CAT_Modules
+ *   @package			multiColumn
+ *
+ */
+
+.cG_Team {
+	margin:						4em 1em;
+	position:					relative;
+	display:					-webkit-box;
+	display:					-moz-box;
+	display:					-o-flexbox;
+	display:					-ms-flexbox;
+	display:					flex;
+	-moz-box-wrap:				wrap;
+	-webkit-box-wrap:			wrap;
+	-webkit-flex-wrap:			wrap;
+	-ms-flexbox-wrap:			wrap;
+	-ms-flex-wrap:				wrap;
+	flex-wrap:					wrap;
+	-webkit-box-pack:			justify;
+	-webkit-justify-content:	space-between;
+	-moz-box-pack:				justify;
+	-ms-flex-pack:				justify;
+	justify-content:			space-between;
+}
+	.cG_Team figure {
+		margin:						0;
+		padding:					0;
+		border:						1px solid #ffffff;
+		-webkit-box-flex:			0;
+		-webkit-flex:				0 0 100%;
+		-ms-flex:					0 0 100%;
+		flex:						0 0 100%;
+	}
+	.cG_Team figure:hover {
+		z-index:	2;
+	}
+		.cG_Team figure img {
+			display:	block;
+			margin:		1em auto;
+		}
+
+		.position {
+			display:		inline-block;
+			padding:		.4em 0 1em 0;
+			text-align:		left;
+			font-weight:	400;
+			font-size:		1.2em;
+		}
+		.cG_mitInfo {
+			padding:		.1em .5em;
+			margin:			.6em 0;
+			border-left:	1px solid #282a2e;
+			text-align:		left;
+			color:			#5b6268;
+		}
+		.cG_Team figure > span a {
+			border:	0 !important;
+		}
+
+@media (min-width: 768px) {
+		.cG_Team figure {
+			background:			white;
+			padding-bottom:		2em;
+			-webkit-box-flex:	0;
+			-webkit-flex:		0 0 calc(33% - 2em);
+			-ms-flex:			0 0 calc(33% - 2em);
+			flex:				0 0 calc(33% - 2em);
+		}
+		.cG_Team h2 {
+			-webkit-box-flex:	0;
+			-webkit-flex:		0 0 100%;
+			-ms-flex:			0 0 100%;
+			flex:				0 0 100%;
+		}
+		.cG_Team figure:nth-child(2),
+		.cG_Team figure:nth-child(3) {
+			-webkit-box-flex:	0;
+			-webkit-flex:		0 0 calc(50% - 2em);
+			-ms-flex:			0 0 calc(50% - 2em);
+			flex:				0 0 calc(50% - 2em);
+		}
+			.cG_mitInfo {
+				padding:		.1em 1.5em;
+				margin:			.6em 0 1.2em 0;
+			}
+}
+@media (min-width: 960px) {
+	.cG_Team {
+		margin:		4em auto;
+		max-width:	960px;
+	}
+}

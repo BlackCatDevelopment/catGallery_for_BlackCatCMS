@@ -14,14 +14,14 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  *   @author			Matthias Glienke
- *   @copyright			2019, Black Cat Development
- *   @link				https://blackcat-cms.org
+ *   @copyright			2014, Black Cat Development
+ *   @link				http://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
  *   @package			catGallery
  *
  *}
- 
+
 {include(../default/modify/javascript.tpl)}
 
 <div class="cc_catG_form" id="cc_catG_{$gallery_id}">
@@ -40,7 +40,6 @@
 		</ul>
 		<div class="clear"></div>
 	</div>
-	<h2 class="fc_gradient_red center"><br>{translate('For perfect result set height and width in image option to the same value.')}<br><br></h2>
 	<p class="catG_IMG_y">{translate('Existing images')}</p>
 	<p class="catG_IMG_n">{translate('No images available')}</p>
 	<ul id="cc_catG_imgs_{$gallery_id}" class="cc_catG_imgs">

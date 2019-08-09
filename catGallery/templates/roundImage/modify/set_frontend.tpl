@@ -1,5 +1,4 @@
-<?php
-/**
+{**
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -21,28 +20,21 @@
  *   @category			CAT_Modules
  *   @package			catGallery
  *
- */
+ *}
 
-// include class.secure.php to protect this file and the whole CMS!
-if (defined('CAT_PATH')) {	
-	include(CAT_PATH.'/framework/class.secure.php'); 
-} else {
-	$oneback = "../";
-	$root = $oneback;
-	$level = 1;
-	while (($level < 10) && (!file_exists($root.'/framework/class.secure.php'))) {
-		$root .= $oneback;
-		$level += 1;
-	}
-	if (file_exists($root.'/framework/class.secure.php')) { 
-		include($root.'/framework/class.secure.php'); 
-	} else {
-		trigger_error(sprintf("[ <b>%s</b> ] Can't include class.secure.php!", $_SERVER['SCRIPT_NAME']), E_USER_ERROR);
-	}
-}
-// end include class.secure.php
 
-// list of all pages for dropdown, sorted by parent->child
-$parser_data['pages']	= CAT_Helper_ListBuilder::sort(CAT_Helper_Page::getPages(CAT_Backend::isBackend()),0);
+<form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" class="ajaxForm">
+	<input type="hidden" name="page_id" value="{$page_id}">
+	<input type="hidden" name="section_id" value="{$section_id}">
+	<input type="hidden" name="gallery_id" value="{$gallery_id}">
+	<input type="hidden" name="action" value="saveOptions">
+	<input type="hidden" name="_cat_ajax" value="1">
+	<input type="hidden" name="options" value="960grid">
 
-?>
+	<p class="cc_In300px">
+		<input id="960grid_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="960grid" value="1" {if $options.960grid}checked="checked" {/if}>
+		<label for="960grid_{$section_id}">{translate('Maximum width 960px')}:</label>
+	</p><br>
+
+	<input type="submit" name="speichern" value="{translate('Save')}">
+</form>
