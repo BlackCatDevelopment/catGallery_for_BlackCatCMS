@@ -14,8 +14,8 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  *   @author			Matthias Glienke
- *   @copyright			2014, Black Cat Development
- *   @link				http://blackcat-cms.org
+ *   @copyright			2019, Black Cat Development
+ *   @link				https://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
  *   @package			catGallery
@@ -38,14 +38,11 @@
 		margin:					0;
 	}
 		.cG_mH figcaption {
-			width:		1000px;
 			margin:		0em auto;
 			padding:	2em 0 5em 0;
 		}
 			.cG_mH figcaption > * {
 				margin:		.2em 0;
-/*				padding:	1em;
-				background:	rgba(255, 255, 255, .9);*/
 			}
 
 			.cG_mH.cG_mHdarkMode figcaption > * {
@@ -53,7 +50,9 @@
 				text-shadow:	0 0 .1em black;
 			}
 			.cG_mH h1 {
-				font-weight: 400;
+				padding-left:	.25em;
+				padding-right:	.25em;
+				font-weight:	100;
 			}
 
 			.cG_mH figcaption p:nth-child(2) {
@@ -77,38 +76,89 @@
 			transition:					all .5s ease-in;
 		}
 
+@media (min-width: 960px) {
+	.cG_mH figcaption {
+		max-width:	960px;
+	}
+	.cG_mH figcaption h1 {
+		padding-left:	0;
+		padding-right:	0;
+	}
+}
+
 
 .cG_mH_Info {
-	padding:	2em 0;
+	padding:	2em 1em;
 	background:	rgba(020, 150, 221, .2);
 	color:		black;
 }
 	.cG_mH_Info > div {
-		width:	1000px;
 		margin:	2em auto;
 	}
+@media (min-width: 960px) {
+	.cG_mH_Info {
+		padding:	2em 0;
+	}
+		.cG_mH_Info > div {
+			max-width:	960px;
+		}
+}
 	.cG_mH_Info img {
 		margin:	0;
 	}
 	.cG_mH_Info dl {
-		display:		-webkit-box;
-		display:		-moz-box;
-		display:		-o-flexbox;
-		display:		-ms-flexbox;
-		display:		flex;
-		flex-wrap:		wrap;
-		padding:		2em 0 1em 0;
-		color:			rgba(040, 042, 046, .8);
+		display:					-webkit-box;
+		display:					-moz-box;
+		display:					-o-flexbox;
+		display:					-ms-flexbox;
+		display:					flex;
+		-moz-box-wrap:				wrap;
+		-webkit-box-wrap:			wrap;
+		-webkit-flex-wrap:			wrap;
+		-ms-flexbox-wrap:			wrap;
+		-ms-flex-wrap:				wrap;
+		flex-wrap:					wrap;
+		-webkit-box-pack:			justify;
+		-webkit-justify-content:	space-between;
+		-moz-box-pack:				justify;
+		-ms-flex-pack:				justify;
+		justify-content:			space-between;
+		padding:					0;
+		color:						rgba(040, 042, 046, .8);
 	}
 		.cG_mH_Info dt {
-			font-weight:	700;
-			flex:			0 1 250px;
+			font-weight:		700;
+			-webkit-box-flex:	1;
+			-webkit-flex:		1 1 50%;
+			-ms-flex:			1 1 50%;
+			flex:				1 1 50%;
 		}
 			.cG_mH_Info dt::after { 
 				content: ": "; 
 			}
 		.cG_mH_Info dd {
-			order:		10;
-			flex:		0 1 250px;
-			padding:	0 3em 0 0;
+			text-align:			right;
+			padding:			0 1em 0 0;
+			-webkit-box-flex:	1;
+			-webkit-flex:		1 1 50%;
+			-ms-flex:			1 1 50%;
+			flex:				1 1 50%;
 		}
+
+@media (min-width: 760px) {
+	.cG_mH_Info dl {
+		padding:	2em 0 1em 0;
+	}
+	.cG_mH_Info dd,
+	.cG_mH_Info dt {
+		text-align:			left;
+		padding:			0 2em 0 0;
+		-webkit-box-flex:	1;
+		-webkit-flex:		1 1 25%;
+		-ms-flex:			1 1 25%;
+		flex:				1 1 25%;
+	}
+	.cG_mH_Info dd {
+		order:		10;
+	}
+}

@@ -14,11 +14,11 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  *   @author			Matthias Glienke
- *   @copyright			2014, Black Cat Development
- *   @link				http://blackcat-cms.org
+ *   @copyright			2019, Black Cat Development
+ *   @link				https://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
- *   @package			multiColumn
+ *   @package			catGallery
  *
  */
 
@@ -77,7 +77,8 @@
 			border:	0 !important;
 		}
 
-@media (min-width: 768px) {
+
+@media (min-width: 700px) {
 		.cG_Team figure {
 			background:			white;
 			padding-bottom:		2em;

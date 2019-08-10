@@ -14,8 +14,8 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  *   @author			Matthias Glienke
- *   @copyright			2014, Black Cat Development
- *   @link				http://blackcat-cms.org
+ *   @copyright			2019, Black Cat Development
+ *   @link				https://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
  *   @package			catGallery
@@ -26,7 +26,7 @@
 </script>*}
 
 <section id="cG_mH_{$section_id}" class="cG_mH{if $options.darkmode} cG_mHdarkMode{/if}">
-	{foreach $images image}{if $image.published}<figure style="height:calc( 6em + {$options.resize_y}px);background-image:url({$imgURL}{$image.picture});">
+	{foreach $images image}{if $image.published}<figure style="background-image:url({$imgURL}{$image.picture});">
 		<figcaption>
 			<h1>{$options.moduleName}</h1>
 			{$image.image_content}
@@ -34,7 +34,7 @@
 		<img src="{$imgURL}{$image.picture}" width="{$options.resize_x}" alt="{$image.options.alt}">
 	</figure>{/if}{/foreach}
 	{if $options.moduleName && $options.plattform}<aside class="cG_mH_Info">
-		<div class="c_1000">
+		<div>
 			<h3>{if $options.icon}<img src="{cat_url}/media/moduleHeader/{$options.icon}" alt="{$options.moduleName}" width="32" height="32" > {else}<span class="icon-module"></span>{/if}{$options.moduleName}</h3>
 			<p>{$options.einsatz}</p>
 			<dl>

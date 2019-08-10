@@ -7,7 +7,7 @@
  * @version			see info.php of this module
  * @author			Matthias Glienke, creativecat
  * @copyright		2013, Black Cat Development
- * @link			http://blackcat-cms.org
+ * @link			https://blackcat-cms.org
  * @license			http://www.gnu.org/licenses/gpl.html
  *
  *}

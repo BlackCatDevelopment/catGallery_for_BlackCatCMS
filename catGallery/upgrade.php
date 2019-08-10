@@ -19,7 +19,7 @@
  *   @link				https://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
- *   @package			catgallery
+ *   @package			catGallery
  *
  */
 
