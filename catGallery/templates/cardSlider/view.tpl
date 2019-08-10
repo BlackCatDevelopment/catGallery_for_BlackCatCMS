@@ -29,14 +29,9 @@
 	cardSlider.push(
 	\{
 		'section_id'	: {$section_id},
-		'animSpeed'		: {if $options.animSpeed}{$options.animSpeed}{else}500{/if},
 		'pauseTime'		: {if $options.pauseTime}{$options.pauseTime}{else}5000{/if}
 	});
 </script>
-<div class="cG_cardSlider">
-	<div id="cG_cS_IMG_{$section_id}" class="cG_cS_IMG" style="height:{$options.resize_y}px;">
-		{foreach $images image}{if $image.published}
-		<img src="{$imgURL}{$image.picture}" width="{$options.resize_x}" height="{$options.resize_y}" alt="{$image.options.alt}">
-		{/if}{/foreach}
-	</div>
-</div>
+<section id="cG_cardS_{$section_id}" class="cG_cardSlider" style="height:{$options.resize_y}px;">
+		{foreach $images image}{if $image.published}<img src="{$imgURL}{$image.picture}" width="{$options.resize_x}" height="{$options.resize_y}" alt="{$image.options.alt}" class="cG_r{rand(1,6)}">{/if}{/foreach}
+</section>

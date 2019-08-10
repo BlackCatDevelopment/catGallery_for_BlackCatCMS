@@ -1,7 +1,33 @@
-if(!$.fn.cardSlider){(function($){$.fn.cardSlider=function(options){var defaults={duration_change:800,duration:6000};var options=$.extend(defaults,options);return this.each(function(){$cur=$(this);var w=$cur.find('img:last').outerWidth();$cur.css({width:w});function set_zindex($cur){var zahler=10;$cur.find('img').each(function(){$(this).css({zIndex:zahler});zahler++;});}
-function switchCards($cur){var $cur_img=$cur.find('img:last');var h=$cur_img.outerHeight();$cur_img.animate({top:-h-20+'px'},options.duration_change,function(){$cur_img.css({zIndex:9});$cur.find('img:first').before($cur_img);$cur_img.animate({top:'-10px'},options.duration_change+300);});set_zindex($cur);}
-var zahler=10;$cur.find('img').each(function(){var angle=Math.round(Math.random()*6)-3;$(this).attr('style','zIndex: zahler;transform:rotate('+angle+'deg); -ms-transform:rotate('+angle+'deg); -moz-transform:rotate('+angle+'deg); -webkit-transform:rotate('+angle+'deg); -o-transform:rotate('+angle+'deg); -moz-box-shadow: 0px 0px 12px #33383E; -webkit-box-shadow: 0px 0px 12px #33383E; box-shadow: 0px 0px 12px #33383E;');zahler++;});setInterval(function(){switchCards($cur);},options.duration);});}})(jQuery);}
+if (!$.fn.cardSlider) {
+    (function($) {
+        $.fn.cardSlider = function(options) {
+            var defaults = {
+                duration: 6000
+            };
+            var options = $.extend(defaults, options);
+            return this.each(function() {
+                $cur	= $(this),
+                $imgs	= $cur.find('img');
+
+				setInterval(function(){
+					$cur.children('img:last').addClass('up');
+					setTimeout(function(){
+						$cur.prepend($cur.children('img:last'));
+						setTimeout(function(){$cur.children('img:first').removeClass('up cG_r1 cG_r2 cG_r3 cG_r4 cG_r5 cG_r6').addClass('cG_r' + (Math.round(Math.random() * 6)));},5);
+					}, 650);
+				},options.duration);
+            });
+        }
+    })(jQuery);
+}
 $(document).ready(function()
-{if(typeof cardSlider!=='undefined'&&typeof cardSliderLoad==='undefined')
-{cardSliderLoad=true;$.each(cardSlider,function(index,cardSliderID)
-{$("#cG_cS_IMG_"+cardSliderID.section_id).cardSlider({duration_change:cardSliderID.animSpeed,duration:cardSliderID.pauseTime});});}});
+{
+	if(typeof cardSlider!=='undefined'&&typeof cardSliderLoad==='undefined')
+	{
+		cardSliderLoad=true;
+		$.each(cardSlider,function(index,cS_ID)
+		{
+			$("#cG_cardS_"+cS_ID.section_id).cardSlider({duration:cS_ID.pauseTime});
+		});
+	}
+});

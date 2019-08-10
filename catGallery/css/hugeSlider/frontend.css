@@ -25,10 +25,12 @@
 .cG_hS {
 	padding:	0;
 	clear:		both;
-	height:		40vh;
-	min-height:	400px;
 	width:		100%;
 	overflow:	hidden;
+	padding:				0;
+	clear:					both;
+	position:				relative;
+	z-index:				100;
 }
 
 .cG_hS::after {
@@ -37,12 +39,6 @@
 	display:	block;
 }
 
-	.cG_hS {
-		padding:				0;
-		clear:					both;
-		position:				relative;
-		z-index:				100;
-	}
 	.cG_hS h1 {
 		font-size:		5em;
 		font-size:		9vh;
@@ -58,7 +54,10 @@
 		color:			white;
 		text-shadow:	0 0 .1em rgba(0,0,0, 1.000);
 	}
-
+	.cG_hS p {
+		max-width:	960px;
+		margin:		.6em auto;
+	}
 		.cG_hS figure {
 			display:				none;
 			text-align:				center;

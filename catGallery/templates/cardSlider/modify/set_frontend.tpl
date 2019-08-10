@@ -29,11 +29,10 @@
 	<input type="hidden" name="gallery_id" value="{$gallery_id}" />
 	<input type="hidden" name="action" value="saveOptions" />
 	<input type="hidden" name="_cat_ajax" value="1" />
-	<input type="hidden" name="options" value="random,animSpeed,pauseTime" />
+	<input type="hidden" name="options" value="random,pauseTime" />
 	<span class="cc_In200px">{translate('Time until animation')}:</span>
 	<input type="text" class="cc_In100px" name="pauseTime" value="{if $options.pauseTime}{$options.pauseTime}{else}8000{/if}" /> ms<br/>
-	<span class="cc_In200px">{translate('Time for animation')}:</span>
-	<input type="text" class="cc_In100px" name="animSpeed" value="{if $options.animSpeed}{$options.animSpeed}{else}3000{/if}" /> ms<br/>
+
 	<p class="cc_In300px">
 		<input id="random_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="random" value="1" {if $options.random}checked="checked" {/if}/>
 		<label for="random_{$section_id}">{translate('Show images by chance')}:</label>

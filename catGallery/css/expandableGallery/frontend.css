@@ -169,6 +169,11 @@
 	-o-transition:				all 350ms ease-in-out;
 	-ms-transition:				all 350ms ease-in-out;
 	transition:					all 350ms ease-in-out;
+	-webkit-box-shadow:			black 0 0 .25em;
+	-moz-box-shadow:			black 0 0 .25em;
+	-o-box-shadow:				black 0 0 .25em;
+	-ms-box-shadow:				black 0 0 .25em;
+	box-shadow:					black 0 0 .25em;
 }
 .cG_eG nav a.active {
 	background:	rgba(242, 243, 244, 1.000);
