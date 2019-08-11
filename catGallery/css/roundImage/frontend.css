@@ -23,7 +23,7 @@
  */
 
 .cG_roundImage {
-	padding:	3em 0;
+	padding:	3em 1em;
 	margin:		auto;
 }
 .cG_roundImage.cG_960 {
@@ -54,6 +54,9 @@
 
 
 @media screen and (min-width:480px) {
+	.cG_roundImage {
+	padding:	3em 0;
+	}
 	.cG_rI {
 		padding:	3em 0;
 		clear:		both;
@@ -73,7 +76,8 @@
 		}
 }
 
-@media screen and (min-width:1024px) {
+@media screen and (min-width:960px) {
+
 	.cG_rI img {
 		max-width:	auto;
 	}

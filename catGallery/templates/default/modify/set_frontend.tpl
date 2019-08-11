@@ -31,7 +31,7 @@
 	<input type="hidden" name="_cat_ajax" value="1">
 	<input type="hidden" name="options" value="effect,animSpeed,pauseTime,random,label,progressbar,auto_play,stop_over,navigation,numbers,thumbs,controls,dots,preview,velocity,focus">
 
-	<strong>{translate('Plugin for BC 1.3. (skitter by thiagosf)')}<br><br></strong>
+	<strong>{translate('Plugin for BC 1.3 (skitter by thiagosf)')}<br><br></strong>
 
 	<p>	
 		<label for="effect_{$section_id}" class="cc_In300px">{translate('Animation')}:</label>

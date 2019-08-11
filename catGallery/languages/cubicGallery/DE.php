@@ -1,4 +1,5 @@
-{**
+<?php
+/**
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -20,19 +21,27 @@
  *   @category			CAT_Modules
  *   @package			catGallery
  *
- *}
+ */
 
-<div class="catG_IMG_options">
-	<p class="drag_corner icon-resize" title="{translate('Reorder image')}"></p>
-	<p class="cG_icon-feed cG_publish{if $image.published} active{/if}" title="{translate('Publish this image')}"></p>
-	<div class="cc_catG_del">
-		<span class="icon-remove" title="{translate('Delete this image')}"></span>
-		<p class="fc_br_right fc_shadow_small">
-			<span class="cc_catG_del_res">{translate('Keep it!')}</span>
-			<strong> | </strong>
-			<span class="cc_catG_del_conf">{translate('Confirm delete')}</span>
-		</p>
-	</div>
-	{*<p class="icon-eye"></p>
-	<p class="icon-scissors"></p>*}
-</div>
+if (defined('CAT_PATH')) {	
+	include(CAT_PATH.'/framework/class.secure.php'); 
+} else {
+	$oneback = "../";
+	$root = $oneback;
+	$level = 1;
+	while (($level < 10) && (!file_exists($root.'/framework/class.secure.php'))) {
+		$root .= $oneback;
+		$level += 1;
+	}
+	if (file_exists($root.'/framework/class.secure.php')) { 
+		include($root.'/framework/class.secure.php'); 
+	} else {
+		trigger_error(sprintf("[ <b>%s</b> ] Can't include class.secure.php!", $_SERVER['SCRIPT_NAME']), E_USER_ERROR);
+	}
+}
+
+
+$LANG	= array(
+	'Image title'	=> 'Titel des Bildes',
+	'Gallery name'	=> 'Name der Galerie'
+);

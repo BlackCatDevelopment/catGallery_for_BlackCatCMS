@@ -37,13 +37,13 @@
 				<img data-dz-thumbnail="" src="{$image.thumb}" width="auto" height="120" ><br>
 			</p>
 			<p class="dz-filename">
-				<strong>{translate('Name of image')}: </strong><span data-dz-name="">{$image.picture}</span>
+				<strong>{translate('Name image')}: </strong><span data-dz-name="">{$image.picture}</span>
 			</p>
 			<p{if !$image} class="cc_catG_disabled"{/if}>
-				<strong>{translate('Alternative text')}:<br></strong>
-				<input type="text" name="alt" value="{if $image.options.alt}{$image.options.alt}{/if}" {if !$image}disabled{/if}>
-				<strong>Titel:<br></strong>
-				<input type="text" name="title" value="{if $image.options.title}{$image.options.title}{/if}" {if !$image}disabled{/if}>
+				<label for="alt_{if !$image}__image_id__{else}{$image.image_id}{/if}">{translate('Alternative text')}:</label>
+				<input id="alt_{if !$image}__image_id__{else}{$image.image_id}{/if}" type="text" name="alt" value="{if $image.options.alt}{$image.options.alt}{/if}" {if !$image}disabled{/if}>
+				<label for="title_{if !$image}__image_id__{else}{$image.image_id}{/if}">{translate('Image title')}:</label>
+				<input id="title_{if !$image}__image_id__{else}{$image.image_id}{/if}" type="text" name="title" value="{if $image.options.title}{$image.options.title}{/if}" {if !$image}disabled{/if}>
 			</p>
 		</div>
 		<input type="submit" class="input_100p fc_br_bottom" value="{translate('Save image')}" {if !$image}disabled{/if}>

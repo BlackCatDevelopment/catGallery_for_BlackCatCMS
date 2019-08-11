@@ -1,4 +1,5 @@
-{**
+<?php
+/**
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -20,15 +21,26 @@
  *   @category			CAT_Modules
  *   @package			catGallery
  *
- *}
+ */
 
-<form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" id="catG_eG_WYSIWYG_{$gallery_id}">
-	<input type="hidden" name="page_id" value="{$page_id}" />
-	<input type="hidden" name="section_id" value="{$section_id}" />
-	<input type="hidden" name="gallery_id" value="{$gallery_id}" />
-	<input type="hidden" name="imgID" value="{$fakeIMG}" />
-	<input type="hidden" name="action" value="saveContent" />
-	<input type="hidden" name="_cat_ajax" value="1" />
-	{show_wysiwyg_editor($catG_WYSIWYG,$catG_WYSIWYG,$content,'100%','100px')}
-	<input type="submit" value="{translate('Save')}">
-</form>
+if (defined('CAT_PATH')) {	
+	include(CAT_PATH.'/framework/class.secure.php'); 
+} else {
+	$oneback = "../";
+	$root = $oneback;
+	$level = 1;
+	while (($level < 10) && (!file_exists($root.'/framework/class.secure.php'))) {
+		$root .= $oneback;
+		$level += 1;
+	}
+	if (file_exists($root.'/framework/class.secure.php')) { 
+		include($root.'/framework/class.secure.php'); 
+	} else {
+		trigger_error(sprintf("[ <b>%s</b> ] Can't include class.secure.php!", $_SERVER['SCRIPT_NAME']), E_USER_ERROR);
+	}
+}
+
+
+$LANG	= array(
+	'Pause time'	=> 'Zeit der Pause'
+);

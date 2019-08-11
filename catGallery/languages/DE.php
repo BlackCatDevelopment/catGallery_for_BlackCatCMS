@@ -55,10 +55,10 @@ $LANG = array(
     'Kind of animation'				=> 'Art der Animation',
     'No effect selected...'			=> 'Kein Effekt ausgew&auml;lt',
     'Time until animation'			=> 'Zeit zwischen der Animation',
-    'Time for animation'			=> 'Animationsgeschwindigkeit',
+    'Animation speed'				=> 'Animationsgeschwindigkeit',
     'Width of label (Set to 0 for no labels)'
     								=> 'Breite des Labels (0 für keine Labels)',
-    'Show images by chance'			=> 'Bilderreihenfolge zuf&auml;llig',
+    'Show pictures randomly'		=> 'Bilderreihenfolge zuf&auml;llig',
     'Image option'					=> 'Bild Optionen',
     'Adjust horizontal'				=> 'Breite einstellen',
     'Adjust vertical'				=> 'H&ouml;he einstellen',
@@ -70,7 +70,7 @@ $LANG = array(
     'Existing images'				=> 'Vorhandene Bilder',
     'Replace image'					=> 'Bild ersetzen',
     'Delete this image'				=> 'Dieses Bild löschen',
-    'Name of image'					=> 'Bildname',
+    'Name image'					=> 'Bildname',
     'Alternative text'				=> 'Alternativer Text',
     'Description for Image'			=> 'Bildbeschreibung',
     'No images available'			=> 'Keine Bilder vorhanden',
@@ -85,8 +85,8 @@ $LANG = array(
 	'Image reordered successfully'	=> 'Bilder erfolgreich umsortiert',
 	'Reorder failed'				=> 'Umsortieren fehlgeschlagen',
 	'Delete this image'				=> 'Dieses Bild l&ouml;schen',
-	'Keep it!'						=> 'Bild behalten',
-	'Confirm delete'				=> 'Bild endgültig löschen',
+	'Keep this image'				=> 'Bild behalten',
+	'Confirm delete'				=> 'Endgültig löschen',
 	'No images to upload'			=> 'Keine Bilder zum Upload vorhanden',
 	'Image uploaded successfully!'	=> 'Bild erfolgreich hochgeladen',
 	'Image deleted successfully!'	=> 'Bild erfolgreich gel&ouml;scht',
@@ -98,37 +98,10 @@ $LANG = array(
 	'Variant saved successfully!'	=> 'Variante erfolgreich gespeichert',
 	'You sent an invalid ID'		=> 'Es wurde keine gültige ID übermittelt.',
 	'Publish this image'			=> 'Dieses Bild freigeben',
-// --- Slider-Pro ---
-	'Slider-Pro options'			=> 'Slider-Pro Optionen',
-	'Picture width'					=> 'Bildbreite',
-	'Picture height'				=> 'Bildh&ouml;he',
-	'Arrows'						=> 'Pfeile',
-	'Picture Caption'				=> 'Bildunterschrift',
-	'Alternative Text'				=> 'Bildersatztext',
-	'Text Layer Content'			=> 'Textebene Inhalt',
-	'Text Layer Color'				=> 'Textebene Hintergrund',
-	'white'							=> 'Hell',
-	'black'							=> 'Dunkel',
-	'Text Layer Rounded'			=> 'Textebene abgerundet',
-	'Text Layer Padding'			=> 'Textebene Textabstand',
-	'Text Layer Width'				=> 'Textebene Breite',
-	'Text Layer Height'				=> 'Textebene H&ouml;he',
-	
-	'Text Layer Offset Horizontal'	=> 'Abstand (horizontal) der Textebene',
-	'Text Layer Offset Vertical'	=> 'Abstand (vertikal) der Textebene',
-	'Text Layer Position'			=> 'Position der Textebene',
-	'topLeft'						=> 'Oben Links',
-	'topCenter'						=> 'Oben Mitte',
-	'topRight'						=> 'Oben Rechts',
-	'centerLeft'					=> 'Mitte Links',
-	'centerCenter'					=> 'Mitte Mitte',
-	'centerRight'					=> 'Mitte Rechts',	
-	'bottomLeft'					=> 'Unten Links',
-	'bottomCenter'					=> 'Unten Mitte',
-	'bottomRight'					=> 'Unten Rechts',
-	'Thumbnail'						=> 'Vorschau Text',
 
-// --- Skitter ---
+
+// --- Default - Skitter ---
+	'Options for skitter'			=> 'Optionen für Skitter',
 	'Progressbar'					=> 'Fortschrittsbalken',
 	'Label display'					=> 'Bildbeschreibung',
 	'Velocity'						=> 'Geschwindigkeit',
@@ -139,5 +112,13 @@ $LANG = array(
 	'Preview with dots'				=> 'Vorschaubilder mit Punkten',
 	'Controls'						=> 'Steuerung anzeigen',
 	'Focus'							=> 'Fokus aktivieren',
-	'Thumbs'						=> 'Vorschaubilder'
+	'Thumbs'						=> 'Vorschaubilder',
+	'Plugin for BC 1.3 (skitter by thiagosf)'	=> 'Plugin f&uuml;r BC 1.3 (skitter by thiagosf)'
 );
+
+// --- Include optional language files for variants ---
+$catGallery	= new catGallery();
+$path	= CAT_Helper_Directory::sanitizePath(CAT_PATH . '/modules/' .$catGallery::$directory .'/languages/' . $catGallery->getVariant());
+
+if ( file_exists( $path ) )
+	CAT_Backend::getInstance('Pages', 'pages_modify')->lang()->addFile( LANGUAGE . '.php', $path );

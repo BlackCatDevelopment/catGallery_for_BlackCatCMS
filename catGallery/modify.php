@@ -61,9 +61,6 @@ if (defined('CAT_PATH')) {
 ##
 #}
 
-
-
-
 include_once "inc/class.catgallery.php";
 
 $catGallery	= new catGallery();

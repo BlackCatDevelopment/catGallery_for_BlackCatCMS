@@ -24,13 +24,11 @@
 
 .cG_hS {
 	padding:	0;
-	clear:		both;
 	width:		100%;
 	overflow:	hidden;
-	padding:				0;
-	clear:					both;
-	position:				relative;
-	z-index:				100;
+	padding:	0;
+	position:	relative;
+	z-index:	100;
 }
 
 .cG_hS::after {
@@ -96,7 +94,7 @@
 			@media screen and (min-width:768px) {
 				.cG_hS figcaption {
 					top:			auto;
-					bottom:			20vh;
+					bottom:			10vh;
 					padding-top:	0;
 				}	
 			}

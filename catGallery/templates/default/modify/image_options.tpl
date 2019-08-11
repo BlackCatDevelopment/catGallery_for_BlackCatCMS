@@ -28,7 +28,7 @@
 	<div class="cc_catG_del">
 		<span class="icon-remove" title="{translate('Delete this image')}"></span>
 		<p class="fc_br_right fc_shadow_small">
-			<span class="cc_catG_del_res">{translate('Keep it!')}</span>
+			<span class="cc_catG_del_res">{translate('Keep this image')}!</span>
 			<strong> | </strong>
 			<span class="cc_catG_del_conf">{translate('Confirm delete')}</span>
 		</p>

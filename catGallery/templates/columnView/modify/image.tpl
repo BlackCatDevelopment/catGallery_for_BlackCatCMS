@@ -23,18 +23,7 @@
  *}
 
 <li class="dz-preview dz-image-preview fc_border_all fc_shadow_small fc_br_all {if !$image}prevTemp prevTemp_{$gallery_id}{/if}" id="catG_{if !$image}__image_id__{else}{$image.image_id}{/if}">
-	<div class="catG_IMG_options">
-		<p class="drag_corner icon-resize" title="{translate('Reorder image')}"></p>
-		<p class="cG_icon-feed cG_publish{if $image.published} active{/if}" title="{translate('Publish this image')}"></p>
-		<div class="cc_catG_del">
-			<span class="icon-remove" title="{translate('Delete this image')}"></span>
-			<p class="fc_br_right fc_shadow_small">
-				<span class="cc_catG_del_res">{translate('Keep it!')}</span>
-				<strong> | </strong>
-				<span class="cc_catG_del_conf">{translate('Confirm delete')}</span>
-			</p>
-		</div>
-	</div>
+	{include(../../default/modify/image_options.tpl)}
 	<form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" class="ajaxForm">
 		<input type="hidden" name="page_id" value="{$page_id}" />
 		<input type="hidden" name="section_id" value="{$section_id}" />
@@ -48,27 +37,27 @@
 				<img data-dz-thumbnail="" src="{$image.thumb}" width="auto" height="120" ><br>
 			</p>
 			<p class="dz-filename">
-				<strong>{translate('Name of image')}: </strong><span data-dz-name="">{$image.picture}</span>
+				<strong>{translate('Name image')}: </strong><span data-dz-name="">{$image.picture}</span>
 			</p>
 			<p{if !$image} class="cc_catG_disabled"{/if}>
-				<strong>Verlinkte Seite:<br></strong>
-				<select name="urlPage" {if !$image}disabled{/if}>
-					<option value="">--- Kein Link ---</option>
+				<label for="urlPage_{if !$image}__image_id__{else}{$image.image_id}{/if}">{translate('Linked page')}:</label>
+				<select name="urlPage" {if !$image}disabled{/if} id="urlPage_{if !$image}__image_id__{else}{$image.image_id}{/if}">
+					<option value="">--- {translate('No link')} ---</option>
 					{foreach $pages page}
 					<option value="{$page.page_id}"{if $image.options.urlPage == $page.page_id} selected="selected"{/if}>{if $page.level > 0}{for i 0 $page.level-1}|--{/for}{/if}{$page.menu_title}</option>
 					{/foreach}
 				</select>
-				<strong>Beschriftung Button:<br></strong>
-				<input type="text" name="linkTitle" value="{if $image.options.linkTitle}{$image.options.linkTitle}{/if}" {if !$image}disabled{/if}>
+				<label for="linkTitle_{if !$image}__image_id__{else}{$image.image_id}{/if}">{translate('Button labeling')}:</label>
+				<input id="linkTitle_{if !$image}__image_id__{else}{$image.image_id}{/if}" type="text" name="linkTitle" value="{if $image.options.linkTitle}{$image.options.linkTitle}{/if}" {if !$image}disabled{/if}>
 			</p>
 			<p{if !$image} class="cc_catG_disabled"{/if}>
-				<strong>{translate('Alternative text')}:<br></strong>
-				<input type="text" name="alt" value="{if $image.options.alt}{$image.options.alt}{/if}" {if !$image}disabled{/if}>
+				<label for="alt_{if !$image}__image_id__{else}{$image.image_id}{/if}">{translate('Alternative text')}:</label>
+				<input id="alt_{if !$image}__image_id__{else}{$image.image_id}{/if}" type="text" name="alt" value="{if $image.options.alt}{$image.options.alt}{/if}" {if !$image}disabled{/if}>
 
-				<strong>{translate('Subtitle')}:<br></strong>
-				<input type="text" name="subtitle" value="{if $image.options.subtitle}{$image.options.subtitle}{/if}" {if !$image}disabled{/if}>
-				<strong>{translate('Heading')}:<br></strong>
-				<input type="text" name="title" value="{if $image.options.title}{$image.options.title}{/if}" {if !$image}disabled{/if}>
+				<label for="subtitle_{if !$image}__image_id__{else}{$image.image_id}{/if}">{translate('Subtitle')}:</label>
+				<input id="subtitle_{if !$image}__image_id__{else}{$image.image_id}{/if}" type="text" name="subtitle" value="{if $image.options.subtitle}{$image.options.subtitle}{/if}" {if !$image}disabled{/if}>
+				<label for="title_{if !$image}__image_id__{else}{$image.image_id}{/if}">{translate('Heading')}:</label>
+				<input id="title_{if !$image}__image_id__{else}{$image.image_id}{/if}" type="text" name="title" value="{if $image.options.title}{$image.options.title}{/if}" {if !$image}disabled{/if}>
 			</p>
 		</div>
 		<button class="toggleWYSIWYG input_50p fc_br_bottomleft fc_gradient1 fc_gradient_hover" {if !$image}disabled{/if}>{translate('Modify description')}</button>

@@ -23,20 +23,7 @@
  *}
 
 <li class="dz-preview dz-image-preview fc_border_all fc_shadow_small fc_br_all {if !$image}prevTemp prevTemp_{$gallery_id}{/if}" id="catG_{if !$image}__image_id__{else}{$image.image_id}{/if}">
-	<div class="catG_IMG_options">
-		<p class="drag_corner icon-resize" title="{translate('Reorder image')}"></p>
-		<p class="cG_icon-feed cG_publish{if $image.published} active{/if}" title="{translate('Publish this image')}"></p>
-		<div class="cc_catG_del">
-			<span class="icon-remove" title="{translate('Delete this image')}"></span>
-			<p class="fc_br_right fc_shadow_small">
-				<span class="cc_catG_del_res">{translate('Keep it!')}</span>
-				<strong> | </strong>
-				<span class="cc_catG_del_conf">{translate('Confirm delete')}</span>
-			</p>
-		</div>
-		{*<p class="icon-eye"></p>
-		<p class="icon-scissors"></p>*}
-	</div>
+	{include(../../default/modify/image_options.tpl)}
 	<form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" class="ajaxForm">
 		<input type="hidden" name="page_id" value="{$page_id}" />
 		<input type="hidden" name="section_id" value="{$section_id}" />
@@ -50,18 +37,18 @@
 				<img data-dz-thumbnail="" src="{$image.thumb}" width="auto" height="120" ><br>
 			</p>
 			<p class="dz-filename">
-				<strong>{translate('Name of image')}: </strong><span data-dz-name="">{$image.picture}</span>
+				<strong>{translate('Name image')}: </strong><span data-dz-name="">{$image.picture}</span>
 			</p>
 			<p{if !$image} class="cc_catG_disabled"{/if}>
 				<strong>{translate('Alternative text')}:<br></strong>
 				<input type="text" name="alt" value="{if $image.options.alt}{$image.options.alt}{/if}" {if !$image}disabled{/if}>
-				<strong>Mitarbeiter:<br></strong>
+				<strong>{translate('Team member')}:<br></strong>
 				<input type="text" name="mitarbeiter" value="{if $image.options.mitarbeiter}{$image.options.mitarbeiter}{/if}" {if !$image}disabled{/if}>
-				<strong>Position:<br></strong>
+				<strong>{translate('Position in company')}:<br></strong>
 				<input type="text" name="mitarbeiter_title" value="{if $image.options.mitarbeiter_title}{$image.options.mitarbeiter_title}{/if}" {if !$image}disabled{/if}>
-				<strong>E-Mail-Adresse:<br></strong>
+				<strong>{translate('E-Mail')}:<br></strong>
 				<input type="text" name="email" value="{if $image.options.email}{$image.options.email}{/if}" {if !$image}disabled{/if}>
-				<strong>Telefon: ( Format: 0911. 98 86 308 - XX ):<br></strong>
+				<strong>{translate('Phone')}:<br></strong>
 				<input type="text" name="telephone" value="{if $image.options.telephone}{$image.options.telephone}{/if}" {if !$image}disabled{/if}>
 			</p>
 		</div>

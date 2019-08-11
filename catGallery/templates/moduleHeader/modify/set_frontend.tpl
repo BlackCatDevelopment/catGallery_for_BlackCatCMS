@@ -38,19 +38,19 @@
 
 	<p class="cc_In300px">
 		<input id="offiziell_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="offiziell" value="1" {if $options.offiziell}checked="checked" {/if}>
-		<label for="offiziell_{$section_id}">{translate('Official module')}:</label>
+		<label for="offiziell_{$section_id}">{translate('Official addon')}:</label>
 	</p><br>
 
-	<span class="cc_In300px">{translate('Name of add on')}:</span>
+	<span class="cc_In300px">{translate('Name of addon')}:</span>
 	<input type="text" class="cc_In100px" name="moduleName" value="{if $options.moduleName}{$options.moduleName}{/if}"><br>
 
-	<span class="cc_In300px">{translate('Current version of add on')}:</span>
+	<span class="cc_In300px">{translate('Current version of addon')}:</span>
 	<input type="text" class="cc_In100px" name="version" value="{if $options.version}{$options.version}{/if}"><br>
 	<span class="cc_In300px">{translate('Minimum version of BC')}:</span>
 	<input type="text" class="cc_In100px" name="plattform" value="{if $options.plattform}{$options.plattform}{/if}"><br>
-	<span class="cc_In300px">{translate('Main author of add on')}:</span>
+	<span class="cc_In300px">{translate('Main author of addon')}:</span>
 	<input type="text" class="cc_In100px" name="main_author" value="{if $options.main_author}{$options.main_author}{/if}"><br>
-	<span class="cc_In300px">{translate('Add on icon')} (/media/moduleHeader/...):</span>
+	<span class="cc_In300px">{translate('Addon icon')} (/media/moduleHeader/...):</span>
 	<input type="text" class="cc_In100px" name="icon" value="{if $options.icon}{$options.icon}{/if}"><br>
 	<span class="cc_In300px">{translate('Where to use')}:</span>
 	<textarea class="cc_In300px" name="einsatz">{if $options.einsatz}{$options.einsatz}{/if}</textarea><br>

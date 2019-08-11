@@ -30,12 +30,14 @@
 	<input type="hidden" name="action" value="saveOptions" />
 	<input type="hidden" name="_cat_ajax" value="1" />
 	<input type="hidden" name="options" value="random,pauseTime" />
-	<span class="cc_In200px">{translate('Time until animation')}:</span>
-	<input type="text" class="cc_In100px" name="pauseTime" value="{if $options.pauseTime}{$options.pauseTime}{else}8000{/if}" /> ms<br/>
 
+	<p>	
+		<label for="pauseTime_{$section_id}" class="cc_In200px">{translate('Pause time')}:</label>
+		<input id="pauseTime_{$section_id}" type="text" class="cc_In100px" name="pauseTime" value="{if $options.pauseTime}{$options.pauseTime}{else}8000{/if}"> ms
+	</p><br>
 	<p class="cc_In300px">
 		<input id="random_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="random" value="1" {if $options.random}checked="checked" {/if}/>
-		<label for="random_{$section_id}">{translate('Show images by chance')}:</label>
+		<label for="random_{$section_id}">{translate('Show pictures randomly')}:</label>
 	</p><br/>
 	<input type="submit" name="speichern" value="{translate('Save')}" />
 </form>

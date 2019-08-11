@@ -37,7 +37,7 @@
 	</p><br>
 	<p class="cc_In200px">
 		<input id="buttons_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="buttons" value="1" {if $options.buttons}checked="checked" {/if}/>
-		<label for="buttons_{$section_id}">{translate('Buttons')}:</label>
+		<label for="buttons_{$section_id}">{translate('Show button')}:</label>
 	</p><br>
 	<p class="cc_In200px">
 		<input id="autoplay_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="autoplay" value="1" {if $options.autoplay}checked="checked" {/if}/>

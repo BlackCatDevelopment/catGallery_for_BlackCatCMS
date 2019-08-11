@@ -34,9 +34,10 @@
 	<p class="cc_In300px">
 		<input id="960grid_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="960grid" value="1" {if $options.960grid}checked="checked" {/if}>
 		<label for="960grid_{$section_id}">{translate('Maximum width 960px')}:</label>
-	</p><br>
-	<span class="cc_In300px">Name der Galerie:</span>
-	<input type="text" class="cc_In100px" name="title" value="{if $options.title}{$options.title}{/if}"><br>
-
+	</p>
+	<p>
+		<label for="title_{$section_id}" class="cc_In200px">{translate('Gallery name')}:</label>
+		<input id="title_{$section_id}" type="text" class="cc_In100px" name="title" value="{if $options.title}{$options.title}{/if}">
+	</p>
 	<input type="submit" name="speichern" value="{translate('Save')}">
 </form>

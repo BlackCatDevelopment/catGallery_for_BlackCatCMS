@@ -37,13 +37,13 @@
 	<span class="cc_In200px">{translate('Color')} (#.....):</span>
 	<input type="text" class="cc_In100px" name="color" value="{if $options.color}{$options.color}{/if}" /><br>
 
-	<span class="cc_In200px">{translate('Time until animation')}:</span>
+	<span class="cc_In200px">{translate('Pause time')}:</span>
 	<input type="text" class="cc_In100px" name="pauseTime" value="{if $options.pauseTime}{$options.pauseTime}{else}8000{/if}" /> ms<br>
-	<span class="cc_In200px">{translate('Time for animation')}:</span>
+	<span class="cc_In200px">{translate('Time animation')}:</span>
 	<input type="text" class="cc_In100px" name="animSpeed" value="{if $options.animSpeed}{$options.animSpeed}{else}3000{/if}" /> ms<br>
 	<p class="cc_In300px">
 		<input id="random_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="random" value="1" {if $options.random}checked="checked" {/if}/>
-		<label for="random_{$section_id}">{translate('Show images by chance')}:</label>
+		<label for="random_{$section_id}">{translate('Show pictures randomly')}:</label>
 	</p><br>
 	<input type="submit" name="speichern" value="{translate('Save')}" />
 </form>

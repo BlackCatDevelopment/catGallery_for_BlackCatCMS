@@ -32,7 +32,7 @@
 	<input type="hidden" name="options" value="random" />
 	<p class="cc_In300px">
 		<input id="random_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="random" value="1" {if $options.random}checked="checked" {/if}/>
-		<label for="random_{$section_id}">{translate('Show images by chance')}:</label>
+		<label for="random_{$section_id}">{translate('Show pictures randomly')}:</label>
 	</p><br/>
 	<input type="submit" name="speichern" value="{translate('Save')}" />
 </form>

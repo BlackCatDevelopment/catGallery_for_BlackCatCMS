@@ -34,16 +34,16 @@
 	<p>	
 		<label for="positionx_{$section_id}" class="cc_In100px">{translate('Position X')}:</label>
 		<select id="positionx_{$section_id}" class="cc_In300px" name="positionx">
-			<option value="left" {if $options.positionx=="left"}selected="selected"{/if}>Left</option>
-			<option value="right" {if $options.positionx=="right"}selected="selected"{/if}>Right</option>
-			<option value="center" {if $options.positionx=="center"}selected="center"{/if}>Center</option>
+			<option value="left" {if $options.positionx=="left"}selected="selected"{/if}>{translate('Left')}</option>
+			<option value="right" {if $options.positionx=="right"}selected="selected"{/if}>{translate('Right')}</option>
+			<option value="center" {if $options.positionx=="center"}selected="center"{/if}>{translate('Center')}</option>
 		</select><br>
 		
 		<label for="positiony_{$section_id}" class="cc_In100px">{translate('Position Y')}:</label>
 		<select id="positiony_{$section_id}" class="cc_In300px" name="positiony">
-			<option value="top" {if $options.positionx=="top"}selected="selected"{/if}>Top</option>
-			<option value="bottom" {if $options.positionx=="bottom"}selected="selected"{/if}>Bottom</option>
-			<option value="center" {if $options.positionx=="center"}selected="center"{/if}>Center</option>
+			<option value="top" {if $options.positionx=="top"}selected="selected"{/if}>{translate('Top')}</option>
+			<option value="bottom" {if $options.positionx=="bottom"}selected="selected"{/if}>{translate('Bottom')}</option>
+			<option value="center" {if $options.positionx=="center"}selected="center"{/if}>{translate('Center')}</option>
 		</select><br>
 		
 		<label for="height_{$section_id}" class="cc_In100px">{translate('Height')}:</label>

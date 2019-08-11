@@ -30,9 +30,8 @@
 	<input type="hidden" name="action" value="saveOptions">
 	<input type="hidden" name="_cat_ajax" value="1">
 	<input type="hidden" name="options" value="title">
-
 	<p>	
-		<label for="title_{$section_id}" class="cc_In100px">{translate('Title')}:</label>
+		<label for="title_{$section_id}" class="cc_In100px">{translate('Heading of gallery')}:</label>
 		<input id="title_{$section_id}" type="text" class="cc_In300px" name="title" value="{if $options.title}{$options.title}{/if}" placeholder="{translate("e.g. Our team")}"><br>
 	</p><br>
 	<input type="submit" name="speichern" value="{translate('Save')}">
