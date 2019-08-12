@@ -23,6 +23,7 @@
  *
  */
 
+// include class.secure.php to protect this file and the whole CMS!
 if (defined('CAT_PATH')) {	
 	include(CAT_PATH.'/framework/class.secure.php'); 
 } else {
@@ -39,13 +40,6 @@ if (defined('CAT_PATH')) {
 		trigger_error(sprintf("[ <b>%s</b> ] Can't include class.secure.php!", $_SERVER['SCRIPT_NAME']), E_USER_ERROR);
 	}
 }
+// end include class.secure.php
 
-// --- imageBack ---
-$LANG	= array(
-	'Image title'		=> 'Titel des Bildes',
-	'Background color'	=> 'Hintergrundfarbe',
-	'Place image'		=> 'Bild platzieren',
-	'Right'				=> 'Rechts',
-	'Left'				=> 'Links',
-	'Center'			=> 'Mittig'
-);
+?>

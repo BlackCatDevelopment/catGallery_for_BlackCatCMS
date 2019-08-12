@@ -51,7 +51,7 @@
 		<label for="label_{$section_id}">{translate('Label display')}:</label>
 
 		<input id="random_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="random" value="1" {if $options.random}checked="checked" {/if}/>
-		<label for="random_{$section_id}">{translate('Show images by chance')}:</label>
+		<label for="random_{$section_id}">{translate('Show pictures randomly')}:</label>
 
 		<input id="progressbar_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="progressbar" value="1" {if $options.progressbar}checked="checked" {/if}/>
 		<label for="progressbar_{$section_id}">{translate('Progressbar')}:</label>

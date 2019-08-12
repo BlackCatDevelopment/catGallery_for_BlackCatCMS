@@ -40,7 +40,7 @@ if (defined('CAT_PATH')) {
 	}
 }
 
-
+// --- hugeSlider ---
 $LANG	= array(
 	'For perfect result use in a template with full width.'	=> 'F&uuml;r das beste Ergebnis, eignet sich ein Template mit voller Breite.'
 );

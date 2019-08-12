@@ -40,7 +40,7 @@ if (defined('CAT_PATH')) {
 	}
 }
 
-
+// --- moduleHeader ---
 $LANG	= array(
 	'Dark image'				=> 'Dunkles Bild',
 	'Official addon'			=> 'Offizielles Addon',

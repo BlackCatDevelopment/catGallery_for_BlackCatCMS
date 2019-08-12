@@ -40,39 +40,14 @@ if (defined('CAT_PATH')) {
 	}
 }
 
-// --- Slider-Pro ---
+// --- recommendation ---
 $LANG = array(
-	'Slider-Pro options'			=> 'Slider-Pro Optionen',
-	'Picture width'					=> 'Bildbreite',
-	'Picture height'				=> 'Bildh&ouml;he',
-	'Arrows'						=> 'Pfeile',
-	'Picture Caption'				=> 'Bildunterschrift',
-	'Alternative Text'				=> 'Bildersatztext',
-	'Text Layer Content'			=> 'Textebene Inhalt',
-	'Text Layer Color'				=> 'Textebene Hintergrund',
-	'white'							=> 'Hell',
-	'black'							=> 'Dunkel',
-	'Text Layer Rounded'			=> 'Textebene abgerundet',
-	'Text Layer Padding'			=> 'Textebene Textabstand',
-	'Text Layer Width'				=> 'Textebene Breite',
-	'Text Layer Height'				=> 'Textebene H&ouml;he',
-	
-	'Text Layer Offset Horizontal'	=> 'Abstand (horizontal) der Textebene',
-	'Text Layer Offset Vertical'	=> 'Abstand (vertikal) der Textebene',
-	'Text Layer Position'			=> 'Position der Textebene',
-	'topLeft'						=> 'Oben Links',
-	'topCenter'						=> 'Oben Mitte',
-	'topRight'						=> 'Oben Rechts',
-	'centerLeft'					=> 'Mitte Links',
-	'centerCenter'					=> 'Mitte Mitte',
-	'centerRight'					=> 'Mitte Rechts',	
-	'bottomLeft'					=> 'Unten Links',
-	'bottomCenter'					=> 'Unten Mitte',
-	'bottomRight'					=> 'Unten Rechts',
-	'Thumbnail'						=> 'Vorschau Text',
-
-	'Show buttons'					=> 'Zeige Steuerung',
-	'fadeArrows'					=> 'Pfeile ausblenden',
-	'centerSelectedSlide'			=> 'Slide zentrieren',
-	'rightToLeft'					=> 'Von rechts nach links'
+	'Name of author'		=> 'Name des Verfassers',
+	'Position in company'	=> 'Position im Unternehmen',
+	'Company'				=> 'Firma',
+	'Heading of gallery'	=> 'Überschrift der Galerie',
+	'Image'					=> 'Bild',
+	'Pause time'			=> 'Pause zwischen Animationen',
+	'Color'					=> 'Farbe',
+	'relative to'			=> 'Relativ zu'
 );

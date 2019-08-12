@@ -40,10 +40,14 @@ if (defined('CAT_PATH')) {
 	}
 }
 
-
+// --- parallax ---
 $LANG	= array(
-	'Name of author'		=> 'Name des Autors',
-	'Position in company'	=> 'Position in Firma',
-	'Company'				=> 'Firma',
-	'Pause time'			=> 'Zeit der Pause'
+	'Position X'			=> 'Position X',
+	'Position Y'			=> 'Position Y',
+	'Right'					=> 'Rechts',
+	'Left'					=> 'Links',
+	'Bottom'				=> 'Unten',
+	'Top'					=> 'Oben',
+	'Center'				=> 'Mittig',
+	'Height'				=> 'H&ouml;he'
 );

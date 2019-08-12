@@ -40,7 +40,7 @@ if (defined('CAT_PATH')) {
 	}
 }
 
-
+// --- expandableGallery ---
 $LANG	= array(
 	'Image title'	=> 'Titel des Bildes',
 	'Description'	=> 'Beschreibung'

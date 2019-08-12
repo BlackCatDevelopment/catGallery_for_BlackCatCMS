@@ -40,7 +40,7 @@ if (defined('CAT_PATH')) {
 	}
 }
 
-
+// --- logos ---
 $LANG	= array(
 	'Image title'		=> 'Titel des Bildes',
 	'Image'				=> 'Bild',

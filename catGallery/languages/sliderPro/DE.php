@@ -72,7 +72,7 @@ $LANG = array(
 	'bottomRight'					=> 'Unten Rechts',
 	'Thumbnail'						=> 'Vorschau Text',
 
-	'Show buttons'					=> 'Zeige Steuerung',
+	'Show button'					=> 'Zeige Steuerung',
 	'fadeArrows'					=> 'Pfeile ausblenden',
 	'centerSelectedSlide'			=> 'Slide zentrieren',
 	'rightToLeft'					=> 'Von rechts nach links'

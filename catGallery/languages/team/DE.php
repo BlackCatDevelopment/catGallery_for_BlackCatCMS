@@ -40,7 +40,7 @@ if (defined('CAT_PATH')) {
 	}
 }
 
-// --- Slider-Pro ---
+// --- team ---
 $LANG = array(
 	'Team member'			=> 'Mitarbeiter',
 	'Position in company'	=> 'Position im Unternehmen',

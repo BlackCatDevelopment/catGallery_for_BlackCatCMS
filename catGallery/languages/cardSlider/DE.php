@@ -40,7 +40,7 @@ if (defined('CAT_PATH')) {
 	}
 }
 
-
+// --- cardSlider ---
 $LANG	= array(
-	'Pause time'	=> 'Zeit der Pause'
+	'Pause time'	=> 'Pause zwischen den Animationen'
 );

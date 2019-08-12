@@ -40,8 +40,9 @@ if (defined('CAT_PATH')) {
 	}
 }
 
-
+// --- cubicGallery ---
 $LANG	= array(
-	'Image title'	=> 'Titel des Bildes',
-	'Gallery name'	=> 'Name der Galerie'
+	'Image title'			=> 'Titel des Bildes',
+	'Gallery name'			=> 'Name der Galerie',
+	'Maximum width 960px'	=> 'Maximal 960px breit',
 );

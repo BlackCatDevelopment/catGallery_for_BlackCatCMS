@@ -40,10 +40,11 @@ if (defined('CAT_PATH')) {
 	}
 }
 
-// --- Slider-Pro ---
+// --- roundImage ---
 $LANG = array(
 	'Image left/right'		=> 'Bild links/rechts',
 	'Left'					=> 'links',
 	'Right'					=> 'rechts',
-	'Maximum width 960px'	=> 'Maximale Weite 960px'
+	'Maximum width 960px'	=> 'Maximale Weite 960px',
+	'For perfect result set height and width in image option to the same value.'	=> 'F&uuml;r ein gutes Ergebnis setze die H&ouml;he und Breite gleich.'
 );

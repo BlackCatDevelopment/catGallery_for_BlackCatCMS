@@ -71,7 +71,7 @@ $LANG = array(
     'Replace image'					=> 'Bild ersetzen',
     'Delete this image'				=> 'Dieses Bild löschen',
     'Name image'					=> 'Bildname',
-    'Alternative text'				=> 'Alternativer Text',
+    'Alternative text'				=> 'Bildersatztext',
     'Description for Image'			=> 'Bildbeschreibung',
     'No images available'			=> 'Keine Bilder vorhanden',
     'Width of gallery (0 for 100%)'	=> 'Breite der Galerie (0 für 100%)',
@@ -121,4 +121,14 @@ $catGallery	= new catGallery();
 $path	= CAT_Helper_Directory::sanitizePath(CAT_PATH . '/modules/' .$catGallery::$directory .'/languages/' . $catGallery->getVariant());
 
 if ( file_exists( $path ) )
-	CAT_Backend::getInstance('Pages', 'pages_modify')->lang()->addFile( LANGUAGE . '.php', $path );
+	CAT_Helper_Page::getInstance()->lang()->addFile( LANGUAGE . '.php', $path );
+/*
+
+
+
+{
+	global $lang;
+	$lang = CAT_Helper_I18n::getInstance();
+	$lang->addFile( LANGUAGE . '.php', $path );
+}*/
+?>

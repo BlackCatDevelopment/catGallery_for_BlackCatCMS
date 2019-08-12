@@ -32,7 +32,7 @@
 	<input type="hidden" name="options" value="image,color,animSpeed,pauseTime,random" />
 	<input type="hidden" name="image_options" value="alt" />
 
-	<span class="cc_In200px">{translate('Image')} (Relativ zu /media/):</span>
+	<span class="cc_In200px">{translate('Image')} ({translate('relative to')} /media/):</span>
 	<input type="text" class="cc_In100px" name="image" value="{if $options.image}{$options.image}{/if}" /><br>
 	<span class="cc_In200px">{translate('Color')} (#.....):</span>
 	<input type="text" class="cc_In100px" name="color" value="{if $options.color}{$options.color}{/if}" /><br>

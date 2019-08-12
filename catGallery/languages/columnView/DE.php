@@ -40,12 +40,10 @@ if (defined('CAT_PATH')) {
 	}
 }
 
-// --- imageBack ---
+// --- columnView ---
 $LANG	= array(
-	'Image title'		=> 'Titel des Bildes',
-	'Background color'	=> 'Hintergrundfarbe',
-	'Place image'		=> 'Bild platzieren',
-	'Right'				=> 'Rechts',
-	'Left'				=> 'Links',
-	'Center'			=> 'Mittig'
+	'Linked page'		=> 'Verlinkte Seite',
+	'Button labeling'	=> 'Beschriftung Button',
+	'Subtitle'			=> 'Untertitel',
+	'Heading'			=> 'Überschrift'
 );
