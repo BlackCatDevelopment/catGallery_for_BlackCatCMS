@@ -106,6 +106,8 @@ if ( CAT_Helper_Addons::versionCompare( $module_version, '2.1', '<' ) )
 		"ALTER TABLE `:prefix:mod_cc_catgallery` DROP FOREIGN KEY `:prefix:cG_sections`; " .
 		"ALTER TABLE `:prefix:mod_cc_catgallery` DROP INDEX `section_id`; " .
 		"ALTER TABLE `:prefix:mod_cc_catgallery` DROP COLUMN `section_id`;"
+	);
+
 	# Remove page_id/section_id from database where not needed
 	foreach ( array(
 		'mod_cc_catgallery_contents',

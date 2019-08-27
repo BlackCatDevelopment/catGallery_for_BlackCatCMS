@@ -44,7 +44,6 @@
 		});
 	});
 </script>
-{/if}
 
 <div class="skitter" id="slider_skitter_{$section_id}">
 	<ul>
@@ -58,3 +57,4 @@
 		{/if}{/foreach}
 	</ul>
 </div>
+{else}{include('view_no_image.tpl')}{/if}

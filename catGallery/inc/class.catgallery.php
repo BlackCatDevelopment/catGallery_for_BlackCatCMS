@@ -1141,9 +1141,19 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		 * @return array
 		 *
 		 **/
-		public function countImg()
+		public function countImg($pubishedOnly = true)
 		{
-			if ( isset( $this->images ) ) return count($this->images);
+			if ( isset( $this->images ) && count($this->images) > 0 )
+			{
+				$count	= 0;
+				if( $pubishedOnly )
+					foreach( $this->images as $pub )
+					{
+						$count	= $count + $pub['published'];
+					}
+				else $count	= count( $this->images );
+				return $count;
+			}
 			else return 0;
 		} // countImg()
 

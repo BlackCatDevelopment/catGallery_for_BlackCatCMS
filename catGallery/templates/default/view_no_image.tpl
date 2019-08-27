@@ -21,3 +21,5 @@
  *   @package			catGallery
  *
  *}
+ 
+ <p>{translate('No images are uploaded or published!')}</p>

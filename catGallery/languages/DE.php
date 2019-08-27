@@ -99,6 +99,10 @@ $LANG = array(
 	'You sent an invalid ID'		=> 'Es wurde keine gültige ID übermittelt.',
 	'Publish this image'			=> 'Dieses Bild freigeben',
 
+// --- Frontend ---
+	'No images are uploaded or published!'		=> 'Es wurden noch keine Bilder hochgeladen oder freigegeben!',
+
+
 
 // --- Default - Skitter ---
 	'Options for skitter'			=> 'Optionen für Skitter',
