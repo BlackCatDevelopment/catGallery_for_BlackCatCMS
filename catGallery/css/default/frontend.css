@@ -3,6 +3,10 @@
 .skitter {
 	margin-bottom:	2.5em;
 }
+.skitter img {
+	padding:	0;
+	margin:		0;
+}
 .skitter > a {
 	border:	0 none;
 }

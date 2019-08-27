@@ -1141,7 +1141,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		 * @return array
 		 *
 		 **/
-		public function countImg($pubishedOnly = true)
+		public function countImg( $pubishedOnly = true )
 		{
 			if ( isset( $this->images ) && count($this->images) > 0 )
 			{
