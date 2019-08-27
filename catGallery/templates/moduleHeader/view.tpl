@@ -21,10 +21,8 @@
  *   @package			catGallery
  *
  *}
-{*<script type="text/javascript">
-	var animSpeed	= {if $options.animSpeed}{$options.animSpeed}{else}700{/if};
-</script>*}
 
+{if $countImg}
 <section id="cG_mH_{$section_id}" class="cG_mH{if $options.darkmode} cG_mHdarkMode{/if}">
 	{foreach $images image}{if $image.published}<figure style="background-image:url({$imgURL}{$image.picture});">
 		<figcaption>
@@ -46,3 +44,4 @@
 		</div>
 	</aside>{/if}
 </section>
+{else}{include('../default/view_no_image.tpl')}{/if}

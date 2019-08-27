@@ -20,6 +20,7 @@
  *   @package			catGallery
  *
  *}
+{if $countImg}
 <script type="text/javascript">
 	if (typeof cG_logo === 'undefined')
 	\{
@@ -35,3 +36,4 @@
 	<div class="cG_logo_wrap">{foreach $images index image}{if $image.published}<img src="{$imgURL}/{$image.picture}" alt="{$image.options.alt}"{if $image.options.title} title="{$image.options.title}"{/if}>{/if}{/foreach}</div>
 	<span class="cG_logo_sh_l"></span><span class="cG_logo_sh_r"></span>
 </section>
+{else}{include('../default/view_no_image.tpl')}{/if}

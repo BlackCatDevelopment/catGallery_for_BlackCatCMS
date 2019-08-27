@@ -21,6 +21,7 @@
  *   @package			catGallery
  *
  *}
+{if $countImg}
 <script type="text/javascript">
 	var animSpeed	= {if $options.animSpeed}{$options.animSpeed}{else}700{/if};
 </script>
@@ -45,3 +46,4 @@
 		<div class="clear"></div>
 	</nav>
 </div>
+{else}{include('../default/view_no_image.tpl')}{/if}

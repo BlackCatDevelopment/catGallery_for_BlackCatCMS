@@ -21,7 +21,8 @@
  *   @package			catGallery
  *
  *}
-
+{if $countImg}
 <section class="cG_hS" id="cG_hS_{$section_id}">
 	{foreach $images image}{if $image.published}<figure style="background-image:url({$image.original});"><img src="{$imgURL}{$image.picture}" width="{$options.resize_x}" height="{$options.resize_y}" alt="{$image.options.alt}">{if $image.image_content != ''}<figcaption class="cG_hS_cont">{$image.image_content}</figcaption>{/if}</figure>{/if}{/foreach}
 </section>
+{else}{include('../default/view_no_image.tpl')}{/if}

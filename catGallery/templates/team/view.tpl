@@ -20,6 +20,7 @@
  *   @package			catGallery
  *
  *}
+{if $countImg}
 {$count = 0}
 <section class="cG_Team">
 	{if $options.title}<h2>{$options.title}</h2>{/if}
@@ -39,3 +40,4 @@
 	{$count = $count+1}
 	{/foreach}
 </section>
+{else}{include('../default/view_no_image.tpl')}{/if}

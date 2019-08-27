@@ -21,7 +21,7 @@
  *   @package			catGallery
  *
  *}
-
+{if $countImg}
 <section id="cG_roundImage_{$section_id}" class="cG_roundImage{if $options.960grid} cG_960{/if}">
 	{foreach $images image}{if $image.published}
 	<article class="cG_rI cG_rI_{if $image.options.side}{$image.options.side}{else}right{/if}">
@@ -30,3 +30,4 @@
 	</article>
 	{/if}{/foreach}
 </section>
+{else}{include('../default/view_no_image.tpl')}{/if}

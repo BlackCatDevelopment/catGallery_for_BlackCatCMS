@@ -20,6 +20,7 @@
  *   @package			catGallery
  *
  *}
+{if $countImg}
 <section class="cG_slogan">
 	{foreach $images index image}{if $image.published}<article style="background:url({$imgURL}/{$image.picture});">
 		<div>
@@ -27,3 +28,4 @@
 		</div>
 	</article>{/if}{/foreach}
 </section>
+{else}{include('../default/view_no_image.tpl')}{/if}

@@ -21,7 +21,7 @@
  *   @package			catGallery
  *
  *}
-
+{if $countImg}
 <script type="text/javascript">
 	if (typeof sliderProIDs === 'undefined')
 	\{
@@ -53,3 +53,4 @@
 		{/foreach}
 	</div>
 </div>
+{else}{include('../default/view_no_image.tpl')}{/if}

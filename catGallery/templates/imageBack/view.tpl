@@ -21,7 +21,7 @@
  *   @package			catGallery
  *
  *}
-
+{if $countImg}
 <section id="imageBack_{$section_id}" class="cG_imageBack c_960">
 {foreach $images as image}{if $image.published}
 	{if $image.options.type == '2'}{include(view/center.tpl)}
@@ -29,3 +29,4 @@
 	{else}{include(view/right.tpl)}{/if}
 {/foreach}
 </section>
+{else}{include('../default/view_no_image.tpl')}{/if}

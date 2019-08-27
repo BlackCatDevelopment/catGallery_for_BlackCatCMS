@@ -21,6 +21,8 @@
  *   @package			catGallery
  *
  *}
+
+{if $countImg}
 <script type="text/javascript">
 	if (typeof cardSlider === 'undefined')
 	\{
@@ -35,3 +37,4 @@
 <section id="cG_cardS_{$section_id}" class="cG_cardSlider" style="height:{$options.resize_y}px;">
 		{foreach $images image}{if $image.published}<img src="{$imgURL}{$image.picture}" width="{$options.resize_x}" height="{$options.resize_y}" alt="{$image.options.alt}" class="cG_r{rand(1,6)}">{/if}{/foreach}
 </section>
+{else}{include('../default/view_no_image.tpl')}{/if}

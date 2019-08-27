@@ -21,7 +21,7 @@
  *   @package			catGallery
  *
  *}
-
+{if $countImg}
 <section class="cG_cV" id="cG_cV_{$section_id}">
 	{foreach $images image}{if $image.published}<figure>
 		<div>{if $image.options.urlPage}<a href="{cmsplink($image.options.urlPage)}">{/if}<img src="{$imgURL}{$image.picture}" alt="{$image.options.alt}">{if $image.options.urlPage}</a>{/if}</div>
@@ -29,3 +29,4 @@
 		{if $image.options.urlPage}<a class="button" href="{cmsplink($image.options.urlPage)}">{$image.options.linkTitle}</a>{/if}
 	</figure>{/if}{/foreach}
 </section>
+{else}{include('../default/view_no_image.tpl')}{/if}

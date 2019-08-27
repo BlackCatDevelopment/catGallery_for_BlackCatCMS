@@ -21,7 +21,7 @@
  *   @package			catGallery
  *
  *}
-
+{if $countImg}
 <script type="text/javascript">
 	if (typeof catGalcGalIDs === 'undefined')
 	\{
@@ -43,3 +43,4 @@
 		</figcaption>
 	</figure>{/if}{/foreach}
 </section>
+{else}{include('../default/view_no_image.tpl')}{/if}
