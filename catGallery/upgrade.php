@@ -81,11 +81,11 @@ if ( CAT_Helper_Addons::versionCompare( $module_version, '2.1', '<' ) )
 		'mod_cc_catgallery_options' ) as $table )
 	{
 		$getTable	= CAT_Helper_Page::getInstance()->db()->query("SELECT * FROM INFORMATION_SCHEMA.TABLES
- WHERE table_name = ':prefix:".$table."'");
+ WHERE table_name = ':prefix:" . $table . "'");
 		if( $getTable && $getTable->rowCount() > 0 && !false == ($row = $getTable->fetchRow() ) )
 		{
 			if($row['ENGINE'] != 'InnoDB' )
-				CAT_Helper_Page::getInstance()->db()->query("ALTER TABLE `:prefix:".$table."` ENGINE=InnoDB");
+				CAT_Helper_Page::getInstance()->db()->query("ALTER TABLE `:prefix:" . $table . "` ENGINE=InnoDB");
 		}
 	}
 	
@@ -94,9 +94,18 @@ if ( CAT_Helper_Addons::versionCompare( $module_version, '2.1', '<' ) )
 		'mod_cc_catgallery_images_options',
 		'mod_cc_catgallery_options' ) as $table )
 	{
-		CAT_Helper_Page::getInstance()->db()->query("ALTER TABLE `:prefix:".$table."` MODIFY `value` TEXT");
+		CAT_Helper_Page::getInstance()->db()->query("ALTER TABLE `:prefix:" . $table . "` MODIFY `value` TEXT");
 	}
 
+	CAT_Helper_Page::getInstance()->db()->query(
+		"ALTER TABLE `:prefix:mod_cc_catgallery` DROP FOREIGN KEY `:prefix:cG_pages`; ".
+		"ALTER TABLE `:prefix:mod_cc_catgallery` DROP INDEX `page_id`; " .
+		"ALTER TABLE `:prefix:mod_cc_catgallery` DROP COLUMN `page_id`;"
+	);
+	CAT_Helper_Page::getInstance()->db()->query(
+		"ALTER TABLE `:prefix:mod_cc_catgallery` DROP FOREIGN KEY `:prefix:cG_sections`; " .
+		"ALTER TABLE `:prefix:mod_cc_catgallery` DROP INDEX `section_id`; " .
+		"ALTER TABLE `:prefix:mod_cc_catgallery` DROP COLUMN `section_id`;"
 	# Remove page_id/section_id from database where not needed
 	foreach ( array(
 		'mod_cc_catgallery_contents',
@@ -106,7 +115,7 @@ if ( CAT_Helper_Addons::versionCompare( $module_version, '2.1', '<' ) )
 	{
 		$getTable	= CAT_Helper_Page::getInstance()->db()->query(
 			"SELECT * FROM INFORMATION_SCHEMA.COLUMNS " .
-				"WHERE table_name = ':prefix:".$table."'");
+				"WHERE table_name = ':prefix:" . $table . "'");
 
 		$attr	= array();
 		if( $getTable && $getTable->rowCount() > 0 )
@@ -117,45 +126,50 @@ if ( CAT_Helper_Addons::versionCompare( $module_version, '2.1', '<' ) )
 			}
 			if (in_array('page_id', $attr))
 				CAT_Helper_Page::getInstance()->db()->query(
-					"ALTER TABLE `:prefix:".$table."` DROP COLUMN `page_id`; "
+					"ALTER TABLE `:prefix:" . $table . "` DROP COLUMN `page_id`; "
 				);
 			if (in_array('section_id', $attr))
 				CAT_Helper_Page::getInstance()->db()->query(
-					"ALTER TABLE `:prefix:".$table."` DROP COLUMN `section_id`"
+					"ALTER TABLE `:prefix:" . $table . "` DROP COLUMN `section_id`"
 				);
 
 			switch ($table)
 			{
 				case 'mod_cc_catgallery_contents':
 					CAT_Helper_Page::getInstance()->db()->query(
-						"ALTER TABLE `:prefix:".$table."` DROP PRIMARY KEY, ADD PRIMARY KEY ( `image_id` )"
+						"ALTER TABLE `:prefix:" . $table . "` DROP PRIMARY KEY, ADD PRIMARY KEY ( `image_id` )"
 					);
 
 					if (in_array('gallery_id', $attr))
 						CAT_Helper_Page::getInstance()->db()->query(
-							"ALTER TABLE `:prefix:".$table."` DROP COLUMN `gallery_id`"
+							"ALTER TABLE `:prefix:" . $table . "` DROP COLUMN `gallery_id`"
 						);
 					break;
 				case 'mod_cc_catgallery_images':
 					CAT_Helper_Page::getInstance()->db()->query(
-						"ALTER TABLE `:prefix:".$table."` DROP PRIMARY KEY, ADD PRIMARY KEY ( `image_id` )"
+						"ALTER TABLE `:prefix:" . $table . "` DROP PRIMARY KEY, ADD PRIMARY KEY ( `image_id` )"
 					);
 					break;
 				case 'mod_cc_catgallery_images_options':
 					CAT_Helper_Page::getInstance()->db()->query(
-						"ALTER TABLE `:prefix:".$table."` DROP PRIMARY KEY, ADD PRIMARY KEY ( `image_id`, `name` )"
+						"ALTER TABLE `:prefix:mod_cc_catgallery` DROP FOREIGN KEY `:prefix:cG_sections`; " .
+						"ALTER TABLE `:prefix:mod_cc_catgallery` DROP INDEX `section_id`; " .
+						"ALTER TABLE `:prefix:mod_cc_catgallery` DROP COLUMN `section_id`;"
+						"ALTER TABLE `:prefix:" . $table . "` DROP PRIMARY KEY, ADD PRIMARY KEY ( `image_id`, `name` )"
 					);
 
 					if (in_array('gallery_id', $attr))
 						CAT_Helper_Page::getInstance()->db()->query(
-							"ALTER TABLE `:prefix:".$table."` DROP COLUMN `gallery_id`"
+							"ALTER TABLE `:prefix:" . $table . "` DROP COLUMN `gallery_id`"
 						);
 					break;
 				case 'mod_cc_catgallery_options':
 					CAT_Helper_Page::getInstance()->db()->query(
-						"ALTER TABLE `:prefix:".$table."` DROP PRIMARY KEY, ADD PRIMARY KEY ( `gallery_id`, `name` )"
+						"ALTER TABLE `:prefix:" . $table . "` DROP PRIMARY KEY, ADD PRIMARY KEY ( `gallery_id`, `name` )"
 					);
 					break;
+				default:
+				break;
 			}
 		}
 	}

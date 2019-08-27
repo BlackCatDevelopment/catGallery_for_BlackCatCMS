@@ -1113,7 +1113,8 @@ if ( ! class_exists( 'catGallery', false ) ) {
 
 			$this->getOptions('variant');
 
-			$this->options['_variant']	= $this->options['variant'] != '' ? $this->options['variant'] : 'default';
+			$this->options['_variant']	= ( isset($this->options['variant']) && $this->options['variant'] != '' )
+											? $this->options['variant'] : 'default';
 
 			return $this->options['_variant'];
 		} // getVariant()

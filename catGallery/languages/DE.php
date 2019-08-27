@@ -120,8 +120,9 @@ $LANG = array(
 require_once( CAT_PATH . '/modules/cc_catgallery/inc/class.catgallery.php' );
 
 $catGallery	= new catGallery();
-$path	= CAT_Helper_Directory::sanitizePath( CAT_PATH . '/modules/' .$catGallery::$directory .'/languages/' . $catGallery->getVariant());
+$path	= CAT_Helper_Directory::sanitizePath( CAT_PATH . '/modules/' .$catGallery::$directory .'/languages/' . $catGallery->getVariant() );
 
 if ( file_exists( $path ) )
 	CAT_Helper_Page::getInstance()->lang()->addFile( LANGUAGE . '.php', $path );
+
 ?>
