@@ -65,6 +65,11 @@ if ( $val->sanitizePost( 'gallery_id','numeric' ) && is_object($catGallery) )
 		$catGallery->saveOptions( 'arrows', '1' );
 		$catGallery->saveOptions( 'buttons', '1' );
 	}
+
+	$ajax_return	= array(
+		'message'	=> $lang->translate( 'Variant saved successfully!' ),
+		'success'	=> true
+	);
 } else {
 	$backend->print_error(
 		$lang->translate( 'You sent an invalid ID' ),

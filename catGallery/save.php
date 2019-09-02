@@ -69,7 +69,8 @@ include_once "inc/class.catgallery.php";
 
 $catGallery	= new catGallery();
 
-$variant		= $catGallery->getVariant();
+$variant		= $val->sanitizePost('variant') != ''
+					? $val->sanitizePost('variant') : $catGallery->getVariant();
 
 $module_path	= '/modules/cc_catgallery/';
 

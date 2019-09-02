@@ -112,9 +112,10 @@ if ( ! class_exists( 'catGallery', false ) ) {
 			'random'		=> '0',
 			'animSpeed'		=> '500',
 			'pauseTime'		=> '4000',
-			'label'			=> '0',
+			'label'			=> '1',
 			'resize_x'		=> '781',
-			'resize_y'		=> '350'
+			'resize_y'		=> '350',
+			'auto_play'		=> '1'
 		);
 
 		public static function getInstance()
