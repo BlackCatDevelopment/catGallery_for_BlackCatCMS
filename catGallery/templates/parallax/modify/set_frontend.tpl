@@ -47,7 +47,7 @@
 		</select><br>
 		
 		<label for="height_{$section_id}" class="cc_In100px">{translate('Height')}:</label>
-		<input id="height_{$section_id}" type="text" class="cc_In300px" name="height" value="{if $options.title}{$options.height}{/if}">px
+		<input id="height_{$section_id}" type="text" class="cc_In300px" name="height" value="{if $options.height}{$options.height}{else}200{/if}">px
 	</p><br>
 	<input type="submit" name="speichern" value="{translate('Save')}" />
 </form>

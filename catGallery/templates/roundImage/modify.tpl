@@ -40,7 +40,7 @@
 		</ul>
 		<div class="clear"></div>
 	</div>
-	<h2 class="fc_gradient_red center"><br>{translate('For perfect result set height and width in image option to the same value.')}<br><br></h2>
+	<h3 class="fc_gradient_red center"><br>{translate('For perfect result set height and width in image option to the same value.')}<br><br></h3>
 	<p class="catG_IMG_y">{translate('Existing images')}</p>
 	<p class="catG_IMG_n">{translate('No images available')}</p>
 	<ul id="cc_catG_imgs_{$gallery_id}" class="cc_catG_imgs">

@@ -30,15 +30,17 @@
 	<div class="cc_catG_settings">
 		<ul class="cc_catG_nav fc_br_left" id="cc_catG_nav_{$gallery_id}">
 			<li class="active fc_br_topleft">{translate('Upload new images')}</li>
+			<li>{translate('Options for frontend')}</li>
 			<li class="fc_br_bottomleft">{translate('Image option')}</li>
 		</ul>
 		<ul class="cc_catG_tabs fc_br_right">
 			<li class="cc_catG_tab active">{include(../default/modify/set_dropzone.tpl)}</li>
+			<li class="cc_catG_tab">{include(modify/set_frontend.tpl)}</li>
 			<li class="cc_catG_tab">{include(../default/modify/set_image.tpl)}</li>
 		</ul>
 		<div class="clear"></div>
 	</div>
-	<h2 class="fc_gradient_red center"><br>{translate('For perfect result use in a template with full width.')}<br><br></h2>
+	<h3 class="fc_gradient_red center"><br>{translate('For perfect result use in a template with full width or in a block with full width.')}<br><br></h3>
 	<p class="catG_IMG_y">{translate('Existing images')}</p>
 	<p class="catG_IMG_n">{translate('No images available')}</p>
 	<ul id="cc_catG_imgs_{$gallery_id}" class="cc_catG_imgs">

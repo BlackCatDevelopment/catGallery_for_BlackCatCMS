@@ -68,11 +68,14 @@ $(document).ready(function()
 
 			$('#cc_dropzone_' + cGID.gallery_id).dropzone(
 			{
-				url:				CAT_URL + '/modules/cc_catgallery/save.php',
-				paramName:			'new_image',
-				thumbnailWidth:		300,
-				thumbnailHeight:	200,
-				sending:			function(file, xhr, formData)
+				url:					CAT_URL + '/modules/cc_catgallery/save.php',
+				paramName:				'new_image',
+				thumbnailWidth:			300,
+				thumbnailHeight:		200,
+				maxFilesize:			2,
+				parallelUploads:		5,
+				parallelChunkUploads:	true,
+				sending:				function(file, xhr, formData)
 				{
 					formData.append('page_id', cGID.page_id);
 					formData.append('section_id', cGID.section_id);
@@ -81,19 +84,17 @@ $(document).ready(function()
 					formData.append('_cat_ajax', 1);
 					catGalPU( true );
 				},
-				previewsContainer:	'#cc_catG_imgs_' + cGID.gallery_id,
-				previewTemplate:	$prevTemp,
-				success:			function(file, xhr, formData)
+				previewsContainer:		'#cc_catG_imgs_' + cGID.gallery_id,
+				previewTemplate:		$prevTemp,
+				success:				function(file, xhr, formData)
 				{
-					// Unvollständigen Upload durch wechseln der Seite verhindern
+					// Unvollständigen Upload durch Wechseln der Seite verhindern
 					if( $('.dz-preview').not('#catG___image_id__').find('.dz-progress').length == 0 ) catGalPU( false );
-					console.log(file, xhr, formData);
 					var $newIMG	= $(file.previewElement),
-						xhr		= JSON.parse(xhr),
-						newID	= $newIMG.attr('id') + xhr.newIMG.image_id;
-			
-					$imgUL.sortable( 'refresh' );
-			
+						xhr		= JSON.parse(xhr);
+
+					$newIMG.attr('id', 'catG_' + xhr.newIMG.image_id);
+
 					$newIMG.find('.dz-progress').remove();
 					$newIMG.find('.dz-filename span').text(xhr.newIMG.picture);
 					$newIMG.find('input[name=imgID]').val(xhr.newIMG.image_id);
@@ -104,6 +105,8 @@ $(document).ready(function()
 					$newIMG.html(function(index,html){
 						return html.replace(/__image_id__/g,xhr.newIMG.image_id);
 					});
+
+					$imgUL.sortable( 'refresh' );
 
 					dialog_form( $newIMG.find('.ajaxForm') );
 			

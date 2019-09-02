@@ -1,4 +1,5 @@
-{**
+<?php
+/**
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -20,20 +21,25 @@
  *   @category			CAT_Modules
  *   @package			catGallery
  *
- *}
-{if $countImg}
-<script type="text/javascript">
-	if (typeof cG_hS === 'undefined')
-	\{
-		cG_hS	= [];
+ */
+
+// include class.secure.php to protect this file and the whole CMS!
+if (defined('CAT_PATH')) {	
+	include(CAT_PATH.'/framework/class.secure.php'); 
+} else {
+	$oneback = "../";
+	$root = $oneback;
+	$level = 1;
+	while (($level < 10) && (!file_exists($root.'/framework/class.secure.php'))) {
+		$root .= $oneback;
+		$level += 1;
 	}
-	cG_hS.push(
-	\{
-		'cG_id'			: {$gallery_id},
-		'interval'		: 5000
-	});
-</script>
-<section id="cG_hS_{$gallery_id}" class="cG_hS">
-	{foreach $images image}{if $image.published}<figure style="background-image:url({$image.original});"><img src="{$imgURL}{$image.picture}" width="{$options.resize_x}" height="{$options.resize_y}" alt="{$image.options.alt}">{if $image.image_content != ''}<figcaption class="cG_hS_cont{if $options.960grid} cG_960{/if}">{$image.image_content}</figcaption>{/if}</figure>{/if}{/foreach}
-</section>
-{else}{include('../default/view_no_image.tpl')}{/if}
+	if (file_exists($root.'/framework/class.secure.php')) { 
+		include($root.'/framework/class.secure.php'); 
+	} else {
+		trigger_error(sprintf("[ <b>%s</b> ] Can't include class.secure.php!", $_SERVER['SCRIPT_NAME']), E_USER_ERROR);
+	}
+}
+// end include class.secure.php
+
+?>

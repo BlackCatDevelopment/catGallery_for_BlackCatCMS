@@ -21,19 +21,19 @@
  *   @package			catGallery
  *
  *}
-{if $countImg}
-<script type="text/javascript">
-	if (typeof cG_hS === 'undefined')
-	\{
-		cG_hS	= [];
-	}
-	cG_hS.push(
-	\{
-		'cG_id'			: {$gallery_id},
-		'interval'		: 5000
-	});
-</script>
-<section id="cG_hS_{$gallery_id}" class="cG_hS">
-	{foreach $images image}{if $image.published}<figure style="background-image:url({$image.original});"><img src="{$imgURL}{$image.picture}" width="{$options.resize_x}" height="{$options.resize_y}" alt="{$image.options.alt}">{if $image.image_content != ''}<figcaption class="cG_hS_cont{if $options.960grid} cG_960{/if}">{$image.image_content}</figcaption>{/if}</figure>{/if}{/foreach}
-</section>
-{else}{include('../default/view_no_image.tpl')}{/if}
+
+
+<form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" class="ajaxForm">
+	<input type="hidden" name="page_id" value="{$page_id}">
+	<input type="hidden" name="section_id" value="{$section_id}">
+	<input type="hidden" name="gallery_id" value="{$gallery_id}">
+	<input type="hidden" name="action" value="saveOptions">
+	<input type="hidden" name="_cat_ajax" value="1">
+	<input type="hidden" name="options" value="960grid">
+
+	<p class="cc_In300px">
+		<input id="960grid_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="960grid" value="1" {if $options.960grid}checked="checked" {/if}>
+		<label for="960grid_{$section_id}">{translate('Maximum width 960px')}:</label>
+	</p><br>
+	<input type="submit" name="speichern" value="{translate('Save')}">
+</form>

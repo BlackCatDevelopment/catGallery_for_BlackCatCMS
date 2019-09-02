@@ -59,7 +59,7 @@ $LANG = array(
     'Width of label (Set to 0 for no labels)'
     								=> 'Breite des Labels (0 für keine Labels)',
     'Show pictures randomly'		=> 'Bilderreihenfolge zuf&auml;llig',
-    'Image option'					=> 'Bild Optionen',
+    'Image option'					=> 'Bildoptionen',
     'Adjust horizontal'				=> 'Breite einstellen',
     'Adjust vertical'				=> 'H&ouml;he einstellen',
     'Upload new images'				=> 'Neue Bilder hochladen',

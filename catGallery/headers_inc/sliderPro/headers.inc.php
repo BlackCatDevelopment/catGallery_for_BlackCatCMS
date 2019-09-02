@@ -70,7 +70,7 @@ $mod_headers = array(
 		'js' => array(
 			'/modules/cc_catgallery/js/sliderPro/jquery.sliderPro.min.js',
 			'/modules/cc_catgallery/js/sliderPro/frontend.js'
-		),
+		)
 	)
 );
 

@@ -29,18 +29,14 @@
 	<input type="hidden" name="gallery_id" value="{$gallery_id}" />
 	<input type="hidden" name="action" value="saveOptions" />
 	<input type="hidden" name="_cat_ajax" value="1" />
-	<input type="hidden" name="options" value="image,color,animSpeed,pauseTime,random" />
+	<input type="hidden" name="options" value="image,color,random" />
 	<input type="hidden" name="image_options" value="alt" />
 
-	<span class="cc_In200px">{translate('Image')} ({translate('relative to')} /media/):</span>
+	<span class="cc_In200px">{translate('Background Image')} ({translate('relative to')} /media/):</span>
 	<input type="text" class="cc_In100px" name="image" value="{if $options.image}{$options.image}{/if}" /><br>
 	<span class="cc_In200px">{translate('Color')} (#.....):</span>
 	<input type="text" class="cc_In100px" name="color" value="{if $options.color}{$options.color}{/if}" /><br>
 
-	<span class="cc_In200px">{translate('Pause time')}:</span>
-	<input type="text" class="cc_In100px" name="pauseTime" value="{if $options.pauseTime}{$options.pauseTime}{else}8000{/if}" /> ms<br>
-	<span class="cc_In200px">{translate('Animation speed')}:</span>
-	<input type="text" class="cc_In100px" name="animSpeed" value="{if $options.animSpeed}{$options.animSpeed}{else}3000{/if}" /> ms<br>
 	<p class="cc_In300px">
 		<input id="random_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="random" value="1" {if $options.random}checked="checked" {/if}/>
 		<label for="random_{$section_id}">{translate('Show pictures randomly')}:</label>

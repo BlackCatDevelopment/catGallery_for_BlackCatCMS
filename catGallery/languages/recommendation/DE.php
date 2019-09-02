@@ -46,8 +46,9 @@ $LANG = array(
 	'Position in company'	=> 'Position im Unternehmen',
 	'Company'				=> 'Firma',
 	'Heading of gallery'	=> 'Überschrift der Galerie',
-	'Image'					=> 'Bild',
+	'Background Image'		=> 'Hintergrundbild',
 	'Pause time'			=> 'Pause zwischen Animationen',
 	'Color'					=> 'Farbe',
-	'relative to'			=> 'Relativ zu'
+	'relative to'			=> 'Relativ zu',
+	'For perfect result set height and width in image option to the same value.'	=> 'F&uuml;r ein gutes Ergebnis setze die H&ouml;he und Breite unter "Bildoptionen" gleich.'
 );

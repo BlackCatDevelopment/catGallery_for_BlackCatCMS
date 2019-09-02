@@ -50,7 +50,7 @@ if ( CAT_Helper_Page::getPagePermission( $page_id, 'admin' ) !== true )
 // ============================= 
 // ! Get the current gallery_id 
 // ============================= 
-if ( $gallery_id = $val->sanitizePost( 'gallery_id','numeric' ) )
+if ( $val->sanitizePost( 'gallery_id','numeric' ) && is_object($catGallery) )
 {
 	$imgID	= $val->sanitizePost( 'imgID','numeric' );
 	$action	= $val->sanitizePost( 'action' );
@@ -168,6 +168,11 @@ if ( $gallery_id = $val->sanitizePost( 'gallery_id','numeric' ) )
 			// ! save variant of images   
 			// =========================== 
 			$catGallery->saveOptions( 'variant', $val->sanitizePost('variant') );
+
+			// =========================== 
+			// ! save optional frontend options
+			// =========================== 
+			$catGallery->saveOptions( 'auto_play', '1' );
 
 			$ajax_return	= array(
 				'message'	=> $lang->translate( 'Variant saved successfully!' ),

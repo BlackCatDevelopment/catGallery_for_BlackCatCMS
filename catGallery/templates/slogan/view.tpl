@@ -22,7 +22,7 @@
  *}
 {if $countImg}
 <section class="cG_slogan">
-	{foreach $images index image}{if $image.published}<article style="background:url({$imgURL}/{$image.picture});">
+	{foreach $images index image}{if $image.published}<article style="background:url({$imgURL}/{$image.picture});background-size: auto 100%;background-size:cover;">
 		<div>
 			{$image.image_content}
 		</div>

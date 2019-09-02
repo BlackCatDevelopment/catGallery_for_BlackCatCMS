@@ -29,7 +29,7 @@
 	<input type="hidden" name="gallery_id" value="{$gallery_id}">
 	<input type="hidden" name="action" value="saveOptions">
 	<input type="hidden" name="_cat_ajax" value="1">
-	<input type="hidden" name="options" value="960grid">
+	<input type="hidden" name="options" value="960grid,title">
 
 	<p class="cc_In300px">
 		<input id="960grid_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="960grid" value="1" {if $options.960grid}checked="checked" {/if}>

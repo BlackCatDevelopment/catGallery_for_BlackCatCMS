@@ -62,7 +62,7 @@ if ( ! class_exists( 'catGallery', false ) ) {
 		public $contents					= array();
 		public $options						= array();
 
-		public $variant						= 'cubicGallery';
+		public $variant						= 'default';
 		public static $directory			= 'cc_catgallery';
 		protected static $orignalFolder		= '/originals/';
 		public static $allVariants			= array();
@@ -200,9 +200,8 @@ if ( ! class_exists( 'catGallery', false ) ) {
 				)->fetchColumn();
 
 				self::$section_id	= intval($sectionID);
-				self::setGalleryFolder();
 			}
-
+			self::setGalleryFolder();
 			return $this;
 		} // end setGalleryID()
 

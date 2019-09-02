@@ -66,6 +66,9 @@ $mod_headers = array(
 				'media'		=> 'all',
 				'file'		=> 'modules/cc_catgallery/css/hugeSlider/frontend.css'
 			)
+		),
+		'js' => array(
+			'/modules/cc_catgallery/js/hugeSlider/frontend.js'
 		)
 	)
 );

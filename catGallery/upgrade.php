@@ -156,7 +156,7 @@ if ( CAT_Helper_Addons::versionCompare( $module_version, '2.1', '<' ) )
 					CAT_Helper_Page::getInstance()->db()->query(
 						"ALTER TABLE `:prefix:mod_cc_catgallery` DROP FOREIGN KEY `:prefix:cG_sections`; " .
 						"ALTER TABLE `:prefix:mod_cc_catgallery` DROP INDEX `section_id`; " .
-						"ALTER TABLE `:prefix:mod_cc_catgallery` DROP COLUMN `section_id`;"
+						"ALTER TABLE `:prefix:mod_cc_catgallery` DROP COLUMN `section_id`;" .
 						"ALTER TABLE `:prefix:" . $table . "` DROP PRIMARY KEY, ADD PRIMARY KEY ( `image_id`, `name` )"
 					);
 

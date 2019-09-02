@@ -1,0 +1,54 @@
+/**
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 3 of the License, or (at
+ *   your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful, but
+ *   WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ *   General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, see <http://www.gnu.org/licenses/>.
+ *
+ *   @author			Matthias Glienke
+ *   @copyright			2019, Black Cat Development
+ *   @link				https://blackcat-cms.org
+ *   @license			http://www.gnu.org/licenses/gpl.html
+ *   @category			CAT_Modules
+ *   @package			catGallery
+ *
+ */
+
+$(document).ready(function()
+{
+	if (typeof cG_hS !== 'undefined' && typeof cG_hSLoaded === 'undefined')
+	{
+		cG_hSLoaded	= true;
+		$.each( cG_hS, function( index, cGID )
+		{
+			var	$cG		= $('#cG_hS_' + cGID.cG_id ),
+				$fig	= $cG.children('figure'),
+				$first	= $fig.filter(':first'),
+				$last	= $fig.filter(':last');
+			console.log($cG,$fig);
+			$fig.filter(':first').addClass('active');
+			setInterval(function(){
+				if($last.hasClass('active'))
+				{
+					$last.removeClass('active');
+					$first.addClass('active');
+				} else {
+					$fig.filter('.hide').removeClass('hide');
+					$fig.filter('.active').removeClass('active').addClass('hide').next().addClass('active');
+					if($last.hasClass('active'))
+					{
+						$first.addClass('hide');
+					}				
+				}
+			}, cGID.interval);
+		});
+	}
+});
