@@ -30,7 +30,7 @@
 	cG_hS.push(
 	\{
 		'cG_id'			: {$gallery_id},
-		'interval'		: 5000
+		'interval'		: {if $options.interval}{$options.interval}{else}5000{/if}
 	});
 </script>
 <section id="cG_hS_{$gallery_id}" class="cG_hS">
