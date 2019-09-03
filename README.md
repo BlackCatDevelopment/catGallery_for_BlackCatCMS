@@ -1,7 +1,7 @@
 catGallery v3.x for Black Cat CMS
 ===============================
 
-This is an add-on for Black Cat CMS.
+This is an add on for Black Cat CMS.
 With this add on you can add and manage different types of content that have anything to do with images.
 
 For german support please visit https://forum.blackcat-cms.org/viewtopic.php?f=21&t=257
