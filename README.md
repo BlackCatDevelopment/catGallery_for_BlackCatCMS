@@ -1,4 +1,4 @@
-catGallery v2.x for Black Cat CMS
+catGallery v3.x for Black Cat CMS
 ===============================
 
 This is an add-on for Black Cat CMS.
@@ -9,7 +9,7 @@ For german support please visit https://forum.blackcat-cms.org/viewtopic.php?f=2
 Adding new variants is very simple. Follow the instructions similar as described for MultiColumn:
 http://wiki.blackcat-cms.org/doku.php?id=addons:modules:multicolumn:module_variants
 
-An video based instruction will follow.
+A video based instruction will follow.
 
 ## Included variants
 - default (skitter in default setting: https://github.com/thiagosf/SkitterSlideshow)
@@ -21,8 +21,12 @@ An video based instruction will follow.
 - imageBack
 - logos
 - moduleHeader
+- parallax
+- recommendation
 - roundImage
 - sliderPro
+- slogan
+- team
 - wide_gallery
 
 ## Preferences
