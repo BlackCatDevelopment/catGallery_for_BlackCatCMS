@@ -45,18 +45,18 @@ if (defined('CAT_PATH')) {
 if(defined('CAT_URL'))
 {
 	// Delete all tables if exists
-	CAT_Helper_Page::getInstance()->db()->query(
-		'DROP TABLE IF EXISTS'
-			. ' `:prefix:mod_cc_catgallery_options`,'
-			. ' `:prefix:mod_cc_catgallery_images_options`,'
-			. ' `:prefix:mod_cc_catgallery_contents`,'
-			. ' `:prefix:mod_cc_catgallery_images`,'
-			. ' `:prefix:mod_cc_catgallery`;'
-	);
+#	CAT_Helper_Page::getInstance()->db()->query(
+#		'DROP TABLE IF EXISTS'
+#			. ' `:prefix:mod_cc_catgallery_options`,'
+#			. ' `:prefix:mod_cc_catgallery_images_options`,'
+#			. ' `:prefix:mod_cc_catgallery_contents`,'
+#			. ' `:prefix:mod_cc_catgallery_images`,'
+#			. ' `:prefix:mod_cc_catgallery`;'
+#	);
 
-	// Create table for basic informations
+	// CREATE TABLE IF NOT EXISTS for basic informations
 	CAT_Helper_Page::getInstance()->db()->query(
-		'CREATE TABLE `:prefix:mod_cc_catgallery`  ('
+		'CREATE TABLE IF NOT EXISTS `:prefix:mod_cc_catgallery`  ('
 			. ' `gallery_id` INT NOT NULL AUTO_INCREMENT,'
 			. ' `page_id` INT,'
 			. ' `section_id` INT,'
@@ -66,9 +66,9 @@ if(defined('CAT_URL'))
 		. ' ) ENGINE=InnoDB'
 	);
 
-	// Create table for options
+	// CREATE TABLE IF NOT EXISTS for options
 	CAT_Helper_Page::getInstance()->db()->query(
-		'CREATE TABLE `:prefix:mod_cc_catgallery_options`  ('
+		'CREATE TABLE IF NOT EXISTS `:prefix:mod_cc_catgallery_options`  ('
 			. ' `gallery_id` INT NOT NULL DEFAULT 0,'
 			. ' `name` VARCHAR(127) NOT NULL DEFAULT \'\','
 			. ' `value` TEXT NOT NULL,'
@@ -77,9 +77,9 @@ if(defined('CAT_URL'))
 		. ' ) ENGINE=InnoDB'
 	);
 
-	// Create table for single pictures
+	// CREATE TABLE IF NOT EXISTS for single pictures
 	CAT_Helper_Page::getInstance()->db()->query(
-		'CREATE TABLE `:prefix:mod_cc_catgallery_images`  ('
+		'CREATE TABLE IF NOT EXISTS `:prefix:mod_cc_catgallery_images`  ('
 			. ' `image_id` INT NOT NULL AUTO_INCREMENT,'
 			. ' `gallery_id` INT NULL DEFAULT NULL,'
 			. ' `picture` VARCHAR(127) NOT NULL DEFAULT \'\','
@@ -90,9 +90,9 @@ if(defined('CAT_URL'))
 		. ' ) ENGINE=InnoDB'
 	);
 
-	// Create table for image options
+	// CREATE TABLE IF NOT EXISTS for image options
 	CAT_Helper_Page::getInstance()->db()->query(
-		'CREATE TABLE `:prefix:mod_cc_catgallery_images_options`  ('
+		'CREATE TABLE IF NOT EXISTS `:prefix:mod_cc_catgallery_images_options`  ('
 			. ' `image_id` INT NOT NULL DEFAULT 0,'
 			. ' `gallery_id` INT NULL DEFAULT NULL,'
 			. ' `name` VARCHAR(127) NOT NULL DEFAULT \'\','
@@ -103,9 +103,9 @@ if(defined('CAT_URL'))
 		. ' ) ENGINE=InnoDB'
 	);
 
-	// Create table for image contents
+	// CREATE TABLE IF NOT EXISTS for image contents
 	CAT_Helper_Page::getInstance()->db()->query(
-		'CREATE TABLE `:prefix:mod_cc_catgallery_contents`  ('
+		'CREATE TABLE IF NOT EXISTS `:prefix:mod_cc_catgallery_contents`  ('
 			. ' `image_id` INT NOT NULL DEFAULT 0,'
 			. ' `content` TEXT NOT NULL,'
 			. ' `text` TEXT NOT NULL,'
