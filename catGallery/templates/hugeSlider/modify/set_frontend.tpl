@@ -29,11 +29,15 @@
 	<input type="hidden" name="gallery_id" value="{$gallery_id}">
 	<input type="hidden" name="action" value="saveOptions">
 	<input type="hidden" name="_cat_ajax" value="1">
-	<input type="hidden" name="options" value="960grid,interval">
+	<input type="hidden" name="options" value="960grid,interval,showArrow">
 	<p>
 		<label for="interval_{$section_id}" class="cc_In200px">{translate('Interval')}:</label>
 		<input id="interval_{$section_id}" type="text" class="cc_In100px" name="interval" value="{if $options.interval}{$options.interval}{else}5000{/if}"> ms
 	</p>
+	<p class="cc_In300px">
+		<input id="showArrow_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="showArrow" value="1" {if $options.showArrow}checked="checked" {/if}>
+		<label for="showArrow_{$section_id}">{translate('Show arrow for scrolling down')}:</label>
+	</p><br>
 	<p class="cc_In300px">
 		<input id="960grid_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="960grid" value="1" {if $options.960grid}checked="checked" {/if}>
 		<label for="960grid_{$section_id}">{translate('Maximum width 960px')}:</label>

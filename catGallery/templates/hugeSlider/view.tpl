@@ -35,5 +35,6 @@
 </script>
 <section id="cG_hS_{$gallery_id}" class="cG_hS">
 	{foreach $images image}{if $image.published}<figure style="background-image:url({$image.original});"><img src="{$imgURL}{$image.picture}" width="{$options.resize_x}" height="{$options.resize_y}" alt="{$image.options.alt}">{if $image.image_content != ''}<figcaption class="cG_hS_cont{if $options.960grid} cG_960{/if}">{$image.image_content}</figcaption>{/if}</figure>{/if}{/foreach}
+	{if $options.showArrow}<span></span>{/if}
 </section>
 {else}{include('../default/view_no_image.tpl')}{/if}

@@ -42,5 +42,6 @@ if (defined('CAT_PATH')) {
 
 // --- hugeSlider ---
 $LANG	= array(
-	'For perfect result use in a template with full width or in a block with full width.'	=> 'F&uuml;r das beste Ergebnis, eignet sich ein Template mit voller Breite bzw. ein Block mit voller Breite.'
+	'For perfect result use in a template with full width or in a block with full width.'	=> 'F&uuml;r das beste Ergebnis, eignet sich ein Template mit voller Breite bzw. ein Block mit voller Breite.',
+	'Show arrow for scrolling down'		=> 'Zeige Pfeil zum Runterscrollen'
 );
