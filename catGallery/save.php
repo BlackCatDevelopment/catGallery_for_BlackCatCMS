@@ -74,8 +74,6 @@ $variant		= $val->sanitizePost('variant') != ''
 
 $module_path	= '/modules/cc_catgallery/';
 
-$lang->addFile( $lang->getLang().'.php', CAT_PATH . $module_path . 'languages/' );
-
 if ( file_exists( CAT_PATH . $module_path .'save/' . $variant . '/save.php' ) )
 	include_once( CAT_PATH . $module_path .'save/' . $variant . '/save.php' );
 elseif ( file_exists( CAT_PATH . $module_path .'save/default/save.php' ) )
