@@ -13,6 +13,7 @@ A video based instruction will follow.
 
 ## Included variants
 - default (skitter in default setting: https://github.com/thiagosf/SkitterSlideshow)
+- bs_Carousel
 - cardSlider
 - columnView
 - cubicGallery
