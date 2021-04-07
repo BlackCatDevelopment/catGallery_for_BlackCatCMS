@@ -14,7 +14,7 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  *   @author			Matthias Glienke
- *   @copyright			2019, Black Cat Development
+ *   @copyright			2021, Black Cat Development
  *   @link				https://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
@@ -22,7 +22,7 @@
  *
  *}
 {if $countImg}
-<section id="cG_roundImage_{$section_id}" class="cG_roundImage{if $options.960grid} cG_960{/if}">
+<section id="cG_roundImage_{$section_id}" class="cG_roundImage{if $options.960grid} c_1024{/if}">
 	{foreach $images image}{if $image.published}
 	<article class="cG_rI cG_rI_{if $image.options.side}{$image.options.side}{else}right{/if}">
 <img src="{$imgURL}{$image.picture}" width="{$options.resize_x}" height="{$options.resize_y}" alt="{$image.options.alt}">
