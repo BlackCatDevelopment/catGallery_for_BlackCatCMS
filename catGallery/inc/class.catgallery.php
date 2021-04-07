@@ -150,6 +150,37 @@ if (!class_exists("catGallery", false)) {
                 self::setGalleryID();
             }
             require_once CAT_PATH . "/framework/functions.php";
+            /*			if ( $is_header || ( !$is_header && !is_array($gallery_id)) )
+			{
+				global $section_id;
+			}
+			
+
+			// This is a workaround for headers.inc.php as there is no $section_id defined yet
+			if ( !isset($section_id) || $is_header )
+			{
+				$section_id	= is_numeric($gallery_id) ? $gallery_id : intval($gallery_id['section_id']);
+			}
+
+#			$this->setSectionID($section_id);
+
+#			if ( $gallery_id === true )
+#			{
+#				$this->initAdd();
+#			}
+#			elseif ( is_numeric($gallery_id) && !$is_header )
+#			{
+#				self::$gallery_id	= intval($gallery_id);
+#			}
+#			elseif ( is_array($gallery_id) && !$is_header )
+#			{
+#				self::$gallery_id	= intval($gallery_id['gallery_id']);
+#			}
+#			elseif ( is_numeric($section_id) && $section_id > 0 )
+#			{
+#				$this->setGalleryID();
+#			}
+#			else return false;*/
         }
 
         /**
@@ -253,6 +284,96 @@ if (!class_exists("catGallery", false)) {
         public function __destruct()
         {
         }
+
+        /**
+         * return, if in a current object all important values are existing (section_id, gallery_id)
+         *
+         * @access public
+         * @param  integer  $image_id - optional check for $image_id to be numeric
+         * @return boolean true/false
+         *
+         **/
+        private function checkIDs($image_id = null)
+        {
+            if (
+                !self::$section_id ||
+                !self::$gallery_id ||
+                ($image_id && !is_numeric($image_id))
+            ) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        /**
+         * add new catGallery
+         *
+         * @access public
+         * @return integer
+         *
+         **/
+        private function initAdd()
+        {
+            if (!self::$section_id) {
+                return false;
+            }
+
+            if (!file_exists(self::$gallery_root)) {
+                CAT_Helper_Directory::getInstance()->createDirectory(
+                    self::$gallery_root,
+                    null,
+                    true
+                );
+                CAT_Helper_Directory::getInstance()->createDirectory(
+                    self::$gallery_root . "/temp/",
+                    null,
+                    true
+                );
+            }
+            // Add a new catGallery
+            if (
+                CAT_Helper_Page::getInstance()
+                    ->db()
+                    ->query(
+                        "INSERT INTO `:prefix:mod_cc_catgallery` " .
+                            "( `section_id` ) VALUES " .
+                            "( :section_id )",
+                        [
+                            "section_id" => self::$section_id,
+                        ]
+                    )
+            ) {
+                $return = true;
+                $this->setGalleryID();
+
+                // Add initial options for gallery
+                foreach (self::$initOptions as $name => $val) {
+                    if (!$this->saveOptions($name, $val)) {
+                        $return = false;
+                    }
+                }
+                if (
+                    $return &&
+                    CAT_Helper_Directory::getInstance()->createDirectory(
+                        $this->getFolder(),
+                        null,
+                        true
+                    ) &&
+                    CAT_Helper_Directory::getInstance()->createDirectory(
+                        $this->getOriginalFolder(),
+                        null,
+                        true
+                    )
+                ) {
+                    return self::$gallery_id;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } // initAdd()
 
         /**
          * delete a catGallery
