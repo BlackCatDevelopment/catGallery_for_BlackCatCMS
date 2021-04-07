@@ -1,0 +1,74 @@
+.logoGrid {
+  padding: 3rem 1rem;
+  background: #fff;
+}
+.logoGridContainer {
+  -webkit-column-count: 1;
+  -moz-column-count: 1;
+  column-count: 1;
+  -webkit-column-gap: 2rem;
+  -moz-column-gap: 2rem;
+  column-gap: 2rem;
+}
+.logoGrid > div.c_1024 {
+  text-align: center;
+}
+.logoGrid img {
+  margin: 0;
+  max-width: 100%;
+  max-height: 190px;
+  -webkit-transition: all 0.4s ease-in;
+  -moz-transition: all 0.4s ease-in;
+  -o-transition: all 0.4s ease-in;
+  -ms-transition: all 0.4s ease-in;
+  transition: all 0.4s ease-in;
+}
+.logoGrid img:hover {
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  transform: scale(1.1);
+}
+.logoGrid a {
+  border: 0 none;
+}
+.logoGrid figure {
+  width: 100%;
+  display: table;
+  margin: 0;
+  padding: 1.4rem 1rem;
+  -webkit-column-break-inside: avoid;
+  -moz-column-break-inside: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid-column;
+}
+.logoGrid figcaption {
+  padding: 0 1rem;
+}
+@media screen and (min-width: 512px) {
+  .logoGridContainer {
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
+  }
+  .logoGrid article {
+    margin: 0;
+    padding: 0;
+  }
+}
+@media screen and (min-width: 768px) {
+  .logoGridContainer {
+    -webkit-column-count: 5;
+    -moz-column-count: 5;
+    column-count: 5;
+  }
+}
+@media screen and (min-width: 1058px) {
+  .logoGridContainer {
+    margin: 0 auto 2rem;
+  }
+  .logoGrid figure {
+    height: 140px !important;
+  }
+}
