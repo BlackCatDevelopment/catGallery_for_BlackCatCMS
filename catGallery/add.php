@@ -15,7 +15,7 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  *   @author			Matthias Glienke
- *   @copyright			2019, Black Cat Development
+ *   @copyright			2021, Black Cat Development
  *   @link				https://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
@@ -24,28 +24,32 @@
  */
 
 // include class.secure.php to protect this file and the whole CMS!
-if (defined('CAT_PATH')) {	
-	include(CAT_PATH.'/framework/class.secure.php'); 
+if (defined("CAT_PATH")) {
+    include CAT_PATH . "/framework/class.secure.php";
 } else {
-	$oneback = "../";
-	$root = $oneback;
-	$level = 1;
-	while (($level < 10) && (!file_exists($root.'/framework/class.secure.php'))) {
-		$root .= $oneback;
-		$level += 1;
-	}
-	if (file_exists($root.'/framework/class.secure.php')) { 
-		include($root.'/framework/class.secure.php'); 
-	} else {
-		trigger_error(sprintf("[ <b>%s</b> ] Can't include class.secure.php!", $_SERVER['SCRIPT_NAME']), E_USER_ERROR);
-	}
+    $oneback = "../";
+    $root = $oneback;
+    $level = 1;
+    while ($level < 10 && !file_exists($root . "/framework/class.secure.php")) {
+        $root .= $oneback;
+        $level += 1;
+    }
+    if (file_exists($root . "/framework/class.secure.php")) {
+        include $root . "/framework/class.secure.php";
+    } else {
+        trigger_error(
+            sprintf(
+                "[ <b>%s</b> ] Can't include class.secure.php!",
+                $_SERVER["SCRIPT_NAME"]
+            ),
+            E_USER_ERROR
+        );
+    }
 }
 // end include class.secure.php
 
-
 require_once "inc/class.catgallery.php";
 
-$catGallery	= new catGallery( true );
-
+$catGallery = new catGallery(true);
 
 ?>

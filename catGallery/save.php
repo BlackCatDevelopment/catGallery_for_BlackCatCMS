@@ -15,7 +15,7 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  *   @author			Matthias Glienke
- *   @copyright			2019, Black Cat Development
+ *   @copyright			2021, Black Cat Development
  *   @link				https://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
@@ -24,74 +24,88 @@
  */
 
 // include class.secure.php to protect this file and the whole CMS!
-if (defined('CAT_PATH')) {	
-	include(CAT_PATH.'/framework/class.secure.php'); 
+if (defined("CAT_PATH")) {
+    include CAT_PATH . "/framework/class.secure.php";
 } else {
-	$oneback = "../";
-	$root = $oneback;
-	$level = 1;
-	while (($level < 10) && (!file_exists($root.'/framework/class.secure.php'))) {
-		$root .= $oneback;
-		$level += 1;
-	}
-	if (file_exists($root.'/framework/class.secure.php')) {
-		include($root.'/framework/class.secure.php'); 
-	} else {
-		trigger_error(sprintf("[ <b>%s</b> ] Can't include class.secure.php!", $_SERVER['SCRIPT_NAME']), E_USER_ERROR);
-	}
+    $oneback = "../";
+    $root = $oneback;
+    $level = 1;
+    while ($level < 10 && !file_exists($root . "/framework/class.secure.php")) {
+        $root .= $oneback;
+        $level += 1;
+    }
+    if (file_exists($root . "/framework/class.secure.php")) {
+        include $root . "/framework/class.secure.php";
+    } else {
+        trigger_error(
+            sprintf(
+                "[ <b>%s</b> ] Can't include class.secure.php!",
+                $_SERVER["SCRIPT_NAME"]
+            ),
+            E_USER_ERROR
+        );
+    }
 }
 // end include class.secure.php
 
-$val		= CAT_Helper_Validate::getInstance();
-$lang		= CAT_Helper_I18n::getInstance();
-$is_ajax	= $val->sanitizePost( '_cat_ajax','numeric' );
-$backend	= $is_ajax == 1
-					? CAT_Backend::getInstance('Pages', 'pages_modify', false)
-					: CAT_Backend::getInstance('Pages', 'pages_modify');
+$val = CAT_Helper_Validate::getInstance();
+$lang = CAT_Helper_I18n::getInstance();
+$is_ajax = $val->sanitizePost("_cat_ajax", "numeric");
+$backend =
+    $is_ajax == 1
+        ? CAT_Backend::getInstance("Pages", "pages_modify", false)
+        : CAT_Backend::getInstance("Pages", "pages_modify");
 
-
-$ajax_return	= array();
+$ajax_return = [];
 
 // ===============
 // ! Get page id
 // ===============
-$page_id	= $val->get('_REQUEST','page_id','numeric');
-$section_id	= $val->get('_REQUEST','section_id','numeric');
+$page_id = $val->get("_REQUEST", "page_id", "numeric");
+$section_id = $val->get("_REQUEST", "section_id", "numeric");
 
-$update_when_modified		= true; // Tells script to update when this page was last updated
+$update_when_modified = true; // Tells script to update when this page was last updated
 
-if ( CAT_Helper_Page::getPagePermission( $page_id, 'admin' ) !== true )
-{
-	$backend->print_error( 'You do not have permissions to modify this page!' );
+if (CAT_Helper_Page::getPagePermission($page_id, "admin") !== true) {
+    $backend->print_error("You do not have permissions to modify this page!");
 }
 
 include_once "inc/class.catgallery.php";
 
-$catGallery	= new catGallery();
+$catGallery = new catGallery();
 
-$variant		= $val->sanitizePost('variant') != ''
-					? $val->sanitizePost('variant') : $catGallery->getVariant();
+$variant =
+    $val->sanitizePost("variant") != ""
+        ? $val->sanitizePost("variant")
+        : $catGallery->getVariant();
 
-$module_path	= '/modules/cc_catgallery/';
+$module_path = "/modules/cc_catgallery/";
 
-if ( file_exists( CAT_PATH . $module_path .'save/' . $variant . '/save.php' ) )
-	include_once( CAT_PATH . $module_path .'save/' . $variant . '/save.php' );
-elseif ( file_exists( CAT_PATH . $module_path .'save/default/save.php' ) )
-	include_once( CAT_PATH . $module_path .'save/default/save.php' );
+$lang->addFile(
+    $lang->getLang() . ".php",
+    CAT_PATH . $module_path . "languages/"
+);
+
+if (file_exists(CAT_PATH . $module_path . "save/" . $variant . "/save.php")) {
+    include_once CAT_PATH . $module_path . "save/" . $variant . "/save.php";
+} elseif (file_exists(CAT_PATH . $module_path . "save/default/save.php")) {
+    include_once CAT_PATH . $module_path . "save/default/save.php";
+}
 
 $update_when_modified = true;
 CAT_Backend::getInstance()->updateWhenModified();
 
-if( $is_ajax == 1 )
-{
-	print json_encode( $ajax_return );
-	exit();
+if ($is_ajax == 1) {
+    print json_encode($ajax_return);
+    exit();
 } else {
-	$backend->print_success(
-		$ajax_return['message'] ? $ajax_return['message'] : $lang->translate( 'Saved successfully' ),
-		CAT_ADMIN_URL . '/pages/modify.php?page_id=' . $page_id
-	);
-	// Print admin footer
-	$backend->print_footer();	
+    $backend->print_success(
+        $ajax_return["message"]
+            ? $ajax_return["message"]
+            : $lang->translate("Saved successfully"),
+        CAT_ADMIN_URL . "/pages/modify.php?page_id=" . $page_id
+    );
+    // Print admin footer
+    $backend->print_footer();
 }
 ?>
