@@ -14,7 +14,7 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  *   @author			Matthias Glienke
- *   @copyright			2019, Black Cat Development
+ *   @copyright			2021, Black Cat Development
  *   @link				https://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
@@ -22,99 +22,101 @@
  *
  */
 
-
 .cG_imageBack {
-	padding:	1em 0;
+  padding: 1em 0;
 }
-	.cG_imageBack figure {
-		padding:	0;
-		margin:		0;
-	}
-	@media screen and (min-width: 960px) {
-		.cG_imageBack {
-			padding:	6em 0;
-		}
-		.cG_imageBack figure {
-			max-width:	960px;
-			margin:		0 auto;
-		}
-	}
-	.cG_imageBack article {
-		padding:	0 1em;
-	}
-	.cG_iBColor figure {
-		padding:	1em;
-	}
-	.cG_imageBack figure:after {
-		content:	'';
-		display:	block;
-		clear:		both;
-	}
+.cG_imageBack figure {
+  padding: 0;
+  margin: 0;
+}
+.cG_imageBack figcaption {
+  padding: 2em 0;
+}
+@media screen and (min-width: 1080px) {
+  .cG_imageBack {
+    padding: 2em 0 5em 0;
+  }
+  .cG_imageBack figure {
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+}
+.cG_imageBack article {
+  padding: 0 1em;
+}
+.cG_iBColor figure {
+  padding: 1em;
+}
+.cG_imageBack figure:after {
+  content: "";
+  display: block;
+  clear: both;
+}
 /*
 /* !Left Right */
 /*
  */
 
-	.cG_imgR-IMG,
-	.cG_imgL-IMG {
-		display:			-webkit-box;
-		display:			-moz-box;
-		display:			-o-flexbox;
-		display:			-ms-flexbox;
-		display:			flex;
-		-moz-box-wrap:		wrap;
-		-webkit-box-wrap:	wrap;
-		-webkit-flex-wrap:	wrap;
-		-ms-flexbox-wrap:	wrap;
-		-ms-flex-wrap:		wrap;
-		flex-wrap:			wrap;
-		align-items:		flex-start;
-	}
-		.cG_imageBack figure > div,
-		.cG_imageBack figure img {
-			max-width:			100% !important;
-			height:				auto !important;
-			-webkit-box-flex:	1;
-			-webkit-flex:		1 0 38%;
-			-ms-flex:			1 0 38%;
-			flex:				1 0 38%;
-			border:				0 none;
-		}
-		.cG_imageBack figure > div {
-			background-size:		cover;
-			background-position:	center center;
-		}
-		.cG_imageBack figure > div > img {
-			opacity:	0;
-		}
-		.cG_imageBack figure > img {
-			line-height:	1em;
-			margin:			0;
-		}
+.cG_imgR-IMG,
+.cG_imgL-IMG {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -o-flexbox;
+  display: -ms-flexbox;
+  display: flex;
+  -moz-box-wrap: wrap;
+  -webkit-box-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  -ms-flexbox-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+.cG_imageBack figure > div,
+.cG_imageBack figure img {
+  max-width: 100% !important;
+  height: auto !important;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1 0 38%;
+  -ms-flex: 1 0 38%;
+  flex: 1 0 38%;
+  border: 0 none;
+}
+.cG_imageBack figure > div {
+  background-size: cover;
+  background-position: center center;
+}
+.cG_imageBack figure > div > img {
+  opacity: 0;
+}
+.cG_imageBack figure > img {
+  line-height: 1em;
+  margin: 0;
+}
 
 @media (min-width: 768px) {
-	.cG_imgR-IMG,
-	.cG_imgL-IMG {
-		-moz-box-wrap:		nowrap;
-		-webkit-box-wrap:	nowrap;
-		-webkit-flex-wrap:	nowrap;
-		-ms-flexbox-wrap:	nowrap;
-		-ms-flex-wrap:		nowrap;
-		flex-wrap:			nowrap;
-	}
-	.cG_imageBack figure.cG_imgL-IMG > img {
-		margin:	0 1em 0 0;
-	}
-	.cG_imageBack figure.cG_imgR-IMG > div {
-		order:	1;
-		margin:	0 0 0 1em;
-	}
+  .cG_imgR-IMG,
+  .cG_imgL-IMG {
+    -moz-box-wrap: nowrap;
+    -webkit-box-wrap: nowrap;
+    -webkit-flex-wrap: nowrap;
+    -ms-flexbox-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+  }
+  .cG_imageBack figure.cG_imgL-IMG > img {
+    margin: 0 1em 0 0;
+  }
+  .cG_imageBack figure.cG_imgR-IMG > div {
+    order: 1;
+    margin: 0 0 0 1em;
+  }
 }
-@media (min-width: 960px) {
-	article.cG_imgR,
-	article.cG_imgL {
-		padding:	3em 0;
-	}
+@media (min-width: 1080px) {
+  article.cG_imgR,
+  article.cG_imgL {
+    padding: 2em 0;
+  }
 }
 
 /*
@@ -122,34 +124,44 @@
 /*
  */
 @media (min-width: 768px) {
-	.cG_imgL-content {
-		padding:	0 0 0 2em;
-	}
+  .cG_imageBack figcaption.cG_imgL-content {
+    padding: 2em 0 2em 2em;
+  }
+}
+@media (min-width: 1080px) {
+  .cG_imageBack figcaption.cG_imgL-content {
+    padding: 0 0 0 2em;
+  }
 }
 
- /*
+/*
 /* !Right */
 /*
  */
 @media (min-width: 768px) {
-	.cG_imgR-content {
-		padding:	0 2em 0 0;
-	}
+  .cG_imageBack figcaption.cG_imgR-content {
+    padding: 2em 2em 2em 0;
+  }
+}
+@media (min-width: 1080px) {
+  .cG_imageBack figcaption.cG_imgR-content {
+    padding: 0 2em 0 0;
+  }
 }
 /*
 /* !Center */
 /*
  */
-	.cG_imgC {
-		position:	relative;
-		padding:	4em 0 1em 0;
-	}
-		.cG_imgC figure {
-			text-align:	center;
-		}
-		.cG_imgC-content {
-			padding:		1em;
-		}
+.cG_imgC {
+  position: relative;
+  padding: 4em 0 1em 0;
+}
+.cG_imgC figure {
+  text-align: center;
+}
+.cG_imgC-content {
+  padding: 1em;
+}
 
-		.cG_imgC h2 {
-		}
+.cG_imgC h2 {
+}
