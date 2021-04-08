@@ -53,11 +53,11 @@ $module_name = "catGallery";
 $module_function = "page";
 $module_version = "3.0beta";
 $module_platform = "1.3.x";
-$module_author = "Matthias Glienke, creativecat.de";
+$module_author = "Matthias Glienke, letima.de";
 $module_license =
     '<a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License</a>';
 $module_description =
-    'The add on "catGallery" provides a simple way to integrate a sliding media box or simple gallery on your website. For details see <a href="https://github.com/BlackCatDevelopment/catGallery_for_BlackCatCMS" target="_blank">GitHub</a>.<br/><br/>Done by Matthias Glienke, <a class="icon-creativecat" href="http://creativecat.de"> creativecat</a>';
+    'The add on "catGallery" provides a simple way to integrate a sliding media box or simple gallery on your website. For details see <a href="https://github.com/BlackCatDevelopment/catGallery_for_BlackCatCMS" target="_blank">GitHub</a>.<br/><br/>Done by Matthias Glienke, <a class="icon-letima" href="https://letima.de"> letima</a>';
 $module_guid = "273cc174-604b-489a-9042-6955dc193d4e";
 
 ?>
