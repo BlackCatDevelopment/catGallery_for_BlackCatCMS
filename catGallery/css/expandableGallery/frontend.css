@@ -1,17 +1,43 @@
+/**
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 3 of the License, or (at
+ *   your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful, but
+ *   WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ *   General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, see <http://www.gnu.org/licenses/>.
+ *
+ *   @author			Matthias Glienke
+ *   @copyright			2021, Black Cat Development
+ *   @link				https://blackcat-cms.org
+ *   @license			http://www.gnu.org/licenses/gpl.html
+ *   @category			CAT_Modules
+ *   @package			catGallery
+ *
+ */
+
 @font-face {
-  font-family: 'expandableGallery';
-  src:  url('fonts/expandableGallery.eot?kugnnf');
-  src:  url('fonts/expandableGallery.eot?kugnnf#iefix') format('embedded-opentype'),
-    url('fonts/expandableGallery.ttf?kugnnf') format('truetype'),
-    url('fonts/expandableGallery.woff?kugnnf') format('woff'),
-    url('fonts/expandableGallery.svg?kugnnf#expandableGallery') format('svg');
+  font-family: "expandableGallery";
+  src: url("fonts/expandableGallery.eot?kugnnf");
+  src: url("fonts/expandableGallery.eot?kugnnf#iefix")
+      format("embedded-opentype"),
+    url("fonts/expandableGallery.ttf?kugnnf") format("truetype"),
+    url("fonts/expandableGallery.woff?kugnnf") format("woff"),
+    url("fonts/expandableGallery.svg?kugnnf#expandableGallery") format("svg");
   font-weight: normal;
   font-style: normal;
 }
 
-[class^="cG_eG-"]::before, [class*=" cG_eG-"]::before {
+[class^="cG_eG-"]::before,
+[class*=" cG_eG-"]::before {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'expandableGallery' !important;
+  font-family: "expandableGallery" !important;
   speak: none;
   font-style: normal;
   font-weight: normal;
@@ -37,238 +63,236 @@
   content: "\e904";
 }
 
-
 .cG_eG {
-	overflow:	hidden;
-	width:		100%;
-	position:	relative;
+  overflow: hidden;
+  width: 100%;
+  position: relative;
 }
-	.cG_eG figure > div {
-		-webkit-transition:	all 350ms ease-in-out;
-		-moz-transition:	all 350ms ease-in-out;
-		-o-transition:		all 350ms ease-in-out;
-		-ms-transition:		all 350ms ease-in-out;
-		transition:			all 350ms ease-in-out;
-		overflow:			hidden;
-		white-space:		nowrap;
-		width:				100%;
-	}
-	@media (min-width: 768px) {
-		.cG_eG figure > div {
-			width:		62%;
-		}
-	}
-	.cG_eG.active figure > div {
-		width:		100%;
-	}
-	.cG_eG figure {
-		margin:				0;
-		padding:			0;
-	}
-		.cG_eG img {
-			margin:				0;
-			padding:			0;
-			-webkit-transition:	all 350ms ease-in-out;
-			-moz-transition:	all 350ms ease-in-out;
-			-o-transition:		all 350ms ease-in-out;
-			-ms-transition:		all 350ms ease-in-out;
-			transition:			all 350ms ease-in-out;
-			width:				100%;
-		}
-		@media (min-width: 768px) {
-			.cG_eG img {
-				width:		100%;
-			}
-		}
-		.cG_eG img {
-			display:		inline-block;
-		}
-		.cG_eG img:nth-child(1) {
-			height:				auto;
-		}
-		.cG_eG.active img {
-			height:		auto;
-			width:		100%;
-		}
-		.cG_eG figcaption {
-			position:			inherit;
-			top:				0;
-			right:				0;
-			bottom:				.35em;
-			margin:				0;
-			z-index:			1;
-			padding:			2em 1.5em;
-			visibility:			visible;
-			opacity:			1;
-			width:				100%;
-			margin-right:		0%;
-			overflow-y:			auto;
-			overflow-x:			inherit;
-			-webkit-transition:	all 350ms ease-in-out;
-			-moz-transition:	all 350ms ease-in-out;
-			-o-transition:		all 350ms ease-in-out;
-			-ms-transition:		all 350ms ease-in-out;
-			transition:			all 350ms ease-in-out;
-		}
-		@media (min-width: 768px) {
-			.cG_eG figcaption {
-				position:	absolute;
-				width:		38%;
-				padding:	1em;
-			}
-		}
-
-		@media (min-width: 768px) {
-			.cG_eG.active figcaption {
-				visibility:			hidden;
-				opacity:			0;
-				margin-right:		-38%;
-			}
-		}
-
-.cG_eG nav {
-	position:			absolute;
-	text-align:			center;
-	z-index:			6;
-	top:				1em;
-	width:				100%;
-	-webkit-transition:	all 350ms ease-in-out;
-	-moz-transition:	all 350ms ease-in-out;
-	-o-transition:		all 350ms ease-in-out;
-	-ms-transition:		all 350ms ease-in-out;
-	transition:			all 350ms ease-in-out;
+.cG_eG figure > div {
+  -webkit-transition: all 350ms ease-in-out;
+  -moz-transition: all 350ms ease-in-out;
+  -o-transition: all 350ms ease-in-out;
+  -ms-transition: all 350ms ease-in-out;
+  transition: all 350ms ease-in-out;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
 }
 @media (min-width: 768px) {
-	.cG_eG nav {
-		top:		auto;
-		bottom:		1em;
-		width:		62%;
-	}
+  .cG_eG figure > div {
+    width: 62%;
+  }
+}
+.cG_eG.active figure > div {
+  width: 100%;
+}
+.cG_eG figure {
+  margin: 0;
+  padding: 0;
+}
+.cG_eG img {
+  margin: 0;
+  padding: 0;
+  -webkit-transition: all 350ms ease-in-out;
+  -moz-transition: all 350ms ease-in-out;
+  -o-transition: all 350ms ease-in-out;
+  -ms-transition: all 350ms ease-in-out;
+  transition: all 350ms ease-in-out;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .cG_eG img {
+    width: 100%;
+  }
+}
+.cG_eG img {
+  display: inline-block;
+}
+.cG_eG img:nth-child(1) {
+  height: auto;
+}
+.cG_eG.active img {
+  height: auto;
+  width: 100%;
+}
+.cG_eG figcaption {
+  position: inherit;
+  top: 0;
+  right: 0;
+  bottom: 0.35em;
+  margin: 0;
+  z-index: 1;
+  padding: 2em 1.5em;
+  visibility: visible;
+  opacity: 1;
+  width: 100%;
+  margin-right: 0%;
+  overflow-y: auto;
+  overflow-x: inherit;
+  -webkit-transition: all 350ms ease-in-out;
+  -moz-transition: all 350ms ease-in-out;
+  -o-transition: all 350ms ease-in-out;
+  -ms-transition: all 350ms ease-in-out;
+  transition: all 350ms ease-in-out;
+}
+@media (min-width: 768px) {
+  .cG_eG figcaption {
+    position: absolute;
+    width: 38%;
+    padding: 1em;
+  }
+}
+
+@media (min-width: 768px) {
+  .cG_eG.active figcaption {
+    visibility: hidden;
+    opacity: 0;
+    margin-right: -38%;
+  }
+}
+
+.cG_eG nav {
+  position: absolute;
+  text-align: center;
+  z-index: 6;
+  top: 1em;
+  width: 100%;
+  -webkit-transition: all 350ms ease-in-out;
+  -moz-transition: all 350ms ease-in-out;
+  -o-transition: all 350ms ease-in-out;
+  -ms-transition: all 350ms ease-in-out;
+  transition: all 350ms ease-in-out;
+}
+@media (min-width: 768px) {
+  .cG_eG nav {
+    top: auto;
+    bottom: 1em;
+    width: 62%;
+  }
 }
 .cG_eG.active nav {
-	width:		100%;
+  width: 100%;
 }
 
 .cG_eG nav a {
-	position:					relative;
-	bottom:						0;
-	display:					inline-block;
-	height:						.5em;
-	width:						.5em;
-	padding:					0;
-	margin:						.4em;
-	background:					rgba(242, 243, 244, .5);
-	border:						0 none;
-	-webkit-border-radius:		50%;
-	-moz-border-radius:			50%;
-	-o-box-shadow:				50%;
-	-ms-box-shadow:				50%;
-	border-radius:				50%;
-	-webkit-transition:			all 350ms ease-in-out;
-	-moz-transition:			all 350ms ease-in-out;
-	-o-transition:				all 350ms ease-in-out;
-	-ms-transition:				all 350ms ease-in-out;
-	transition:					all 350ms ease-in-out;
-	-webkit-box-shadow:			black 0 0 .25em;
-	-moz-box-shadow:			black 0 0 .25em;
-	-o-box-shadow:				black 0 0 .25em;
-	-ms-box-shadow:				black 0 0 .25em;
-	box-shadow:					black 0 0 .25em;
+  position: relative;
+  bottom: 0;
+  display: inline-block;
+  height: 0.5em;
+  width: 0.5em;
+  padding: 0;
+  margin: 0.4em;
+  background: rgba(242, 243, 244, 0.5);
+  border: 0 none;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -o-box-shadow: 50%;
+  -ms-box-shadow: 50%;
+  border-radius: 50%;
+  -webkit-transition: all 350ms ease-in-out;
+  -moz-transition: all 350ms ease-in-out;
+  -o-transition: all 350ms ease-in-out;
+  -ms-transition: all 350ms ease-in-out;
+  transition: all 350ms ease-in-out;
+  -webkit-box-shadow: black 0 0 0.25em;
+  -moz-box-shadow: black 0 0 0.25em;
+  -o-box-shadow: black 0 0 0.25em;
+  -ms-box-shadow: black 0 0 0.25em;
+  box-shadow: black 0 0 0.25em;
 }
 .cG_eG nav a.active {
-	background:	rgba(242, 243, 244, 1.000);
-	bottom:		-.25em;
-	height:		1em;
-	width:		1em;
+  background: rgba(242, 243, 244, 1);
+  bottom: -0.25em;
+  height: 1em;
+  width: 1em;
 }
 
 .cG_eG button {
-	color:				white;
-	background:			transparent;
-	border:				0 none;
-	font-size:			3em;
-	position:			absolute;
-	z-index:			5;
-	padding:			.05em;
-	margin:				-.75em 0 0 -.5em;
-	height:				auto;
-	text-shadow:		none;
-	display:			none;
-	-webkit-transition:	all 350ms ease-in-out;
-	-moz-transition:	all 350ms ease-in-out;
-	-o-transition:		all 350ms ease-in-out;
-	-ms-transition:		all 350ms ease-in-out;
-	transition:			all 350ms ease-in-out;
-	-webkit-box-shadow:	transparent 0 0 0 0;
-	-moz-box-shadow:	transparent 0 0 0 0;
-	-o-box-shadow:		transparent 0 0 0 0;
-	-ms-box-shadow:		transparent 0 0 0 0;
-	box-shadow:			transparent 0 0 0 0;
-	visibility:			hidden;
-	opacity:			0;
+  width: auto;
+  color: white;
+  background: transparent;
+  border: 0 none;
+  font-size: 3em;
+  position: absolute;
+  z-index: 5;
+  padding: 0.05em;
+  margin: -0.75em 0 0 -0.5em;
+  height: auto;
+  text-shadow: none;
+  display: none;
+  -webkit-transition: all 350ms ease-in-out;
+  -moz-transition: all 350ms ease-in-out;
+  -o-transition: all 350ms ease-in-out;
+  -ms-transition: all 350ms ease-in-out;
+  transition: all 350ms ease-in-out;
+  -webkit-box-shadow: transparent 0 0 0 0;
+  -moz-box-shadow: transparent 0 0 0 0;
+  -o-box-shadow: transparent 0 0 0 0;
+  -ms-box-shadow: transparent 0 0 0 0;
+  box-shadow: transparent 0 0 0 0;
+  visibility: hidden;
+  opacity: 0;
 }
 .cG_eG.active button {
-	visibility:	visible;
-	opacity:	1;
+  visibility: visible;
+  opacity: 1;
 }
 .cG_eG button.inactive {
-	visibility:	hidden;
-	opacity:	0;
+  visibility: hidden;
+  opacity: 0;
 }
-	.cG_eG button.cG_eG-cancel {
-		top:	1.5em;
-		left:	calc( 62% - 1.25em );
-	}
-	.cG_eG button.cG_eG-zoom-in {
-		top:		50%;
-		left:		31%;
-	}
-
-	.cG_eG:hover button.cG_eG-zoom-in {
-		visibility:			visible;
-		opacity:			1;
-		top:				50%;
-		left:				31%;
-	}
-	.cG_eG button.cG_eG-prev {
-		top:	50%;
-		left:	1em;
-	}
-	.cG_eG button.cG_eG-next {
-		top:	50%;
-		left:	calc( 62% - 1.25em );
-	}
-	.cG_eG.active button.cG_eG-next,
-	.cG_eG.active button.cG_eG-cancel {
-		left:	calc( 100% - 1.25em );
-	}
-	.cG_eG.active button.cG_eG-zoom-in {
-		left:		50%;
-		visibility:	hidden;
-		opacity:	0;
-	}
-	
-		@media (min-width: 768px) {
-			.cG_eG button {
-				display:	block;	
-			}
-		}
-
-
-
-.cG_eG h2 {
-	padding:		.2em 0 1em 0;
+.cG_eG button.cG_eG-cancel {
+  top: 1.5em;
+  left: calc(62% - 1.25em);
+}
+.cG_eG button.cG_eG-zoom-in {
+  top: 50%;
+  left: 31%;
 }
 
-.cG_eG h3 {
-	padding:		.2em 0 2em 0;
+.cG_eG:hover button.cG_eG-zoom-in {
+  visibility: visible;
+  opacity: 1;
+  top: 50%;
+  left: 31%;
+}
+.cG_eG button.cG_eG-prev {
+  top: 50%;
+  left: 1em;
+}
+.cG_eG button.cG_eG-next {
+  top: 50%;
+  left: calc(62% - 1.25em);
+}
+.cG_eG.active button.cG_eG-next,
+.cG_eG.active button.cG_eG-cancel {
+  left: calc(100% - 1.25em);
+}
+.cG_eG.active button.cG_eG-zoom-in {
+  left: 50%;
+  visibility: hidden;
+  opacity: 0;
 }
 
 @media (min-width: 768px) {
-	.cG_eG h2 {
-		padding:		.2em 0 .75em 0;
-	}
-	.cG_eG h3 {
-		padding:		.2em 0 1.5em 0;
-	}
+  .cG_eG button {
+    display: block;
+  }
+}
+
+.cG_eG h2 {
+  padding: 0.2em 0 1em 0;
+}
+
+.cG_eG h3 {
+  padding: 0.2em 0 2em 0;
+}
+
+@media (min-width: 768px) {
+  .cG_eG h2 {
+    padding: 0.2em 0 0.75em 0;
+  }
+  .cG_eG h3 {
+    padding: 0.2em 0 1.5em 0;
+  }
 }

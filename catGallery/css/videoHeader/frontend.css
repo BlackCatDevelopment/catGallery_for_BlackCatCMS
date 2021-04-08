@@ -157,7 +157,7 @@
   .cG_headerVideo > div {
     text-align: center;
     position: absolute;
-    left: calc((100vw - 1024px) / 2);
+    left: calc((100vw - 960px) / 2);
   }
 }
 

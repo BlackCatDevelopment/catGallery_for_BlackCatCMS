@@ -14,7 +14,7 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  *   @author			Matthias Glienke
- *   @copyright			2019, Black Cat Development
+ *   @copyright			2021, Black Cat Development
  *   @link				https://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
@@ -22,102 +22,90 @@
  *
  */
 
-$(document).ready(function()
-{
-	if (typeof cG_eG !== 'undefined' && typeof cG_eGLoaded === 'undefined')
-	{
-		cG_eGLoaded	= true;
-		$.each( cG_eG, function( index, cGID )
-		{
-			var	$cG		= $('#cG_eG_' + cGID.cG_id ),
-				$fig	= $cG.children('figure'),
-				$prev	= $fig.children('button.cG_eG-prev'),
-				$next	= $fig.children('button.cG_eG-next'),
-				$exp	= $fig.children('button.cG_eG-zoom-in'),
-				$close	= $fig.children('button.cG_eG-cancel'),
-				$imgs	= $fig.children('div').children('img'),
-				$img	= $imgs.filter(':first'),
-				iCount	= $imgs.length,
-				imgC	= 0;
+$(document).ready(function () {
+  if (typeof cG_eG !== "undefined" && typeof cG_eGLoaded === "undefined") {
+    cG_eGLoaded = true;
+    $.each(cG_eG, function (index, cGID) {
+      var $cG = $("#cG_eG_" + cGID.cG_id),
+        $fig = $cG.children("figure"),
+        $prev = $fig.children("button.cG_eG-prev"),
+        $next = $fig.children("button.cG_eG-next"),
+        $exp = $fig.children("button.cG_eG-zoom-in"),
+        $close = $fig.children("button.cG_eG-cancel"),
+        $imgs = $fig.children("div").children("img"),
+        $img = $imgs.filter(":first"),
+        iCount = $imgs.length,
+        imgC = 0;
 
-			$fig.append('<nav />')
-			$cG.addClass('gec');
+      $fig.append("<nav />");
+      $cG.addClass("gec");
 
-			var	$nav	= $fig.children('nav');
+      var $nav = $fig.children("nav");
 
-			for ( i=0;i<iCount;i++)
-			{
-				$nav.append('<a href="" />')
-			}
-			var	$nLink	= $nav.children('a');
-			
-			$nLink.filter(':first').addClass('active');
+      for (i = 0; i < iCount; i++) {
+        $nav.append('<a href="" />');
+      }
+      var $nLink = $nav.children("a");
 
-			$imgs.click(function(){$cG.addClass('active');});
-			$exp.click(function(){$cG.addClass('active');});
-			$close.click(function(){$cG.removeClass('active');});
-			$next.click(function()
-			{
-				$prev.removeClass('inactive');
-				if ( imgC < iCount-1 )
-				{
-					$('body').scroll();
-					$nLink.eq(imgC).removeClass('active');
-					$img.css({marginLeft: '-' + (100*(++imgC)) + '%'});
-					$nLink.eq(imgC).addClass('active');
-				}
-				if ( imgC == iCount-1 )
-					$next.addClass('inactive');
-			});
-			$prev.click(function()
-			{
-				$('body').scroll();
-				$next.removeClass('inactive');
-				if ( imgC > 0 )
-				{
-					$nLink.eq(imgC).removeClass('active');
-					$img.css({marginLeft: '-' + (100*(--imgC)) + '%'});
-					$nLink.eq(imgC).addClass('active');
-				}
-				if ( imgC == 0 )
-					$prev.addClass('inactive');
-			});
-			$nLink.click(function(e)
-			{
-				$('body').scroll();
-				e.preventDefault();
-				var $cur	= $(this);
-				$nLink.eq(imgC).removeClass('active');
-				imgC	= $cur.index();
-				$nLink.eq(imgC).addClass('active');
-				$img.css({marginLeft: '-' + (100*(imgC)) + '%'});
-				
-				$prev.removeClass('inactive');
-				$next.removeClass('inactive');
-				if ( imgC == 0 )
-					$prev.addClass('inactive');
-				if ( imgC == iCount-1 )
-					$next.addClass('inactive');
-			});
-			
-			var ts;
-			$imgs.bind('touchstart', function (e)
-			{
-				ts = e.originalEvent.touches[0].clientX;
-			});
-			
-			$imgs.bind('touchend', function (e){
-				var te = e.originalEvent.changedTouches[0].clientX;
-				if(ts > te+100)
-				{
-					$next.click();
-				}else if(ts < te-100)
-				{
-					$prev.click();
-				}
-			});
-			
-		});
+      $nLink.filter(":first").addClass("active");
 
-	}
+      $imgs.click(function () {
+        $cG.addClass("active");
+      });
+      $exp.click(function () {
+        $cG.addClass("active");
+      });
+      $close.click(function () {
+        $cG.removeClass("active");
+      });
+      $next.click(function () {
+        $prev.removeClass("inactive");
+        if (imgC < iCount - 1) {
+          $("body").scroll();
+          $nLink.eq(imgC).removeClass("active");
+          $img.css({ marginLeft: "-" + 100 * ++imgC + "%" });
+          $nLink.eq(imgC).addClass("active");
+        }
+        if (imgC == iCount - 1) $next.addClass("inactive");
+      });
+      $prev.click(function () {
+        $("body").scroll();
+        $next.removeClass("inactive");
+        if (imgC > 0) {
+          $nLink.eq(imgC).removeClass("active");
+          $img.css({ marginLeft: "-" + 100 * --imgC + "%" });
+          $nLink.eq(imgC).addClass("active");
+        }
+        if (imgC == 0) $prev.addClass("inactive");
+      });
+      $nLink.click(function (e) {
+        $("body").scroll();
+        e.preventDefault();
+        var $cur = $(this);
+        $nLink.eq(imgC).removeClass("active");
+        imgC = $cur.index();
+        $nLink.eq(imgC).addClass("active");
+        $img.css({ marginLeft: "-" + 100 * imgC + "%" });
+
+        $prev.removeClass("inactive");
+        $next.removeClass("inactive");
+        if (imgC == 0) $prev.addClass("inactive");
+        if (imgC == iCount - 1) $next.addClass("inactive");
+      });
+
+      var ts;
+      $imgs.bind("touchstart", function (e) {
+        ts = e.originalEvent.touches[0].clientX;
+      });
+
+      $imgs.bind("touchend", function (e) {
+        var te = e.originalEvent.changedTouches[0].clientX;
+        if (ts > te + 100) {
+          $next.click();
+        } else if (ts < te - 100) {
+          $prev.click();
+        }
+      });
+    });
+  }
 });
