@@ -22,20 +22,21 @@
  *}
 {if $countImg}
 <section id="columnGrid_{$gallery_id}" class="columnGrid c_960">
-	<div>{$options.wysiwygContent}</div>{$title=""}
-	{foreach $branchen branche}{foreach $branche image}{if $image.published}
-		<figure>
-			<figcaption>
-                {if $title!=$image.options.title}{$title=$image.options.title}<h5>{$title}</h5>{/if}
-			    <img src="{$imgURL}{$image.picture}" {*src="{$image.thumb}" data-src="{$imgURL}{$image.picture}" class="b-lazy"*} alt="{$image.options.alt}{if $image.options.urheber} - ({$image.options.urheber}){/if}">
-			    <div>
-			    	<p>{if $image.options.alt}<strong>{$image.options.alt}</strong><br>{/if}</p>
-			    	{if $image.image_content}<h6>Studiengänge:</h6>
-                    {$image.image_content}{/if}
-			    	
-			    </div>
-            </figcaption>    
-		</figure>
-	{/if}{/foreach}{/foreach}
+    <div>{$options.wysiwygContent}</div>{$title=""}
+    {foreach $category c}{foreach $c image}{if $image.published}
+    <figure>
+        <figcaption>
+            {if $title!=$image.options.title}{$title=$image.options.title}<h5>{$title}</h5>{/if}
+            <img src="{$imgURL}{$image.picture}" {*src="{$image.thumb}" data-src="{$imgURL}{$image.picture}" class="b-lazy"*} alt="{$image.options.alt}{if $image.options.urheber} - ({$image.options.urheber}){/if}">
+            <div>
+                <p>{if $image.options.alt}<strong>{$image.options.alt}</strong><br>{/if}</p>
+                {if $image.image_content}{$image.image_content}{/if}
+                {if $image.options.tel}<p>{$image.options.tel}</p>{/if}
+                {if $image.options.url}<p><a href="{$image.options.url}">{$image.options.url}</a></p>{/if}
+                {if $image.options.adr1 || $image.options.adr2}<p>{$image.options.adr1}<br>{$image.options.adr2}</p>{/if}
+            </div>
+        </figcaption>    
+    </figure>
+    {/if}{/foreach}{/foreach}
 </section>
 {else}{include('../default/view_no_image.tpl')}{/if}

@@ -54,6 +54,6 @@ $LANG = [
     "Internetaddress" => "Internetadresse",
     "Address line" => "Adresszeile",
     "Author" => "Urheber",
-    "Show images alphabetically by company" =>
-        "Zeige die Bilder nach Firmen alphabetisch sortiert",
+    "The images are always grouped according to the category title. The categories are also automatically sorted alphabetically." =>
+        "Die Bilder werden immer nach dem Kategorietitel zusammengefasst. Die Kategorien werden außerdem automatisch alphabetisch sortiert.",
 ];

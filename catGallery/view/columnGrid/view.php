@@ -48,17 +48,17 @@ if (defined("CAT_PATH")) {
 }
 // end include class.secure.php
 
-$branchen = [];
+$category = [];
 foreach ($parser_data["images"] as $index => $image) {
-    $branchen[$image["options"]["title"]][] = $image;
+    $category[$image["options"]["title"]][] = $image;
 }
-if ($parser_data["options"]["sort"]) {
-    ksort($branchen);
-    foreach ($branchen as $br) {
-        usort($br, function ($a, $b) {
-            return $a["alt"] <=> $b["alt"];
-        });
-    }
+
+ksort($category);
+foreach ($category as $br) {
+    usort($br, function ($a, $b) {
+        return $a["alt"] <=> $b["alt"];
+    });
 }
-$parser_data["branchen"] = $branchen;
+
+$parser_data["category"] = $category;
 ?>

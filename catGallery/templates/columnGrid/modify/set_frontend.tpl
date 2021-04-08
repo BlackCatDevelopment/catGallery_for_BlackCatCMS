@@ -28,17 +28,12 @@
 	<input type="hidden" name="gallery_id" value="{$gallery_id}">
 	<input type="hidden" name="action" value="saveOptions">
 	<input type="hidden" name="_cat_ajax" value="1">
-	<input type="hidden" name="options" value="color,wysiwygContent,sort">
+	<input type="hidden" name="options" value="color,wysiwygContent">
 
 	<span class="cc_In200px">{translate('Color')} (#.....):</span>
 	<input type="text" class="cc_In100px" name="color" value="{if $options.color}{$options.color}{/if}"><br>
 
 	<span class="cc_In200px">{translate('Description')}:</span>
 	{show_wysiwyg_editor($cG_wysiwygContent,$cG_wysiwygContent,$options.wysiwygContent,'100%','400px')}
-    <hr>
-	<p class="cc_In300px">
-        <input id="sort_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="sort" value="1" {if $options.sort}checked="checked" {/if}>
-        <label for="sort_{$section_id}">{translate('Show images alphabetically by company')}</label>
-    </p><br>
 	<input type="submit" name="speichern" value="{translate('Save')}">
 </form>
