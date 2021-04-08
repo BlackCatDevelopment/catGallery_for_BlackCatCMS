@@ -13,7 +13,7 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  *   @author			Matthias Glienke
- *   @copyright			2019, Black Cat Development
+ *   @copyright			2021, Black Cat Development
  *   @link				https://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
@@ -24,20 +24,21 @@
 {$count = 0}
 <section class="cG_Team">
 	{if $options.title}<h2>{$options.title}</h2>{/if}
-	{foreach $images image}
-	<figure>
-		<img src="{$imgURL}/{$image.picture}" alt="{$image.options.mitarbeiter}">
+	{$i=0}{foreach $images image}{if $image.published}{$i=$i+1}
+	<figure data-aos="fade-up" data-aos-delay="{$i*50}">
+		<img src="{$imgURL}/{$image.picture}" alt="{$image.options.mitarbeiter}" class="cG_MAimg">
 		<figcaption>
 			<h3 class="title">{$image.options.mitarbeiter}</h3>
 			<h4 class="position">{$image.options.mitarbeiter_title}</h4>
-			<div class="cG_mitInfo">
+			{if $image.image_content}<div class="cG_mitInfo">
 				{$image.image_content}
-			</div>
-			<span><a href="tel:{$image.options.telephone_int}" class="tel icon-phone"> {$image.options.telephone}</a></span><br>
-			<span>{hide_email($image.options.email,'icon-envelop')}</span>
+			</div>{/if}
+			{if $image.options.telephone_int}<span class="teamTel"><a href="tel:{$image.options.telephone_int}" class="ics-mobile"> {$image.options.telephone}</a></span>{/if}
+			{if $image.options.email}<span class="teamMail">{hide_email($image.options.email,'ics-envelop')}</span>{/if}
 		</figcaption>
 	</figure>
 	{$count = $count+1}
-	{/foreach}
+	{/if}{/foreach}
+	{*<img class="cG_t1" src="{cat_url}/templates/ics/css/default/images/triangle.svg" >*}
 </section>
 {else}{include('../default/view_no_image.tpl')}{/if}

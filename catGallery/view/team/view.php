@@ -27,10 +27,11 @@
 if (defined("CAT_PATH")) {
     include CAT_PATH . "/framework/class.secure.php";
 } else {
-    $root = "../";
+    $oneback = "../";
+    $root = $oneback;
     $level = 1;
     while ($level < 10 && !file_exists($root . "/framework/class.secure.php")) {
-        $root .= "../";
+        $root .= $oneback;
         $level += 1;
     }
     if (file_exists($root . "/framework/class.secure.php")) {
@@ -46,4 +47,20 @@ if (defined("CAT_PATH")) {
     }
 }
 // end include class.secure.php
+
+include CAT_PATH . "/modules/cc_catgallery/view/default/view.php";
+
+foreach ($parser_data["images"] as $index => $image) {
+    $parser_data["images"][$index]["options"]["telephone_int"] =
+        "+49" .
+        substr(
+            str_replace(
+                [".", " ", "-"],
+                ["", "", ""],
+                $image["options"]["telephone"]
+            ),
+            1
+        );
+}
+
 ?>
