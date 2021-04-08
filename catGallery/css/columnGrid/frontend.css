@@ -1,0 +1,92 @@
+/**
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 3 of the License, or (at
+ *   your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful, but
+ *   WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ *   General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, see <http://www.gnu.org/licenses/>.
+ *
+ *   @author			Matthias Glienke
+ *   @copyright			2021, Black Cat Development
+ *   @link				https://blackcat-cms.org
+ *   @license			http://www.gnu.org/licenses/gpl.html
+ *   @category			CAT_Modules
+ *   @package			catGallery
+ *
+ */
+
+.columnGrid {
+  padding: 0 1rem 4em 1rem;
+  -webkit-column-count: 1;
+  -moz-column-count: 1;
+  column-count: 1;
+  -webkit-column-gap: 1.4em;
+  -moz-column-gap: 1.4em;
+  column-gap: 1.4em;
+}
+.columnGrid > div {
+  text-align: center;
+  -webkit-column-span: all;
+  -moz-column-span: all;
+  column-span: all;
+}
+.columnGrid img {
+  margin: 0.5em 0 1.4em 0;
+  max-width: 100%;
+}
+.columnGrid figure {
+  width: 100%;
+  display: table;
+  margin: 0;
+  font-size: 0.7em;
+  line-height: 1.4em;
+  -webkit-column-break-inside: avoid;
+  -moz-column-break-inside: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid-column;
+}
+
+.columnGrid h5 {
+  text-align: center;
+  font-size: 1em;
+  color: #02406f;
+  background: #96b9d9;
+  padding: 0.8em 0;
+  margin: 0 0 0.8em 0;
+}
+
+@media screen and (min-width: 512px) {
+  .columnGrid {
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
+  }
+  .columnGrid article {
+    margin: 0;
+    padding: 0;
+  }
+  .columnGrid figure {
+  }
+}
+@media screen and (min-width: 768px) {
+  .columnGrid {
+    -webkit-column-count: 3;
+    -moz-column-count: 3;
+    column-count: 3;
+  }
+}
+@media screen and (min-width: 960px) {
+  .columnGrid {
+    padding: 0 0 4em 0;
+    -webkit-column-count: 4;
+    -moz-column-count: 4;
+    column-count: 4;
+  }
+}
