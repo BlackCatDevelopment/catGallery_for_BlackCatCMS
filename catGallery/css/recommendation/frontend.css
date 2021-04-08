@@ -1,221 +1,267 @@
+/**
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 3 of the License, or (at
+ *   your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful, but
+ *   WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ *   General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, see <http://www.gnu.org/licenses/>.
+ *
+ *   @author			Matthias Glienke, letima
+ *   @copyright			2021, Black Cat Development
+ *   @link				https://blackcat-cms.org
+ *   @license			http://www.gnu.org/licenses/gpl.html
+ *   @category			CAT_Modules
+ *   @package			catGallery
+ *
+ */
+
 .cG_rec {
-	color:					white;
-	background:				black;
-	text-align:				center;
-	padding:				4em 0;
-	background-size:		cover;
-	background-repeat:		no-repeat;
-	background-position:	center center;
-	position:				relative;
-	-webkit-transition:		all 500ms ease-in;
-	-moz-transition:		all 500ms ease-in;
-	-o-transition:			all 500ms ease-in;
-	-ms-transition:			all 500ms ease-in;
-	transition:				all 500ms ease-in;
-	text-shadow:			.1em .1em .2em black;
+  color: white;
+  text-align: center;
+  background: rgb(110, 45, 136);
+  background: -moz-radial-gradient(
+    circle,
+    rgba(110, 45, 136, 1) 0%,
+    rgba(182, 46, 89, 1) 50%,
+    rgba(243, 235, 96, 1) 100%
+  );
+  background: -webkit-radial-gradient(
+    circle,
+    rgba(110, 45, 136, 1) 0%,
+    rgba(182, 46, 89, 1) 50%,
+    rgba(243, 235, 96, 1) 100%
+  );
+  background: radial-gradient(
+    circle,
+    rgba(110, 45, 136, 1) 0%,
+    rgba(182, 46, 89, 1) 50%,
+    rgba(243, 235, 96, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#6e2d88",endColorstr="#f3eb60",GradientType=1);
+  padding: 4rem 0;
+  background-position: 0 90%;
+  background-size: 200% 100%;
+  position: relative;
+  -webkit-transition: all 500ms ease-in;
+  -moz-transition: all 500ms ease-in;
+  -o-transition: all 500ms ease-in;
+  -ms-transition: all 500ms ease-in;
+  transition: all 500ms ease-in;
+  text-shadow: 0.1rem 0.1rem 0.2rem black;
 }
 
-	.cG_rec figure {
-		visibility:				hidden;
-		opacity:				0;
-		height:					0;
-		padding:				0 2em;
-		margin:					0;
-		-webkit-margin-before:	0;
-		-webkit-margin-after:	0;
-		-webkit-margin-start:	0;
-		-webkit-margin-end:		0;
-		-webkit-transition:		all 500ms ease-in;
-		-moz-transition:		all 500ms ease-in;
-		-o-transition:			all 500ms ease-in;
-		-ms-transition:			all 500ms ease-in;
-		transition:				all 500ms ease-in;
-	}
-	@media screen and (min-width: 768px) {
-		.cG_rec figure {
-			padding:			0;
-			margin:				0;
-			overflow:			hidden;
-		}
-	}
-	@media screen and (min-width: 960px) {
-		.cG_rec {
-			margin:		1em auto;
-		}
-	}
-	.cG_rec figure.active {
-		visibility:	visible;
-		height:		auto;
-		opacity:	1;
-	}
-	.cG_rec h2 {
-		color:		white;
-		opacity:	0;
-		padding:	0;
-		margin:		0;
-		height:		0;
-	}
-	.cG_rec img {
-		height:					150px;
-		width:					150px;
-		margin:					2em;
-		display:				inline-block;
-		border:					1px solid black;
-		background-color: 		white;
-		-webkit-border-radius:	50%;
-		-moz-border-radius:		50%;
-		-o-box-shadow:			50%;
-		-ms-box-shadow:			50%;
-		border-radius:			50%;
-		-webkit-box-shadow:		black 0 0 2em .5em;
-		-moz-box-shadow:		black 0 0 2em .5em;
-		-o-box-shadow:			black 0 0 2em .5em;
-		-ms-box-shadow:			black 0 0 2em .5em;
-		box-shadow:				black 0 0 2em .5em;
-	}
-	.cG_rec figcaption {
-		margin:			1em auto 0 auto;
-		font-size:		1em;
-		line-height:	1.6em;
-	}
+.cG_rec + p {
+  text-align: right;
+  margin: 1rem auto 3rem auto;
+}
 
-	.cG_rec .comment {
-		position:		relative;
-	}
-		.cG_rec .comment::before,
-		.cG_rec .comment::after {
-			font-size:	4em;
-			content:	'"';
-			font-style: italic;
-			position:	absolute;
-			color:		#d8dbdd;
-		}
-		.cG_rec .comment::before {
-			left:		0;
-			top:		-.2em;
-		}
-		.cG_rec .comment::after {
-			right:		0;
-			bottom:		-.6em;
-		}
-	@media screen and (min-width: 768px) {
-		.cG_rec figcaption {
-			max-width:		700px;
-			font-size:		1.3em;
-			width:			62vw;
-		}
-		.cG_rec .comment::before {
-			left:		-.5em;
-			top:		-.1em;
-		}
-		.cG_rec .comment::after {
-			right:		-.5em;
-			bottom:		-.3em;
-		}
-	}
-	.cG_rec .author,
-	.cG_rec .position,
-	.cG_rec .firma {
-		padding:	0;
-		margin:		0;
-		display:	block;
-		text-align:	right;
-		font-size:	.7em;
-	}	
+.cG_rec figure {
+  visibility: hidden;
+  opacity: 0;
+  height: 0;
+  padding: 0 2rem;
+  margin: 0;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0;
+  -webkit-transition: all 500ms ease-in;
+  -moz-transition: all 500ms ease-in;
+  -o-transition: all 500ms ease-in;
+  -ms-transition: all 500ms ease-in;
+  transition: all 500ms ease-in;
+}
+@media screen and (min-width: 768px) {
+  .cG_rec figure {
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+  }
+}
+@media screen and (min-width: 960px) {
+  .cG_rec {
+    margin: 1rem auto;
+  }
+}
+.cG_rec figure.active {
+  visibility: visible;
+  height: auto;
+  opacity: 1;
+}
+.cG_rec h2 {
+  color: white;
+  opacity: 0;
+  padding: 0;
+  margin: 0;
+  height: 0;
+}
+.cG_rec img {
+  height: 150px;
+  width: 150px;
+  margin: 2rem;
+  display: inline-block;
+  border: 1px solid rgba(182, 046, 089, 1);
+  background-color: white;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -o-box-shadow: 50%;
+  -ms-box-shadow: 50%;
+  border-radius: 50%;
+  -webkit-box-shadow: rgba(080, 039, 103, 1) 0 0 2rem -0.5rem;
+  -moz-box-shadow: rgba(080, 039, 103, 1) 0 0 2rem -0.5rem;
+  -o-box-shadow: rgba(080, 039, 103, 1) 0 0 2rem -0.5rem;
+  -ms-box-shadow: rgba(080, 039, 103, 1) 0 0 2rem -0.5rem;
+  box-shadow: rgba(080, 039, 103, 1) 0 0 2rem -0.5rem;
+}
+.cG_rec figcaption {
+  margin: 1rem auto 0 auto;
+  font-size: 1rem;
+  line-height: 1.6rem;
+}
 
-	.cG_rec .author {
-		padding-top:	2em;
-		font-size:		.9em;
-		line-height:	.9em;
-		color:			#f2f3f4;
-	}
-	.cG_rec .position {
-		color:		#b1bec7;
-	}
-	.cG_rec .firma {
-		color:		#d8dbdd;
-		margin-top:	-.6em;
-		font-size:	.8em;
-	}
-	
-	
-	.cG_rec button {
-		background:				rgba(242, 243, 244, 0);
-		border:					0 none;
-		margin:					-.35em 0 0 0;
-		font-size: 				1.5em;
-		font-weight:			100;
-		text-shadow:			none;
-		height:					2em;
-		width:					2em;
-		text-align:				center;
-		position:				absolute;
-		bottom:					.75em;
-		visibility:				hidden;
-		opacity:				0;
-		-webkit-border-radius:	50%;
-		-moz-border-radius:		50%;
-		-o-box-shadow:			50%;
-		-ms-box-shadow:			50%;
-		border-radius:			50%;
-		-webkit-box-shadow:		transparent 0 0 0 0;
-		-moz-box-shadow:		transparent 0 0 0 0;
-		-o-box-shadow:			transparent 0 0 0 0;
-		-ms-box-shadow:			transparent 0 0 0 0;
-		box-shadow:				transparent 0 0 0 0;
-		-webkit-transition:		opacity 250ms ease-in, background 500ms ease-in;
-		-moz-transition:		opacity 250ms ease-in, background 500ms ease-in;
-		-o-transition:			opacity 250ms ease-in, background 500ms ease-in;
-		-ms-transition:			opacity 250ms ease-in, background 500ms ease-in;
-		transition:				opacity 250ms ease-in, background 500ms ease-in;
-	}
-		.cG_rec button.prev {
-			padding:		0 .075em .075em 0;
-			left:			30%;
-		}
-		.cG_rec button.next {
-			padding:		0 0 .075em .075em;
-			right:			30%;
-		}
-	.cG_rec button.active {
-		background:			rgba(242, 243, 244, .2);
-		visibility:			visible;
-		opacity:			1;
-	}
+.cG_rec .comment {
+  position: relative;
+}
+.cG_rec .comment::before,
+.cG_rec .comment::after {
+  font-size: 4rem;
+  content: '"';
+  font-style: italic;
+  position: absolute;
+  color: #d8dbdd;
+}
+.cG_rec .comment::before {
+  left: 0;
+  top: -0.2rem;
+}
+.cG_rec .comment::after {
+  right: 0;
+  bottom: -0.6rem;
+}
+@media screen and (min-width: 768px) {
+  .cG_rec figcaption {
+    max-width: 700px;
+    font-size: 1rem;
+    width: 62vw;
+  }
+  .cG_rec .comment::before {
+    left: -2rem;
+    top: -0.1rem;
+  }
+  .cG_rec .comment::after {
+    right: -0.5rem;
+    bottom: -0.3rem;
+  }
+}
+.cG_rec .author,
+.cG_rec .position,
+.cG_rec .firma {
+  padding: 0;
+  margin: 0;
+  display: block;
+  text-align: right;
+  font-size: 0.7rem;
+}
 
-	.cG_rec:hover button.active {
-		background:			rgba(242, 243, 244, .2);
-		visibility:			visible;
-		opacity:			1;
-	}
+.cG_rec .author {
+  padding-top: 2rem;
+  font-size: 0.9rem;
+  line-height: 0.9rem;
+  color: #f2f3f4;
+}
+.cG_rec .position {
+  color: #b1bec7;
+}
+.cG_rec .firma {
+  color: #d8dbdd;
+  margin-top: -0.6rem;
+  font-size: 0.8rem;
+}
 
-	@media screen and (min-width: 768px) {
-		.cG_rec button {
-			top:			50%;
-			bottom:			auto;
-			line-height:	2.25em;
-			font-size:		3em;
-			visibility:		hidden;
-			opacity:		0;
-			height:			2.2em;
-			width:			2.2em;
-		}
-		.cG_rec button.active {
-			background:			rgba(242, 243, 244, 0);
-			visibility:			hidden;
-			opacity:			0;
-		}
-		.cG_rec button.prev {
-			padding:		0 .075em .075em 0;
-			left:			.7em;
-		}
-		.cG_rec button.next {
-			padding:		0 0 .075em .075em;
-			right:			.7em;
-		}
-		.cG_rec:hover button.active {
-			background:			rgba(242, 243, 244, .2);
-			visibility:			visible;
-			opacity:			1;
-		}
-	}
+.cG_rec button {
+  background: rgba(242, 243, 244, 0);
+  border: 0 none;
+  margin: -0.35rem 0 0 0;
+  font-size: 1.5rem;
+  font-weight: 100;
+  text-shadow: none;
+  height: 2rem;
+  width: 2rem;
+  text-align: center;
+  position: absolute;
+  bottom: 0.75rem;
+  visibility: hidden;
+  opacity: 0;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -o-box-shadow: 50%;
+  -ms-box-shadow: 50%;
+  border-radius: 50%;
+  -webkit-box-shadow: transparent 0 0 0 0;
+  -moz-box-shadow: transparent 0 0 0 0;
+  -o-box-shadow: transparent 0 0 0 0;
+  -ms-box-shadow: transparent 0 0 0 0;
+  box-shadow: transparent 0 0 0 0;
+  -webkit-transition: opacity 250ms ease-in, background 500ms ease-in;
+  -moz-transition: opacity 250ms ease-in, background 500ms ease-in;
+  -o-transition: opacity 250ms ease-in, background 500ms ease-in;
+  -ms-transition: opacity 250ms ease-in, background 500ms ease-in;
+  transition: opacity 250ms ease-in, background 500ms ease-in;
+}
+.cG_rec button.prev {
+  padding: 0 0.075rem 0.075rem 0;
+  left: 30%;
+}
+.cG_rec button.next {
+  padding: 0 0 0.075rem 0.075rem;
+  right: 30%;
+}
+.cG_rec button.active {
+  background: rgba(242, 243, 244, 0.2);
+  visibility: visible;
+  opacity: 1;
+}
+
+.cG_rec:hover button.active {
+  background: rgba(242, 243, 244, 0.2);
+  visibility: visible;
+  opacity: 1;
+}
+
+@media screen and (min-width: 768px) {
+  .cG_rec button {
+    top: 50%;
+    bottom: auto;
+    line-height: 2.25rem;
+    font-size: 2rem;
+    visibility: hidden;
+    opacity: 0;
+    height: 4.4rem;
+    width: 4.4rem;
+  }
+  .cG_rec button.active {
+    background: rgba(242, 243, 244, 0);
+    visibility: hidden;
+    opacity: 0;
+  }
+  .cG_rec button.prev {
+    padding: 0 0.075rem 0.075rem 0;
+    left: 0.7rem;
+  }
+  .cG_rec button.next {
+    padding: 0 0 0.075rem 0.075rem;
+    right: 0.7rem;
+  }
+  .cG_rec:hover button.active {
+    background: rgba(242, 243, 244, 0.2);
+    visibility: visible;
+    opacity: 1;
+  }
+}

@@ -13,7 +13,7 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program; if not, see <http://www.gnu.org/licenses>.
  *
- *   @author			Matthias Glienke
+ *   @author			Matthias Glienke, letima
  *   @copyright			2021, Black Cat Development
  *   @link				https://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
