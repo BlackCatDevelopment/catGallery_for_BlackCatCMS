@@ -51,7 +51,7 @@ if (defined("CAT_PATH")) {
 $module_directory = "cc_catgallery";
 $module_name = "catGallery";
 $module_function = "page";
-$module_version = "3.0";
+$module_version = "3.0beta";
 $module_platform = "1.3.x";
 $module_author = "Matthias Glienke, creativecat.de";
 $module_license =
