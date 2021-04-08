@@ -48,39 +48,10 @@ if (defined("CAT_PATH")) {
 }
 // end include class.secure.php
 
-$mod_headers = [
-    "backend" => [
-        "css" => [
-            [
-                "media" => "all",
-                "file" => "modules/cc_catgallery/css/default/backend.css",
-            ],
-        ],
-        "js" => [
-            "/modules/cc_catgallery/js/default/dropzone.min.js",
-            "/modules/cc_catgallery/js/default/backend.js",
-        ],
-        "jquery" => [
-            [
-                "core" => true,
-            ],
-        ],
-    ],
-    "frontend" => [
-        "css" => [
-            [
-                "media" => "all",
-                "file" =>
-                    "modules/cc_catgallery/css/recommendation/frontend.css",
-            ],
-        ],
-        "js" => ["/modules/cc_catgallery/js/recommendation/frontend.js"],
-        "jquery" => [
-            [
-                "core" => true,
-            ],
-        ],
-    ],
-];
+// list of all pages for dropdown, sorted by parent->child
+$parser_data["pages"] = CAT_Helper_ListBuilder::sort(
+    CAT_Helper_Page::getPages(CAT_Backend::isBackend()),
+    0
+);
 
 ?>
