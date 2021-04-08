@@ -13,7 +13,7 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  *   @author			Matthias Glienke
- *   @copyright			2019, Black Cat Development
+ *   @copyright			2021, Black Cat Development
  *   @link				https://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
