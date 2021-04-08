@@ -13,7 +13,7 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  *   @author			Matthias Glienke
- *   @copyright			2019, Black Cat Development
+ *   @copyright			2021, Black Cat Development
  *   @link				https://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
@@ -21,7 +21,7 @@
  *
  *}
 {if $countImg}
-<script type="text/javascript">
+<script>
 	if (typeof cG_logo === 'undefined')
 	\{
 		cG_logo	= [];
@@ -35,5 +35,7 @@
 <section id="cG_logo_{$gallery_id}" class="cG_logo">
 	<div class="cG_logo_wrap">{foreach $images index image}{if $image.published}<img src="{$imgURL}/{$image.picture}" alt="{$image.options.alt}"{if $image.options.title} title="{$image.options.title}"{/if}>{/if}{/foreach}</div>
 	<span class="cG_logo_sh_l"></span><span class="cG_logo_sh_r"></span>
+    {if $options.urlPage}<a href="{cmsplink($options.urlPage)}" class="button ics-ics-logo greenButton">{if $options.buttonText}{$options.buttonText}{else}Mehr erfahren...{/if}</a>{/if}
 </section>
 {else}{include('../default/view_no_image.tpl')}{/if}
+

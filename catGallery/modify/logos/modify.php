@@ -27,10 +27,11 @@
 if (defined("CAT_PATH")) {
     include CAT_PATH . "/framework/class.secure.php";
 } else {
-    $root = "../";
+    $oneback = "../";
+    $root = $oneback;
     $level = 1;
     while ($level < 10 && !file_exists($root . "/framework/class.secure.php")) {
-        $root .= "../";
+        $root .= $oneback;
         $level += 1;
     }
     if (file_exists($root . "/framework/class.secure.php")) {
@@ -46,4 +47,11 @@ if (defined("CAT_PATH")) {
     }
 }
 // end include class.secure.php
+
+// list of all pages for dropdown, sorted by parent->child
+$parser_data["pages"] = CAT_Helper_ListBuilder::sort(
+    CAT_Helper_Page::getPages(CAT_Backend::isBackend()),
+    0
+);
+
 ?>

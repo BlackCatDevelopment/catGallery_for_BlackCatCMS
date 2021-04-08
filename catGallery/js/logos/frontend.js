@@ -14,7 +14,7 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  *   @author			Matthias Glienke
- *   @copyright			2019, Black Cat Development
+ *   @copyright			2021, Black Cat Development
  *   @link				https://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
@@ -22,31 +22,36 @@
  *
  */
 
-function scroller($imgs,$wrap)
-{
-	var $img	= $imgs.filter(':first');
-	$img.animate(
-	{
-		marginLeft:	'-' + ($img.outerWidth()+1.5*parseInt($wrap.css('font-size'))) + 'px',		
-	}, 8000, 'linear', function()
-	{
-		$(this).appendTo($wrap).css({ marginLeft: '0px' });
-		scroller($wrap.children('img'),$wrap);
-	});
+function scroller($imgs, $wrap) {
+  var $img = $imgs.filter(":first"),
+    w = $img.outerWidth() + 5 * parseInt($wrap.css("font-size"));
+
+  $img.animate(
+    {
+      marginLeft: "-" + w + "px",
+    },
+    w * 10,
+    "linear",
+    function () {
+      $(this).appendTo($wrap).css({ marginLeft: "0px" });
+      scroller($wrap.children("img"), $wrap);
+    }
+  );
 }
 
-$(document).ready(function()
-{
-	if (typeof cG_logo !== 'undefined' && typeof cG_logoLoaded === 'undefined')
-	{
-		cG_logoLoaded	= true;
-		$.each( cG_logo, function( index, cGID )
-		{
-			var	$cG		= $('#cG_logo_' + cGID.cG_id );
-				$cG.children('.cG_logo_wrap').children('img').clone().appendTo($cG.children('.cG_logo_wrap'));
-			var $wrap	= $cG.children('.cG_logo_wrap'),
-				$imgs	= $wrap.children('img');
-				scroller($imgs,$wrap);
-		});
-	}
+$(document).ready(function () {
+  if (typeof cG_logo !== "undefined" && typeof cG_logoLoaded === "undefined") {
+    cG_logoLoaded = true;
+    $.each(cG_logo, function (index, cGID) {
+      var $cG = $("#cG_logo_" + cGID.cG_id);
+      $cG
+        .children(".cG_logo_wrap")
+        .children("img")
+        .clone()
+        .appendTo($cG.children(".cG_logo_wrap"));
+      var $wrap = $cG.children(".cG_logo_wrap"),
+        $imgs = $wrap.children("img");
+      scroller($imgs, $wrap);
+    });
+  }
 });
