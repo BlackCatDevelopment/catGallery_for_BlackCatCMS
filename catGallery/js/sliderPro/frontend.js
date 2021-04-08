@@ -14,7 +14,7 @@
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
  *   @author			Matthias Glienke
- *   @copyright			2019, Black Cat Development
+ *   @copyright			2021, Black Cat Development
  *   @link				https://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
@@ -22,24 +22,24 @@
  *
  */
 
-$(document).ready(function()
-{
-	if (typeof sliderProIDs !== 'undefined' && typeof sliderProLoaded === 'undefined')
-	{
-		// This is a workaround if backend.js is loaded twice
-		sliderProLoaded	= true;
-		$.each( sliderProIDs, function( index, cGID )
-		{
-			$( '#my-slider_' + cGID.gallery_id).sliderPro({
-				'width'					: cGID.resX,
-				'height'				: cGID.resY,
-				'arrows'				: cGID.arrows,
-				'buttons'				: cGID.buttons,
-				'autoplay'				: cGID.autoplay,
-				'fadeArrows'			: cGID.fadeArrows,
-				'centerSelectedSlide'	: cGID.centerSelectedSlide,
-				'rightToLeft'			: cGID.rightToLeft
-			});
-		});
-	}
+$(document).ready(function () {
+  if (
+    typeof sliderProIDs !== "undefined" &&
+    typeof sliderProLoaded === "undefined"
+  ) {
+    // This is a workaround if backend.js is loaded twice
+    sliderProLoaded = true;
+    $.each(sliderProIDs, function (index, cGID) {
+      $("#my-slider_" + cGID.gallery_id).sliderPro({
+        width: cGID.resX,
+        height: cGID.resY,
+        arrows: cGID.arrows,
+        buttons: cGID.buttons,
+        autoplay: cGID.autoplay,
+        fadeArrows: cGID.fadeArrows,
+        centerSelectedSlide: cGID.centerSelectedSlide,
+        rightToLeft: cGID.rightToLeft,
+      });
+    });
+  }
 });
