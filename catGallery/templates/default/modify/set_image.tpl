@@ -33,7 +33,7 @@
 		<span class="cc_In200px">{translate('Adjust horizontal')}:</span>
 		<input type="text" class="cc_In100px" name="resize_x" value="{if $options.resize_x}{$options.resize_x}{else}724{/if}" /> px<br/>
 		<span class="cc_In200px">{translate('Adjust vertical')}:</span>
-		<input type="text" class="cc_In100px" name="resize_y" value="{if $options.resize_x}{$options.resize_y}{else}407{/if}" /> px<br/>
+		<input type="text" class="cc_In100px" name="resize_y" value="{if $options.resize_y}{$options.resize_y}{else}407{/if}" /> px<br/>
 	</p>
 	<input type="submit" name="speichern" value="{translate('Save')}" />
 </form>
