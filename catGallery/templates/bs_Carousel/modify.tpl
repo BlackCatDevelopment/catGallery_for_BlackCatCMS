@@ -38,7 +38,7 @@
 			<li class="cc_catG_tab active">{include(../default/modify/set_dropzone.tpl)}</li>
 			<li class="cc_catG_tab">{include(modify/set_frontend.tpl)}</li>
 			<li class="cc_catG_tab">{include(modify/set_carousel.tpl)}</li>
-			<li class="cc_catG_tab">{include(modify/set_image.tpl)}</li>
+			<li class="cc_catG_tab">{include(../default/modify/set_image.tpl)}</li>
 		</ul>
 		<div class="clear"></div>
 	</div>
