@@ -119,8 +119,8 @@ if (!class_exists("catGallery", false)) {
             "animSpeed" => "500",
             "pauseTime" => "4000",
             "label" => "1",
-            "resize_x" => "781",
-            "resize_y" => "350",
+            "resize_x" => "800",
+            "resize_y" => "600",
             "auto_play" => "1",
         ];
 

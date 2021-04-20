@@ -31,9 +31,9 @@
 	<input type="hidden" name="options" value="resize_x,resize_y" />
 	<p class="cc_catG_dreispalten">
 		<span class="cc_In200px">{translate('Picture width')}:</span>
-		<input type="text" class="cc_In100px" name="resize_x" value="{if $options.resize_x}{$options.resize_x}{else}640{/if}" /> px<br/>
+		<input type="text" class="cc_In100px" name="resize_x" value="{if $options.resize_x}{$options.resize_x}{else}800{/if}" /> px<br/>
 		<span class="cc_In200px">{translate('Picture height')}:</span>
-		<input type="text" class="cc_In100px" name="resize_y" value="{if $options.resize_y}{$options.resize_y}{else}480{/if}" /> px<br/><br/>
+		<input type="text" class="cc_In100px" name="resize_y" value="{if $options.resize_y}{$options.resize_y}{else}600{/if}" /> px<br/><br/>
 	</p>
 	<input type="submit" name="speichern" value="{translate('Save')}" />
 </form>
