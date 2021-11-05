@@ -87,9 +87,10 @@
 	&nbsp;&nbsp;
 	<label for="sheadlevel_{$section_id}" class="cc_In50px">{translate('Size')}:</label>
 	<select id="sheadlevel_{$section_id}" name="sheadlevel">
-		{foreach array(1,2,3,4) i}
-		<option value="{$i}"{if $options.sheadlevel && $i == $options.sheadlevel} selected="selected"{/if}>Level {$i}</option>
-		{/foreach}
+		<option value="1"{if $options.sheadlevel && 1 == $options.sheadlevel} selected="selected"{/if}>Level 1</option>
+		<option value="2"{if $options.sheadlevel && 2 == $options.sheadlevel} selected="selected"{/if}>Level 2</option>
+		<option value="3"{if $options.sheadlevel && 3 == $options.sheadlevel} selected="selected"{/if}>Level 3</option>
+		<option value="4"{if $options.sheadlevel && 4 == $options.sheadlevel} selected="selected"{/if}>Level 4</option>
 	</select>
 	&nbsp;&nbsp;
 	<label for="stextstyle_{$section_id}" class="cc_In50px">{translate('Style')}:</label>

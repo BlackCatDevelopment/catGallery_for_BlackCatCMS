@@ -44,7 +44,7 @@
 	<div id="carousel" class="carousel slide {if $options.cfade}carousel-fade{/if}" data-ride="carousel">
 <!-- Carousel content begin -->
 		<div class="carousel-inner">
-			{$firstitem = true}
+			{assign var=firstitem value=true}
 			{foreach $images image}{if $image.published}
 				<div class="carousel-item {if $firstitem}active{/if}">
 					<img class="d-block w-100" src="{$imgURL}{$image.picture}" alt="{$image.options.alt}">
@@ -53,14 +53,14 @@
 						{if $options.icontent}<p>{$image.image_content}</p>{/if}
 					</div>
 				</div>
-			{$firstitem = false}
+			{assign var=firstitem value=false}
 			{/if}{/foreach}
 		</div>
 <!-- Carousel indicators begin -->
 		{if $options.cindicators}
 			<ol class="carousel-indicators">
-				{$slideto=0;}{foreach $images image}{if $image.published}
-					<li data-target="#carousel" data-slide-to="{$slideto++}"></li>
+				{assign var=slideto value=0}{foreach $images image}{if $image.published}
+					<li data-target="#carousel" data-slide-to="{assign var=slideto value=$slideto+1}"></li>
 				{/if}{/foreach}
 			</ol>
 		{/if}

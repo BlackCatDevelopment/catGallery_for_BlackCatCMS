@@ -14,7 +14,7 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
- *   @author			Dirk Grebe
+ *   @author			Matthias Glienke, letima development
  *   @copyright			2021, Black Cat Development
  *   @link				https://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
@@ -23,6 +23,7 @@
  *
  */
 
+// include class.secure.php to protect this file and the whole CMS!
 if (defined("CAT_PATH")) {
     include CAT_PATH . "/framework/class.secure.php";
 } else {
@@ -45,39 +46,11 @@ if (defined("CAT_PATH")) {
         );
     }
 }
+// end include class.secure.php
 
-// --- bs_Carousel ---
-$LANG = [
-    "Options for carousel" => "Optionen f&uuml;rs Carousel",
-    "Bootstrap 4 variant for BC 1.3." =>
-        "Bootstrap 4 Variante f&uuml;r BC 1.3.",
-    "Section Header Text Pos." => "Bereich Text Position",
-    "Default" => "Standard",
-    "Align Centered" => "Zentriert",
-    "Align Right" => "Rechts",
-    "Section Headline" => "Bereich Kopfzeile",
-    "Headline" => "&Uuml;berschrift",
-    "Size" => "Gr&ouml;&szlig;e",
-    "Style" => "Textart",
-    "Uppercase" => "Gro&szlig;buchstaben",
-    "Divider" => "Trennlinie",
-    "Divider Icon" => "Trennzeichen",
-    "Divider Color" => "Trennlinienfarbe",
-    "White" => "Wei&szlig;",
-    "Primary" => "Prim&auml;r",
-    "Secondary" => "Sekund&auml;r",
-    "Success" => "Erfolgreich",
-    "Danger" => "Gef&auml;hrlich",
-    "Warning" => "Warnung",
-    "Info" => "Info",
-    "Light" => "Hell",
-    "Dark" => "Dunkel",
-    "Section Lead Text" => "Bereich Haupttext",
-    "Activate fade" => "Bilder ein-/ausblenden",
-    "Show indicators" => "Positionsanzeiger anzeigen",
-    "Show image title" => "Bild Titel anzeigen",
-    "Show image description" => "Bild Beschreibung anzeigen",
-    "Image title" => "Bild Titel",
-    "You need to install lib_bootstrap_4 for this variant." =>
-        "F&uuml;r diese Variante muss lib_bootstrap_4 installiert sein.",
-];
+// Check if lib_bootstrap_4 is installed
+$parser_data["lib_bootstrap_4"] = CAT_Helper_Addons::getAddonDetails(
+    "lib_bootstrap_4"
+);
+
+?>

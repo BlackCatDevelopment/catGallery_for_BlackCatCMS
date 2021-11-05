@@ -42,6 +42,7 @@
 		</ul>
 		<div class="clear"></div>
 	</div>
+	{if !$lib_bootstrap_4}<h3 class="fc_gradient_red center"><br>{translate('You need to install lib_bootstrap_4 for this variant.')}<br><br></h3>{/if}
 	<p class="catG_IMG_y">{translate('Existing images')}</p>
 	<p class="catG_IMG_n">{translate('No images available')}</p>
 	<ul id="cc_catG_imgs_{$gallery_id}" class="cc_catG_imgs">
