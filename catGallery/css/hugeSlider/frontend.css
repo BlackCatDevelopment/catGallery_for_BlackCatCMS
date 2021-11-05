@@ -146,7 +146,6 @@
   text-shadow: 0 0 1rem rgba(014, 020, 031, 1);
 }
 .cG_hS p {
-  max-width: 960px;
   margin: 0.6rem auto;
 }
 .cG_hS figure {
@@ -298,10 +297,10 @@
     left: 0;
     right: 0;
   }
-  .cG_hS figure.cG_hS_figright h1,
-  .cG_hS figure.cG_hS_figleft h1,
-  .cG_hS figure.cG_hS_figright h2,
-  .cG_hS figure.cG_hS_figleft h2 {
+  .cG_hS figure.cG_hS_figright :not(.c_960) h1,
+  .cG_hS figure.cG_hS_figleft :not(.c_960) h1,
+  .cG_hS figure.cG_hS_figright :not(.c_960) h2,
+  .cG_hS figure.cG_hS_figleft :not(.c_960) h2 {
     width: 62%;
   }
 }

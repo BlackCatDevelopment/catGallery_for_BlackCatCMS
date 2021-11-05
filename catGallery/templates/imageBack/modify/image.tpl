@@ -50,7 +50,7 @@
 			<p{if !$image} class="cc_catG_disabled"{/if}>
 				<strong>{translate('Place image')}:<br></strong>
 				<select name="type" {if !$image}disabled{/if}>
-					<option value="0"{if $image.options.type == 0} selected="selected"{/if}>{translate('Right')}:</option>
+					<option value="0"{if $image.options.type == 0} selected="selected"{/if}>{translate('Right')}</option>
 					<option value="1"{if $image.options.type == 1} selected="selected"{/if}>{translate('Left')}</option>
 					<option value="2"{if $image.options.type == 2} selected="selected"{/if}>{translate('Center')}</option>
 				</select>
