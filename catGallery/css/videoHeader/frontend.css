@@ -157,7 +157,12 @@
   .cG_headerVideo > div {
     text-align: center;
     position: absolute;
-    left: calc((100vw - 960px) / 2);
+    left: 50%;
+    -webkit-transform: translate(-50%, 0);
+    -moz-transform: translate(-50%, 0);
+    -ms-transform: translate(-50%, 0);
+    -o-transform: translate(-50%, 0);
+    transform: translate(-50%, 0);
   }
 }
 
