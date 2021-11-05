@@ -49,15 +49,8 @@ if (defined("CAT_PATH")) {
 // end include class.secure.php
 
 include CAT_PATH . "/modules/catGallery/view/default/view.php";
-echo "****";
+
 foreach ($parser_data["images"] as $index => $image) {
-    $catGallery->createImg($image["image_id"], 215, 252);
-    $parser_data["images"][$index]["thumb"] = sprintf(
-        "%s/thumbs_%s_%s/",
-        $catGallery->getFolder(false),
-        215,
-        252
-    );
     $parser_data["images"][$index]["options"]["telephone_int"] =
         "+49" .
         substr(
