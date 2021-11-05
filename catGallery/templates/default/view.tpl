@@ -23,29 +23,33 @@
  *}
 {if $countImg}
 <script >
-	$(document).ready( function()
+	if (typeof cG_def === 'undefined')
 	\{
-		$("#slider_skitter_{$section_id}").skitter(
-		\{
-			{if $options.effect}animation:		"{$options.effect}",{/if}
-			interval:		{if $pauseTime}{$pauseTime}{else}4000{/if},
-			velocity:		{if $options.velocity}"{$options.velocity}"{else}"1.0"{/if},
-			stop_over:		{if $options.stop_over}true{else}false{/if},
-			auto_play:		{if $options.auto_play}true{else}false{/if},
-			navigation:		{if $options.navigation}true{else}false{/if},
-			thumbs:			{if $options.thumbs}true{else}false{/if},
-			progressbar:	{if $options.progressbar}true{else}false{/if},
-			numbers:		{if $options.numbers}true{else}false{/if},
-			controls:		{if $options.controls}true{else}false{/if},
-			dots:			{if $options.dots}true{else}false{/if},
-			focus:			{if $options.focus}true{else}false{/if},
-			label:			{if $options.label}true{else}false{/if},
-			preview:		{if $options.preview}true{else}false{/if},
-		});
+		cG_def	= [];
+	}
+	cG_def.push(
+	\{
+		'section_id'	: {$section_id},
+		'cG_id'			: {$gallery_id},
+		{if $options.effect}animation:		"{$options.effect}",{/if}
+		interval:		{if $pauseTime}{$pauseTime}{else}4000{/if},
+		velocity:		{if $options.velocity}"{$options.velocity}"{else}"1.0"{/if},
+		stop_over:		{if $options.stop_over}true{else}false{/if},
+		auto_play:		{if $options.auto_play}true{else}false{/if},
+		navigation:		{if $options.navigation}true{else}false{/if},
+		thumbs:			{if $options.thumbs}true{else}false{/if},
+		progressbar:	{if $options.progressbar}true{else}false{/if},
+		numbers:		{if $options.numbers}true{else}false{/if},
+		controls:		{if $options.controls}true{else}false{/if},
+		dots:			{if $options.dots}true{else}false{/if},
+		focus:			{if $options.focus}true{else}false{/if},
+		label:			{if $options.label}true{else}false{/if},
+		preview:		{if $options.preview}true{else}false{/if}
 	});
+
 </script>
 
-<div class="skitter" id="slider_skitter_{$section_id}">
+<div class="skitter" id="slider_skitter_{$gallery_id}">
 	<ul>
 		{foreach $images as image}{if $image.published}
 		<li>

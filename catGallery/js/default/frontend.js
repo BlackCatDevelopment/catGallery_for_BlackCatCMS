@@ -21,3 +21,27 @@
  *   @package			catGallery
  *
  */
+$(document).ready(function () {
+  if (typeof cG_def !== "undefined" && typeof cG_defLoaded === "undefined") {
+    cG_defLoaded = true;
+    $.each(cG_def, function (index, cGID) {
+      var $cG = $("#slider_skitter_" + cGID.cG_id);
+      $cG.skitter({
+        animation: cGID.animation,
+        interval: cGID.interval,
+        velocity: cGID.velocity,
+        stop_over: cGID.stop_over,
+        auto_play: cGID.auto_play,
+        navigation: cGID.navigation,
+        thumbs: cGID.thumbs,
+        progressbar: cGID.progressbar,
+        numbers: cGID.numbers,
+        controls: cGID.controls,
+        dots: cGID.dots,
+        focus: cGID.focus,
+        label: cGID.label,
+        preview: cGID.preview,
+      });
+    });
+  }
+});
