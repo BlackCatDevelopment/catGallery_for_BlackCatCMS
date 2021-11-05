@@ -65,5 +65,13 @@ $mod_headers = [
             ],
         ],
     ],
+    "frontend" => [
+        "css" => [
+            [
+                "media" => "all",
+                "file" => "modules/catGallery/css/team/frontend.css",
+            ],
+        ],
+    ],
 ];
 ?>

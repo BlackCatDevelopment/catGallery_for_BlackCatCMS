@@ -686,7 +686,7 @@ if (!class_exists("catGallery", false)) {
                 if ($this->getOptions("random") == 1) {
                     shuffle($this->images);
                 }
-                return $this->images;
+                return array_values($this->images);
             }
         } // end getImage()
 

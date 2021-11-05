@@ -34,7 +34,7 @@
 		<input type="hidden" name="_cat_ajax" value="1" />
 		<div class="cc_catG_left dz-details">
 			<p class="cc_catG_image">
-				<img data-dz-thumbnail="" src="{$image.thumb}" width="auto" height="120" ><br>
+				<img data-dz-thumbnail="" src="{if $image}{$image.thumb}{/if}" width="auto" height="120" ><br>
 			</p>
 			<p class="dz-filename">
 				<strong>{translate('Name image')}: </strong><span data-dz-name="">{$image.picture}</span>

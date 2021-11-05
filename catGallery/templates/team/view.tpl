@@ -21,10 +21,9 @@
  *
  *}
 {if $countImg}
-{$count = 0}
 <section class="cG_Team">
 	{if $options.title}<h2>{$options.title}</h2>{/if}
-	{$i=0}{foreach $images image}{if $image.published}{$i=$i+1}
+	{foreach $images i image}{if $image.published}
 	<figure data-aos="fade-up" data-aos-delay="{$i*50}">
 		<img src="{$imgURL}/{$image.picture}" alt="{$image.options.mitarbeiter}" class="cG_MAimg">
 		<figcaption>
@@ -37,7 +36,6 @@
 			{if $image.options.email}<span class="teamMail">{hide_email($image.options.email,'ics-envelop')}</span>{/if}
 		</figcaption>
 	</figure>
-	{$count = $count+1}
 	{/if}{/foreach}
 	{*<img class="cG_t1" src="{cat_url}/templates/ics/css/default/images/triangle.svg" >*}
 </section>
