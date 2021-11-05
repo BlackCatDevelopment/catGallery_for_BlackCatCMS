@@ -24,13 +24,12 @@
 
 
 <form action="{$CAT_URL}/modules/catGallery/save.php" method="post" class="ajaxForm">
-	<input type="hidden" name="page_id" value="{$page_id}" />
-	<input type="hidden" name="section_id" value="{$section_id}" />
-	<input type="hidden" name="gallery_id" value="{$gallery_id}" />
-	<input type="hidden" name="action" value="saveOptions" />
-	<input type="hidden" name="_cat_ajax" value="1" />
-	<input type="hidden" name="options" value="positionx,positiony,height" />
-	<input type="hidden" name="image_options" value="alt" />
+	<input type="hidden" name="page_id" value="{$page_id}">
+	<input type="hidden" name="section_id" value="{$section_id}">
+	<input type="hidden" name="gallery_id" value="{$gallery_id}">
+	<input type="hidden" name="action" value="saveOptions">
+	<input type="hidden" name="_cat_ajax" value="1">
+	<input type="hidden" name="options" value="positionx,positiony,height">
 	<p>	
 		<label for="positionx_{$section_id}" class="cc_In100px">{translate('Position X')}:</label>
 		<select id="positionx_{$section_id}" class="cc_In300px" name="positionx">
@@ -41,13 +40,13 @@
 		
 		<label for="positiony_{$section_id}" class="cc_In100px">{translate('Position Y')}:</label>
 		<select id="positiony_{$section_id}" class="cc_In300px" name="positiony">
-			<option value="top" {if $options.positionx=="top"}selected="selected"{/if}>{translate('Top')}</option>
-			<option value="bottom" {if $options.positionx=="bottom"}selected="selected"{/if}>{translate('Bottom')}</option>
-			<option value="center" {if $options.positionx=="center"}selected="center"{/if}>{translate('Center')}</option>
+			<option value="top" {if $options.positiony=="top"}selected="selected"{/if}>{translate('Top')}</option>
+			<option value="bottom" {if $options.positiony=="bottom"}selected="selected"{/if}>{translate('Bottom')}</option>
+			<option value="center" {if $options.positiony=="center"}selected="center"{/if}>{translate('Center')}</option>
 		</select><br>
 		
 		<label for="height_{$section_id}" class="cc_In100px">{translate('Height')}:</label>
 		<input id="height_{$section_id}" type="text" class="cc_In300px" name="height" value="{if $options.height}{$options.height}{else}200{/if}">px
 	</p><br>
-	<input type="submit" name="speichern" value="{translate('Save')}" />
+	<input type="submit" name="speichern" value="{translate('Save')}">
 </form>

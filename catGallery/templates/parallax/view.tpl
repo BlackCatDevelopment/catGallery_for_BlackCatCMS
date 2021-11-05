@@ -21,5 +21,5 @@
  *
  *}
 {if $countImg}
-{foreach $images index image}{if $image.published}<section class="parallax-window" data-position-y="{$options.positiony}" data-position-x="{$options.positionx}" data-parallax="scroll" data-image-src="{$imgURL}/{$image.picture}" style="height:{if $options.height}{$options.height}{else}200{/if}px;"><div></div></section>{/if}{/foreach}
+{foreach $images index image}{if $image.published}<section class="parallax-window" data-position-y="{$options.positiony}" data-position-x="{$options.positionx}" data-parallax="scroll" data-image-src="{$imgURL}/{$image.picture}" style="height:{if $options.height}{$options.height}{else}200{/if}px;"><div class="c_960">{$image.image_content}</div></section>{/if}{/foreach}
 {else}{include('../default/view_no_image.tpl')}{/if}
