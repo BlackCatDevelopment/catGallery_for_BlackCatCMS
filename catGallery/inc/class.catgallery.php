@@ -52,6 +52,11 @@ if (!class_exists("catGallery", false)) {
     class catGallery
     {
         private static $instance;
+
+        protected static $db;
+        protected static $logger;
+        public static $val;
+
         protected static $gallery_id = null;
         protected static $section_id = null;
         protected static $galleryFolder = "";
@@ -68,10 +73,24 @@ if (!class_exists("catGallery", false)) {
         public $contents = [];
         public $options = [];
 
+        protected static $name = "catGallery (Modul für Bilder)";
+        public static $directory = "catGallery";
+        protected static $version = "3.0beta";
+        protected static $author = "Matthias Glienke, letima development";
+        protected static $license = '<a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License</a>';
+        protected static $description = 'The add on "catGallery" provides a simple way to integrate a sliding media box or simple gallery on your website. For details see <a href="https://github.com/BlackCatDevelopment/catGallery_for_BlackCatCMS" target="_blank">GitHub</a>.<br/><br/>Done by Matthias Glienke, <a class="icon-letima" href="https://letima.de"> letima</a>';
+        protected static $guid = "273cc174-604b-489a-9042-6955dc193d4e";
+        protected static $home = "https://letima.de";
+        protected static $platform = "1.3.x";
+
+        protected static $parserValues = [];
+        protected static $parsed = null;
+        protected static $template = "modify";
+        private static $allVariants = [];
+        public $currentVariant = "default";
+
         public $variant = "default";
-        public static $directory = "cc_catgallery";
         protected static $orignalFolder = "/originals/";
-        public static $allVariants = [];
 
         public $effects = [
             "cube",
@@ -132,6 +151,16 @@ if (!class_exists("catGallery", false)) {
             return self::$instance;
         }
 
+        public static function init()
+        {
+            // Connection to DB
+            self::$db = CAT_Helper_DB::getInstance();
+            // ValidateHelper
+            self::$val = CAT_Helper_Validate::getInstance();
+            // Logger 7 = debug, 8 = off
+            self::$logger = new CAT_Helper_KLogger(CAT_PATH . "/temp", 7);
+        }
+
         public function __construct($gallery_id = null, $is_header = false)
         {
             if ($gallery_id && is_numeric($gallery_id) && !$is_header) {
@@ -183,6 +212,11 @@ if (!class_exists("catGallery", false)) {
 #			else return false;*/
         }
 
+        public static function getClassInfo($value): string
+        {
+            return static::$$value;
+        }
+
         /**
          * set the $section_id by self:$gallery_id
          *
@@ -196,11 +230,10 @@ if (!class_exists("catGallery", false)) {
                 self::$section_id = intval($sectionID);
             } else {
                 // Get columns in this section
-                $sectionID = CAT_Helper_Page::getInstance()
-                    ->db()
+                $sectionID = self::$db
                     ->query(
                         "SELECT `section_id` " .
-                            "FROM `:prefix:mod_cc_catgallery` " .
+                            "FROM `:prefix:mod_catGallery` " .
                             "WHERE `gallery_id` = :galID",
                         [
                             "galID" => self::$gallery_id,
@@ -219,17 +252,13 @@ if (!class_exists("catGallery", false)) {
          */
         private function setGalleryFolder()
         {
-            self::$gallery_root =
-                CAT_PATH . MEDIA_DIRECTORY . "/cc_catgallery/";
+            self::$gallery_root = CAT_PATH . MEDIA_DIRECTORY . "/catGallery/";
             $this->galleryPATH =
-                self::$gallery_root .
-                "cc_catgallery_" .
-                self::$section_id .
-                "/";
+                self::$gallery_root . "catGallery_" . self::$section_id . "/";
             $this->galleryURL =
                 CAT_URL .
                 MEDIA_DIRECTORY .
-                "/cc_catgallery/cc_catgallery_" .
+                "/catGallery/catGallery_" .
                 self::$section_id .
                 "/";
             return $this;
@@ -249,11 +278,10 @@ if (!class_exists("catGallery", false)) {
                 self::setSectionID();
             } else {
                 // Get columns in this section
-                $gallery_id = CAT_Helper_Page::getInstance()
-                    ->db()
+                $gallery_id = self::$db
                     ->query(
                         "SELECT `gallery_id` " .
-                            "FROM `:prefix:mod_cc_catgallery` " .
+                            "FROM `:prefix:mod_catGallery` " .
                             "WHERE `section_id` = :section_id",
                         [
                             "section_id" => self::$section_id,
@@ -333,16 +361,14 @@ if (!class_exists("catGallery", false)) {
             }
             // Add a new catGallery
             if (
-                CAT_Helper_Page::getInstance()
-                    ->db()
-                    ->query(
-                        "INSERT INTO `:prefix:mod_cc_catgallery` " .
-                            "( `section_id` ) VALUES " .
-                            "( :section_id )",
-                        [
-                            "section_id" => self::$section_id,
-                        ]
-                    )
+                self::$db->query(
+                    "INSERT INTO `:prefix:mod_catGallery` " .
+                        "( `section_id` ) VALUES " .
+                        "( :section_id )",
+                    [
+                        "section_id" => self::$section_id,
+                    ]
+                )
             ) {
                 $return = true;
                 $this->setGalleryID();
@@ -392,17 +418,15 @@ if (!class_exists("catGallery", false)) {
 
             // Delete complete record from the database
             if (
-                CAT_Helper_Page::getInstance()
-                    ->db()
-                    ->query(
-                        "DELETE FROM `:prefix:mod_cc_catgallery` " .
-                            "WHERE `section_id` = :section_id AND " .
-                            "`gallery_id` = :gallery_id",
-                        [
-                            "section_id" => self::$section_id,
-                            "gallery_id" => self::$gallery_id,
-                        ]
-                    ) &&
+                self::$db->query(
+                    "DELETE FROM `:prefix:mod_catGallery` " .
+                        "WHERE `section_id` = :section_id AND " .
+                        "`gallery_id` = :gallery_id",
+                    [
+                        "section_id" => self::$section_id,
+                        "gallery_id" => self::$gallery_id,
+                    ]
+                ) &&
                 CAT_Helper_Directory::getInstance()->removeDirectory(
                     $this->getFolder()
                 )
@@ -426,15 +450,13 @@ if (!class_exists("catGallery", false)) {
                 return false;
             }
 
-            $getPos = CAT_Helper_Page::getInstance()
-                ->db()
-                ->query(
-                    "SELECT MAX(position) AS pos FROM `:prefix:mod_cc_catgallery_images` " .
-                        "WHERE `gallery_id` = :gallery_id",
-                    [
-                        "gallery_id" => self::$gallery_id,
-                    ]
-                );
+            $getPos = self::$db->query(
+                "SELECT MAX(position) AS pos FROM `:prefix:mod_catGallery_images` " .
+                    "WHERE `gallery_id` = :gallery_id",
+                [
+                    "gallery_id" => self::$gallery_id,
+                ]
+            );
             if ($getPos && $getPos->rowCount() > 0) {
                 if (!false == ($pos = $getPos->fetch())) {
                     $position = $pos["pos"] + 1;
@@ -442,21 +464,17 @@ if (!class_exists("catGallery", false)) {
             }
 
             if (
-                CAT_Helper_Page::getInstance()
-                    ->db()
-                    ->query(
-                        "INSERT INTO `:prefix:mod_cc_catgallery_images` " .
-                            "( `gallery_id`, `position` ) VALUES " .
-                            "( :gallery_id, :position )",
-                        [
-                            "gallery_id" => self::$gallery_id,
-                            "position" => $position,
-                        ]
-                    )
+                self::$db->query(
+                    "INSERT INTO `:prefix:mod_catGallery_images` " .
+                        "( `gallery_id`, `position` ) VALUES " .
+                        "( :gallery_id, :position )",
+                    [
+                        "gallery_id" => self::$gallery_id,
+                        "position" => $position,
+                    ]
+                )
             ) {
-                $newID = CAT_Helper_Page::getInstance()
-                    ->db()
-                    ->lastInsertId();
+                $newID = self::$db->lastInsertId();
                 $picture = sprintf(
                     "image_%s_%s.%s",
                     self::$section_id,
@@ -465,19 +483,17 @@ if (!class_exists("catGallery", false)) {
                 );
 
                 if (
-                    CAT_Helper_Page::getInstance()
-                        ->db()
-                        ->query(
-                            "UPDATE `:prefix:mod_cc_catgallery_images` " .
-                                "SET `picture` = :picture " .
-                                "WHERE `image_id` = :image_id AND " .
-                                "`gallery_id` = :gallery_id",
-                            [
-                                "picture" => $picture,
-                                "image_id" => $newID,
-                                "gallery_id" => self::$gallery_id,
-                            ]
-                        ) &&
+                    self::$db->query(
+                        "UPDATE `:prefix:mod_catGallery_images` " .
+                            "SET `picture` = :picture " .
+                            "WHERE `image_id` = :image_id AND " .
+                            "`gallery_id` = :gallery_id",
+                        [
+                            "picture" => $picture,
+                            "image_id" => $newID,
+                            "gallery_id" => self::$gallery_id,
+                        ]
+                    ) &&
                     $this->saveContent($newID, "")
                 ) {
                     return [
@@ -513,17 +529,15 @@ if (!class_exists("catGallery", false)) {
             $return = true;
             // Delete complete record from the database
             if (
-                !CAT_Helper_Page::getInstance()
-                    ->db()
-                    ->query(
-                        'DELETE FROM `:prefix:mod_cc_catgallery_images`
+                !self::$db->query(
+                    'DELETE FROM `:prefix:mod_catGallery_images`
 					WHERE `image_id` = :image_id AND
 						`gallery_id` = :gallery_id',
-                        [
-                            "image_id" => $image_id,
-                            "gallery_id" => self::$gallery_id,
-                        ]
-                    )
+                    [
+                        "image_id" => $image_id,
+                        "gallery_id" => self::$gallery_id,
+                    ]
+                )
             ) {
                 $return = false;
             }
@@ -578,27 +592,23 @@ if (!class_exists("catGallery", false)) {
             // Get images from database
             $images =
                 $image_id && is_numeric($image_id)
-                    ? CAT_Helper_Page::getInstance()
-                        ->db()
-                        ->query(
-                            "SELECT * FROM `:prefix:mod_cc_catgallery_images` " .
-                                "WHERE `gallery_id` = :gallery_id AND " .
-                                "`image_id` = :image_id",
-                            [
-                                "gallery_id" => self::$gallery_id,
-                                "image_id" => $image_id,
-                            ]
-                        )
-                    : CAT_Helper_Page::getInstance()
-                        ->db()
-                        ->query(
-                            "SELECT * FROM `:prefix:mod_cc_catgallery_images` " .
-                                "WHERE `gallery_id` = :gallery_id " .
-                                "ORDER BY `position`",
-                            [
-                                "gallery_id" => self::$gallery_id,
-                            ]
-                        );
+                    ? self::$db->query(
+                        "SELECT * FROM `:prefix:mod_catGallery_images` " .
+                            "WHERE `gallery_id` = :gallery_id AND " .
+                            "`image_id` = :image_id",
+                        [
+                            "gallery_id" => self::$gallery_id,
+                            "image_id" => $image_id,
+                        ]
+                    )
+                    : self::$db->query(
+                        "SELECT * FROM `:prefix:mod_catGallery_images` " .
+                            "WHERE `gallery_id` = :gallery_id " .
+                            "ORDER BY `position`",
+                        [
+                            "gallery_id" => self::$gallery_id,
+                        ]
+                    );
 
             $tmp_path = sprintf(
                 "%sthumbs_%s_%s/",
@@ -711,20 +721,18 @@ if (!class_exists("catGallery", false)) {
                 return false;
             }
 
-            $opts = CAT_Helper_Page::getInstance()
-                ->db()
-                ->query(
-                    sprintf(
-                        "SELECT * FROM `:prefix:mod_cc_catgallery_images_options` " .
-                            "WHERE `image_id` IN " .
-                            "(SELECT `image_id` FROM `:prefix:mod_cc_catgallery_images` WHERE `gallery_id` = :gallery_id) " .
-                            "%s",
-                        $select
-                    ),
-                    [
-                        "gallery_id" => self::$gallery_id,
-                    ]
-                );
+            $opts = self::$db->query(
+                sprintf(
+                    "SELECT * FROM `:prefix:mod_catGallery_images_options` " .
+                        "WHERE `image_id` IN " .
+                        "(SELECT `image_id` FROM `:prefix:mod_catGallery_images` WHERE `gallery_id` = :gallery_id) " .
+                        "%s",
+                    $select
+                ),
+                [
+                    "gallery_id" => self::$gallery_id,
+                ]
+            );
 
             $options = [];
             if ($image_id) {
@@ -785,12 +793,10 @@ if (!class_exists("catGallery", false)) {
                 return false;
             }
 
-            $conts = CAT_Helper_Page::getInstance()
-                ->db()
-                ->query(
-                    'SELECT `content`, `image_id` FROM `:prefix:mod_cc_catgallery_contents`
+            $conts = self::$db->query(
+                'SELECT `content`, `image_id` FROM `:prefix:mod_catGallery_contents`
 						WHERE ' . $select
-                );
+            );
 
             $contents = [];
 
@@ -1090,12 +1096,10 @@ if (!class_exists("catGallery", false)) {
 
             // use HTMLPurifier to clean up the contents if enabled
             if (
-                CAT_Helper_Page::getInstance()
-                    ->db()
-                    ->get_one(
-                        "SELECT `value` FROM `:prefix:settings` " .
-                            "WHERE `name` = 'enable_htmlpurifier' AND `value` = 'true'"
-                    )
+                self::$db->get_one(
+                    "SELECT `value` FROM `:prefix:settings` " .
+                        "WHERE `name` = 'enable_htmlpurifier' AND `value` = 'true'"
+                )
             ) {
                 $content = CAT_Helper_Protect::getInstance()->purify($content, [
                     "Core.CollectErrors" => true,
@@ -1103,23 +1107,21 @@ if (!class_exists("catGallery", false)) {
             }
 
             if (
-                CAT_Helper_Page::getInstance()
-                    ->db()
-                    ->query(
-                        "REPLACE INTO `:prefix:mod_cc_catgallery_contents` " .
-                            "SET `image_id`		= :image_id, " .
-                            "`content`		= :content, " .
-                            "`text`			= :text",
-                        [
-                            "image_id" => $image_id,
-                            "content" => $content,
-                            "text" => umlauts_to_entities(
-                                strip_tags($content),
-                                strtoupper(DEFAULT_CHARSET),
-                                0
-                            ),
-                        ]
-                    )
+                self::$db->query(
+                    "REPLACE INTO `:prefix:mod_catGallery_contents` " .
+                        "SET `image_id`		= :image_id, " .
+                        "`content`		= :content, " .
+                        "`text`			= :text",
+                    [
+                        "image_id" => $image_id,
+                        "content" => $content,
+                        "text" => umlauts_to_entities(
+                            strip_tags($content),
+                            strtoupper(DEFAULT_CHARSET),
+                            0
+                        ),
+                    ]
+                )
             ) {
                 return true;
             } else {
@@ -1141,22 +1143,19 @@ if (!class_exists("catGallery", false)) {
                 return false;
             }
 
-            CAT_Helper_Page::getInstance()
-                ->db()
+            self::$db->query(
+                "UPDATE `:prefix:mod_catGallery_images` " .
+                    "SET `published` = 1 - `published` " .
+                    "WHERE `gallery_id`		= :gallery_id " .
+                    "AND `image_id`	= :image_id",
+                [
+                    "gallery_id" => self::$gallery_id,
+                    "image_id" => $image_id,
+                ]
+            );
+            return self::$db
                 ->query(
-                    "UPDATE `:prefix:mod_cc_catgallery_images` " .
-                        "SET `published` = 1 - `published` " .
-                        "WHERE `gallery_id`		= :gallery_id " .
-                        "AND `image_id`	= :image_id",
-                    [
-                        "gallery_id" => self::$gallery_id,
-                        "image_id" => $image_id,
-                    ]
-                );
-            return CAT_Helper_Page::getInstance()
-                ->db()
-                ->query(
-                    "SELECT `published` FROM `:prefix:mod_cc_catgallery_images` " .
+                    "SELECT `published` FROM `:prefix:mod_catGallery_images` " .
                         "WHERE `gallery_id`		= :gallery_id " .
                         "AND `image_id`	= :image_id",
                     [
@@ -1187,21 +1186,19 @@ if (!class_exists("catGallery", false)) {
             }
 
             if (
-                CAT_Helper_Page::getInstance()
-                    ->db()
-                    ->query(
-                        "REPLACE INTO `:prefix:mod_cc_catgallery_images_options` " .
-                            "SET `gallery_id`	= :gallery_id, " .
-                            "`image_id`		= :image_id, " .
-                            "`name`			= :name, " .
-                            "`value`		= :value",
-                        [
-                            "gallery_id" => self::$gallery_id,
-                            "image_id" => $image_id,
-                            "name" => $name,
-                            "value" => is_null($value) ? "" : $value,
-                        ]
-                    )
+                self::$db->query(
+                    "REPLACE INTO `:prefix:mod_catGallery_images_options` " .
+                        "SET `gallery_id`	= :gallery_id, " .
+                        "`image_id`		= :image_id, " .
+                        "`name`			= :name, " .
+                        "`value`		= :value",
+                    [
+                        "gallery_id" => self::$gallery_id,
+                        "image_id" => $image_id,
+                        "name" => $name,
+                        "value" => is_null($value) ? "" : $value,
+                    ]
+                )
             ) {
                 return true;
             } else {
@@ -1229,26 +1226,22 @@ if (!class_exists("catGallery", false)) {
             }
 
             $getOptions = $name
-                ? CAT_Helper_Page::getInstance()
-                    ->db()
-                    ->query(
-                        "SELECT * FROM `:prefix:mod_cc_catgallery_options` " .
-                            "WHERE `gallery_id` = :gallery_id AND " .
-                            "`name` = :name",
-                        [
-                            "gallery_id" => self::$gallery_id,
-                            "name" => $name,
-                        ]
-                    )
-                : CAT_Helper_Page::getInstance()
-                    ->db()
-                    ->query(
-                        "SELECT * FROM `:prefix:mod_cc_catgallery_options` " .
-                            "WHERE `gallery_id` = :gallery_id",
-                        [
-                            "gallery_id" => self::$gallery_id,
-                        ]
-                    );
+                ? self::$db->query(
+                    "SELECT * FROM `:prefix:mod_catGallery_options` " .
+                        "WHERE `gallery_id` = :gallery_id AND " .
+                        "`name` = :name",
+                    [
+                        "gallery_id" => self::$gallery_id,
+                        "name" => $name,
+                    ]
+                )
+                : self::$db->query(
+                    "SELECT * FROM `:prefix:mod_catGallery_options` " .
+                        "WHERE `gallery_id` = :gallery_id",
+                    [
+                        "gallery_id" => self::$gallery_id,
+                    ]
+                );
 
             if (isset($getOptions) && $getOptions->numRows() > 0) {
                 while (!false == ($row = $getOptions->fetchRow())) {
@@ -1281,19 +1274,17 @@ if (!class_exists("catGallery", false)) {
             }
 
             if (
-                CAT_Helper_Page::getInstance()
-                    ->db()
-                    ->query(
-                        "REPLACE INTO `:prefix:mod_cc_catgallery_options` " .
-                            "SET `gallery_id`	= :gallery_id, " .
-                            "`name`			= :name, " .
-                            "`value`		= :value",
-                        [
-                            "gallery_id" => self::$gallery_id,
-                            "name" => $name,
-                            "value" => is_null($value) ? "" : $value,
-                        ]
-                    )
+                self::$db->query(
+                    "REPLACE INTO `:prefix:mod_catGallery_options` " .
+                        "SET `gallery_id`	= :gallery_id, " .
+                        "`name`			= :name, " .
+                        "`value`		= :value",
+                    [
+                        "gallery_id" => self::$gallery_id,
+                        "name" => $name,
+                        "value" => is_null($value) ? "" : $value,
+                    ]
+                )
             ) {
                 return true;
             } else {
@@ -1325,19 +1316,17 @@ if (!class_exists("catGallery", false)) {
                 $imgID = explode("_", $imgStr);
 
                 if (
-                    !CAT_Helper_Page::getInstance()
-                        ->db()
-                        ->query(
-                            "UPDATE `:prefix:mod_cc_catgallery_images` " .
-                                "SET `position` = :position " .
-                                "WHERE `gallery_id`		= :gallery_id " .
-                                "AND `image_id`		= :image_id",
-                            [
-                                "position" => $index,
-                                "gallery_id" => self::$gallery_id,
-                                "image_id" => $imgID[count($imgID) - 1],
-                            ]
-                        )
+                    !self::$db->query(
+                        "UPDATE `:prefix:mod_catGallery_images` " .
+                            "SET `position` = :position " .
+                            "WHERE `gallery_id`		= :gallery_id " .
+                            "AND `image_id`		= :image_id",
+                        [
+                            "position" => $index,
+                            "gallery_id" => self::$gallery_id,
+                            "image_id" => $imgID[count($imgID) - 1],
+                        ]
+                    )
                 ) {
                     $return = false;
                 }
@@ -1524,7 +1513,192 @@ if (!class_exists("catGallery", false)) {
             $parts = array_filter(explode("/", $url));
             return implode("/", $parts);
         } // sanitizeURL()
+
+        /**
+         * Funktion zum initialen Installieren des Moduls
+         */
+        public static function install(): void
+        {
+            // Install tables for flexElement
+            self::_installSQL(
+                CAT_PATH .
+                    "/modules/" .
+                    static::$directory .
+                    "/inc/db/structure.sql"
+            );
+
+            // Create directory for catGallery
+            $gallery_path = CAT_Helper_Directory::sanitizePath(
+                CAT_PATH . MEDIA_DIRECTORY . "/" . static::$directory
+            );
+            if (!file_exists($gallery_path)) {
+                CAT_Helper_Directory::getInstance()->createDirectory(
+                    $gallery_path . "/temp",
+                    null,
+                    true
+                );
+            }
+            sleep(1);
+            // add files to class_secure
+            $addons_helper = new CAT_Helper_Addons();
+            foreach (["save.php"] as $file) {
+                if (
+                    false ===
+                    $addons_helper->sec_register_file(static::$directory, $file)
+                ) {
+                    error_log("Unable to register file -$file-!");
+                }
+            }
+        }
+
+        /**
+         * Funktion zum initialen Installieren des Moduls
+         */
+        public static function uninstall(): void
+        {
+            // Delete all tables if exists
+            self::$db->query(
+                "DROP TABLE IF EXISTS" .
+                    " `:prefix:mod_catGallery_options`," .
+                    " `:prefix:mod_catGallery_images_options`," .
+                    " `:prefix:mod_catGallery_contents`," .
+                    " `:prefix:mod_catGallery_images`," .
+                    " `:prefix:mod_catGallery`;"
+            );
+            // Keep images alive ...
+        }
+
+        /**
+         * temporäre Funktion zum initialen Installieren der structure.sql
+         */
+        private static function _installSQL($file): ?bool
+        {
+            $errors = [];
+
+            $import = file_get_contents($file);
+
+            $import = preg_replace("%/\*(.*)\*/%Us", "", $import);
+            $import = preg_replace("%^--(.*)\n%mU", "", $import);
+            $import = preg_replace("%^$\n%mU", "", $import);
+            foreach (self::_split_sql_file($import, ";") as $imp) {
+                if ($imp != "" && $imp != " ") {
+                    $ret = self::$db->query($imp);
+                    if (self::$db->isError()) {
+                        $errors[] = self::$db->getError();
+                    }
+                }
+            }
+            return count($errors) ? false : true;
+        } // end function _installSQL()
+
+        /**
+         * Credits: http://stackoverflow.com/questions/147821/loading-sql-files-from-within-php
+         **/
+        private static function _split_sql_file($sql, $delimiter): array
+        {
+            // Split up our string into "possible" SQL statements.
+            $tokens = explode($delimiter, $sql);
+
+            // try to save mem.
+            $sql = "";
+            $output = [];
+
+            // we don't actually care about the matches preg gives us.
+            $matches = [];
+
+            // this is faster than calling count($oktens) every time thru the loop.
+            $token_count = count($tokens);
+            for ($i = 0; $i < $token_count; $i++) {
+                // Don't wanna add an empty string as the last thing in the array.
+                if ($i != $token_count - 1 || strlen($tokens[$i] > 0)) {
+                    // This is the total number of single quotes in the token.
+                    $total_quotes = preg_match_all(
+                        "/'/",
+                        $tokens[$i],
+                        $matches
+                    );
+                    // Counts single quotes that are preceded by an odd number of backslashes,
+                    // which means they're escaped quotes.
+                    $escaped_quotes = preg_match_all(
+                        "/(?<!\\\\)(\\\\\\\\)*\\\\'/",
+                        $tokens[$i],
+                        $matches
+                    );
+
+                    $unescaped_quotes = $total_quotes - $escaped_quotes;
+
+                    // If the number of unescaped quotes is even, then the delimiter did NOT occur inside a string literal.
+                    if ($unescaped_quotes % 2 == 0) {
+                        // It's a complete sql statement.
+                        $output[] = $tokens[$i];
+                        // save memory.
+                        $tokens[$i] = "";
+                    } else {
+                        // incomplete sql statement. keep adding tokens until we have a complete one.
+                        // $temp will hold what we have so far.
+                        $temp = $tokens[$i] . $delimiter;
+                        // save memory..
+                        $tokens[$i] = "";
+
+                        // Do we have a complete statement yet?
+                        $complete_stmt = false;
+
+                        for (
+                            $j = $i + 1;
+                            !$complete_stmt && $j < $token_count;
+                            $j++
+                        ) {
+                            // This is the total number of single quotes in the token.
+                            $total_quotes = preg_match_all(
+                                "/'/",
+                                $tokens[$j],
+                                $matches
+                            );
+                            // Counts single quotes that are preceded by an odd number of backslashes,
+                            // which means they're escaped quotes.
+                            $escaped_quotes = preg_match_all(
+                                "/(?<!\\\\)(\\\\\\\\)*\\\\'/",
+                                $tokens[$j],
+                                $matches
+                            );
+
+                            $unescaped_quotes = $total_quotes - $escaped_quotes;
+
+                            if ($unescaped_quotes % 2 == 1) {
+                                // odd number of unescaped quotes. In combination with the previous incomplete
+                                // statement(s), we now have a complete statement. (2 odds always make an even)
+                                $output[] = $temp . $tokens[$j];
+
+                                // save memory.
+                                $tokens[$j] = "";
+                                $temp = "";
+
+                                // exit the loop.
+                                $complete_stmt = true;
+                                // make sure the outer loop continues at the right point.
+                                $i = $j;
+                            } else {
+                                // even number of unescaped quotes. We still don't have a complete statement.
+                                // (1 odd and 1 even always make an odd)
+                                $temp .= $tokens[$j] . $delimiter;
+                                // save memory.
+                                $tokens[$j] = "";
+                            }
+                        } // for..
+                    } // else
+                }
+            }
+
+            // remove empty
+            for ($i = count($output) + 1; $i >= 0; $i--) {
+                if (isset($output[$i]) && trim($output[$i]) == "") {
+                    array_splice($output, $i, 1);
+                }
+            }
+
+            return $output;
+        }
     }
 }
-
+catGallery::init();
 ?>

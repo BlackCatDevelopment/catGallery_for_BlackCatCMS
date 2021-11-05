@@ -129,7 +129,7 @@ $LANG = [
 ];
 
 // --- Include optional language files for variants ---
-require_once CAT_PATH . "/modules/cc_catgallery/inc/class.catgallery.php";
+require_once CAT_PATH . "/modules/catGallery/inc/class.catgallery.php";
 
 $catGallery = new catGallery();
 $path = CAT_Helper_Directory::sanitizePath(

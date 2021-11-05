@@ -47,28 +47,36 @@ if (defined("CAT_PATH")) {
     }
 }
 // end include class.secure.php
+ini_set("display_errors", 1);
+ini_set("display_startup_errors", 1);
+error_reporting(E_ALL);
+require_once "inc/class.catgallery.php";
 
+if (defined("CAT_URL")) {
+    catGallery::install();
+}
+/*
 if (defined("CAT_URL")) {
     // Delete all tables if exists
     #	CAT_Helper_Page::getInstance()->db()->query(
     #		'DROP TABLE IF EXISTS'
-    #			. ' `:prefix:mod_cc_catgallery_options`,'
-    #			. ' `:prefix:mod_cc_catgallery_images_options`,'
-    #			. ' `:prefix:mod_cc_catgallery_contents`,'
-    #			. ' `:prefix:mod_cc_catgallery_images`,'
-    #			. ' `:prefix:mod_cc_catgallery`;'
+    #			. ' `:prefix:mod_catGallery_options`,'
+    #			. ' `:prefix:mod_catGallery_images_options`,'
+    #			. ' `:prefix:mod_catGallery_contents`,'
+    #			. ' `:prefix:mod_catGallery_images`,'
+    #			. ' `:prefix:mod_catGallery`;'
     #	);
 
     // CREATE TABLE IF NOT EXISTS for basic informations
     CAT_Helper_Page::getInstance()
         ->db()
         ->query(
-            "CREATE TABLE IF NOT EXISTS `:prefix:mod_cc_catgallery`  (" .
+            "CREATE TABLE IF NOT EXISTS `:prefix:mod_catGallery`  (" .
                 " `gallery_id` INT NOT NULL AUTO_INCREMENT," .
                 " `page_id` INT," .
                 " `section_id` INT," .
                 " PRIMARY KEY ( `gallery_id` )," .
-                " CONSTRAINT `:prefix:cG_pages` FOREIGN KEY (`page_id`) REFERENCES `:prefix:pages`(`page_id`) ON DELETE CASCADE," .
+                " ," .
                 " CONSTRAINT `:prefix:cG_sections` FOREIGN KEY (`section_id`) REFERENCES `:prefix:sections`(`section_id`) ON DELETE CASCADE" .
                 " ) ENGINE=InnoDB"
         );
@@ -77,12 +85,12 @@ if (defined("CAT_URL")) {
     CAT_Helper_Page::getInstance()
         ->db()
         ->query(
-            "CREATE TABLE IF NOT EXISTS `:prefix:mod_cc_catgallery_options`  (" .
+            "CREATE TABLE IF NOT EXISTS `:prefix:mod_catGallery_options`  (" .
                 " `gallery_id` INT NOT NULL DEFAULT 0," .
                 ' `name` VARCHAR(127) NOT NULL DEFAULT \'\',' .
                 " `value` TEXT NOT NULL," .
                 " PRIMARY KEY ( `gallery_id`, `name` )," .
-                " CONSTRAINT `:prefix:cG_Options` FOREIGN KEY (`gallery_id`) REFERENCES `:prefix:mod_cc_catgallery`(`gallery_id`) ON DELETE CASCADE" .
+                " CONSTRAINT `:prefix:cG_Options` FOREIGN KEY (`gallery_id`) REFERENCES `:prefix:mod_catGallery`(`gallery_id`) ON DELETE CASCADE" .
                 " ) ENGINE=InnoDB"
         );
 
@@ -90,14 +98,14 @@ if (defined("CAT_URL")) {
     CAT_Helper_Page::getInstance()
         ->db()
         ->query(
-            "CREATE TABLE IF NOT EXISTS `:prefix:mod_cc_catgallery_images`  (" .
+            "CREATE TABLE IF NOT EXISTS `:prefix:mod_catGallery_images`  (" .
                 " `image_id` INT NOT NULL AUTO_INCREMENT," .
                 " `gallery_id` INT NULL DEFAULT NULL," .
                 ' `picture` VARCHAR(127) NOT NULL DEFAULT \'\',' .
                 " `published` TINYINT(1) NOT NULL DEFAULT 0," .
                 " `position` INT NOT NULL," .
                 " PRIMARY KEY ( `image_id` )," .
-                " CONSTRAINT `:prefix:cG_Images` FOREIGN KEY (`gallery_id`) REFERENCES `:prefix:mod_cc_catgallery`(`gallery_id`) ON DELETE CASCADE" .
+                " CONSTRAINT `:prefix:cG_Images` FOREIGN KEY (`gallery_id`) REFERENCES `:prefix:mod_catGallery`(`gallery_id`) ON DELETE CASCADE" .
                 " ) ENGINE=InnoDB"
         );
 
@@ -105,14 +113,13 @@ if (defined("CAT_URL")) {
     CAT_Helper_Page::getInstance()
         ->db()
         ->query(
-            "CREATE TABLE IF NOT EXISTS `:prefix:mod_cc_catgallery_images_options`  (" .
+            "CREATE TABLE IF NOT EXISTS `:prefix:mod_catGallery_images_options`  (" .
                 " `image_id` INT NOT NULL DEFAULT 0," .
                 " `gallery_id` INT NULL DEFAULT NULL," .
                 ' `name` VARCHAR(127) NOT NULL DEFAULT \'\',' .
                 " `value` TEXT NOT NULL," .
-                " PRIMARY KEY ( `image_id`, `name` )," .
-                " CONSTRAINT `:prefix:cG_ImageOptionsImg` FOREIGN KEY (`image_id`) REFERENCES `:prefix:mod_cc_catgallery_images`(`image_id`) ON DELETE CASCADE," .
-                " CONSTRAINT `:prefix:cG_ImageOptionsGal` FOREIGN KEY (`gallery_id`) REFERENCES `:prefix:mod_cc_catgallery`(`gallery_id`) ON DELETE CASCADE" .
+                " PRIMARY KEY (  )," .
+                " " .
                 " ) ENGINE=InnoDB"
         );
 
@@ -120,23 +127,16 @@ if (defined("CAT_URL")) {
     CAT_Helper_Page::getInstance()
         ->db()
         ->query(
-            "CREATE TABLE IF NOT EXISTS `:prefix:mod_cc_catgallery_contents`  (" .
+            "CREATE TABLE IF NOT EXISTS `:prefix:`  (" .
                 " `image_id` INT NOT NULL DEFAULT 0," .
                 " `content` TEXT NOT NULL," .
                 " `text` TEXT NOT NULL," .
                 " PRIMARY KEY ( `image_id` )," .
-                " CONSTRAINT `:prefix:cG_ImageOptionsContent` FOREIGN KEY (`image_id`) REFERENCES `:prefix:mod_cc_catgallery_images`(`image_id`) ON DELETE CASCADE" .
+                " CONSTRAINT `:prefix:cG_ImageOptionsContent` FOREIGN KEY (`image_id`) REFERENCES `:prefix:mod_catGallery_images`(`image_id`) ON DELETE CASCADE" .
                 " ) ENGINE=InnoDB"
         );
 
-    $gallery_path = CAT_PATH . MEDIA_DIRECTORY . "/cc_catgallery";
-    if (!file_exists($gallery_path)) {
-        CAT_Helper_Directory::getInstance()->createDirectory(
-            $gallery_path . "/temp",
-            null,
-            true
-        );
-    }
+    
 
     // Activate search for image_contents
     $insert_search = CAT_Helper_Page::getInstance()
@@ -146,7 +146,7 @@ if (defined("CAT_URL")) {
                 "SELECT * FROM `%ssearch`
 				WHERE `value` = '%s'",
                 CAT_TABLE_PREFIX,
-                "cc_catgallery"
+                "catGallery"
             )
         );
 
@@ -170,14 +170,14 @@ if (defined("CAT_URL")) {
                 sprintf(
                     "INSERT INTO `%ssearch`
 					( `name`, `value`, `extra` ) VALUES
-					( 'module', 'cc_catgallery', '%s' )",
+					( 'module', 'catGallery', '%s' )",
                     CAT_TABLE_PREFIX,
                     $field_info
                 )
             );
         // Query start
         $query_start_code =
-            "SELECT [TP]pages.page_id, [TP]pages.page_title, [TP]pages.link, [TP]pages.description, [TP]pages.modified_when, [TP]pages.modified_by FROM [TP]mod_cc_catgallery_contents, [TP]pages WHERE ";
+            "SELECT [TP]pages.page_id, [TP]pages.page_title, [TP]pages.link, [TP]pages.description, [TP]pages.modified_when, [TP]pages.modified_by FROM [TP]mod_catGallery_contents, [TP]pages WHERE ";
 
         CAT_Helper_Page::getInstance()
             ->db()
@@ -188,12 +188,12 @@ if (defined("CAT_URL")) {
 					( 'query_start', '%s', '%s' )",
                     CAT_TABLE_PREFIX,
                     $query_start_code,
-                    "cc_catgallery"
+                    "catGallery"
                 )
             );
         // Query body
         $query_body_code =
-            " [TP]pages.page_id = [TP]mod_cc_catgallery_contents.page_id AND [TP]mod_cc_catgallery_contents.text [O] \'[W][STRING][W]\' AND [TP]pages.searching = \'1\'";
+            " [TP]pages.page_id = [TP]mod_catGallery_contents.page_id AND [TP]mod_catGallery_contents.text [O] \'[W][STRING][W]\' AND [TP]pages.searching = \'1\'";
 
         CAT_Helper_Page::getInstance()
             ->db()
@@ -204,7 +204,7 @@ if (defined("CAT_URL")) {
 					( 'query_body', '%s', '%s' )",
                     CAT_TABLE_PREFIX,
                     $query_body_code,
-                    "mod_cc_catgallery_contents"
+                    "mod_catGallery_contents"
                 )
             );
 
@@ -219,7 +219,7 @@ if (defined("CAT_URL")) {
 					( 'query_end', '%s', '%s' )",
                     CAT_TABLE_PREFIX,
                     $query_end_code,
-                    "mod_cc_catgallery_contents"
+                    "mod_catGallery_contents"
                 )
             );
     }
@@ -227,12 +227,10 @@ if (defined("CAT_URL")) {
     // add files to class_secure
     $addons_helper = new CAT_Helper_Addons();
     foreach (["save.php"] as $file) {
-        if (
-            false === $addons_helper->sec_register_file("cc_catgallery", $file)
-        ) {
+        if (false === $addons_helper->sec_register_file("catGallery", $file)) {
             error_log("Unable to register file -$file-!");
         }
     }
 }
-
+*/
 ?>

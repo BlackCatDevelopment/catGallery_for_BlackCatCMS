@@ -64,7 +64,7 @@ $(document).ready(function () {
       ceckIMG($imgUL);
 
       $("#cc_dropzone_" + cGID.gallery_id).dropzone({
-        url: CAT_URL + "/modules/cc_catgallery/save.php",
+        url: CAT_URL + "/modules/catGallery/save.php",
         paramName: "new_image",
         thumbnailWidth: 300,
         thumbnailHeight: 200,
@@ -143,7 +143,7 @@ $(document).ready(function () {
           };
         dialog_ajax(
           "Bild veröffentlichen",
-          CAT_URL + "/modules/cc_catgallery/save.php",
+          CAT_URL + "/modules/catGallery/save.php",
           ajaxData,
           "POST",
           "JSON",
@@ -172,7 +172,7 @@ $(document).ready(function () {
         $.ajax({
           type: "POST",
           context: $li,
-          url: CAT_URL + "/modules/cc_catgallery/save.php",
+          url: CAT_URL + "/modules/catGallery/save.php",
           dataType: "JSON",
           data: ajaxData,
           cache: false,
@@ -240,7 +240,7 @@ $(document).ready(function () {
           $.ajax({
             type: "POST",
             context: $par,
-            url: CAT_URL + "/modules/cc_catgallery/save.php",
+            url: CAT_URL + "/modules/catGallery/save.php",
             dataType: "JSON",
             data: ajaxData,
             cache: false,
@@ -320,7 +320,7 @@ $(document).ready(function () {
           console.log(ajaxData);
           $.ajax({
             type: "POST",
-            url: CAT_URL + "/modules/cc_catgallery/save.php",
+            url: CAT_URL + "/modules/catGallery/save.php",
             dataType: "json",
             data: ajaxData,
             cache: false,

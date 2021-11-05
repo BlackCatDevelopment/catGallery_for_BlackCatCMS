@@ -44,7 +44,7 @@
 		{foreach $images as image}
 		{include(modify/image.tpl)}
 		{/foreach}
-		{$image = NULL}
+		{assign var=image value=NULL}
 		{include(modify/image.tpl)}
 	</ul>
 </div>

@@ -79,7 +79,7 @@ $variant =
         ? $val->sanitizePost("variant")
         : $catGallery->getVariant();
 
-$module_path = "/modules/cc_catgallery/";
+$module_path = "/modules/catGallery/";
 
 if (file_exists(CAT_PATH . $module_path . "save/" . $variant . "/save.php")) {
     include_once CAT_PATH . $module_path . "save/" . $variant . "/save.php";

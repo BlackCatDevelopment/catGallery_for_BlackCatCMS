@@ -53,12 +53,12 @@ $mod_headers = [
         "css" => [
             [
                 "media" => "all",
-                "file" => "modules/cc_catgallery/css/default/backend.css",
+                "file" => "modules/catGallery/css/default/backend.css",
             ],
         ],
         "js" => [
-            "/modules/cc_catgallery/js/default/dropzone.min.js",
-            "/modules/cc_catgallery/js/default/backend.js",
+            "/modules/catGallery/js/default/dropzone.min.js",
+            "/modules/catGallery/js/default/backend.js",
         ],
         "jquery" => [
             [
@@ -70,13 +70,13 @@ $mod_headers = [
         "css" => [
             [
                 "media" => "all",
-                "file" => "modules/cc_catgallery/css/default/frontend.css",
+                "file" => "modules/catGallery/css/default/frontend.css",
             ],
         ],
         "js" => [
-            "/modules/cc_catgallery/js/default/jquery.easing.1.3.js",
-            "/modules/cc_catgallery/js/default/jquery.skitter.min.js",
-            "/modules/cc_catgallery/js/default/frontend.js",
+            "/modules/catGallery/js/default/jquery.easing.1.3.js",
+            "/modules/catGallery/js/default/jquery.skitter.min.js",
+            "/modules/catGallery/js/default/frontend.js",
         ],
         "jquery" => [
             [

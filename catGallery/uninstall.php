@@ -48,44 +48,10 @@ if (defined("CAT_PATH")) {
 }
 // end include class.secure.php
 
-$mod_headers = [
-    "backend" => [
-        "css" => [
-            [
-                "media" => "all",
-                "file" => "modules/catGallery/css/default/backend.css",
-            ],
-        ],
-        "js" => [
-            "/modules/catGallery/js/default/dropzone.min.js",
-            "/modules/catGallery/js/default/backend.js",
-        ],
-        "jquery" => [
-            [
-                "core" => true,
-            ],
-        ],
-    ],
-    "frontend" => [
-        "css" => [
-            [
-                "media"	=> "all",
-                "file"	=> "modules/catGallery/css/bs_Gallery/frontend.css",
-			],
-			[
-				"media"	=> "all",
-				"file"	=> "modules/lib_bootstrap_4/vendor/icons/font/bootstrap-icons.css",
-			]
-		],
-		"js" => [
-				"/modules/lib_bootstrap_4/vendor/js/bootstrap.min.js",
-		],
-		"jquery" => [
-			[
-				"core"	=> true,
-            ],
-        ],
-    ],
-];
+require_once "inc/class.catgallery.php";
+
+if (defined("CAT_URL")) {
+    catGallery::uninstall();
+}
 
 ?>

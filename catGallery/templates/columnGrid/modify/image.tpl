@@ -24,7 +24,7 @@
 {$cont=preg_split('/<br[^>]*>/i',$image.image_content)}
 <li class="dz-preview dz-image-preview fc_border_all fc_shadow_small fc_br_all {if !$image}prevTemp prevTemp_{$gallery_id}{/if}" id="catG_{if !$image}__image_id__{else}{$image.image_id}{/if}">
 	{include(../../default/modify/image_options.tpl)}
-	<form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" class="ajaxForm">
+	<form action="{$CAT_URL}/modules/catGallery/save.php" method="post" class="ajaxForm">
 		<input type="hidden" name="page_id" value="{$page_id}">
 		<input type="hidden" name="section_id" value="{$section_id}">
 		<input type="hidden" name="gallery_id" value="{$gallery_id}">

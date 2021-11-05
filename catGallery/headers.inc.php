@@ -54,7 +54,7 @@ $catGallery = new catGallery($section, true);
 
 $variant = $catGallery->getVariant();
 
-$module_path = "/modules/cc_catgallery/";
+$module_path = "/modules/catGallery/";
 
 if (
     file_exists(

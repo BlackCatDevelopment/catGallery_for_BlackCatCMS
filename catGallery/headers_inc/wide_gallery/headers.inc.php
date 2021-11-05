@@ -53,12 +53,12 @@ $mod_headers = [
         "css" => [
             [
                 "media" => "all",
-                "file" => "modules/cc_catgallery/css/default/backend.css",
+                "file" => "modules/catGallery/css/default/backend.css",
             ],
         ],
         "js" => [
-            "/modules/cc_catgallery/js/default/dropzone.min.js",
-            "/modules/cc_catgallery/js/default/backend.js",
+            "/modules/catGallery/js/default/dropzone.min.js",
+            "/modules/catGallery/js/default/backend.js",
         ],
         "jquery" => [
             [
@@ -71,17 +71,17 @@ $mod_headers = [
             [
                 "media" => "all",
                 "file" =>
-                    "modules/cc_catgallery/css/wide_gallery/jquery.fancybox.css",
+                    "modules/catGallery/css/wide_gallery/jquery.fancybox.css",
             ],
             [
                 "media" => "all",
-                "file" => "modules/cc_catgallery/css/wide_gallery/frontend.css",
+                "file" => "modules/catGallery/css/wide_gallery/frontend.css",
             ],
         ],
         "js" => [
-            "/modules/cc_catgallery/js/default/jquery.easing.1.3.js",
-            "/modules/cc_catgallery/js/wide_gallery/jquery.fancybox.pack.js",
-            "/modules/cc_catgallery/js/wide_gallery/frontend.js",
+            "/modules/catGallery/js/default/jquery.easing.1.3.js",
+            "/modules/catGallery/js/wide_gallery/jquery.fancybox.pack.js",
+            "/modules/catGallery/js/wide_gallery/frontend.js",
         ],
         "jquery" => [
             [

@@ -48,7 +48,7 @@ if (defined("CAT_PATH")) {
 }
 // end include class.secure.php
 
-include CAT_PATH . "/modules/cc_catgallery/view/default/view.php";
+include CAT_PATH . "/modules/catGallery/view/default/view.php";
 echo "****";
 foreach ($parser_data["images"] as $index => $image) {
     $catGallery->createImg($image["image_id"], 215, 252);

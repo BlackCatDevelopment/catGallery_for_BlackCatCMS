@@ -24,7 +24,7 @@
 
 <li class="dz-preview dz-image-preview fc_border_all fc_shadow_small fc_br_all {if !$image}prevTemp prevTemp_{$gallery_id}{/if}" id="catG_{if !$image}__image_id__{else}{$image.image_id}{/if}">
 	{include(image_options.tpl)}
-	<form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" class="ajaxForm">
+	<form action="{$CAT_URL}/modules/catGallery/save.php" method="post" class="ajaxForm">
 		<input type="hidden" name="page_id" value="{$page_id}" />
 		<input type="hidden" name="section_id" value="{$section_id}" />
 		<input type="hidden" name="gallery_id" value="{$gallery_id}" />
@@ -34,14 +34,14 @@
 		<input type="hidden" name="_cat_ajax" value="1" />
 		<div class="cc_catG_left dz-details">
 			<p class="cc_catG_image">
-				<img data-dz-thumbnail="" src="{$image.thumb}" width="auto" height="120" ><br>
+				<img data-dz-thumbnail="" src="{if $image}{$image.thumb}{/if}" width="auto" height="120" ><br>
 			</p>
 			<p class="dz-filename">
-				<strong>{translate('Name image')}: </strong><span data-dz-name="">{$image.picture}</span>
+				<strong>{translate('Name image')}: </strong><span data-dz-name="">{if $image}{$image.picture}{/if}</span>
 			</p>
 			<p{if !$image} class="cc_catG_disabled"{/if}>
 				<strong>{translate('Alternative text')}:<br></strong>
-				<input type="text" name="alt" value="{if $image.options.alt}{$image.options.alt}{/if}" {if !$image}disabled{/if}>
+				<input type="text" name="alt" value="{if $image && $image.options.alt}{$image.options.alt}{/if}" {if !$image}disabled{/if}>
 			</p>
 		</div>
 		<button class="toggleWYSIWYG input_50p fc_br_bottomleft fc_gradient1 fc_gradient_hover" {if !$image}disabled{/if}>{translate('Modify description')}</button>

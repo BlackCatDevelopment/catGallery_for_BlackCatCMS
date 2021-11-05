@@ -48,23 +48,6 @@ if (defined("CAT_PATH")) {
 }
 // end include class.secure.php
 
-#if (CAT_Users::is_root() )
-#{
-##$baseURL	= CAT_PATH.MEDIA_DIRECTORY.'/cc_catgallery/';
-##$dirs = glob($baseURL.'/*',GLOB_ONLYDIR);
-##foreach($dirs as $dir )
-##{
-##	if ( !file_exists($dir.'/originals/'))
-##		CAT_Helper_Directory::createDirectory( $dir.'/originals/', NULL, true );
-##	$files = glob($dir."/*.{jpeg,jpg,gif,png}", GLOB_BRACE);
-##	foreach($files as $file)
-##	{
-##		rename($file,$dir.'/originals/'.basename( $file ));
-##	}
-##}
-##
-#}
-
 include_once "inc/class.catgallery.php";
 
 $catGallery = new catGallery();
@@ -76,7 +59,7 @@ $parser_data = [
     "page_id" => $page_id,
     "section_id" => $section_id,
     "gallery_id" => $catGallery->getID(),
-    "version" => CAT_Helper_Addons::getModuleVersion("cc_catgallery"),
+    "version" => CAT_Helper_Addons::getModuleVersion("catGallery"),
     "module_variants" => $catGallery->getAllVariants(),
     "options" => $catGallery->getOptions(),
     "effects" => $catGallery->effects,
@@ -85,7 +68,7 @@ $parser_data = [
     "cG_wysiwygContent" => "wysiwygContent_" . $section_id,
 ];
 
-$module_path = "/modules/cc_catgallery/";
+$module_path = "/modules/catGallery/";
 
 if (
     file_exists(
