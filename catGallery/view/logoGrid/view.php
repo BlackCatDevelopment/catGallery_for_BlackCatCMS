@@ -51,11 +51,16 @@ if (defined("CAT_PATH")) {
 if ($parser_data["options"]["sort"]) {
     $sort = [];
     foreach ($parser_data["images"] as $image) {
-        $sort[$image["options"]["alt"]] = $image;
+        $add = "";
+        $count = 1;
+        while (isset($sort[$image["options"]["alt"] . $add])) {
+            $add = "_" . ++$counter;
+        }
+        $sort[$image["options"]["alt"] . $add] = $image;
     }
 
     ksort($sort);
 
-    $parser_data["images"] = $sort;
+    $parser_data["images"] = array_values($sort);
 }
 ?>
