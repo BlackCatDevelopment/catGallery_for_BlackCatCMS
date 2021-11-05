@@ -13,7 +13,7 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
- *   @author			Matthias Glienke, letima
+ *   @author			Matthias Glienke, letima development
  *   @copyright			2021, Black Cat Development
  *   @link				https://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
@@ -44,7 +44,6 @@
     rgba(182, 46, 89, 1) 50%,
     rgba(243, 235, 96, 1) 100%
   );
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#6e2d88",endColorstr="#f3eb60",GradientType=1);
   padding: 4rem 0;
   background-position: 0 90%;
   background-size: 200% 100%;
@@ -105,8 +104,6 @@
   background-color: white;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
-  -o-box-shadow: 50%;
-  -ms-box-shadow: 50%;
   border-radius: 50%;
   -webkit-box-shadow: rgba(080, 039, 103, 1) 0 0 2rem -0.5rem;
   -moz-box-shadow: rgba(080, 039, 103, 1) 0 0 2rem -0.5rem;
@@ -120,22 +117,22 @@
   line-height: 1.6rem;
 }
 
-.cG_rec .comment {
+.cG_rec .cG_rec_comment {
   position: relative;
 }
-.cG_rec .comment::before,
-.cG_rec .comment::after {
+.cG_rec .cG_rec_comment::before,
+.cG_rec .cG_rec_comment::after {
   font-size: 4rem;
   content: '"';
   font-style: italic;
   position: absolute;
   color: #d8dbdd;
 }
-.cG_rec .comment::before {
+.cG_rec .cG_rec_comment::before {
   left: 0;
   top: -0.2rem;
 }
-.cG_rec .comment::after {
+.cG_rec .cG_rec_comment::after {
   right: 0;
   bottom: -0.6rem;
 }
@@ -145,18 +142,18 @@
     font-size: 1rem;
     width: 62vw;
   }
-  .cG_rec .comment::before {
+  .cG_rec .cG_rec_comment::before {
     left: -2rem;
     top: -0.1rem;
   }
-  .cG_rec .comment::after {
+  .cG_rec .cG_rec_comment::after {
     right: -0.5rem;
     bottom: -0.3rem;
   }
 }
-.cG_rec .author,
-.cG_rec .position,
-.cG_rec .firma {
+.cG_rec .cG_rec_author,
+.cG_rec .cG_rec_position,
+.cG_rec .cG_rec_firma {
   padding: 0;
   margin: 0;
   display: block;
@@ -164,16 +161,16 @@
   font-size: 0.7rem;
 }
 
-.cG_rec .author {
+.cG_rec .cG_rec_author {
   padding-top: 2rem;
   font-size: 0.9rem;
   line-height: 0.9rem;
   color: #f2f3f4;
 }
-.cG_rec .position {
+.cG_rec .cG_rec_position {
   color: #b1bec7;
 }
-.cG_rec .firma {
+.cG_rec .cG_rec_firma {
   color: #d8dbdd;
   margin-top: -0.6rem;
   font-size: 0.8rem;
@@ -195,8 +192,6 @@
   opacity: 0;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
-  -o-box-shadow: 50%;
-  -ms-box-shadow: 50%;
   border-radius: 50%;
   -webkit-box-shadow: transparent 0 0 0 0;
   -moz-box-shadow: transparent 0 0 0 0;
