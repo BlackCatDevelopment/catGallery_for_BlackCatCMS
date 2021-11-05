@@ -22,11 +22,11 @@
  *}
 {if $countImg}
 <section id="columnGrid_{$gallery_id}" class="columnGrid c_960">
-    <div>{$options.wysiwygContent}</div>{$title=""}
+    <div>{$options.wysiwygContent}</div>{assign var=title value=""}
     {foreach $category c}{foreach $c image}{if $image.published}
     <figure>
         <figcaption>
-            {if $title!=$image.options.title}{$title=$image.options.title}<h5>{$title}</h5>{/if}
+            {if $title!=$image.options.title}{assign var=title value=$image.options.title}<h5>{$title}</h5>{/if}
             <img src="{$imgURL}{$image.picture}" {*src="{$image.thumb}" data-src="{$imgURL}{$image.picture}" class="b-lazy"*} alt="{$image.options.alt}{if $image.options.urheber} - ({$image.options.urheber}){/if}">
             <div>
                 <p>{if $image.options.alt}<strong>{$image.options.alt}</strong><br>{/if}</p>

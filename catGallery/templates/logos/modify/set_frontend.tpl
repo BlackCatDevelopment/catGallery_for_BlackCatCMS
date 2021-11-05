@@ -45,13 +45,13 @@
     <label class="cc_In200px">Text Button</label>
     <input type="text" class="cc_In100px" name="buttonText" value="{if $options.buttonText}{$options.buttonText}{/if}"><br>
 
-    <label for="urlPage_{$section_id}">{translate('Linked page')}:</label>
+    <p><label for="urlPage_{$section_id}">{translate('Linked page')}:</label>
     <select name="urlPage" id="urlPage_{$section_id}">
         <option value="">--- {translate('No link')} ---</option>
         {foreach $pages page}
         <option value="{$page.page_id}"{if $options.urlPage == $page.page_id} selected="selected"{/if}>{if $page.level > 0}{for i 0 $page.level-1}|--{/for}{/if}{$page.menu_title}</option>
         {/foreach}
-    </select>
+    </select></p>
 
     <p class="cc_In300px">
         <input id="random_{$section_id}" class="fc_checkbox_jq" type="checkbox" name="random" value="1" {if $options.random}checked="checked" {/if}>
