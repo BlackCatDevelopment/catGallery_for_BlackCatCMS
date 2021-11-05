@@ -22,10 +22,8 @@
  *
  */
 $(document).ready(function () {
-  console.log("test");
   if (typeof cGrec !== "undefined" && typeof cGrecLoaded === "undefined") {
     cGrecLoaded = true;
-    console.log("test");
     $.each(cGrec, function (index, cGID) {
       var $cG = $("#cG_rec_" + cGID.cG_id),
         $prev = $cG.children(".prev"),

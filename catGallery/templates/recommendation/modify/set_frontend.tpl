@@ -29,8 +29,11 @@
 	<input type="hidden" name="gallery_id" value="{$gallery_id}">
 	<input type="hidden" name="action" value="saveOptions">
 	<input type="hidden" name="_cat_ajax" value="1">
-	<input type="hidden" name="options" value="image,color,random,urlPage,urlPage2,urlPageTitle">
+	<input type="hidden" name="options" value="title,image,color,random,urlPage,urlPage2,urlPageTitle">
 	<input type="hidden" name="image_options" value="alt">
+
+    <span class="cc_In200px">Titel:</span>
+    <input type="text" class="cc_In300px" name="title" value="{if $options.title}{$options.title}{/if}"><br>
 
 	<span class="cc_In200px">{translate('Background Image')} ({translate('relative to')} /media/):</span>
 	<input type="text" class="cc_In100px" name="image" value="{if $options.image}{$options.image}{/if}"><br>
