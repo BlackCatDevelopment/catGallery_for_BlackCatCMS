@@ -31,8 +31,8 @@
 	<input type="hidden" name="_cat_ajax" value="1">
 	<input type="hidden" name="options" value="title,color">
 	<span class="cc_In200px">Überschrift:</span>
-	<input type="text" class="cc_In300px" name="title" value="{$options.title}"><br>
+	<input type="text" class="cc_In300px" name="title" value="{if $options.title}{$options.title}{/if}"><br>
 	<span class="cc_In200px">Hintergrundfarbe (#...):</span>
-	<input type="text" class="cc_In300px" name="color" value="{$options.color}"><br>
+	<input type="text" class="cc_In300px" name="color" value="{if $options.color}{$options.color}{/if}"><br>
 	<input type="submit" name="speichern" value="{translate('Save')}">
 </form>
