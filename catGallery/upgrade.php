@@ -50,10 +50,6 @@ if (defined("CAT_PATH")) {
 if (!isset($module_version)) {
     $directory = "catGallery";
     $details = CAT_Helper_Addons::getAddonDetails($directory);
-    if (!$details) {
-        $directory = "cc_catgallery";
-        $details = CAT_Helper_Addons::getAddonDetails($directory);
-    }
     $module_version = $details["version"];
 }
 

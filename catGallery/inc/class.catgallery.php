@@ -301,7 +301,7 @@ if (!class_exists("catGallery", false)) {
          * @return integer
          *
          **/
-        public function getGalleryID()
+        public function getGalleryID(): int
         {
             if (!self::$gallery_id) {
                 $this->setGalleryID();
@@ -321,7 +321,7 @@ if (!class_exists("catGallery", false)) {
          * @return boolean true/false
          *
          **/
-        private function checkIDs($image_id = null)
+        private function checkIDs($image_id = null): bool
         {
             if (
                 !self::$section_id ||
@@ -341,7 +341,7 @@ if (!class_exists("catGallery", false)) {
          * @return integer
          *
          **/
-        private function initAdd()
+        private function initAdd(): ?int
         {
             if (!self::$section_id) {
                 return false;
@@ -408,7 +408,7 @@ if (!class_exists("catGallery", false)) {
          * @return integer
          *
          **/
-        public function deleteGallery()
+        public function deleteGallery(): bool
         {
             if (!$this->checkIDs()) {
                 return false;
@@ -444,7 +444,7 @@ if (!class_exists("catGallery", false)) {
          * @return array
          *
          **/
-        public function addImg($file_extension = null)
+        public function addImg($file_extension = null): ?array
         {
             if (!$this->checkIDs() || !$file_extension) {
                 return false;
@@ -516,7 +516,7 @@ if (!class_exists("catGallery", false)) {
          * @return boolean
          *
          **/
-        public function removeImage($image_id = null)
+        public function removeImage($image_id = null): bool
         {
             if (!$this->checkIDs($image_id)) {
                 return false;
@@ -1088,7 +1088,7 @@ if (!class_exists("catGallery", false)) {
          * @return bool true/false
          *
          **/
-        public function saveContent($image_id = null, $content = "")
+        public function saveContent($image_id = null, $content = ""): bool
         {
             if (!$this->checkIDs($image_id)) {
                 return false;
@@ -1137,7 +1137,7 @@ if (!class_exists("catGallery", false)) {
          * @return bool true/false
          *
          **/
-        public function publishImg($image_id = null)
+        public function publishImg($image_id = null): ?int
         {
             if (!$this->checkIDs($image_id)) {
                 return false;
@@ -1180,7 +1180,7 @@ if (!class_exists("catGallery", false)) {
             $image_id = null,
             $name = null,
             $value = ""
-        ) {
+        ): bool {
             if (!$this->checkIDs($image_id) || !$name) {
                 return false;
             }
@@ -1220,7 +1220,7 @@ if (!class_exists("catGallery", false)) {
          * @return array()
          *
          **/
-        public function getOptions($name = null)
+        public function getOptions($name = null): ?array
         {
             if (!$this->checkIDs()) {
                 return false;
@@ -1257,7 +1257,7 @@ if (!class_exists("catGallery", false)) {
                 if (isset($this->options[$name])) {
                     return $this->options[$name];
                 } else {
-                    return null;
+                    return [];
                 }
             }
             return $this->options;
@@ -1272,7 +1272,7 @@ if (!class_exists("catGallery", false)) {
          * @return bool true/false
          *
          **/
-        public function saveOptions($name = null, $value = "")
+        public function saveOptions($name = null, $value = ""): bool
         {
             if (!$this->checkIDs() || !$name) {
                 return false;
@@ -1305,7 +1305,7 @@ if (!class_exists("catGallery", false)) {
          * @return bool true/false
          *
          **/
-        public function reorderImg($imgIDs = [])
+        public function reorderImg($imgIDs = []): bool
         {
             if (
                 !$this->checkIDs() ||
@@ -1346,7 +1346,7 @@ if (!class_exists("catGallery", false)) {
          * @return integer
          *
          **/
-        public function getID()
+        public function getID(): int
         {
             return self::$gallery_id;
         } // getID()
@@ -1358,7 +1358,7 @@ if (!class_exists("catGallery", false)) {
          * @return string
          *
          **/
-        public function getVariant()
+        public function getVariant(): string
         {
             if (isset($this->options["_variant"])) {
                 return $this->options["_variant"];
@@ -1378,11 +1378,19 @@ if (!class_exists("catGallery", false)) {
         /**
          * Get all available variants of an addon by checking the templates-folder
          */
-        public static function getAllVariants()
+        public static function getAllVariants(): array
         {
             if (count(self::$allVariants) > 0) {
                 return self::$allVariants;
             }
+            if (
+                !file_exists(
+                    CAT_PATH . "/modules/" . static::$directory . "/templates/"
+                )
+            ) {
+                return [];
+            }
+            self::$allVariants = [];
             foreach (
                 CAT_Helper_Directory::getInstance()
                     ->setRecursion(false)
@@ -1406,7 +1414,7 @@ if (!class_exists("catGallery", false)) {
          * @return array
          *
          **/
-        public function countImg($pubishedOnly = true)
+        public function countImg($pubishedOnly = true): int
         {
             if (isset($this->images) && count($this->images) > 0) {
                 $count = 0;
@@ -1431,7 +1439,7 @@ if (!class_exists("catGallery", false)) {
          * @return string
          *
          **/
-        public function getFolder($path = true)
+        public function getFolder($path = true): string
         {
             if ($path) {
                 return $this->galleryPATH;
@@ -1448,7 +1456,7 @@ if (!class_exists("catGallery", false)) {
          * @return string
          *
          **/
-        public function getOriginalFolder($path = true)
+        public function getOriginalFolder($path = true): string
         {
             if ($path) {
                 return $this->galleryPATH . self::$orignalFolder;
@@ -1465,7 +1473,7 @@ if (!class_exists("catGallery", false)) {
          * @return string
          *
          **/
-        public function getImageURL($path = false)
+        public function getImageURL($path = false): string
         {
             if ($path) {
                 if (!$this->imagePATH || $this->imagePATH == "") {
@@ -1497,7 +1505,7 @@ if (!class_exists("catGallery", false)) {
          * @return array
          *
          **/
-        public function getAllowed()
+        public function getAllowed(): string
         {
             return self::$allowed_file_types;
         } // getAllowed()
@@ -1510,10 +1518,10 @@ if (!class_exists("catGallery", false)) {
          * @return string
          *
          **/
-        public function sanitizeURL($url = null)
+        public function sanitizeURL($url = null): string
         {
             if (!$url) {
-                return false;
+                return "";
             }
             $parts = array_filter(explode("/", $url));
             return implode("/", $parts);
@@ -1704,6 +1712,6 @@ if (!class_exists("catGallery", false)) {
             return $output;
         }
     }
+    catGallery::init();
 }
-catGallery::init();
 ?>
