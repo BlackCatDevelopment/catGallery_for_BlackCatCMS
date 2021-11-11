@@ -1220,15 +1220,17 @@ if (!class_exists("catGallery", false)) {
          * @return array()
          *
          **/
-        public function getOptions($name = null): ?array
+        public function getOptions($name = null)
         {
             if (!$this->checkIDs()) {
-                return false;
+                return [];
             }
 
             if ($name && isset($this->options[$name])) {
                 return $this->options[$name];
             }
+
+            $this->options = [];
 
             $getOptions = $name
                 ? self::$db->query(
