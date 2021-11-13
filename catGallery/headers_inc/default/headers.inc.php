@@ -30,7 +30,7 @@ if (defined("CAT_PATH")) {
     $oneback = "../";
     $root = $oneback;
     $level = 1;
-    while ($level < 10 && !file_exists($root . "/framework/class.secure.php")) {
+    while ($level < 10 && !file_exists($root . "framework/class.secure.php")) {
         $root .= $oneback;
         $level += 1;
     }

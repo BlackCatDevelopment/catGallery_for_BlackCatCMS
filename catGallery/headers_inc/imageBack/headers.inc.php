@@ -27,10 +27,11 @@
 if (defined("CAT_PATH")) {
     include CAT_PATH . "/framework/class.secure.php";
 } else {
-    $root = "../";
+    $oneback = "../";
+    $root = $oneback;
     $level = 1;
-    while ($level < 10 && !file_exists($root . "/framework/class.secure.php")) {
-        $root .= "../";
+    while ($level < 10 && !file_exists($root . "framework/class.secure.php")) {
+        $root .= $oneback;
         $level += 1;
     }
     if (file_exists($root . "/framework/class.secure.php")) {
