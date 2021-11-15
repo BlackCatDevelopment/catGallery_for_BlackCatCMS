@@ -90,58 +90,10 @@ if (!class_exists("catGallery", false)) {
         public $currentVariant = "default";
 
         public $variant = "default";
+        public static $modulePath;
         protected static $orignalFolder = "/originals/";
 
-        public $effects = [
-            "cube",
-            "cubeRandom",
-            "block",
-            "cubeStop",
-            "cubeHide",
-            "cubeSize",
-            "horizontal",
-            "showBars",
-            "showBarsRandom",
-            "tube",
-            "fade",
-            "fadeFour",
-            "paralell",
-            "blind",
-            "blindHeight",
-            "blindWidth",
-            "directionTop",
-            "directionBottom",
-            "directionRight",
-            "directionLeft",
-            "cubeStopRandom",
-            "cubeSpread",
-            "cubeJelly",
-            "glassCube",
-            "glassBlock",
-            "circles",
-            "circlesInside",
-            "circlesRotate",
-            "cubeShow",
-            "upBars",
-            "downBars",
-            "hideBars",
-            "swapBars",
-            "swapBarsBack",
-            "random",
-            "randomSmart",
-        ];
-
-        protected static $initOptions = [
-            "variant" => "default",
-            "effect" => "random",
-            "random" => "0",
-            "animSpeed" => "500",
-            "pauseTime" => "4000",
-            "label" => "1",
-            "resize_x" => "800",
-            "resize_y" => "600",
-            "auto_play" => "1",
-        ];
+        protected static $initOptions;
 
         public static function getInstance()
         {
@@ -159,6 +111,21 @@ if (!class_exists("catGallery", false)) {
             self::$val = CAT_Helper_Validate::getInstance();
             // Logger 7 = debug, 8 = off
             self::$logger = new CAT_Helper_KLogger(CAT_PATH . "/temp", 7);
+
+            self::$modulePath =
+                CAT_PATH . "/modules/" . static::$directory . "/";
+
+            self::$initOptions = [
+                "variant" => "default",
+                "effect" => "random",
+                "random" => "0",
+                "animSpeed" => "500",
+                "pauseTime" => "4000",
+                "label" => "1",
+                "resize_x" => "800",
+                "resize_y" => "600",
+                "auto_play" => "1",
+            ];
         }
 
         public function __construct($gallery_id = null, $is_header = false)
@@ -301,7 +268,7 @@ if (!class_exists("catGallery", false)) {
          * @return integer
          *
          **/
-        public function getGalleryID(): int
+        public function getGalleryID()
         {
             if (!self::$gallery_id) {
                 $this->setGalleryID();
@@ -321,7 +288,7 @@ if (!class_exists("catGallery", false)) {
          * @return boolean true/false
          *
          **/
-        private function checkIDs($image_id = null): bool
+        private function checkIDs($image_id = null)
         {
             if (
                 !self::$section_id ||
@@ -341,7 +308,7 @@ if (!class_exists("catGallery", false)) {
          * @return integer
          *
          **/
-        private function initAdd(): ?int
+        private function initAdd()
         {
             if (!self::$section_id) {
                 return false;
@@ -408,7 +375,7 @@ if (!class_exists("catGallery", false)) {
          * @return integer
          *
          **/
-        public function deleteGallery(): bool
+        public function deleteGallery()
         {
             if (!$this->checkIDs()) {
                 return false;
@@ -444,7 +411,7 @@ if (!class_exists("catGallery", false)) {
          * @return array
          *
          **/
-        public function addImg($file_extension = null): ?array
+        public function addImg($file_extension = null)
         {
             if (!$this->checkIDs() || !$file_extension) {
                 return false;
@@ -516,7 +483,7 @@ if (!class_exists("catGallery", false)) {
          * @return boolean
          *
          **/
-        public function removeImage($image_id = null): bool
+        public function removeImage($image_id = null)
         {
             if (!$this->checkIDs($image_id)) {
                 return false;
@@ -613,8 +580,8 @@ if (!class_exists("catGallery", false)) {
             $tmp_path = sprintf(
                 "%sthumbs_%s_%s/",
                 $this->getFolder(),
-                $this->getOptions("resize_x"),
-                $this->getOptions("resize_y")
+                $this->getOption("resize_x"),
+                $this->getOption("resize_y")
             );
             $thumb_path = sprintf(
                 "%sthumbs_%s_%s/",
@@ -650,8 +617,8 @@ if (!class_exists("catGallery", false)) {
 
                     foreach (self::$respSize as $size) {
                         $ratio = round(
-                            $this->getOptions("resize_x") /
-                                $this->getOptions("resize_y")
+                            $this->getOption("resize_x") /
+                                $this->getOption("resize_y")
                         );
                         $respY = $size / $ratio;
                         $this->images[$row["image_id"]]["rd_" . $size] =
@@ -662,8 +629,8 @@ if (!class_exists("catGallery", false)) {
                             $respY .
                             "/";
                     }
-                    $method = $this->getOptions("imageMethod")
-                        ? $this->getOptions("imageMethod")
+                    $method = $this->getOption("imageMethod")
+                        ? $this->getOption("imageMethod")
                         : "crop";
                     if (!file_exists($tmp_path . $row["picture"])) {
                         $this->createImg($row["image_id"], null, null, $method);
@@ -683,10 +650,10 @@ if (!class_exists("catGallery", false)) {
             if ($image_id && is_numeric($image_id)) {
                 return $this->images[$image_id];
             } else {
-                if ($this->getOptions("random") == 1) {
+                if ($this->getOption("random") == 1) {
                     shuffle($this->images);
                 }
-                return array_values($this->images);
+                return $this->images;
             }
         } // end getImage()
 
@@ -899,8 +866,8 @@ if (!class_exists("catGallery", false)) {
                                     $this->getOriginalFolder() .
                                         $addImg["picture"]
                                 );
-                                $method = $this->getOptions("imageMethod")
-                                    ? $this->getOptions("imageMethod")
+                                $method = $this->getOption("imageMethod")
+                                    ? $this->getOption("imageMethod")
                                     : "crop";
                                 if (
                                     !CAT_Helper_Image::getInstance()->make_thumb(
@@ -1016,10 +983,10 @@ if (!class_exists("catGallery", false)) {
 
             $resize_x = isset($resize_x)
                 ? $resize_x
-                : $this->getOptions("resize_x");
+                : $this->getOption("resize_x");
             $resize_y = isset($resize_y)
                 ? $resize_y
-                : $this->getOptions("resize_y");
+                : $this->getOption("resize_y");
 
             if (file_exists($this->getOriginalFolder() . $image)) {
                 CAT_Helper_Image::getInstance()->make_thumb(
@@ -1088,7 +1055,7 @@ if (!class_exists("catGallery", false)) {
          * @return bool true/false
          *
          **/
-        public function saveContent($image_id = null, $content = ""): bool
+        public function saveContent($image_id = null, $content = "")
         {
             if (!$this->checkIDs($image_id)) {
                 return false;
@@ -1108,9 +1075,9 @@ if (!class_exists("catGallery", false)) {
 
             if (
                 self::$db->query(
-                    "REPLACE INTO `:prefix:mod_catGallery_contents` " .
+                    "REPLACE INTO `:prefix:mod_catGallery_images_options` " .
                         "SET `image_id`		= :image_id, " .
-                        "`content`		= :content, " .
+                        "`value`		= :content, " .
                         "`text`			= :text",
                     [
                         "image_id" => $image_id,
@@ -1137,7 +1104,7 @@ if (!class_exists("catGallery", false)) {
          * @return bool true/false
          *
          **/
-        public function publishImg($image_id = null): ?int
+        public function publishImg($image_id = null)
         {
             if (!$this->checkIDs($image_id)) {
                 return false;
@@ -1180,25 +1147,20 @@ if (!class_exists("catGallery", false)) {
             $image_id = null,
             $name = null,
             $value = ""
-        ): bool {
+        ) {
             if (!$this->checkIDs($image_id) || !$name) {
                 return false;
             }
-            self::$logger->LogDebug(
-                "Save for id: " .
-                    $image_id .
-                    ", Name: " .
-                    $name .
-                    ", Value: " .
-                    $value
-            );
+
             if (
                 self::$db->query(
                     "REPLACE INTO `:prefix:mod_catGallery_images_options` " .
-                        "SET `image_id`		= :image_id, " .
+                        "SET `gallery_id`	= :gallery_id, " .
+                        "`image_id`		= :image_id, " .
                         "`name`			= :name, " .
                         "`value`		= :value",
                     [
+                        "gallery_id" => self::$gallery_id,
                         "image_id" => $image_id,
                         "name" => $name,
                         "value" => is_null($value) ? "" : $value,
@@ -1211,6 +1173,15 @@ if (!class_exists("catGallery", false)) {
             }
         } // end saveContentOptions()
 
+        public function getOption(string $name = null): ?string
+        {
+            if ($name == "") {
+                return "";
+            }
+            $get = $this->getOptions($name);
+            return reset($get);
+        }
+
         /**
          * get options for catGallery
          *
@@ -1220,14 +1191,14 @@ if (!class_exists("catGallery", false)) {
          * @return array()
          *
          **/
-        public function getOptions($name = null)
+        public function getOptions($name = null): array
         {
             if (!$this->checkIDs()) {
                 return [];
             }
 
             if ($name && isset($this->options[$name])) {
-                return $this->options[$name];
+                return [$this->options[$name]];
             }
 
             $this->options = [];
@@ -1257,7 +1228,7 @@ if (!class_exists("catGallery", false)) {
             }
             if ($name) {
                 if (isset($this->options[$name])) {
-                    return $this->options[$name];
+                    return [$this->options[$name]];
                 } else {
                     return [];
                 }
@@ -1274,7 +1245,7 @@ if (!class_exists("catGallery", false)) {
          * @return bool true/false
          *
          **/
-        public function saveOptions($name = null, $value = ""): bool
+        public function saveOptions($name = null, $value = "")
         {
             if (!$this->checkIDs() || !$name) {
                 return false;
@@ -1307,7 +1278,7 @@ if (!class_exists("catGallery", false)) {
          * @return bool true/false
          *
          **/
-        public function reorderImg($imgIDs = []): bool
+        public function reorderImg($imgIDs = [])
         {
             if (
                 !$this->checkIDs() ||
@@ -1348,7 +1319,7 @@ if (!class_exists("catGallery", false)) {
          * @return integer
          *
          **/
-        public function getID(): int
+        public function getID()
         {
             return self::$gallery_id;
         } // getID()
@@ -1360,13 +1331,13 @@ if (!class_exists("catGallery", false)) {
          * @return string
          *
          **/
-        public function getVariant(): string
+        public function getVariant()
         {
             if (isset($this->options["_variant"])) {
                 return $this->options["_variant"];
             }
 
-            $this->getOptions("variant");
+            $this->getOption("variant");
 
             $this->options["_variant"] =
                 isset($this->options["variant"]) &&
@@ -1380,19 +1351,11 @@ if (!class_exists("catGallery", false)) {
         /**
          * Get all available variants of an addon by checking the templates-folder
          */
-        public static function getAllVariants(): array
+        public static function getAllVariants()
         {
             if (count(self::$allVariants) > 0) {
                 return self::$allVariants;
             }
-            if (
-                !file_exists(
-                    CAT_PATH . "/modules/" . static::$directory . "/templates/"
-                )
-            ) {
-                return [];
-            }
-            self::$allVariants = [];
             foreach (
                 CAT_Helper_Directory::getInstance()
                     ->setRecursion(false)
@@ -1416,7 +1379,7 @@ if (!class_exists("catGallery", false)) {
          * @return array
          *
          **/
-        public function countImg($pubishedOnly = true): int
+        public function countImg($pubishedOnly = true)
         {
             if (isset($this->images) && count($this->images) > 0) {
                 $count = 0;
@@ -1441,7 +1404,7 @@ if (!class_exists("catGallery", false)) {
          * @return string
          *
          **/
-        public function getFolder($path = true): string
+        public function getFolder($path = true)
         {
             if ($path) {
                 return $this->galleryPATH;
@@ -1458,7 +1421,7 @@ if (!class_exists("catGallery", false)) {
          * @return string
          *
          **/
-        public function getOriginalFolder($path = true): string
+        public function getOriginalFolder($path = true)
         {
             if ($path) {
                 return $this->galleryPATH . self::$orignalFolder;
@@ -1475,7 +1438,7 @@ if (!class_exists("catGallery", false)) {
          * @return string
          *
          **/
-        public function getImageURL($path = false): string
+        public function getImageURL($path = false)
         {
             if ($path) {
                 if (!$this->imagePATH || $this->imagePATH == "") {
@@ -1483,8 +1446,8 @@ if (!class_exists("catGallery", false)) {
                         sprintf(
                             "%sthumbs_%s_%s/",
                             $this->getFolder(),
-                            $this->getOptions("resize_x"),
-                            $this->getOptions("resize_y")
+                            $this->getOption("resize_x"),
+                            $this->getOption("resize_y")
                         )
                     );
                 }
@@ -1493,8 +1456,8 @@ if (!class_exists("catGallery", false)) {
                 $this->imageURL = sprintf(
                     "%sthumbs_%s_%s/",
                     $this->getFolder(false),
-                    $this->getOptions("resize_x"),
-                    $this->getOptions("resize_y")
+                    $this->getOption("resize_x"),
+                    $this->getOption("resize_y")
                 );
             }
             return $this->imageURL;
@@ -1507,7 +1470,7 @@ if (!class_exists("catGallery", false)) {
          * @return array
          *
          **/
-        public function getAllowed(): string
+        public function getAllowed()
         {
             return self::$allowed_file_types;
         } // getAllowed()
@@ -1520,10 +1483,10 @@ if (!class_exists("catGallery", false)) {
          * @return string
          *
          **/
-        public function sanitizeURL($url = null): string
+        public function sanitizeURL($url = null)
         {
             if (!$url) {
-                return "";
+                return false;
             }
             $parts = array_filter(explode("/", $url));
             return implode("/", $parts);
@@ -1542,6 +1505,20 @@ if (!class_exists("catGallery", false)) {
                     "/inc/db/structure.sql"
             );
 
+            // add files to class_secure
+            $addons_helper = new CAT_Helper_Addons();
+            foreach (["save.php"] as $file) {
+                if (
+                    false ===
+                    $addons_helper->sec_register_file(static::$directory, $file)
+                ) {
+                    echo "Unable to register file -$file-!<br>";
+                    error_log("Unable to register file -$file-!");
+                } else {
+                    echo "Register file -$file-!<br>";
+                }
+            }
+
             // Create directory for catGallery
             $gallery_path = CAT_Helper_Directory::sanitizePath(
                 CAT_PATH . MEDIA_DIRECTORY . "/" . static::$directory
@@ -1552,17 +1529,6 @@ if (!class_exists("catGallery", false)) {
                     null,
                     true
                 );
-            }
-            sleep(1);
-            // add files to class_secure
-            $addons_helper = new CAT_Helper_Addons();
-            foreach (["save.php"] as $file) {
-                if (
-                    false ===
-                    $addons_helper->sec_register_file(static::$directory, $file)
-                ) {
-                    error_log("Unable to register file -$file-!");
-                }
             }
         }
 
@@ -1576,7 +1542,6 @@ if (!class_exists("catGallery", false)) {
                 "DROP TABLE IF EXISTS" .
                     " `:prefix:mod_catGallery_options`," .
                     " `:prefix:mod_catGallery_images_options`," .
-                    " `:prefix:mod_catGallery_contents`," .
                     " `:prefix:mod_catGallery_images`," .
                     " `:prefix:mod_catGallery`;"
             );

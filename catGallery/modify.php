@@ -68,40 +68,43 @@ $parser_data = [
     "cG_wysiwygContent" => "wysiwygContent_" . $section_id,
 ];
 
-$module_path = "/modules/catGallery/";
-
-if (
-    file_exists(
-        CAT_PATH .
-            $module_path .
-            "modify/" .
-            $catGallery->getVariant() .
-            "/modify.php"
-    )
-) {
-    include CAT_PATH .
-        $module_path .
+$modify = CAT_Helper_Directory::sanitizePath(
+    catGallery::$modulePath .
         "modify/" .
         $catGallery->getVariant() .
-        "/modify.php";
-} elseif (file_exists(CAT_PATH . $module_path . "modify/default/modify.php")) {
-    include CAT_PATH . $module_path . "modify/default/modify.php";
+        "/modify.php"
+);
+$defModify = CAT_Helper_Directory::sanitizePath(
+    catGallery::$modulePath .
+        "modify/" .
+        $catGallery->getVariant() .
+        "/modify.php"
+);
+if (file_exists($modify)) {
+    include $modify;
+} elseif (file_exists($defModify)) {
+    include $defModify;
 }
 
 if (
     file_exists(
-        CAT_PATH .
-            $module_path .
-            "templates/" .
-            $catGallery->getVariant() .
-            "/modify.tpl"
+        CAT_Helper_Directory::sanitizePath(
+            catGallery::$modulePath .
+                "templates/" .
+                $catGallery->getVariant() .
+                "/modify.tpl"
+        )
     )
 ) {
     $parser->setPath(
         dirname(__FILE__) . "/templates/" . $catGallery->getVariant()
     );
 } elseif (
-    file_exists(CAT_PATH . $module_path . "templates/default/modify.tpl")
+    file_exists(
+        CAT_Helper_Directory::sanitizePath(
+            catGallery::$modulePath . "templates/default/modify.tpl"
+        )
+    )
 ) {
     $parser->setPath(dirname(__FILE__) . "/templates/default/");
 }

@@ -19,7 +19,7 @@
  *   @link				https://blackcat-cms.org
  *   @license			http://www.gnu.org/licenses/gpl.html
  *   @category			CAT_Modules
- *   @package			cc_catgallery
+ *   @package			catGallery
  *
  */
 
@@ -49,105 +49,384 @@ if (defined("CAT_PATH")) {
 // end include class.secure.php
 
 if (!isset($module_version)) {
-    $directory = "catGallery";
-    $details = CAT_Helper_Addons::getAddonDetails($directory);
+    $details = CAT_Helper_Addons::getAddonDetails("catGallery");
     $module_version = $details["version"];
 }
 
-// The update.php is not possible
-if (CAT_Helper_Addons::versionCompare($module_version, "3.0", "<")) {
-    /*
-    // rename folders
-    $basePath = CAT_Helper_Directory::getInstance()->sanitizePath(
-        CAT_PATH . MEDIA_DIRECTORY . "/cc_catgallery/"
-    );
-    if (file_exists($basePath)) {
-        $dirs = glob($basePath . "/*", GLOB_ONLYDIR);
-        foreach ($dirs as $dir) {
-            if (!file_exists($dir) && strpos($dir, "_")) {
-                $newDir = explode("_", $dir);
-                if (count($newDir) == 2) {
-                    echo $dir;
-                    echo $basePath . "catGallery_" . $newDir[1];
-                    rename($dir, $basePath . "catGallery_" . $newDir[1]);
-                }
-            }
-        }
-        rename(
-            $basePath,
-            CAT_Helper_Directory::getInstance()->sanitizePath(
-                CAT_PATH . MEDIA_DIRECTORY . "catCallery"
-            )
+if (CAT_Helper_Addons::versionCompare($module_version, "2.1", "<")) {
+    $checkPosition = CAT_Helper_Page::getInstance()
+        ->db()
+        ->query(
+            "SELECT * FROM INFORMATION_SCHEMA.COLUMNS" .
+                " WHERE table_name = ':prefix:mod_catGallery_images'" .
+                " AND column_name = 'position'"
         );
+
+    # Add option to reorder contents
+    if ($checkPosition && $checkPosition->rowCount() == 0) {
+        CAT_Helper_Page::getInstance()
+            ->db()
+            ->query(
+                "ALTER TABLE `:prefix:mod_catGallery_images` ADD `position` INT NOT NULL DEFAULT '0'"
+            );
     }
 
-    // Move all variants from old to new folder
-    $modulePath = CAT_Helper_Directory::getInstance()->sanitizePath(
-        CAT_PATH . "modules/cc_catgallery/"
-    );
-    $newPath = CAT_Helper_Directory::getInstance()->sanitizePath(
-        CAT_PATH . "modules/catGallery/"
-    );
-    $checkVariants = [
-        "css",
-        "js",
-        "templates",
-        "modify",
-        "view",
-        "save",
-        "headers_inc",
-    ];
-    if (file_exists($modulePath)) {
-        foreach ($checkVariants as $ceckV) {
-            $dirs = glob($modulePath . "/" . $ceckV . "/*", GLOB_ONLYDIR);
-            foreach ($dirs as $dir) {
-                $trail = explode("/", $dir);
-                if (!file_exists($newPath . "/" . $ceckV . "/" . end($dir))) {
-                    rename($dir, $newPath . "/" . $ceckV . "/" . end($dir));
-                }
+    # Add option to publish/unpublish contents
+    $checkPublish = CAT_Helper_Page::getInstance()
+        ->db()
+        ->query(
+            "SELECT * FROM INFORMATION_SCHEMA.COLUMNS" .
+                " WHERE table_name = ':prefix:mod_catGallery_images'" .
+                " AND column_name = 'published'"
+        );
+    if ($checkPublish && $checkPublish->rowCount() == 0) {
+        CAT_Helper_Page::getInstance()
+            ->db()
+            ->query(
+                "ALTER TABLE `:prefix:mod_catGallery_images` ADD `published` TINYINT(1)  NULL DEFAULT NULL"
+            );
+        CAT_Helper_Page::getInstance()
+            ->db()
+            ->query(
+                "UPDATE `:prefix:mod_catGallery_images` SET `published` = 1"
+            );
+    }
+
+    # Change to InnoDB
+    foreach (
+        [
+            "mod_catGallery",
+            "mod_catGallery_contents",
+            "mod_catGallery_images",
+            "mod_catGallery_images_options",
+            "mod_catGallery_options",
+        ]
+        as $table
+    ) {
+        $getTable = CAT_Helper_Page::getInstance()
+            ->db()
+            ->query(
+                "SELECT * FROM INFORMATION_SCHEMA.TABLES
+ WHERE table_name = ':prefix:" .
+                    $table .
+                    "'"
+            );
+        if (
+            $getTable &&
+            $getTable->rowCount() > 0 &&
+            !false == ($row = $getTable->fetchRow())
+        ) {
+            if ($row["ENGINE"] != "InnoDB") {
+                CAT_Helper_Page::getInstance()
+                    ->db()
+                    ->query(
+                        "ALTER TABLE `:prefix:" . $table . "` ENGINE=InnoDB"
+                    );
             }
         }
     }
 
-    // Update addons table
+    # Change varchar(2047) to text
+    foreach (
+        ["mod_catGallery_images_options", "mod_catGallery_options"]
+        as $table
+    ) {
+        CAT_Helper_Page::getInstance()
+            ->db()
+            ->query("ALTER TABLE `:prefix:" . $table . "` MODIFY `value` TEXT");
+    }
+
     CAT_Helper_Page::getInstance()
         ->db()
         ->query(
-            "UPDATE `:prefix:addons` SET `upgraded`=:time, `version`=:ver, `directory`=:dirNew " .
-                "WHERE `directory`=:dirOld",
-            [
-                "time" => time(),
-                "ver" => $details["module_version"],
-                "dirNew" => "catGallery",
-                "dirOld" => "cc_catgallery",
-            ]
+            "ALTER TABLE `:prefix:mod_catGallery` DROP FOREIGN KEY `:prefix:cG_pages`; " .
+                "ALTER TABLE `:prefix:mod_catGallery` DROP INDEX `page_id`; " .
+                "ALTER TABLE `:prefix:mod_catGallery` DROP COLUMN `page_id`;"
         );
-    // Update class_secure table
     CAT_Helper_Page::getInstance()
         ->db()
         ->query(
-            "UPDATE `:prefix:class_secure` SET `filepath`=:pathNew " .
-                "WHERE `module`=:addon AND `filepath` =:pathOld",
-            [
-                "pathNew" => "/modules/catGallery/save.php",
-                "addon" => $details["addon_id"],
-                "pathOld" => "/modules/cc_catgallery/save.php",
-            ]
-        );
-    // Update class_secure table
-    CAT_Helper_Page::getInstance()
-        ->db()
-        ->query(
-            "UPDATE `:prefix:sections` SET `module`=:pathNew " .
-                "WHERE `module`=:pathOld",
-            [
-                "pathNew" => "catGallery",
-                "pathOld" => "cc_catgallery",
-            ]
+            "ALTER TABLE `:prefix:mod_catGallery` DROP FOREIGN KEY `:prefix:cG_sections`; " .
+                "ALTER TABLE `:prefix:mod_catGallery` DROP INDEX `section_id`; " .
+                "ALTER TABLE `:prefix:mod_catGallery` DROP COLUMN `section_id`;"
         );
 
-    // ToDo!s => Search anpassen!
-    */
+    # Remove page_id/section_id from database where not needed
+    foreach (
+        [
+            "mod_catGallery_contents",
+            "mod_catGallery_images",
+            "mod_catGallery_images_options",
+            "mod_catGallery_options",
+        ]
+        as $table
+    ) {
+        $getTable = CAT_Helper_Page::getInstance()
+            ->db()
+            ->query(
+                "SELECT * FROM INFORMATION_SCHEMA.COLUMNS " .
+                    "WHERE table_name = ':prefix:" .
+                    $table .
+                    "'"
+            );
+
+        $attr = [];
+        if ($getTable && $getTable->rowCount() > 0) {
+            while (!false == ($row = $getTable->fetchRow())) {
+                $attr[] = $row["COLUMN_NAME"];
+            }
+            if (in_array("page_id", $attr)) {
+                CAT_Helper_Page::getInstance()
+                    ->db()
+                    ->query(
+                        "ALTER TABLE `:prefix:" .
+                            $table .
+                            "` DROP COLUMN `page_id`; "
+                    );
+            }
+            if (in_array("section_id", $attr)) {
+                CAT_Helper_Page::getInstance()
+                    ->db()
+                    ->query(
+                        "ALTER TABLE `:prefix:" .
+                            $table .
+                            "` DROP COLUMN `section_id`"
+                    );
+            }
+
+            switch ($table) {
+                case "mod_catGallery_contents":
+                    CAT_Helper_Page::getInstance()
+                        ->db()
+                        ->query(
+                            "ALTER TABLE `:prefix:" .
+                                $table .
+                                "` DROP PRIMARY KEY, ADD PRIMARY KEY ( `image_id` )"
+                        );
+
+                    if (in_array("gallery_id", $attr)) {
+                        CAT_Helper_Page::getInstance()
+                            ->db()
+                            ->query(
+                                "ALTER TABLE `:prefix:" .
+                                    $table .
+                                    "` DROP COLUMN `gallery_id`"
+                            );
+                    }
+                    break;
+                case "mod_catGallery_images":
+                    CAT_Helper_Page::getInstance()
+                        ->db()
+                        ->query(
+                            "ALTER TABLE `:prefix:" .
+                                $table .
+                                "` DROP PRIMARY KEY, ADD PRIMARY KEY ( `image_id` )"
+                        );
+                    break;
+                case "mod_catGallery_images_options":
+                    CAT_Helper_Page::getInstance()
+                        ->db()
+                        ->query(
+                            "ALTER TABLE `:prefix:mod_catGallery` DROP FOREIGN KEY `:prefix:cG_sections`; " .
+                                "ALTER TABLE `:prefix:mod_catGallery` DROP INDEX `section_id`; " .
+                                "ALTER TABLE `:prefix:mod_catGallery` DROP COLUMN `section_id`;" .
+                                "ALTER TABLE `:prefix:" .
+                                $table .
+                                "` DROP PRIMARY KEY, ADD PRIMARY KEY ( `image_id`, `name` )"
+                        );
+
+                    if (in_array("gallery_id", $attr)) {
+                        CAT_Helper_Page::getInstance()
+                            ->db()
+                            ->query(
+                                "ALTER TABLE `:prefix:" .
+                                    $table .
+                                    "` DROP COLUMN `gallery_id`"
+                            );
+                    }
+                    break;
+                case "mod_catGallery_options":
+                    CAT_Helper_Page::getInstance()
+                        ->db()
+                        ->query(
+                            "ALTER TABLE `:prefix:" .
+                                $table .
+                                "` DROP PRIMARY KEY, ADD PRIMARY KEY ( `gallery_id`, `name` )"
+                        );
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    # Clean up database from non-linked values
+    CAT_Helper_Page::getInstance()
+        ->db()
+        ->query(
+            "DELETE FROM `:prefix:mod_catGallery` WHERE `section_id` IN ( " .
+                "SELECT temp.`section_id` FROM ( SELECT gal.`section_id` FROM `:prefix:mod_catGallery` gal " .
+                "LEFT JOIN `:prefix:sections` section ON gal.`section_id` = section.`section_id` " .
+                "WHERE section.`section_id` IS NULL ) temp )"
+        );
+
+    CAT_Helper_Page::getInstance()
+        ->db()
+        ->query(
+            "DELETE FROM `:prefix:mod_catGallery` WHERE `page_id` IN ( " .
+                "SELECT temp.`page_id` FROM ( SELECT gal.`page_id` FROM `:prefix:mod_catGallery` gal " .
+                "LEFT JOIN `:prefix:pages` page ON gal.`page_id` = page.`page_id` " .
+                "WHERE page.`page_id` IS NULL ) temp )"
+        );
+
+    CAT_Helper_Page::getInstance()
+        ->db()
+        ->query(
+            "DELETE FROM `:prefix:mod_catGallery_images` WHERE `gallery_id` IN ( " .
+                "SELECT temp.`gallery_id` FROM ( SELECT img.`gallery_id` FROM `:prefix:mod_catGallery_images` img " .
+                "LEFT JOIN `:prefix:mod_catGallery` gal ON img.`gallery_id` = gal.`gallery_id` " .
+                "WHERE gal.`gallery_id` IS NULL ) temp )"
+        );
+
+    CAT_Helper_Page::getInstance()
+        ->db()
+        ->query(
+            "DELETE FROM `:prefix:mod_catGallery_contents` WHERE `image_id` IN ( " .
+                "SELECT temp.`image_id` FROM ( SELECT content.`image_id` FROM `:prefix:mod_catGallery_contents` content " .
+                "LEFT JOIN `:prefix:mod_catGallery_images` img ON content.`image_id` = img.`image_id` " .
+                "WHERE img.`image_id` IS NULL ) temp )"
+        );
+
+    CAT_Helper_Page::getInstance()
+        ->db()
+        ->query(
+            "DELETE FROM `:prefix:mod_catGallery_images_options` WHERE `image_id` IN ( " .
+                "SELECT temp.`image_id` FROM ( SELECT opt.`image_id` FROM `:prefix:mod_catGallery_images_options` opt " .
+                "LEFT JOIN `:prefix:mod_catGallery_images` img ON opt.`image_id` = img.`image_id` " .
+                "WHERE img.`image_id` IS NULL ) temp )"
+        );
+
+    # Add Constraints
+    $getConstraints = CAT_Helper_Page::getInstance()
+        ->db()
+        ->query(
+            "SELECT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS"
+        );
+
+    $constraints = [];
+    if ($getConstraints && $getConstraints->rowCount() > 0) {
+        while (!false == ($row = $getConstraints->fetchRow())) {
+            $constraints[] = $row["CONSTRAINT_NAME"];
+        }
+    }
+    if (!in_array(CAT_TABLE_PREFIX . "cG_pages", $constraints)) {
+        CAT_Helper_Page::getInstance()
+            ->db()
+            ->query(
+                "ALTER TABLE `:prefix:mod_catGallery` ADD CONSTRAINT `:prefix:cG_pages` FOREIGN KEY (`page_id`) REFERENCES `:prefix:pages` (`page_id`) ON DELETE CASCADE"
+            );
+    }
+
+    if (!in_array(CAT_TABLE_PREFIX . "cG_sections", $constraints)) {
+        CAT_Helper_Page::getInstance()
+            ->db()
+            ->query(
+                "ALTER TABLE `:prefix:mod_catGallery` ADD CONSTRAINT `:prefix:cG_sections` FOREIGN KEY (`section_id`) REFERENCES `:prefix:sections` (`section_id`) ON DELETE CASCADE"
+            );
+    }
+
+    if (!in_array(CAT_TABLE_PREFIX . "cG_Options", $constraints)) {
+        CAT_Helper_Page::getInstance()
+            ->db()
+            ->query(
+                "ALTER TABLE `:prefix:mod_catGallery_options` ADD CONSTRAINT `:prefix:cG_Options` FOREIGN KEY (`gallery_id`) REFERENCES `:prefix:mod_catGallery` (`gallery_id`) ON DELETE CASCADE"
+            );
+    }
+
+    if (!in_array(CAT_TABLE_PREFIX . "cG_Images", $constraints)) {
+        CAT_Helper_Page::getInstance()
+            ->db()
+            ->query(
+                "ALTER TABLE `:prefix:mod_catGallery_images` ADD CONSTRAINT `:prefix:cG_Images` FOREIGN KEY (`gallery_id`) REFERENCES `:prefix:mod_catGallery` (`gallery_id`) ON DELETE CASCADE"
+            );
+    }
+
+    if (!in_array(CAT_TABLE_PREFIX . "cG_ImageOptionsImg", $constraints)) {
+        CAT_Helper_Page::getInstance()
+            ->db()
+            ->query(
+                "ALTER TABLE `:prefix:mod_catGallery_images_options` ADD CONSTRAINT `:prefix:cG_ImageOptionsImg` FOREIGN KEY (`image_id`) REFERENCES `:prefix:mod_catGallery_images` (`image_id`) ON DELETE CASCADE"
+            );
+    }
+
+    if (!in_array(CAT_TABLE_PREFIX . "cG_ImageOptionsContent", $constraints)) {
+        CAT_Helper_Page::getInstance()
+            ->db()
+            ->query(
+                "ALTER TABLE `:prefix:mod_catGallery_contents` ADD CONSTRAINT `:prefix:cG_ImageOptionsContent` FOREIGN KEY (`image_id`) REFERENCES `:prefix:mod_catGallery_images` (`image_id`) ON DELETE CASCADE"
+            );
+    }
+
+    $path = CAT_PATH . "/modules/catGallery/classes/";
+    if (file_exists($path)) {
+        CAT_Helper_Directory::getInstance()->removeDirectory($path);
+    }
+
+    # change save of variant to new automatic detected variants
+    $getInfo = CAT_Helper_Addons::checkInfo(
+        CAT_PATH . "/modules/catGallery/"
+    );
+
+    $getVariant = CAT_Helper_Page::getInstance()
+        ->db()
+        ->query(
+            "SELECT `gallery_id`, `value` FROM `:prefix:mod_catGallery_options` " .
+                "WHERE `name` = 'variant'"
+        );
+    if ($getVariant && $getVariant->rowCount() > 0) {
+        while (!false == ($row = $getVariant->fetchRow())) {
+            if ($row["value"] == "" || $row["value"] == "0") {
+                $variant = "default";
+            } elseif (
+                is_numeric($row["value"]) &&
+                isset($getInfo["module_variants"][$row["value"]])
+            ) {
+                $variant = $getInfo["module_variants"][$row["value"]];
+            } elseif (is_numeric($row["value"])) {
+                $variant = "default";
+            } else {
+                $variant = $row["value"];
+            }
+            CAT_Helper_Page::getInstance()
+                ->db()
+                ->query(
+                    "UPDATE `:prefix:mod_catGallery_options` " .
+                        "SET `value` = :val " .
+                        "WHERE `gallery_id` = :galID AND `name` = 'variant'",
+                    [
+                        "val" => $variant,
+                        "galID" => $row["gallery_id"],
+                    ]
+                );
+        }
+    }
+
+    // move images in new folders
+    $baseURL = CAT_PATH . MEDIA_DIRECTORY . "/catGallery/";
+    $dirs = glob($baseURL . "/*", GLOB_ONLYDIR);
+    foreach ($dirs as $dir) {
+        if (!file_exists($dir . "/originals/")) {
+            CAT_Helper_Directory::createDirectory(
+                $dir . "/originals/",
+                null,
+                true
+            );
+        }
+        $files = glob($dir . "/*.{jpeg,jpg,gif,png}", GLOB_BRACE);
+        foreach ($files as $file) {
+            rename($file, $dir . "/originals/" . basename($file));
+        }
+    }
 }
 
 ?>
