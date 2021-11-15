@@ -95,7 +95,7 @@ if ($is_ajax == 1) {
     exit();
 } else {
     $backend->print_success(
-        $ajax_return["message"]
+        isset($ajax_return["message"])
             ? $ajax_return["message"]
             : $lang->translate("Saved successfully"),
         CAT_ADMIN_URL . "/pages/modify.php?page_id=" . $page_id
