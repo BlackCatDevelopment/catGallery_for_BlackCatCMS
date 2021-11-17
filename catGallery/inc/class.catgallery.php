@@ -778,7 +778,9 @@ if (!class_exists("catGallery", false)) {
                 }
             }
             if ($image_id) {
-                return $this->images[$image_id]["content"];
+                return isset($this->images[$image_id]["content"])
+                    ? $this->images[$image_id]["content"]
+                    : "";
             } else {
                 return $contents;
             }
@@ -1075,9 +1077,9 @@ if (!class_exists("catGallery", false)) {
 
             if (
                 self::$db->query(
-                    "REPLACE INTO `:prefix:mod_catGallery_images_options` " .
+                    "REPLACE INTO `:prefix:mod_catGallery_contents` " .
                         "SET `image_id`		= :image_id, " .
-                        "`value`		= :content, " .
+                        "`content`		= :content, " .
                         "`text`			= :text",
                     [
                         "image_id" => $image_id,
@@ -1512,10 +1514,7 @@ if (!class_exists("catGallery", false)) {
                     false ===
                     $addons_helper->sec_register_file(static::$directory, $file)
                 ) {
-                    echo "Unable to register file -$file-!<br>";
                     error_log("Unable to register file -$file-!");
-                } else {
-                    echo "Register file -$file-!<br>";
                 }
             }
 

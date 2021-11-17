@@ -82,7 +82,6 @@ $(document).ready(function () {
         previewsContainer: "#cc_catG_imgs_" + cGID.gallery_id,
         previewTemplate: $prevTemp,
         success: function (file, xhr, formData) {
-          console.log(file, xhr, formData);
           // Unvollständigen Upload durch Wechseln der Seite verhindern
           if (
             $(".dz-preview").not("#catG___image_id__").find(".dz-progress")
@@ -328,7 +327,6 @@ $(document).ready(function () {
               data.process = set_activity("Sort entries");
             },
             success: function (data, textStatus, jqXHR) {
-              console.log(data);
               if (data.success === true) {
                 return_success(jqXHR.process, data.message);
               } else {

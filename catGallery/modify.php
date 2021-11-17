@@ -62,7 +62,6 @@ $parser_data = [
     "version" => CAT_Helper_Addons::getModuleVersion("catGallery"),
     "module_variants" => $catGallery->getAllVariants(),
     "options" => $catGallery->getOptions(),
-    "effects" => $catGallery->effects,
     "images" => $catGallery->getImage(),
     "catG_WYSIWYG" => "wysiwyg_" . $section_id,
     "cG_wysiwygContent" => "wysiwygContent_" . $section_id,
