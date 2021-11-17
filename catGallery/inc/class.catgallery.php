@@ -1470,7 +1470,7 @@ if (!class_exists("catGallery", false)) {
          * @return array
          *
          **/
-        public function getAllowed()
+        public function getAllowed(): array
         {
             return self::$allowed_file_types;
         } // getAllowed()
