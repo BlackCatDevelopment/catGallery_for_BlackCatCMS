@@ -23,7 +23,7 @@
  *}
 
 
-<form action="{$CAT_URL}/modules/catGallery/save.php" method="post" class="ajaxForm">
+<form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" class="ajaxForm">
 	<input type="hidden" name="page_id" value="{$page_id}" />
 	<input type="hidden" name="section_id" value="{$section_id}" />
 	<input type="hidden" name="gallery_id" value="{$gallery_id}" />

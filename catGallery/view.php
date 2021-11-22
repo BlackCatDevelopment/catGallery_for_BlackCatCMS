@@ -59,7 +59,7 @@ $parser_data = [
     "page_id" => $page_id,
     "section_id" => $section_id,
     "gallery_id" => $catGallery->getID(),
-    "version" => CAT_Helper_Addons::getModuleVersion("catGallery"),
+    "version" => CAT_Helper_Addons::getModuleVersion("cc_catgallery"),
     "module_variants" => $catGallery->getAllVariants(),
     "options" => $catGallery->getOptions(),
     "effects" => $catGallery->effects,
@@ -80,7 +80,7 @@ if ($parser_data["countImg"] > 0) {
     $template = "view_no_image";
 }
 
-$module_path = "/modules/catGallery/";
+$module_path = "/modules/cc_catgallery/";
 
 $variant = $catGallery->getVariant();
 

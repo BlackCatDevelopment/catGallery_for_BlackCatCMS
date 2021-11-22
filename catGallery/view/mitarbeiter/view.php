@@ -48,7 +48,7 @@ if (defined("CAT_PATH")) {
 }
 // end include class.secure.php
 
-include CAT_PATH . "/modules/catGallery/view/default/view.php";
+include CAT_PATH . "/modules/cc_catgallery/view/default/view.php";
 
 foreach ($parser_data["images"] as $index => $image) {
     $parser_data["images"][$index]["options"]["telephone_int"] =

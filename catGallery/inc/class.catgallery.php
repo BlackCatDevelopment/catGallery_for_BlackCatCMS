@@ -74,7 +74,7 @@ if (!class_exists("catGallery", false)) {
         public $options = [];
 
         protected static $name = "catGallery (Modul für Bilder)";
-        public static $directory = "catGallery";
+        public static $directory = "cc_catgallery";
         protected static $version = "3.0beta";
         protected static $author = "Matthias Glienke, letima development";
         protected static $license = '<a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License</a>';
@@ -200,7 +200,7 @@ if (!class_exists("catGallery", false)) {
                 $sectionID = self::$db
                     ->query(
                         "SELECT `section_id` " .
-                            "FROM `:prefix:mod_catGallery` " .
+                            "FROM `:prefix:mod_cc_catgallery` " .
                             "WHERE `gallery_id` = :galID",
                         [
                             "galID" => self::$gallery_id,
@@ -219,13 +219,17 @@ if (!class_exists("catGallery", false)) {
          */
         private function setGalleryFolder()
         {
-            self::$gallery_root = CAT_PATH . MEDIA_DIRECTORY . "/catGallery/";
+            self::$gallery_root =
+                CAT_PATH . MEDIA_DIRECTORY . "/cc_catgallery/";
             $this->galleryPATH =
-                self::$gallery_root . "catGallery_" . self::$section_id . "/";
+                self::$gallery_root .
+                "cc_catgallery_" .
+                self::$section_id .
+                "/";
             $this->galleryURL =
                 CAT_URL .
                 MEDIA_DIRECTORY .
-                "/catGallery/catGallery_" .
+                "/cc_catgallery/cc_catgallery_" .
                 self::$section_id .
                 "/";
             return $this;
@@ -248,7 +252,7 @@ if (!class_exists("catGallery", false)) {
                 $gallery_id = self::$db
                     ->query(
                         "SELECT `gallery_id` " .
-                            "FROM `:prefix:mod_catGallery` " .
+                            "FROM `:prefix:mod_cc_catgallery` " .
                             "WHERE `section_id` = :section_id",
                         [
                             "section_id" => self::$section_id,
@@ -329,7 +333,7 @@ if (!class_exists("catGallery", false)) {
             // Add a new catGallery
             if (
                 self::$db->query(
-                    "INSERT INTO `:prefix:mod_catGallery` " .
+                    "INSERT INTO `:prefix:mod_cc_catgallery` " .
                         "( `section_id` ) VALUES " .
                         "( :section_id )",
                     [
@@ -386,7 +390,7 @@ if (!class_exists("catGallery", false)) {
             // Delete complete record from the database
             if (
                 self::$db->query(
-                    "DELETE FROM `:prefix:mod_catGallery` " .
+                    "DELETE FROM `:prefix:mod_cc_catgallery` " .
                         "WHERE `section_id` = :section_id AND " .
                         "`gallery_id` = :gallery_id",
                     [
@@ -418,7 +422,7 @@ if (!class_exists("catGallery", false)) {
             }
 
             $getPos = self::$db->query(
-                "SELECT MAX(position) AS pos FROM `:prefix:mod_catGallery_images` " .
+                "SELECT MAX(position) AS pos FROM `:prefix:mod_cc_catgallery_images` " .
                     "WHERE `gallery_id` = :gallery_id",
                 [
                     "gallery_id" => self::$gallery_id,
@@ -432,7 +436,7 @@ if (!class_exists("catGallery", false)) {
 
             if (
                 self::$db->query(
-                    "INSERT INTO `:prefix:mod_catGallery_images` " .
+                    "INSERT INTO `:prefix:mod_cc_catgallery_images` " .
                         "( `gallery_id`, `position` ) VALUES " .
                         "( :gallery_id, :position )",
                     [
@@ -451,7 +455,7 @@ if (!class_exists("catGallery", false)) {
 
                 if (
                     self::$db->query(
-                        "UPDATE `:prefix:mod_catGallery_images` " .
+                        "UPDATE `:prefix:mod_cc_catgallery_images` " .
                             "SET `picture` = :picture " .
                             "WHERE `image_id` = :image_id AND " .
                             "`gallery_id` = :gallery_id",
@@ -497,7 +501,7 @@ if (!class_exists("catGallery", false)) {
             // Delete complete record from the database
             if (
                 !self::$db->query(
-                    'DELETE FROM `:prefix:mod_catGallery_images`
+                    'DELETE FROM `:prefix:mod_cc_catgallery_images`
 					WHERE `image_id` = :image_id AND
 						`gallery_id` = :gallery_id',
                     [
@@ -560,7 +564,7 @@ if (!class_exists("catGallery", false)) {
             $images =
                 $image_id && is_numeric($image_id)
                     ? self::$db->query(
-                        "SELECT * FROM `:prefix:mod_catGallery_images` " .
+                        "SELECT * FROM `:prefix:mod_cc_catgallery_images` " .
                             "WHERE `gallery_id` = :gallery_id AND " .
                             "`image_id` = :image_id",
                         [
@@ -569,7 +573,7 @@ if (!class_exists("catGallery", false)) {
                         ]
                     )
                     : self::$db->query(
-                        "SELECT * FROM `:prefix:mod_catGallery_images` " .
+                        "SELECT * FROM `:prefix:mod_cc_catgallery_images` " .
                             "WHERE `gallery_id` = :gallery_id " .
                             "ORDER BY `position`",
                         [
@@ -690,9 +694,9 @@ if (!class_exists("catGallery", false)) {
 
             $opts = self::$db->query(
                 sprintf(
-                    "SELECT * FROM `:prefix:mod_catGallery_images_options` " .
+                    "SELECT * FROM `:prefix:mod_cc_catgallery_images_options` " .
                         "WHERE `image_id` IN " .
-                        "(SELECT `image_id` FROM `:prefix:mod_catGallery_images` WHERE `gallery_id` = :gallery_id) " .
+                        "(SELECT `image_id` FROM `:prefix:mod_cc_catgallery_images` WHERE `gallery_id` = :gallery_id) " .
                         "%s",
                     $select
                 ),
@@ -761,7 +765,7 @@ if (!class_exists("catGallery", false)) {
             }
 
             $conts = self::$db->query(
-                'SELECT `content`, `image_id` FROM `:prefix:mod_catGallery_contents`
+                'SELECT `content`, `image_id` FROM `:prefix:mod_cc_catgallery_contents`
 						WHERE ' . $select
             );
 
@@ -1077,7 +1081,7 @@ if (!class_exists("catGallery", false)) {
 
             if (
                 self::$db->query(
-                    "REPLACE INTO `:prefix:mod_catGallery_contents` " .
+                    "REPLACE INTO `:prefix:mod_cc_catgallery_contents` " .
                         "SET `image_id`		= :image_id, " .
                         "`content`		= :content, " .
                         "`text`			= :text",
@@ -1113,7 +1117,7 @@ if (!class_exists("catGallery", false)) {
             }
 
             self::$db->query(
-                "UPDATE `:prefix:mod_catGallery_images` " .
+                "UPDATE `:prefix:mod_cc_catgallery_images` " .
                     "SET `published` = 1 - `published` " .
                     "WHERE `gallery_id`		= :gallery_id " .
                     "AND `image_id`	= :image_id",
@@ -1124,7 +1128,7 @@ if (!class_exists("catGallery", false)) {
             );
             return self::$db
                 ->query(
-                    "SELECT `published` FROM `:prefix:mod_catGallery_images` " .
+                    "SELECT `published` FROM `:prefix:mod_cc_catgallery_images` " .
                         "WHERE `gallery_id`		= :gallery_id " .
                         "AND `image_id`	= :image_id",
                     [
@@ -1156,7 +1160,7 @@ if (!class_exists("catGallery", false)) {
 
             if (
                 self::$db->query(
-                    "REPLACE INTO `:prefix:mod_catGallery_images_options` " .
+                    "REPLACE INTO `:prefix:mod_cc_catgallery_images_options` " .
                         "SET `gallery_id`	= :gallery_id, " .
                         "`image_id`		= :image_id, " .
                         "`name`			= :name, " .
@@ -1207,7 +1211,7 @@ if (!class_exists("catGallery", false)) {
 
             $getOptions = $name
                 ? self::$db->query(
-                    "SELECT * FROM `:prefix:mod_catGallery_options` " .
+                    "SELECT * FROM `:prefix:mod_cc_catgallery_options` " .
                         "WHERE `gallery_id` = :gallery_id AND " .
                         "`name` = :name",
                     [
@@ -1216,7 +1220,7 @@ if (!class_exists("catGallery", false)) {
                     ]
                 )
                 : self::$db->query(
-                    "SELECT * FROM `:prefix:mod_catGallery_options` " .
+                    "SELECT * FROM `:prefix:mod_cc_catgallery_options` " .
                         "WHERE `gallery_id` = :gallery_id",
                     [
                         "gallery_id" => self::$gallery_id,
@@ -1255,7 +1259,7 @@ if (!class_exists("catGallery", false)) {
 
             if (
                 self::$db->query(
-                    "REPLACE INTO `:prefix:mod_catGallery_options` " .
+                    "REPLACE INTO `:prefix:mod_cc_catgallery_options` " .
                         "SET `gallery_id`	= :gallery_id, " .
                         "`name`			= :name, " .
                         "`value`		= :value",
@@ -1297,7 +1301,7 @@ if (!class_exists("catGallery", false)) {
 
                 if (
                     !self::$db->query(
-                        "UPDATE `:prefix:mod_catGallery_images` " .
+                        "UPDATE `:prefix:mod_cc_catgallery_images` " .
                             "SET `position` = :position " .
                             "WHERE `gallery_id`		= :gallery_id " .
                             "AND `image_id`		= :image_id",
@@ -1539,10 +1543,10 @@ if (!class_exists("catGallery", false)) {
             // Delete all tables if exists
             self::$db->query(
                 "DROP TABLE IF EXISTS" .
-                    " `:prefix:mod_catGallery_options`," .
-                    " `:prefix:mod_catGallery_images_options`," .
-                    " `:prefix:mod_catGallery_images`," .
-                    " `:prefix:mod_catGallery`;"
+                    " `:prefix:mod_cc_catgallery_options`," .
+                    " `:prefix:mod_cc_catgallery_images_options`," .
+                    " `:prefix:mod_cc_catgallery_images`," .
+                    " `:prefix:mod_cc_catgallery`;"
             );
             // Keep images alive ...
         }

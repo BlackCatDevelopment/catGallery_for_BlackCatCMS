@@ -22,7 +22,7 @@
  *
  *}
 
-<form action="{$CAT_URL}/modules/catGallery/save.php" method="post" id="cG_frontOptions_{$gallery_id}">
+<form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" id="cG_frontOptions_{$gallery_id}">
 	<input type="hidden" name="page_id" value="{$page_id}">
 	<input type="hidden" name="section_id" value="{$section_id}">
 	<input type="hidden" name="gallery_id" value="{$gallery_id}">

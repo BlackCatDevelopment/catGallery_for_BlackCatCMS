@@ -53,22 +53,22 @@ $mod_headers = [
         "css" => [
             [
                 "media" => "all",
-                "file" => "modules/catGallery/css/default/backend.css",
+                "file" => "modules/cc_catgallery/css/default/backend.css",
             ],
         ],
         "js" => [
-            "/modules/catGallery/js/default/dropzone.min.js",
-            "/modules/catGallery/js/default/backend.js",
+            "/modules/cc_catgallery/js/default/dropzone.min.js",
+            "/modules/cc_catgallery/js/default/backend.js",
         ],
     ],
     "frontend" => [
         "css" => [
             [
                 "media" => "all",
-                "file" => "modules/catGallery/css/videoHeader/frontend.css",
+                "file" => "modules/cc_catgallery/css/videoHeader/frontend.css",
             ],
         ],
-        "js" => ["/modules/catGallery/js/videoHeader/frontend.js"],
+        "js" => ["/modules/cc_catgallery/js/videoHeader/frontend.js"],
         "jquery" => [
             [
                 "core" => true,

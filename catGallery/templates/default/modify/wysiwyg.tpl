@@ -22,7 +22,7 @@
  *
  *}
 
-<form action="{$CAT_URL}/modules/catGallery/save.php" method="post" class="catG_WYSIWYG fc_br_all fc_gradient2 fc_shadow_big" id="catG_WYSIWYG_{$gallery_id}">
+<form action="{$CAT_URL}/modules/cc_catgallery/save.php" method="post" class="catG_WYSIWYG fc_br_all fc_gradient2 fc_shadow_big" id="catG_WYSIWYG_{$gallery_id}">
 	<input type="hidden" name="page_id" value="{$page_id}" />
 	<input type="hidden" name="section_id" value="{$section_id}" />
 	<input type="hidden" name="gallery_id" value="{$gallery_id}" />

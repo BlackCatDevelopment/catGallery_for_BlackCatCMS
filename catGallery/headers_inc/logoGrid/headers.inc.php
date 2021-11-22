@@ -53,19 +53,19 @@ $mod_headers = [
         "css" => [
             [
                 "media" => "all",
-                "file" => "modules/catGallery/css/default/backend.css",
+                "file" => "modules/cc_catgallery/css/default/backend.css",
             ],
         ],
         "js" => [
-            "/modules/catGallery/js/default/dropzone.min.js",
-            "/modules/catGallery/js/default/backend.js",
+            "/modules/cc_catgallery/js/default/dropzone.min.js",
+            "/modules/cc_catgallery/js/default/backend.js",
         ],
     ],
     "frontend" => [
         "css" => [
             [
                 "media" => "all",
-                "file" => "modules/catGallery/css/logoGrid/frontend.css",
+                "file" => "modules/cc_catgallery/css/logoGrid/frontend.css",
             ],
         ],
     ],
