@@ -34,8 +34,8 @@ if (defined("CAT_PATH")) {
         $root .= $oneback;
         $level += 1;
     }
-    if (file_exists($root . "/framework/class.secure.php")) {
-        include $root . "/framework/class.secure.php";
+    if (file_exists($root . "framework/class.secure.php")) {
+        include $root . "framework/class.secure.php";
     } else {
         trigger_error(
             sprintf(
@@ -147,16 +147,16 @@ if (!class_exists("catGallery", false)) {
             }
             require_once CAT_PATH . "/framework/functions.php";
             /*			if ( $is_header || ( !$is_header && !is_array($gallery_id)) )
-			{
-				global $section_id;
-			}
-			
+            {
+                global $section_id;
+            }
+            
 
-			// This is a workaround for headers.inc.php as there is no $section_id defined yet
-			if ( !isset($section_id) || $is_header )
-			{
-				$section_id	= is_numeric($gallery_id) ? $gallery_id : intval($gallery_id['section_id']);
-			}
+            // This is a workaround for headers.inc.php as there is no $section_id defined yet
+            if ( !isset($section_id) || $is_header )
+            {
+                $section_id	= is_numeric($gallery_id) ? $gallery_id : intval($gallery_id['section_id']);
+            }
 
 #			$this->setSectionID($section_id);
 
@@ -502,8 +502,8 @@ if (!class_exists("catGallery", false)) {
             if (
                 !self::$db->query(
                     'DELETE FROM `:prefix:mod_cc_catgallery_images`
-					WHERE `image_id` = :image_id AND
-						`gallery_id` = :gallery_id',
+                    WHERE `image_id` = :image_id AND
+                        `gallery_id` = :gallery_id',
                     [
                         "image_id" => $image_id,
                         "gallery_id" => self::$gallery_id,
@@ -766,7 +766,7 @@ if (!class_exists("catGallery", false)) {
 
             $conts = self::$db->query(
                 'SELECT `content`, `image_id` FROM `:prefix:mod_cc_catgallery_contents`
-						WHERE ' . $select
+                        WHERE ' . $select
             );
 
             $contents = [];
@@ -1544,9 +1544,14 @@ if (!class_exists("catGallery", false)) {
             self::$db->query(
                 "DROP TABLE IF EXISTS" .
                     " `:prefix:mod_cc_catgallery_options`," .
-                    " `:prefix:mod_cc_catgallery_images_options`," .
-                    " `:prefix:mod_cc_catgallery_images`," .
-                    " `:prefix:mod_cc_catgallery`;"
+                    " `:prefix:mod_cc_catgallery_contents`," .
+                    " `:prefix:mod_cc_catgallery_images_options`;"
+            );
+            self::$db->query(
+                "DROP TABLE IF EXISTS" . " `:prefix:mod_cc_catgallery_images`;"
+            );
+            self::$db->query(
+                "DROP TABLE IF EXISTS" . " `:prefix:mod_cc_catgallery`;"
             );
             // Keep images alive ...
         }

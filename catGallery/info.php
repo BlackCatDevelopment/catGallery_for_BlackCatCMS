@@ -34,8 +34,8 @@ if (defined("CAT_PATH")) {
         $root .= $oneback;
         $level += 1;
     }
-    if (file_exists($root . "/framework/class.secure.php")) {
-        include $root . "/framework/class.secure.php";
+    if (file_exists($root . "framework/class.secure.php")) {
+        include $root . "framework/class.secure.php";
     } else {
         trigger_error(
             sprintf(
@@ -47,9 +47,6 @@ if (defined("CAT_PATH")) {
     }
 }
 // end include class.secure.php
-ini_set("display_errors", 1);
-ini_set("display_startup_errors", 1);
-error_reporting(E_ALL);
 
 require_once "inc/class.catgallery.php";
 
