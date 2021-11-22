@@ -881,27 +881,21 @@ if (!class_exists("catGallery", false)) {
                                 $addImg = $this->addImg($file_extension);
 
                                 rename(
-                                    CAT_Helper_Directory::sanitizePath(
-                                        $this->getOriginalFolder() .
-                                            "/" .
-                                            $current->file_dst_name
-                                    ),
-                                    CAT_Helper_Directory::sanitizePath(
-                                        $this->getOriginalFolder() .
-                                            "/" .
-                                            $addImg["picture"]
-                                    )
+                                    $this->getOriginalFolder() .
+                                        "/" .
+                                        $current->file_dst_name,
+                                    $this->getOriginalFolder() .
+                                        "/" .
+                                        $addImg["picture"]
                                 );
                                 $method = $this->getOption("imageMethod")
                                     ? $this->getOption("imageMethod")
                                     : "crop";
                                 if (
                                     !CAT_Helper_Image::getInstance()->make_thumb(
-                                        CAT_Helper_Directory::sanitizePath(
-                                            $this->getOriginalFolder() .
-                                                "/" .
-                                                $addImg["picture"]
-                                        ),
+                                        $this->getOriginalFolder() .
+                                            "/" .
+                                            $addImg["picture"],
                                         $this->getFolder() . $addImg["picture"],
                                         1600, //$resize_y,
                                         1600, //$resize_x,
@@ -925,7 +919,9 @@ if (!class_exists("catGallery", false)) {
                                         $this->getFolder(false),
                                         self::$thumb_x,
                                         self::$thumb_y
-                                    ) . $addImg["picture"]
+                                    ) .
+                                        "/" .
+                                        $addImg["picture"]
                                 );
 
                                 /*unlink(self::$gallery_root . '/temp/' . $current->file_dst_name);*/
@@ -1020,11 +1016,12 @@ if (!class_exists("catGallery", false)) {
                 ? $resize_y
                 : $this->getOption("resize_y");
 
-            if (file_exists($this->getOriginalFolder() . $image)) {
+            if (
+                file_exists($this->getOriginalFolder() . "/" . $image) &&
+                !file_exists($tmp_path . "/" . $image)
+            ) {
                 CAT_Helper_Image::getInstance()->make_thumb(
-                    CAT_Helper_Directory::sanitizePath(
-                        $this->getOriginalFolder() . "/" . $image
-                    ),
+                    $this->getOriginalFolder() . "/" . $image,
                     $tmp_path . "/" . $image,
                     $resize_y,
                     $resize_x,
@@ -1462,11 +1459,11 @@ if (!class_exists("catGallery", false)) {
         {
             if ($path) {
                 return CAT_Helper_Directory::sanitizePath(
-                    $this->galleryPATH . self::$originalFolder
+                    $this->galleryPATH . "/" . self::$originalFolder
                 );
             } else {
                 return CAT_Helper_Validate::sanitize_url(
-                    $this->galleryURL . self::$originalFolder
+                    $this->galleryURL . "/" . self::$originalFolder
                 );
             }
         } // getOriginalFolder()
