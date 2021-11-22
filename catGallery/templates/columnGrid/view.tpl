@@ -27,7 +27,7 @@
     <figure>
         <figcaption>
             {if $title!=$image.options.title}{assign var=title value=$image.options.title}<h5>{$title}</h5>{/if}
-            <img src="{$imgURL}{$image.picture}" {*src="{$image.thumb}" data-src="{$imgURL}{$image.picture}" class="b-lazy"*} alt="{$image.options.alt}{if $image.options.urheber} - ({$image.options.urheber}){/if}">
+            <img src="{$imgURL}/{$image.picture}" {*src="{$image.thumb}" data-src="{$imgURL}/{$image.picture}" class="b-lazy"*} alt="{$image.options.alt}{if $image.options.urheber} - ({$image.options.urheber}){/if}">
             <div>
                 <p>{if $image.options.alt}<strong>{$image.options.alt}</strong><br>{/if}</p>
                 {if $image.image_content}{$image.image_content}{/if}

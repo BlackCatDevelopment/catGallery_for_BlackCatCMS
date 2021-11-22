@@ -46,7 +46,7 @@
 	{foreach $images image}{if $image.published}
 		<figure class="col-lg-{$options.icount} col-sm-{$options.icount}">
 			{if $options.ihover!=''}<div class="{$options.ihover}">{/if}
-				<img class="img-fluid {if $options.iborder}img-thumbnail{/if}" src="{$imgURL}{$image.picture}" alt="{$image.options.alt}">
+				<img class="img-fluid {if $options.iborder}img-thumbnail{/if}" src="{$imgURL}/{$image.picture}" alt="{$image.options.alt}">
 				{if $options.ihover!=''}
 					{if $options.ihover=='box1'}{include(modify/style1.tpl)}
 					{elseif $options.ihover=='box2'}{include(modify/style2.tpl)}

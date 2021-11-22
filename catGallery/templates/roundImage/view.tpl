@@ -25,7 +25,7 @@
 <section id="cG_roundImage_{$section_id}" class="cG_roundImage{if $options.960grid} c_1024{/if}">
 	{foreach $images image}{if $image.published}
 	<article class="cG_rI cG_rI_{if $image.options.side}{$image.options.side}{else}right{/if}">
-<img src="{$imgURL}{$image.picture}" width="{$options.resize_x}" height="{$options.resize_y}" alt="{$image.options.alt}">
+<img src="{$imgURL}/{$image.picture}" width="{$options.resize_x}" height="{$options.resize_y}" alt="{$image.options.alt}">
 		{if $image.image_content != ''}<div class="cG_rI_cont">{$image.image_content}</div>{/if}
 	</article>
 	{/if}{/foreach}

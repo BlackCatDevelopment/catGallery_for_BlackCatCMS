@@ -45,7 +45,7 @@
 	<div class="sp-slides">
 		{foreach $images image}
 		<div class="sp-slide">
-			<img src="{$imgURL}{$image.picture}" class="sp-image" alt="{$image.options.alt}" />
+			<img src="{$imgURL}/{$image.picture}" class="sp-image" alt="{$image.options.alt}" />
 			{if $image.options.caption != ''}<p class="sp-caption">{$image.options.caption}</p>{/if}
 			{if $image.image_content != ''}<div class="sp-layer sp-{$image.options.layercolor} {$image.options.layerrounded} {$image.options.layerpadding}" data-position="{$image.options.layerposition}" data-width="{$image.options.layerwidth}" data-height="{$image.options.layerheight}" data-horizontal="{$image.options.layerhoffset}" data-vertical="{$image.options.layervoffset}">{$image.image_content}</div>{/if}
 			{if $image.options.thumbnail != ''}<p class="sp-thumbnail">{$image.options.thumbnail}</p>{/if}

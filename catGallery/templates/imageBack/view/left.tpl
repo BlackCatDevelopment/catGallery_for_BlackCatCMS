@@ -24,7 +24,7 @@
 
 <article class="cG_imgL{if $image.options.backColor} cG_iBColor{/if}" {if $image.options.backColor}style="background-color:#{$image.options.backColor}"{/if}>
 	<figure class="cG_imgL-IMG">
-		<div style="background-image: url({$imgURL}{$image.picture})"><img src="{$imgURL}{$image.picture}" alt="{$image.options.alt}"></div>
+		<div style="background-image: url({$imgURL}/{$image.picture})"><img src="{$imgURL}/{$image.picture}" alt="{$image.options.alt}"></div>
 		<figcaption class="cG_imgL-content">
 			{if $image.options.title}<h2>{$image.options.title}</h2>{/if}
 			{$image.image_content}

@@ -26,7 +26,7 @@
 	<div class="logoGridContainer c_1024">
 		{foreach $images image}{if $image.published}<figure>
 			{if $image.options.href}<a href="{$image.options.href}" target="_blank">{/if}
-			<img src="{$imgURL}{$image.picture}" alt="{$image.options.alt}" title="{$image.options.alt}">
+			<img src="{$imgURL}/{$image.picture}" alt="{$image.options.alt}" title="{$image.options.alt}">
 			{if $image.options.href}</a>{/if}
 			{if $image.image_content}<figcaption>{$image.image_content}</figcaption>{/if}
 		</figure>{/if}{/foreach}

@@ -24,12 +24,12 @@
 
 {if $countImg}
 <section id="cG_mH_{$section_id}" class="cG_mH{if $options.darkmode} cG_mHdarkMode{/if}">
-	{foreach $images image}{if $image.published}<figure style="background-image:url({$imgURL}{$image.picture});">
+	{foreach $images image}{if $image.published}<figure style="background-image:url({$imgURL}/{$image.picture});">
 		<figcaption>
 			<h1>{$options.moduleName}</h1>
 			{$image.image_content}
 		</figcaption>
-		<img src="{$imgURL}{$image.picture}" width="{$options.resize_x}" alt="{$image.options.alt}">
+		<img src="{$imgURL}/{$image.picture}" width="{$options.resize_x}" alt="{$image.options.alt}">
 	</figure>{/if}{/foreach}
 	{if $options.moduleName && $options.plattform}<aside class="cG_mH_Info">
 		<div>

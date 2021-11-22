@@ -16,7 +16,7 @@
 	<h2>{$options.title}</h2>
 	<div class="c_1000">
 		{foreach $images image}<article>
-			<img src="{$imgURL}{$image.picture}" alt="{$image.options.mitarbeiter}"><br>
+			<img src="{$imgURL}/{$image.picture}" alt="{$image.options.mitarbeiter}"><br>
 			{if $image.options.mitarbeiter}<h5>{$image.options.mitarbeiter}</h5>{/if}
 			{if $image.options.unternehmen}<p>{$image.options.unternehmen}</p>{/if}
 			{if $image.options.aufgabe}<p><strong>{$image.options.aufgabe}</strong></p>{/if}

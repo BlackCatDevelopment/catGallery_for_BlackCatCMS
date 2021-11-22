@@ -91,7 +91,7 @@ if (!class_exists("catGallery", false)) {
 
         public $variant = "default";
         public static $modulePath;
-        protected static $orignalFolder = "/originals/";
+        protected static $originalFolder = "/originals/";
 
         protected static $initOptions;
 
@@ -226,12 +226,12 @@ if (!class_exists("catGallery", false)) {
                 "cc_catgallery_" .
                 self::$section_id .
                 "/";
-            $this->galleryURL =
+            $this->galleryURL = CAT_Helper_Validate::sanitize_url(
                 CAT_URL .
-                MEDIA_DIRECTORY .
-                "/cc_catgallery/cc_catgallery_" .
-                self::$section_id .
-                "/";
+                    MEDIA_DIRECTORY .
+                    "/cc_catgallery/cc_catgallery_" .
+                    self::$section_id
+            );
             return $this;
         }
 
@@ -581,23 +581,29 @@ if (!class_exists("catGallery", false)) {
                         ]
                     );
 
-            $tmp_path = sprintf(
-                "%sthumbs_%s_%s/",
-                $this->getFolder(),
-                $this->getOption("resize_x"),
-                $this->getOption("resize_y")
+            $tmp_path = CAT_Helper_Directory::getInstance()->sanitizePath(
+                sprintf(
+                    "%s/thumbs_%s_%s/",
+                    $this->getFolder(),
+                    $this->getOption("resize_x"),
+                    $this->getOption("resize_y")
+                )
             );
-            $thumb_path = sprintf(
-                "%sthumbs_%s_%s/",
-                $this->getFolder(),
-                self::$thumb_x,
-                self::$thumb_y
+            $thumb_path = CAT_Helper_Directory::getInstance()->sanitizePath(
+                sprintf(
+                    "%s/thumbs_%s_%s/",
+                    $this->getFolder(),
+                    self::$thumb_x,
+                    self::$thumb_y
+                )
             );
-            $thumb_url = sprintf(
-                "%sthumbs_%s_%s/",
-                $this->getFolder(false),
-                self::$thumb_x,
-                self::$thumb_y
+            $thumb_url = CAT_Helper_Validate::sanitize_url(
+                sprintf(
+                    "%s/thumbs_%s_%s",
+                    $this->getFolder(false),
+                    self::$thumb_x,
+                    self::$thumb_y
+                )
             );
 
             if ($images && $images->rowCount() > 0) {
@@ -607,8 +613,11 @@ if (!class_exists("catGallery", false)) {
                         "position" => $row["position"],
                         "published" => $row["published"],
                         "picture" => $row["picture"],
-                        "original" =>
-                            $this->getOriginalFolder(false) . $row["picture"],
+                        "original" => CAT_Helper_Validate::sanitize_url(
+                            $this->getOriginalFolder(false) .
+                                "/" .
+                                $row["picture"]
+                        ),
                         "options" => $addOptions
                             ? $this->getImgOptions($row["image_id"])
                             : null,
@@ -616,7 +625,9 @@ if (!class_exists("catGallery", false)) {
                             ? $this->getImgContent($row["image_id"])
                             : null,
                         "contentname" => "image_content_" . $row["image_id"],
-                        "thumb" => $thumb_url . $row["picture"],
+                        "thumb" => CAT_Helper_Validate::sanitize_url(
+                            $thumb_url . "/" . $row["picture"]
+                        ),
                     ];
 
                     foreach (self::$respSize as $size) {
@@ -625,13 +636,16 @@ if (!class_exists("catGallery", false)) {
                                 $this->getOption("resize_y")
                         );
                         $respY = $size / $ratio;
-                        $this->images[$row["image_id"]]["rd_" . $size] =
+                        $this->images[$row["image_id"]][
+                            "rd_" . $size
+                        ] = CAT_Helper_Validate::sanitize_url(
                             $this->galleryURL .
-                            "/thumbs_" .
-                            $size .
-                            "_" .
-                            $respY .
-                            "/";
+                                "/thumbs_" .
+                                $size .
+                                "_" .
+                                $respY .
+                                "/"
+                        );
                     }
                     $method = $this->getOption("imageMethod")
                         ? $this->getOption("imageMethod")
@@ -657,7 +671,7 @@ if (!class_exists("catGallery", false)) {
                 if ($this->getOption("random") == 1) {
                     shuffle($this->images);
                 }
-                return $this->images;
+                return array_values($this->images);
             }
         } // end getImage()
 
@@ -867,18 +881,27 @@ if (!class_exists("catGallery", false)) {
                                 $addImg = $this->addImg($file_extension);
 
                                 rename(
-                                    $this->getOriginalFolder() .
-                                        $current->file_dst_name,
-                                    $this->getOriginalFolder() .
-                                        $addImg["picture"]
+                                    CAT_Helper_Directory::sanitizePath(
+                                        $this->getOriginalFolder() .
+                                            "/" .
+                                            $current->file_dst_name
+                                    ),
+                                    CAT_Helper_Directory::sanitizePath(
+                                        $this->getOriginalFolder() .
+                                            "/" .
+                                            $addImg["picture"]
+                                    )
                                 );
                                 $method = $this->getOption("imageMethod")
                                     ? $this->getOption("imageMethod")
                                     : "crop";
                                 if (
                                     !CAT_Helper_Image::getInstance()->make_thumb(
-                                        $this->getOriginalFolder() .
-                                            $addImg["picture"],
+                                        CAT_Helper_Directory::sanitizePath(
+                                            $this->getOriginalFolder() .
+                                                "/" .
+                                                $addImg["picture"]
+                                        ),
                                         $this->getFolder() . $addImg["picture"],
                                         1600, //$resize_y,
                                         1600, //$resize_x,
@@ -894,13 +917,16 @@ if (!class_exists("catGallery", false)) {
                                     self::$thumb_y
                                 );
 
-                                $addImg["thumb"] =
+                                $addImg[
+                                    "thumb"
+                                ] = CAT_Helper_Validate::sanitize_url(
                                     sprintf(
-                                        "%sthumbs_%s_%s/",
+                                        "%s/thumbs_%s_%s",
                                         $this->getFolder(false),
                                         self::$thumb_x,
                                         self::$thumb_y
-                                    ) . $addImg["picture"];
+                                    ) . $addImg["picture"]
+                                );
 
                                 /*unlink(self::$gallery_root . '/temp/' . $current->file_dst_name);*/
 
@@ -963,7 +989,7 @@ if (!class_exists("catGallery", false)) {
                 (is_numeric($resize_x) && is_numeric($resize_y))
                     ? CAT_Helper_Directory::getInstance()->sanitizePath(
                         sprintf(
-                            "%sthumbs_%s_%s/",
+                            "%s/thumbs_%s_%s/",
                             $this->getFolder(),
                             $resize_x,
                             $resize_y
@@ -996,7 +1022,9 @@ if (!class_exists("catGallery", false)) {
 
             if (file_exists($this->getOriginalFolder() . $image)) {
                 CAT_Helper_Image::getInstance()->make_thumb(
-                    $this->getOriginalFolder() . $image,
+                    CAT_Helper_Directory::sanitizePath(
+                        $this->getOriginalFolder() . "/" . $image
+                    ),
                     $tmp_path . "/" . $image,
                     $resize_y,
                     $resize_x,
@@ -1009,13 +1037,16 @@ if (!class_exists("catGallery", false)) {
                     $ratio = round($resize_x / $resize_y);
                     $respY = $size / $ratio;
 
-                    $this->images[$image_id]["rd_" . $size] =
+                    $this->images[$image_id][
+                        "rd_" . $size
+                    ] = CAT_Helper_Validate::sanitize_url(
                         $this->galleryURL .
-                        "/thumbs_" .
-                        $size .
-                        "_" .
-                        $respY .
-                        "/";
+                            "/thumbs_" .
+                            $size .
+                            "_" .
+                            $respY .
+                            "/"
+                    );
 
                     $respPath = CAT_Helper_Directory::getInstance()->sanitizePath(
                         sprintf(
@@ -1430,9 +1461,13 @@ if (!class_exists("catGallery", false)) {
         public function getOriginalFolder($path = true)
         {
             if ($path) {
-                return $this->galleryPATH . self::$orignalFolder;
+                return CAT_Helper_Directory::sanitizePath(
+                    $this->galleryPATH . self::$originalFolder
+                );
             } else {
-                return $this->galleryURL . self::$orignalFolder;
+                return CAT_Helper_Validate::sanitize_url(
+                    $this->galleryURL . self::$originalFolder
+                );
             }
         } // getOriginalFolder()
 
@@ -1450,7 +1485,7 @@ if (!class_exists("catGallery", false)) {
                 if (!$this->imagePATH || $this->imagePATH == "") {
                     $this->imagePATH = CAT_Helper_Directory::getInstance()->sanitizePath(
                         sprintf(
-                            "%sthumbs_%s_%s/",
+                            "%s/thumbs_%s_%s/",
                             $this->getFolder(),
                             $this->getOption("resize_x"),
                             $this->getOption("resize_y")
@@ -1459,11 +1494,13 @@ if (!class_exists("catGallery", false)) {
                 }
                 return $this->imagePATH;
             } elseif (!$this->imageURL || $this->imageURL == "") {
-                $this->imageURL = sprintf(
-                    "%sthumbs_%s_%s/",
-                    $this->getFolder(false),
-                    $this->getOption("resize_x"),
-                    $this->getOption("resize_y")
+                $this->imageURL = CAT_Helper_Validate::sanitize_url(
+                    sprintf(
+                        "%s/thumbs_%s_%s",
+                        $this->getFolder(false),
+                        $this->getOption("resize_x"),
+                        $this->getOption("resize_y")
+                    )
                 );
             }
             return $this->imageURL;

@@ -35,7 +35,7 @@
 
 <section id="cG_cGal_{$gallery_id}" class="cG_cGal{if $options.960grid} cG_960{/if}">
 	{foreach $images image}{if $image.published}<figure>
-		<img src="{$imgURL}{$image.picture}" alt="{$image.options.alt}">
+		<img src="{$imgURL}/{$image.picture}" alt="{$image.options.alt}">
 		<figcaption>
 			<a class="cg_cGalOpen" href="{$image.original}" title="{$image.options.title}">+</a>
 			<div>{if $image.options.title}<h3>{$image.options.title}</h3>{/if}

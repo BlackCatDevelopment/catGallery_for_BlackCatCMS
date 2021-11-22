@@ -33,7 +33,7 @@
 				<a href="{$folder_url}/{$image.picture}" class="fancybox">
 					<span class="fancy_overlay"></span>
 					<span class="icon-search"></span>
-					<img src="{$imgURL}{$image.picture}" width="{$options.resize_x}" />
+					<img src="{$imgURL}/{$image.picture}" width="{$options.resize_x}" />
 				</a>
 			</li>
 			{/if}{/foreach}

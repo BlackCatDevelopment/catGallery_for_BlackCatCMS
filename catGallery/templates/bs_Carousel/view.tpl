@@ -47,7 +47,7 @@
 			{assign var=firstitem value=true}
 			{foreach $images image}{if $image.published}
 				<div class="carousel-item {if $firstitem}active{/if}">
-					<img class="d-block w-100" src="{$imgURL}{$image.picture}" alt="{$image.options.alt}">
+					<img class="d-block w-100" src="{$imgURL}/{$image.picture}" alt="{$image.options.alt}">
 					<div class="carousel-caption d-none d-md-block">
 						{if $options.ititle}<h4>{$image.options.title}</h4>{/if}
 						{if $options.icontent}<p>{$image.image_content}</p>{/if}

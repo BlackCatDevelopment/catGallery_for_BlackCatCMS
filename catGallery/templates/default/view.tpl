@@ -53,7 +53,7 @@
 	<ul>
 		{foreach $images as image}{if $image.published}
 		<li>
-			<a href="#"><img src="{$imgURL}{$image.picture}" alt="{$image.options.alt}" /></a>
+			<a href="#"><img src="{$imgURL}/{$image.picture}" alt="{$image.options.alt}" /></a>
 			{if $options.label && $image.image_content != ''}<div class="label_text">
 				{$image.image_content}
 			</div>{/if}
