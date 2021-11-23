@@ -91,7 +91,7 @@ if (!class_exists("catGallery", false)) {
 
         public $variant = "default";
         public static $modulePath;
-        protected static $originalFolder = "/originals/";
+        protected static $originalDir = "/originals";
 
         protected static $initOptions;
 
@@ -1459,11 +1459,11 @@ if (!class_exists("catGallery", false)) {
         {
             if ($path) {
                 return CAT_Helper_Directory::sanitizePath(
-                    $this->galleryPATH . "/" . self::$originalFolder
+                    $this->galleryPATH . self::$originalDir
                 );
             } else {
                 return CAT_Helper_Validate::sanitize_url(
-                    $this->galleryURL . "/" . self::$originalFolder
+                    $this->galleryURL . self::$originalDir
                 );
             }
         } // getOriginalFolder()
