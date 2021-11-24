@@ -1390,15 +1390,17 @@ if (!class_exists("catGallery", false)) {
             if (count(self::$allVariants) > 0) {
                 return self::$allVariants;
             }
+            $templatePath =
+                CAT_PATH . "/modules/" . static::$directory . "/templates/";
+            if (!file_exists($templatePath)) {
+                $templatePath = dirname(__DIR__, 1) . "/templates/";
+            } else {
+                return [];
+            }
             foreach (
                 CAT_Helper_Directory::getInstance()
                     ->setRecursion(false)
-                    ->scanDirectory(
-                        CAT_PATH .
-                            "/modules/" .
-                            static::$directory .
-                            "/templates/"
-                    )
+                    ->scanDirectory($templatePath)
                 as $path
             ) {
                 self::$allVariants[] = basename($path);
