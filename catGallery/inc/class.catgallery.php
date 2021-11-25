@@ -1392,10 +1392,12 @@ if (!class_exists("catGallery", false)) {
             }
             $templatePath =
                 CAT_PATH . "/modules/" . static::$directory . "/templates/";
+
             if (!file_exists($templatePath)) {
                 $templatePath = dirname(__DIR__, 1) . "/templates/";
-            } else {
-                return [];
+                if (!file_exists($templatePath)) {
+                    return [];
+                }
             }
             foreach (
                 CAT_Helper_Directory::getInstance()
