@@ -74,11 +74,15 @@ $mod_headers = [
 			],
 			[
 				"media"	=> "all",
+				"file"	=> "modules/lib_bootstrap_4/vendor/css/bootstrap.min.css",
+			],
+			[
+				"media"	=> "all",
 				"file"	=> "modules/lib_bootstrap_4/vendor/icons/font/bootstrap-icons.css",
 			]
 		],
 		"js" => [
-				"/modules/lib_bootstrap_4/vendor/js/bootstrap.min.js",
+				"/modules/lib_bootstrap_4/vendor/js/bootstrap.bundle.min.js",
 		],
 		"jquery" => [
 			[
