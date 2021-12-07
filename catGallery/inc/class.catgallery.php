@@ -1189,12 +1189,10 @@ if (!class_exists("catGallery", false)) {
             if (
                 self::$db->query(
                     "REPLACE INTO `:prefix:mod_cc_catgallery_images_options` " .
-                        "SET `gallery_id`	= :gallery_id, " .
-                        "`image_id`		= :image_id, " .
+                        "SET `image_id`		= :image_id, " .
                         "`name`			= :name, " .
                         "`value`		= :value",
                     [
-                        "gallery_id" => self::$gallery_id,
                         "image_id" => $image_id,
                         "name" => $name,
                         "value" => is_null($value) ? "" : $value,
