@@ -44,7 +44,7 @@
 			<param name="movie" value="http://releases.flowplayer.org/swf/flowplayer-3.2.1.swf">
 			<param name="allowFullScreen" value="false">
 			<param name="wmode" value="transparent">
-			<param name="flashVars" value="config=\{'playlist':['{urlencode('"https:"$CAT_URL"/media/videos/"$image.options.video".mp4"')}',\{'url':'{urlencode('"https:"$$CAT_URL"/media/videos/"$image.options.video".mp4"')}','autoPlay':true}]}">
+			<param name="flashVars" value="config=\{'playlist':['{urlencode('"https:"$CAT_URL"/media/videos/"$image.options.video".mp4"')}',\{'url':'{urlencode('"https:"$CAT_URL"/media/videos/"$image.options.video".mp4"')}','autoPlay':true}]}">
 			<img alt="{$image.options.alt}" height="1340" src="{$image.original}" title="Dieser Browser unterstützt keinerlei Videos.">
 			<p>Dieser Browser unterstützt HTML5 Video nicht. Sie können es jedoch herunterladen: <a href="{cat_url}/media/videos/{$image.options.video}.mp4">Download</a></p>
 		</object>
