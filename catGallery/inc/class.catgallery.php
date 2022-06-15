@@ -554,7 +554,8 @@ if (!class_exists("catGallery", false)) {
         public function getImage(
             $image_id = null,
             $addOptions = true,
-            $addContent = true
+            $addContent = true,
+            $frontend = false
         ) {
             if (!$this->checkIDs()) {
                 return false;
@@ -619,7 +620,7 @@ if (!class_exists("catGallery", false)) {
                                 $row["picture"]
                         ),
                         "options" => $addOptions
-                            ? $this->getImgOptions($row["image_id"])
+                            ? $this->getImgOptions($row["image_id"], $frontend)
                             : null,
                         "image_content" => $addContent
                             ? $this->getImgContent($row["image_id"])
@@ -683,7 +684,7 @@ if (!class_exists("catGallery", false)) {
          * @return array()
          *
          **/
-        private function getImgOptions($image_id = null)
+        private function getImgOptions($image_id = null, $frontend = false)
         {
             if (!$this->checkIDs()) {
                 return false;
@@ -726,7 +727,9 @@ if (!class_exists("catGallery", false)) {
 
             if ($opts && $opts->rowCount() > 0) {
                 while (!false == ($row = $opts->fetch())) {
-                    $options[$row["image_id"]][$row["name"]] = $row["value"];
+                    $options[$row["image_id"]][$row["name"]] = $frontend
+                        ? htmlspecialchars_decode($row["value"])
+                        : htmlspecialchars($row["value"]);
 
                     if (isset($this->images[$row["image_id"]]["options"])) {
                         $this->images[$row["image_id"]][
@@ -734,12 +737,16 @@ if (!class_exists("catGallery", false)) {
                         ] = array_merge(
                             $this->images[$row["image_id"]]["options"],
                             [
-                                $row["name"] => htmlspecialchars($row["value"]),
+                                $row["name"] => $frontend
+                                    ? htmlspecialchars_decode($row["value"])
+                                    : htmlspecialchars($row["value"]),
                             ]
                         );
                     } else {
                         $this->images[$row["image_id"]]["options"] = [
-                            $row["name"] => htmlspecialchars($row["value"]),
+                            $row["name"] => $frontend
+                                ? htmlspecialchars_decode($row["value"])
+                                : htmlspecialchars($row["value"]),
                         ];
                     }
                 }
@@ -1223,7 +1230,7 @@ if (!class_exists("catGallery", false)) {
          * @return array()
          *
          **/
-        public function getOptions($name = null): array
+        public function getOptions($name = null, $frontend = false): array
         {
             if (!$this->checkIDs()) {
                 return [];
@@ -1255,7 +1262,9 @@ if (!class_exists("catGallery", false)) {
 
             if (isset($getOptions) && $getOptions->numRows() > 0) {
                 while (!false == ($row = $getOptions->fetchRow())) {
-                    $this->options[$row["name"]] = $row["value"];
+                    $this->options[$row["name"]] = $frontend
+                        ? htmlspecialchars_decode($row["value"])
+                        : htmlspecialchars($row["value"]);
                 }
             }
             if ($name) {
