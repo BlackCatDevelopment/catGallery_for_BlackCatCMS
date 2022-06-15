@@ -734,12 +734,12 @@ if (!class_exists("catGallery", false)) {
                         ] = array_merge(
                             $this->images[$row["image_id"]]["options"],
                             [
-                                $row["name"] => $row["value"],
+                                $row["name"] => htmlspecialchars($row["value"]),
                             ]
                         );
                     } else {
                         $this->images[$row["image_id"]]["options"] = [
-                            $row["name"] => $row["value"],
+                            $row["name"] => htmlspecialchars($row["value"]),
                         ];
                     }
                 }
