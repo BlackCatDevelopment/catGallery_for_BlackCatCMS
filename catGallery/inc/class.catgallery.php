@@ -947,7 +947,9 @@ if (!class_exists("catGallery", false)) {
                                     ->lang()
                                     ->translate(
                                         "File upload error: {{error}}",
-                                        ["error" => $current->error]
+                                        [
+                                            "error" => $current->error,
+                                        ]
                                     );
                             }
                         } else {
