@@ -75,7 +75,7 @@ if (!class_exists("catGallery", false)) {
 
         protected static $name = "catGallery (Modul für Bilder)";
         public static $directory = "cc_catgallery";
-        protected static $version = "3.0beta";
+        protected static $version = "3.0";
         protected static $author = "Matthias Glienke, letima development";
         protected static $license = '<a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License</a>';
         protected static $description = 'The add on "catGallery" provides a simple way to integrate a sliding media box or simple gallery on your website. For details see <a href="https://github.com/BlackCatDevelopment/catGallery_for_BlackCatCMS" target="_blank">GitHub</a>.<br/><br/>Done by Matthias Glienke, <a class="icon-letima" href="https://letima.de"> letima</a>';
