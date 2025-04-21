@@ -37,12 +37,11 @@ if (defined("CAT_PATH")) {
     if (file_exists($root . "framework/class.secure.php")) {
         include $root . "framework/class.secure.php";
     } else {
-        trigger_error(
+        throw new \RuntimeException(
             sprintf(
-                "[ <b>%s</b> ] Can't include class.secure.php!",
+                "Cannot include class.secure.php at %s",
                 $_SERVER["SCRIPT_NAME"]
-            ),
-            E_USER_ERROR
+            )
         );
     }
 }
@@ -70,12 +69,13 @@ if (!class_exists("catGallery", false)) {
         protected $galleryPATH = "";
         protected $galleryURL = "";
 
+        protected array $images = [];
         public $contents = [];
         public $options = [];
 
         protected static $name = "catGallery (Modul für Bilder)";
         public static $directory = "cc_catgallery";
-        protected static $version = "3.0";
+        protected static $version = "3.0beta";
         protected static $author = "Matthias Glienke, letima development";
         protected static $license = '<a href="http://www.gnu.org/licenses/gpl.html">GNU General Public License</a>';
         protected static $description = 'The add on "catGallery" provides a simple way to integrate a sliding media box or simple gallery on your website. For details see <a href="https://github.com/BlackCatDevelopment/catGallery_for_BlackCatCMS" target="_blank">GitHub</a>.<br/><br/>Done by Matthias Glienke, <a class="icon-letima" href="https://letima.de"> letima</a>';
@@ -179,9 +179,9 @@ if (!class_exists("catGallery", false)) {
 #			else return false;*/
         }
 
-        public static function getClassInfo($value): string
+        public static function getClassInfo($value): ?string
         {
-            return static::$$value;
+            return static::$$value ?? null;
         }
 
         /**
@@ -554,8 +554,7 @@ if (!class_exists("catGallery", false)) {
         public function getImage(
             $image_id = null,
             $addOptions = true,
-            $addContent = true,
-            $frontend = false
+            $addContent = true
         ) {
             if (!$this->checkIDs()) {
                 return false;
@@ -620,7 +619,7 @@ if (!class_exists("catGallery", false)) {
                                 $row["picture"]
                         ),
                         "options" => $addOptions
-                            ? $this->getImgOptions($row["image_id"], $frontend)
+                            ? $this->getImgOptions($row["image_id"])
                             : null,
                         "image_content" => $addContent
                             ? $this->getImgContent($row["image_id"])
@@ -684,7 +683,7 @@ if (!class_exists("catGallery", false)) {
          * @return array()
          *
          **/
-        private function getImgOptions($image_id = null, $frontend = false)
+        private function getImgOptions($image_id = null)
         {
             if (!$this->checkIDs()) {
                 return false;
@@ -727,9 +726,7 @@ if (!class_exists("catGallery", false)) {
 
             if ($opts && $opts->rowCount() > 0) {
                 while (!false == ($row = $opts->fetch())) {
-                    $options[$row["image_id"]][$row["name"]] = $frontend
-                        ? htmlspecialchars_decode($row["value"])
-                        : htmlspecialchars($row["value"]);
+                    $options[$row["image_id"]][$row["name"]] = $row["value"];
 
                     if (isset($this->images[$row["image_id"]]["options"])) {
                         $this->images[$row["image_id"]][
@@ -737,16 +734,12 @@ if (!class_exists("catGallery", false)) {
                         ] = array_merge(
                             $this->images[$row["image_id"]]["options"],
                             [
-                                $row["name"] => $frontend
-                                    ? htmlspecialchars_decode($row["value"])
-                                    : htmlspecialchars($row["value"]),
+                                $row["name"] => $row["value"],
                             ]
                         );
                     } else {
                         $this->images[$row["image_id"]]["options"] = [
-                            $row["name"] => $frontend
-                                ? htmlspecialchars_decode($row["value"])
-                                : htmlspecialchars($row["value"]),
+                            $row["name"] => $row["value"],
                         ];
                     }
                 }
@@ -1214,12 +1207,14 @@ if (!class_exists("catGallery", false)) {
             }
         } // end saveContentOptions()
 
-        public function getOption(string $name = null): ?string
-        {
+        public function getOption(
+            ?string $name = null,
+            bool $backend = false
+        ): ?string {
             if ($name == "") {
                 return "";
             }
-            $get = $this->getOptions($name);
+            $get = $this->getOptions($name, $backend);
             return reset($get);
         }
 
@@ -1232,7 +1227,7 @@ if (!class_exists("catGallery", false)) {
          * @return array()
          *
          **/
-        public function getOptions($name = null, $frontend = false): array
+        public function getOptions($name = null, $backend = false): array
         {
             if (!$this->checkIDs()) {
                 return [];
@@ -1264,9 +1259,9 @@ if (!class_exists("catGallery", false)) {
 
             if (isset($getOptions) && $getOptions->numRows() > 0) {
                 while (!false == ($row = $getOptions->fetchRow())) {
-                    $this->options[$row["name"]] = $frontend
-                        ? htmlspecialchars_decode($row["value"])
-                        : htmlspecialchars($row["value"]);
+                    $this->options[$row["name"]] = $backend
+                        ? htmlspecialchars(stripslashes($row["value"]))
+                        : stripslashes($row["value"]);
                 }
             }
             if ($name) {
@@ -1416,6 +1411,7 @@ if (!class_exists("catGallery", false)) {
             ) {
                 self::$allVariants[] = basename($path);
             }
+            sort(self::$allVariants);
             return self::$allVariants;
         }
 
